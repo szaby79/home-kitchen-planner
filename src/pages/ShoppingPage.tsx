@@ -1,0 +1,128 @@
+import { useState } from 'react';
+import { useAppContext } from '@/components/Layout';
+import { WEEKDAYS, WeekDay } from '@/types/recipe';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Check, Plus, Trash2, ShoppingCart } from 'lucide-react';
+
+export default function ShoppingPage() {
+  const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved } = useAppContext();
+  const [view, setView] = useState<'weekly' | 'daily'>('weekly');
+  const [newItem, setNewItem] = useState('');
+  const [newQty, setNewQty] = useState('');
+  const [newUnit, setNewUnit] = useState('');
+
+  const handleAdd = () => {
+    if (!newItem.trim()) return;
+    addExtraItem({ name: newItem.trim(), quantity: Number(newQty) || 1, unit: newUnit || 'db', checked: false, manual: true });
+    setNewItem(''); setNewQty(''); setNewUnit('');
+  };
+
+  const allItems = [...shoppingList, ...extraItems];
+  const hasItems = allItems.length > 0;
+
+  return (
+    <div className="page-container max-w-3xl">
+      <h1 className="section-title">Bevásárlólista</h1>
+
+      {/* View toggle */}
+      <div className="flex gap-2 mb-4">
+        <Button variant={view === 'weekly' ? 'default' : 'outline'} size="sm" onClick={() => setView('weekly')}>
+          Heti nézet
+        </Button>
+        <Button variant={view === 'daily' ? 'default' : 'outline'} size="sm" onClick={() => setView('daily')}>
+          Napi nézet
+        </Button>
+      </div>
+
+      {/* Add manual item */}
+      <div className="bg-card border rounded-lg p-4 mb-6">
+        <h3 className="text-sm font-semibold mb-2">Egyéb tétel hozzáadása</h3>
+        <div className="flex gap-2 flex-wrap">
+          <Input placeholder="Tétel neve" value={newItem} onChange={e => setNewItem(e.target.value)} className="flex-1 min-w-[150px]" />
+          <Input placeholder="Mennyiség" value={newQty} onChange={e => setNewQty(e.target.value)} className="w-20" />
+          <Input placeholder="Egység" value={newUnit} onChange={e => setNewUnit(e.target.value)} className="w-20" />
+          <Button onClick={handleAdd} size="icon"><Plus className="w-4 h-4" /></Button>
+        </div>
+      </div>
+
+      {!hasItems && (
+        <div className="text-center py-12 text-muted-foreground">
+          <ShoppingCart className="w-12 h-12 mx-auto mb-3 opacity-30" />
+          <p>A bevásárlólista üres. Állíts össze egy heti menüt!</p>
+        </div>
+      )}
+
+      {/* Weekly view */}
+      {view === 'weekly' && hasItems && (
+        <div className="bg-card border rounded-lg divide-y">
+          {allItems.map((item, i) => {
+            const key = `${item.name}-${item.unit}`;
+            const removed = removedItems.has(key);
+            return (
+              <div
+                key={`${key}-${i}`}
+                className={`flex items-center gap-3 px-4 py-3 transition-opacity ${removed ? 'opacity-40' : ''}`}
+              >
+                <button
+                  onClick={() => toggleRemoved(key)}
+                  className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
+                    removed ? 'bg-success border-success' : 'border-input hover:border-primary'
+                  }`}
+                >
+                  {removed && <Check className="w-3 h-3 text-success-foreground" />}
+                </button>
+                <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
+                <span className="text-sm text-muted-foreground font-medium">
+                  {Math.round(item.quantity * 10) / 10} {item.unit}
+                </span>
+                {item.manual && (
+                  <button onClick={() => removeExtraItem(i - shoppingList.length)} className="text-destructive hover:text-destructive/80">
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Daily view */}
+      {view === 'daily' && (
+        <div className="space-y-4">
+          {WEEKDAYS.map(day => {
+            const items = dailyShoppingList[day];
+            if (!items || items.length === 0) return null;
+            return (
+              <div key={day} className="bg-card border rounded-lg">
+                <div className="px-4 py-3 border-b bg-secondary/30">
+                  <h3 className="font-display font-semibold">{day}</h3>
+                </div>
+                <div className="divide-y">
+                  {items.map((item, i) => {
+                    const key = `${item.name}-${item.unit}`;
+                    const removed = removedItems.has(key);
+                    return (
+                      <div key={`${key}-${i}`} className={`flex items-center gap-3 px-4 py-2.5 ${removed ? 'opacity-40' : ''}`}>
+                        <button
+                          onClick={() => toggleRemoved(key)}
+                          className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${
+                            removed ? 'bg-success border-success' : 'border-input hover:border-primary'
+                          }`}
+                        >
+                          {removed && <Check className="w-3 h-3 text-success-foreground" />}
+                        </button>
+                        <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
+                        <span className="text-sm text-muted-foreground">{Math.round(item.quantity * 10) / 10} {item.unit}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
