@@ -93,8 +93,8 @@ function MealSlot({ label, value, servings, days, options, recipes, onChange, on
   value: string | null;
   servings: number;
   days: number;
-  options: typeof recipes;
-  recipes: typeof options;
+  options: Recipe[];
+  recipes: Recipe[];
   onChange: (val: string | null) => void;
   onServingsChange: (val: number) => void;
   onDaysChange: (val: number) => void;
