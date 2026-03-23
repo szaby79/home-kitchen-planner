@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppContext } from '@/components/Layout';
-import { WEEKDAYS, WeekDay, CATEGORY_LABELS } from '@/types/recipe';
+import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Shuffle, Trash2, Minus, Plus } from 'lucide-react';
 
