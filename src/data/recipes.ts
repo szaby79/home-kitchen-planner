@@ -3,7 +3,7 @@ import { Recipe } from '@/types/recipe';
 export const defaultRecipes: Recipe[] = [
   // ===== SOUPS =====
   {
-    id: 'soup-1', name: 'Húsleves', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
+    id: 'soup-1', name: 'Húsleves', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: 'photos/Husleves.webp',
     ingredients: [
       { name: 'csirkecomb', quantity: 600, unit: 'g' }, { name: 'sárgarépa', quantity: 2, unit: 'db' },
       { name: 'petrezselyemgyökér', quantity: 2, unit: 'db' }, { name: 'zeller', quantity: 1, unit: 'db' },
