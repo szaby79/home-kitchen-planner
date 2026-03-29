@@ -1,0 +1,60 @@
+Home Kitchen Planner Alkalmazás Áttekintése
+A projekt egy magyar nyelvű konyhai tervező alkalmazás, amely segít a felhasználóknak heti menüket tervezni és bevásárlólistákat generálni az elkészítendő ételek alapján.
+
+Projekt Struktúra
+Ez egy React, TypeScript, Tailwind CSS és shadcn/ui komponensek alapú alkalmazás, amely magyar nyelvű felhasználók számára készült a hagyományos magyar ételek hatékony tervezéséhez és előkészítéséhez.
+
+Főbb Funkciók
+1. Receptkezelés
+Az alkalmazás 65+ előre betöltött magyar recepttel rendelkezik, amelyek levesek, főételek és desszertek kategóriákba vannak sorolva
+Minden receptről szerepel az összetevők listája, az elkészítési leírás, az adagméret és az étkezés típusa (ebéd, vacsora vagy mindkettő)
+A felhasználók hozzáadhatnak, szerkeszthetnek és törölhetnek saját recepteket az admin felületen keresztül
+2. Heti Étkezésterv
+A felhasználók heti bontásban (hétfőtől vasárnapig: Hétfő-Vasárnap) tudják tervezni az ebédeket és vacsorákat
+Minden napra külön-külön lehet választani ebédre és vacsorára receptet
+Lehetőség van az adagok módosítására és arra, hogy hány napig szolgáljon az adott étel
+Tartalmaz véletlenszerű generáló funkciót, amely automatikusan kitölti a hetet megadott számú ebéddel és vacsorával
+3. Bevásárlólista Generálása
+Automatikusan kiszámolja a szükséges hozzávalókat az elkészítendő ételek alapján
+Heti és napi nézetet is kínál a bevásárlólistának
+Lehetőség van egyéni tételek manuális hozzáadására
+Pipálható jelölőnégyzeteket biztosít a vásárolt tételek megjelöléséhez
+Kiszámolja a hozzávalók mennyiségét az adagméretek és a napok száma alapján
+4. Navigáció és Elrendezés
+Reszponzív dizájn mobilbarát navigációval
+A fő navigáció linkeket tartalmaz a Főoldalhoz, Receptekhez, Heti Tervhez, Bevásárlólistához és Adminhoz
+Kontextus szolgáltatót használ az állapot megosztására az alkalmazáson belül
+Technikai Architektúra
+Állapotkezelés
+Két fő egyéni hook kezeli az alkalmazás állapotát:
+useRecipeStore: Receptadatok kezelése localStorage használatával
+usePlannerStore: Heti tervezés és bevásárlólista generálás kezelése localStorage használatával
+Adatfolyam
+A receptek a recipes.ts fájlból töltődnek be és localStorage-ba kerülnek mentésre
+A heti terv localStorage-ban kerül tárolásra és valós időben frissíti a bevásárlólistát
+A bevásárlólisták dinamikusan kerülnek kiszámításra a kiválasztott receptek és adagméretek alapján
+Fő Komponensek
+Layout Komponens: Biztosítja a fő navigációt és kontextus szolgáltatót
+Recept Oldalak: Receptek böngészése, részletek megtekintése és kezelése
+Tervező Oldal: Interaktív heti étkezésterv készítő felület
+Bevásárló Oldal: Generált bevásárlólisták napi/heti nézetben
+Admin Oldal: Receptkezelő felület
+Működés
+Indítás: A felhasználók a főoldalról indulnak, ahol statisztikákat láthatnak a rendelkezésre álló receptekről és gyors linkeket az alapfunkciókhoz
+
+Tervezési Folyamat:
+
+Ugorjunk a "Heti terv" oldalra
+Válasszunk recepteket minden nap ebédre és vacsorára
+Módosítsuk az adagméreteket és a napok számát igény szerint
+A rendszer automatikusan kiszámolja a szükséges hozzávalókat
+Bevásárlólista Generálása:
+
+Látogassuk meg a "Bevásárlólista" oldalt
+Tekintsük meg a tervezett hétre szükséges hozzávalókat
+Választhatunk heti vagy napi nézet között
+Szükség esetén adjunk hozzá egyéb tételeket
+Pipáljuk ki a vásárolt tételeket vásárlás közben
+Adattárolás: Minden adat (receptek, tervek, bevásárlólisták) localStorage-ba kerül mentésre, így munkamenetek között is megmarad
+
+Ez az alkalmazás kifejezetten magyar felhasználók számára készült, akik hatékonyan szeretnének hagyományos magyar ételeket tervezni, és hangsúlyt fektet a családi étkezésre és az ételkészítés előkészítésére.
