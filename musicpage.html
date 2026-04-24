@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Music Webpage</title>
+
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+
+        #box {
+            width: 120px;
+            height: 120px;
+            background-color: orange;
+            margin: 30px auto;
+            border-radius: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>My Favorite Music Video</h1>
+
+    <p>This is a simple webpage I created using HTML, CSS, and JavaScript.</p>
+
+    <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        title="YouTube video player"
+        frameborder="0"
+        allowfullscreen>
+    </iframe>
+
+    <h2>JavaScript Animation</h2>
+
+    <div id="box"></div>
+
+    <button onclick="moveBox()">Click to Animate</button>
+
+    <script>
+        function moveBox() {
+            let box = document.getElementById("box");
+            let position = 0;
+
+            let animation = setInterval(function() {
+                if (position >= 200) {
+                    clearInterval(animation);
+                } else {
+                    position++;
+                    box.style.left = position + "px";
+                }
+            }, 5);
+        }
+    </script>
+
+</body>
+</html>
