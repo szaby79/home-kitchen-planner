@@ -3,18 +3,37 @@ import { Recipe } from '@/types/recipe';
 import { defaultRecipes } from '@/data/recipes';
 
 const STORAGE_KEY = 'plan-pan-recipes';
+const CONTENT_VERSION_KEY = 'plan-pan-recipes-content-version';
+const CONTENT_VERSION = '2';
 
 const defaultRecipesById = new Map(
   defaultRecipes.map(recipe => [recipe.id, recipe] as const),
 );
 
-function refreshDefaultRecipeImages(recipes: Recipe[]): Recipe[] {
-  return recipes.map(recipe => {
+function refreshDefaultRecipeContent(recipes: Recipe[]): Recipe[] {
+  const needsContentMigration = localStorage.getItem(CONTENT_VERSION_KEY) !== CONTENT_VERSION;
+
+  const refreshed = recipes.map(recipe => {
     const defaultRecipe = defaultRecipesById.get(recipe.id);
-    return defaultRecipe
-      ? { ...recipe, imageUrl: defaultRecipe.imageUrl }
-      : recipe;
+    if (!defaultRecipe) return recipe;
+
+    return {
+      ...recipe,
+      imageUrl: defaultRecipe.imageUrl,
+      ...(needsContentMigration
+        ? {
+            ingredients: defaultRecipe.ingredients,
+            description: defaultRecipe.description,
+          }
+        : {}),
+    };
   });
+
+  if (needsContentMigration) {
+    localStorage.setItem(CONTENT_VERSION_KEY, CONTENT_VERSION);
+  }
+
+  return refreshed;
 }
 
 function loadRecipes(): Recipe[] {
@@ -22,7 +41,7 @@ function loadRecipes(): Recipe[] {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored) as Recipe[];
-      return refreshDefaultRecipeImages(parsed);
+      return refreshDefaultRecipeContent(parsed);
     }
   } catch {
     return defaultRecipes;

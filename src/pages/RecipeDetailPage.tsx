@@ -80,7 +80,7 @@ export default function RecipeDetailPage() {
         {/* Description */}
         <div className="bg-card border rounded-lg p-5">
           <h2 className="font-display text-lg font-semibold mb-3">Elkészítés</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">{recipe.description}</p>
+          <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{recipe.description}</p>
           {recipe.note && (
             <div className="mt-4 p-3 bg-warm/10 rounded-md text-sm">
               <strong>Megjegyzés:</strong> {recipe.note}

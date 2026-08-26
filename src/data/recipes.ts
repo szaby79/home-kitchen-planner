@@ -1,4 +1,5 @@
 import { Recipe } from '@/types/recipe';
+import { beginnerInstructions } from '@/data/beginnerInstructions';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -19,7 +20,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'marhahús', quantity: 500, unit: 'g' }, { name: 'vöröshagyma', quantity: 2, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'burgonya', quantity: 400, unit: 'g' },
       { name: 'sárgarépa', quantity: 2, unit: 'db' }, { name: 'zöldpaprika', quantity: 2, unit: 'db' },
-      { name: 'paradicsom', quantity: 2, unit: 'db' }, { name: 'csipetke', quantity: 100, unit: 'g' },
+      { name: 'paradicsom', quantity: 2, unit: 'db' }, { name: 'finomliszt', quantity: 100, unit: 'g' },
+      { name: 'tojás', quantity: 1, unit: 'db' },
       { name: 'só', quantity: 1, unit: 'ek' }, { name: 'kömény', quantity: 0.5, unit: 'tk' },
       { name: 'fokhagyma', quantity: 2, unit: 'gerezd' }, { name: 'olaj', quantity: 2, unit: 'ek' },
     ],
@@ -44,7 +46,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'sárgarépa', quantity: 1, unit: 'db' }, { name: 'petrezselyemgyökér', quantity: 1, unit: 'db' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'liszt', quantity: 1, unit: 'ek' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'csipetke', quantity: 80, unit: 'g' }, { name: 'babérlevél', quantity: 2, unit: 'db' },
+      { name: 'finomliszt', quantity: 100, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
+      { name: 'babérlevél', quantity: 2, unit: 'db' },
     ],
     description: 'A babot beáztatjuk, a csülökkel együtt puhára főzzük. Zöldségeket kockázva hozzáadjuk. Tejföllel-liszttel beteszítjük. Csipetkét főzünk bele. Pirospaprikával fűszerezzük.'
   },
@@ -249,7 +252,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'tejföl', quantity: 200, unit: 'ml' },
       { name: 'zöldpaprika', quantity: 1, unit: 'db' }, { name: 'paradicsom', quantity: 1, unit: 'db' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'olaj', quantity: 2, unit: 'ek' },
-      { name: 'nokedli', quantity: 400, unit: 'g' },
+      { name: 'finomliszt', quantity: 400, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'Hagymát dinsztelünk, pirospaprikával fűszerezzük. A csirkét hozzáadjuk, paprikával és paradicsommal, kevés vízzel pároljuk puháig. Tejföllel gazdagítjuk. Nokedlivel tálaljuk.'
   },
@@ -259,7 +262,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'sertéshús', quantity: 600, unit: 'g' }, { name: 'vöröshagyma', quantity: 3, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'zöldpaprika', quantity: 1, unit: 'db' },
       { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'nokedli', quantity: 400, unit: 'g' },
+      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
+      { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'Sok hagymát dinsztelünk, pirospaprikával fűszerezzük. Kockázott húst hozzáadjuk, kevés vízen puhára pároljuk. Nokedlivel tálaljuk.'
   },
@@ -269,7 +273,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'marhahús', quantity: 600, unit: 'g' }, { name: 'vöröshagyma', quantity: 3, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'zöldpaprika', quantity: 1, unit: 'db' },
       { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'nokedli', quantity: 400, unit: 'g' },
+      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
+      { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'Sok hagymát dinsztelünk, pirospaprikával fűszerezzük. A marhahúst kockázzuk, lassan puhára pároljuk (kb 2 óra). Nokedlivel tálaljuk.'
   },
@@ -279,7 +284,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'marhahús', quantity: 500, unit: 'g' }, { name: 'vöröshagyma', quantity: 2, unit: 'db' },
       { name: 'füstölt szalonna', quantity: 100, unit: 'g' }, { name: 'gomba', quantity: 200, unit: 'g' },
       { name: 'tejföl', quantity: 100, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'nokedli', quantity: 400, unit: 'g' },
+      { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
+      { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'A szalonnát kockázzuk, kisütjük. Hagymát dinsztelünk rajta. Csíkokra vágott húst hozzáadjuk, gombával, tejföllel pároljuk puháig. Nokedlivel tálaljuk.'
   },
@@ -544,7 +550,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'zöldpaprika', quantity: 1, unit: 'db' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'liszt', quantity: 1, unit: 'ek' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'nokedli', quantity: 400, unit: 'g' },
+      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
+      { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'A karajt szeleteljük, megsütjük. Gombát, hagymát, paprikát dinsztelünk. Tejföllel összefőzzük. Nokedlivel tálaljuk.'
   },
@@ -596,7 +603,7 @@ const defaultRecipeData: Recipe[] = [
     id: 'dessert-3', name: 'Aranygaluska', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'liszt', quantity: 500, unit: 'g' }, { name: 'élesztő', quantity: 25, unit: 'g' },
-      { name: 'tej', quantity: 200, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
+      { name: 'tej', quantity: 700, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'cukor', quantity: 80, unit: 'g' }, { name: 'vaj', quantity: 100, unit: 'g' },
       { name: 'dió', quantity: 100, unit: 'g' }, { name: 'vanília pudingpor', quantity: 1, unit: 'csomag' },
     ],
@@ -725,5 +732,6 @@ const defaultRecipeData: Recipe[] = [
 // a stable, matching image instead of relying on external or cached URLs.
 export const defaultRecipes: Recipe[] = defaultRecipeData.map(recipe => ({
   ...recipe,
+  description: beginnerInstructions[recipe.id] ?? recipe.description,
   imageUrl: `/recipes/${recipe.id}.webp`,
 }));
