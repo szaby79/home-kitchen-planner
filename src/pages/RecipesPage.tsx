@@ -5,6 +5,7 @@ import { useAppContext } from '@/components/Layout';
 import { Category, CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { sortRecipesByCategory } from '@/lib/recipeSort';
 
 export default function RecipesPage() {
   const { recipes } = useAppContext();
@@ -19,7 +20,7 @@ export default function RecipesPage() {
       const q = search.toLowerCase();
       list = list.filter(r => r.name.toLowerCase().includes(q));
     }
-    return list;
+    return sortRecipesByCategory(list);
   }, [recipes, activeCategory, search]);
 
   const categories: { value: string; label: string }[] = [

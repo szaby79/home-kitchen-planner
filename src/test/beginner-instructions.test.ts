@@ -3,9 +3,21 @@ import { renderHook } from '@testing-library/react';
 import { beginnerInstructions } from '@/data/beginnerInstructions';
 import { defaultRecipes } from '@/data/recipes';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
+import { sortRecipesByCategory } from '@/lib/recipeSort';
 import { Recipe } from '@/types/recipe';
 
 describe('beginner recipe instructions', () => {
+  it('groups soups, mains and desserts in this order', () => {
+    const sorted = sortRecipesByCategory(defaultRecipes);
+
+    expect(sorted.slice(0, 30).every(recipe => recipe.category === 'soup')).toBe(true);
+    expect(sorted.slice(30, 100).every(recipe => recipe.category === 'main')).toBe(true);
+    expect(sorted.slice(100).every(recipe => recipe.category === 'dessert')).toBe(true);
+    expect([sorted[0].id, sorted[29].id]).toEqual(['soup-1', 'soup-30']);
+    expect([sorted[30].id, sorted[99].id]).toEqual(['main-1', 'main-70']);
+    expect([sorted[100].id, sorted[119].id]).toEqual(['dessert-1', 'dessert-20']);
+  });
+
   it('provides short, numbered instructions for every built-in recipe', () => {
     expect(Object.keys(beginnerInstructions)).toHaveLength(70);
     expect(defaultRecipes).toHaveLength(120);
