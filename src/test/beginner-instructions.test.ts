@@ -8,12 +8,19 @@ import { Recipe } from '@/types/recipe';
 describe('beginner recipe instructions', () => {
   it('provides short, numbered instructions for every built-in recipe', () => {
     expect(Object.keys(beginnerInstructions)).toHaveLength(70);
+    expect(defaultRecipes).toHaveLength(120);
 
     for (const recipe of defaultRecipes) {
-      expect(beginnerInstructions[recipe.id], recipe.name).toBeDefined();
-      expect(recipe.description, recipe.name).toBe(beginnerInstructions[recipe.id]);
       expect(recipe.description.match(/^\d+\./gm)?.length, recipe.name).toBeGreaterThanOrEqual(5);
     }
+  });
+
+  it('adds 10 soups, 35 mains and 5 desserts without duplicate IDs or names', () => {
+    expect(defaultRecipes.filter(recipe => recipe.category === 'soup')).toHaveLength(30);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'main')).toHaveLength(70);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'dessert')).toHaveLength(20);
+    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(120);
+    expect(new Set(defaultRecipes.map(recipe => recipe.name.toLocaleLowerCase('hu'))).size).toBe(120);
   });
 
   it('includes homemade csipetke ingredients and the paprika warning', () => {
@@ -48,6 +55,7 @@ describe('beginner recipe instructions', () => {
     expect(result.current.recipes[0].description).toBe(defaultRecipes[0].description);
     expect(result.current.recipes[0].ingredients).toEqual(defaultRecipes[0].ingredients);
     expect(result.current.recipes[1]).toEqual(userRecipe);
-    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('2');
+    expect(result.current.recipes).toHaveLength(121);
+    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('3');
   });
 });

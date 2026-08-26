@@ -1,5 +1,8 @@
 import { Recipe } from '@/types/recipe';
 import { beginnerInstructions } from '@/data/beginnerInstructions';
+import { additionalSoups } from '@/data/additionalSoups';
+import { additionalMains } from '@/data/additionalMains';
+import { additionalDesserts } from '@/data/additionalDesserts';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -730,7 +733,14 @@ const defaultRecipeData: Recipe[] = [
 
 // Recipe images are bundled with the application so every default recipe has
 // a stable, matching image instead of relying on external or cached URLs.
-export const defaultRecipes: Recipe[] = defaultRecipeData.map(recipe => ({
+const allRecipeData = [
+  ...defaultRecipeData,
+  ...additionalSoups,
+  ...additionalMains,
+  ...additionalDesserts,
+];
+
+export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => ({
   ...recipe,
   description: beginnerInstructions[recipe.id] ?? recipe.description,
   imageUrl: `/recipes/${recipe.id}.webp`,

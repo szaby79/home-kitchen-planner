@@ -4,7 +4,7 @@ import { defaultRecipes } from '@/data/recipes';
 
 const STORAGE_KEY = 'plan-pan-recipes';
 const CONTENT_VERSION_KEY = 'plan-pan-recipes-content-version';
-const CONTENT_VERSION = '2';
+const CONTENT_VERSION = '3';
 
 const defaultRecipesById = new Map(
   defaultRecipes.map(recipe => [recipe.id, recipe] as const),
@@ -30,6 +30,12 @@ function refreshDefaultRecipeContent(recipes: Recipe[]): Recipe[] {
   });
 
   if (needsContentMigration) {
+    const existingIds = new Set(refreshed.map(recipe => recipe.id));
+    for (const defaultRecipe of defaultRecipes) {
+      if (!existingIds.has(defaultRecipe.id)) {
+        refreshed.push(defaultRecipe);
+      }
+    }
     localStorage.setItem(CONTENT_VERSION_KEY, CONTENT_VERSION);
   }
 
