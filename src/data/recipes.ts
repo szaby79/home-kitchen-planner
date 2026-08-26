@@ -1,6 +1,6 @@
 import { Recipe } from '@/types/recipe';
 
-export const defaultRecipes: Recipe[] = [
+const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
   {
     id: 'soup-1', name: 'Húsleves', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
@@ -720,3 +720,10 @@ export const defaultRecipes: Recipe[] = [
     description: 'A mézet, cukrot, vajat felolvasztjuk. A liszttel, fűszerekkel tésztát gyúrunk. Kinyújtjuk, kiszúrjuk. 180°C-on sütjük 10 percig.'
   },
 ];
+
+// Recipe images are bundled with the application so every default recipe has
+// a stable, matching image instead of relying on external or cached URLs.
+export const defaultRecipes: Recipe[] = defaultRecipeData.map(recipe => ({
+  ...recipe,
+  imageUrl: `/recipes/${recipe.id}.webp`,
+}));

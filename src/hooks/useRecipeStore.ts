@@ -4,11 +4,29 @@ import { defaultRecipes } from '@/data/recipes';
 
 const STORAGE_KEY = 'plan-pan-recipes';
 
+const defaultRecipesById = new Map(
+  defaultRecipes.map(recipe => [recipe.id, recipe] as const),
+);
+
+function refreshDefaultRecipeImages(recipes: Recipe[]): Recipe[] {
+  return recipes.map(recipe => {
+    const defaultRecipe = defaultRecipesById.get(recipe.id);
+    return defaultRecipe
+      ? { ...recipe, imageUrl: defaultRecipe.imageUrl }
+      : recipe;
+  });
+}
+
 function loadRecipes(): Recipe[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored) as Recipe[];
+      return refreshDefaultRecipeImages(parsed);
+    }
+  } catch {
+    return defaultRecipes;
+  }
   return defaultRecipes;
 }
 
