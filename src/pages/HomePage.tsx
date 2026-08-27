@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ChefHat, ArrowRight, Heart } from 'lucide-react';
+import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ChefHat, ArrowRight, Heart, Zap } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, Category } from '@/types/recipe';
 
@@ -16,6 +16,7 @@ export default function HomePage() {
   const counts: Record<Category, number> = {
     soup: recipes.filter(r => r.category === 'soup').length,
     main: recipes.filter(r => r.category === 'main').length,
+    salad: recipes.filter(r => r.category === 'salad').length,
     dessert: recipes.filter(r => r.category === 'dessert').length,
   };
 
@@ -30,11 +31,19 @@ export default function HomePage() {
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
           A Plan & Pan megtervezi a család heti ebédjeit és vacsoráit, segít az ételek elkészítésében, majd egy közös bevásárlólistát készít. Nem csupán receptgyűjtemény: leveszi a heti menütervezés terhét a válladról.
         </p>
-        <ButtonLink />
+        <div className="flex flex-wrap justify-center gap-3">
+          <ButtonLink />
+          <Link
+            to="/recipes?quick=1"
+            className="inline-flex items-center gap-2 rounded-lg border border-accent bg-[#F2F7EF] px-5 py-3 font-semibold text-accent transition hover:bg-[#E3EDDE]"
+          >
+            <Zap className="w-4 h-4" /> Gyors ételek
+          </Link>
+        </div>
       </section>
 
       {/* Stats */}
-      <section className="grid grid-cols-3 gap-3 sm:gap-4 max-w-lg mx-auto mb-10">
+      <section className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto mb-10">
         {(Object.keys(CATEGORY_LABELS) as Category[]).map(cat => (
           <Link
             key={cat}

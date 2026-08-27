@@ -1,29 +1,46 @@
 import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, ChefHat, Heart } from 'lucide-react';
+import { Search, ChefHat, Heart, Zap } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { Category, CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { sortRecipesByCategory } from '@/lib/recipeSort';
+import { isQuickRecipe } from '@/lib/recipeScheduling';
 
 export default function RecipesPage() {
   const { recipes, isFavorite, toggleFavorite } = useAppContext();
   const [params, setParams] = useSearchParams();
   const activeCategory = (params.get('category') as Category) || 'all';
   const [search, setSearch] = useState('');
+  const quickOnly = params.get('quick') === '1';
   const [favoritesOnly, setFavoritesOnly] = useState(false);
 
   const filtered = useMemo(() => {
     let list = recipes;
     if (activeCategory !== 'all') list = list.filter(r => r.category === activeCategory);
+    if (quickOnly) list = list.filter(isQuickRecipe);
     if (favoritesOnly) list = list.filter(r => isFavorite(r.id));
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(r => r.name.toLowerCase().includes(q));
     }
     return sortRecipesByCategory(list);
-  }, [recipes, activeCategory, search, favoritesOnly, isFavorite]);
+  }, [recipes, activeCategory, search, favoritesOnly, quickOnly, isFavorite]);
+
+  const setCategory = (category: string) => {
+    const next = new URLSearchParams(params);
+    if (category === 'all') next.delete('category');
+    else next.set('category', category);
+    setParams(next);
+  };
+
+  const toggleQuick = () => {
+    const next = new URLSearchParams(params);
+    if (quickOnly) next.delete('quick');
+    else next.set('quick', '1');
+    setParams(next);
+  };
 
   const categories: { value: string; label: string }[] = [
     { value: 'all', label: 'Összes' },
@@ -40,7 +57,7 @@ export default function RecipesPage() {
           {categories.map(c => (
             <button
               key={c.value}
-              onClick={() => setParams(c.value === 'all' ? {} : { category: c.value })}
+              onClick={() => setCategory(c.value)}
               className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                 activeCategory === c.value || (c.value === 'all' && activeCategory === 'all')
                   ? 'bg-primary text-primary-foreground'
@@ -51,6 +68,14 @@ export default function RecipesPage() {
             </button>
           ))}
         </div>
+        <button
+          onClick={toggleQuick}
+          className={`inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium border transition-colors ${
+            quickOnly ? 'bg-accent text-accent-foreground border-accent' : 'bg-card hover:bg-secondary'
+          }`}
+        >
+          <Zap className={`w-4 h-4 ${quickOnly ? 'fill-current' : ''}`} /> Gyors ételek
+        </button>
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
@@ -95,6 +120,7 @@ export default function RecipesPage() {
                 <div className="flex gap-2">
                   <Badge variant="secondary" className="text-xs">{CATEGORY_LABELS[recipe.category]}</Badge>
                   <Badge variant="outline" className="text-xs">{MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
+                  {isQuickRecipe(recipe) && <Badge className="text-xs bg-accent text-accent-foreground">Gyors</Badge>}
                 </div>
               </div>
             </Link>

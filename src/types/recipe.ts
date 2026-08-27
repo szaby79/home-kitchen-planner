@@ -1,4 +1,4 @@
-export type Category = 'soup' | 'main' | 'dessert';
+export type Category = 'soup' | 'main' | 'salad' | 'dessert';
 export type MealType = 'lunch' | 'dinner' | 'both';
 
 export interface Ingredient {
@@ -50,6 +50,7 @@ export const WEEKDAYS: WeekDay[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök',
 export const CATEGORY_LABELS: Record<Category, string> = {
   soup: 'Levesek',
   main: 'Főételek',
+  salad: 'Saláták',
   dessert: 'Desszertek',
 };
 
