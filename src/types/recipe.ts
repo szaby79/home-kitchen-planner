@@ -32,6 +32,9 @@ export interface DayPlan {
 
 export type WeekendDessertMode = 'same' | 'different';
 
+export type MealSlot = 'lunch' | 'dinner';
+export type GenerationSelection = Record<WeekDay, Record<MealSlot, boolean>>;
+
 export type WeekDay = 'Hétfő' | 'Kedd' | 'Szerda' | 'Csütörtök' | 'Péntek' | 'Szombat' | 'Vasárnap';
 
 export type WeekPlan = Record<WeekDay, DayPlan>;
@@ -75,4 +78,10 @@ export function createEmptyDayPlan(): DayPlan {
 
 export function createEmptyWeekPlan(): WeekPlan {
   return Object.fromEntries(WEEKDAYS.map(d => [d, createEmptyDayPlan()])) as WeekPlan;
+}
+
+export function createGenerationSelection(selected = false): GenerationSelection {
+  return Object.fromEntries(
+    WEEKDAYS.map(day => [day, { lunch: selected, dinner: selected }]),
+  ) as GenerationSelection;
 }

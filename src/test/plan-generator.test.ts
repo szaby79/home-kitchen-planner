@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
-import { generateWeekPlan } from '@/lib/planGenerator';
-import { WEEKDAYS } from '@/types/recipe';
+import { generateSelectedPlan, generateWeekPlan } from '@/lib/planGenerator';
+import { createGenerationSelection, WEEKDAYS } from '@/types/recipe';
 import { isQuickRecipe, isSundayRecipe } from '@/lib/recipeScheduling';
 
 describe('weekly menu generation rules', () => {
@@ -51,5 +51,19 @@ describe('weekly menu generation rules', () => {
     expect(plan.Szombat.dessert).toBeNull();
     expect(plan.Vasárnap.lunch).toBeNull();
     expect(plan.Vasárnap.dessert).toBeNull();
+  });
+
+  it('changes only the meals selected by the user', () => {
+    const original = generateWeekPlan(defaultRecipes, 7, 7, 'same');
+    const selection = createGenerationSelection(false);
+    selection.Szerda.dinner = true;
+
+    const updated = generateSelectedPlan(defaultRecipes, original, selection, 'same');
+
+    WEEKDAYS.forEach(day => {
+      expect(updated[day].lunch).toBe(original[day].lunch);
+      if (day !== 'Szerda') expect(updated[day].dinner).toBe(original[day].dinner);
+    });
+    expect(updated.Szerda.dinner).not.toBeNull();
   });
 });

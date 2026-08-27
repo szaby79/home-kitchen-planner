@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore } from '@/hooks/usePlannerStore';
-import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, WeekendDessertMode } from '@/types/recipe';
+import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, WeekendDessertMode, GenerationSelection } from '@/types/recipe';
 import { useFavorites } from '@/hooks/useFavorites';
 
 interface AppContextType {
@@ -17,7 +17,7 @@ interface AppContextType {
   weekPlan: WeekPlan;
   updateDay: (day: WeekDay, updates: Partial<DayPlan>) => void;
   clearPlan: () => void;
-  generateRandomPlan: (l: number, d: number, dessertMode: WeekendDessertMode) => void;
+  generateRandomPlan: (selection: GenerationSelection, dessertMode: WeekendDessertMode) => void;
   shoppingList: ShoppingItem[];
   dailyShoppingList: Record<WeekDay, ShoppingItem[]>;
   extraItems: ShoppingItem[];
@@ -25,6 +25,8 @@ interface AppContextType {
   removeExtraItem: (index: number) => void;
   removedItems: Set<string>;
   toggleRemoved: (key: string) => void;
+  shoppingNotes: string;
+  setShoppingNotes: (notes: string) => void;
   favoriteIds: string[];
   toggleFavorite: (recipeId: string) => void;
   isFavorite: (recipeId: string) => boolean;
@@ -108,7 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
-          Plan & Pan v1.4 © {new Date().getFullYear()} — Magyar családi ételtervező
+          Plan & Pan v1.5 © {new Date().getFullYear()} — Magyar családi ételtervező
         </footer>
       </div>
     </AppContext.Provider>

@@ -43,7 +43,7 @@ export default function AdminPage() {
     if (confirm('Biztosan törlöd ezt a receptet?')) deleteRecipe(id);
   };
 
-  const updateIngredient = (index: number, field: keyof Ingredient, value: any) => {
+  const updateIngredient = (index: number, field: keyof Ingredient, value: string | number) => {
     if (!editing) return;
     const ings = [...editing.ingredients];
     ings[index] = { ...ings[index], [field]: field === 'quantity' ? Number(value) || 0 : value };

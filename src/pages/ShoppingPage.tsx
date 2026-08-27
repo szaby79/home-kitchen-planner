@@ -3,10 +3,12 @@ import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Check, Plus, Trash2, ShoppingCart } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Check, Plus, Trash2, ShoppingCart, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function ShoppingPage() {
-  const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved } = useAppContext();
+  const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved, shoppingNotes, setShoppingNotes } = useAppContext();
   const [view, setView] = useState<'weekly' | 'daily'>('weekly');
   const [newItem, setNewItem] = useState('');
   const [newQty, setNewQty] = useState('');
@@ -23,7 +25,11 @@ export default function ShoppingPage() {
 
   return (
     <div className="page-container max-w-3xl">
+      <Link to="/planner" className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <ArrowLeft className="h-4 w-4" /> Vissza a menühöz
+      </Link>
       <h1 className="section-title">Bevásárlólista</h1>
+      <p className="mb-4 text-sm text-muted-foreground">A lista a menü és az ételcserék alapján automatikusan frissül.</p>
 
       {/* View toggle */}
       <div className="flex gap-2 mb-4">
@@ -123,6 +129,18 @@ export default function ShoppingPage() {
           })}
         </div>
       )}
+
+      <div className="mt-6 rounded-lg border bg-card p-4">
+        <label htmlFor="shopping-notes" className="mb-1 block text-sm font-semibold">Saját jegyzet</label>
+        <p className="mb-3 text-xs text-muted-foreground">Írj ide bármit, amit még nem szeretnél elfelejteni. A jegyzet automatikusan mentődik.</p>
+        <Textarea
+          id="shopping-notes"
+          value={shoppingNotes}
+          onChange={event => setShoppingNotes(event.target.value)}
+          placeholder={'Például:\nChips\nÜdítő\nKutyakaja'}
+          className="min-h-36 resize-y"
+        />
+      </div>
     </div>
   );
 }
