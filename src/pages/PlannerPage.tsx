@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
@@ -147,19 +148,40 @@ function MealSlot({ label, value, servings, days, options, recipes, onChange, on
         ))}
       </select>
       {recipe && (
-        <div className="flex flex-wrap gap-3 text-xs">
-          <div className="flex items-center gap-1">
-            <span className="text-muted-foreground">Adag:</span>
-            <button onClick={() => onServingsChange(Math.max(1, servings - 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">-</button>
-            <span className="font-bold">{servings}</span>
-            <button onClick={() => onServingsChange(servings + 1)} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
+        <div className="flex gap-3 rounded-lg border bg-card p-2.5">
+          <Link
+            to={`/recipes/${recipe.id}`}
+            aria-label={`${recipe.name} receptjének megnyitása`}
+            className="shrink-0 overflow-hidden rounded-md"
+          >
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              className="h-[72px] w-24 sm:w-28 object-cover transition-transform hover:scale-105"
+            />
+          </Link>
+          <div className="min-w-0 flex-1">
+            <Link to={`/recipes/${recipe.id}`} className="font-semibold text-sm hover:text-primary transition-colors line-clamp-2">
+              {recipe.name}
+            </Link>
+            <Link to={`/recipes/${recipe.id}`} className="text-xs text-primary hover:underline">
+              Recept megnyitása
+            </Link>
+            <div className="flex flex-wrap gap-3 text-xs mt-2">
+              <div className="flex items-center gap-1">
+                <span className="text-muted-foreground">Adag:</span>
+                <button onClick={() => onServingsChange(Math.max(1, servings - 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">-</button>
+                <span className="font-bold">{servings}</span>
+                <button onClick={() => onServingsChange(servings + 1)} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
+              </div>
+              {!hideDays && onDaysChange && <div className="flex items-center gap-1">
+                <span className="text-muted-foreground">Napra:</span>
+                <button onClick={() => onDaysChange(Math.max(1, days - 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">-</button>
+                <span className="font-bold">{days}</span>
+                <button onClick={() => onDaysChange(Math.min(7, days + 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
+              </div>}
+            </div>
           </div>
-          {!hideDays && onDaysChange && <div className="flex items-center gap-1">
-            <span className="text-muted-foreground">Napra:</span>
-            <button onClick={() => onDaysChange(Math.max(1, days - 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">-</button>
-            <span className="font-bold">{days}</span>
-            <button onClick={() => onDaysChange(Math.min(7, days + 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
-          </div>}
         </div>
       )}
     </div>
