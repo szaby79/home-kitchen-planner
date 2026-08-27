@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe } from '@/types/recipe';
+import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode } from '@/types/recipe';
+import { generateWeekPlan } from '@/lib/planGenerator';
 
 const PLAN_KEY = 'plan-pan-weekplan';
 const EXTRA_ITEMS_KEY = 'plan-pan-extra-items';
@@ -7,8 +8,17 @@ const EXTRA_ITEMS_KEY = 'plan-pan-extra-items';
 function loadPlan(): WeekPlan {
   try {
     const stored = localStorage.getItem(PLAN_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch {}
+    if (stored) {
+      const parsed = JSON.parse(stored) as Partial<WeekPlan>;
+      const migrated = createEmptyWeekPlan();
+      WEEKDAYS.forEach(day => {
+        migrated[day] = { ...migrated[day], ...(parsed[day] || {}) };
+      });
+      return migrated;
+    }
+  } catch {
+    return createEmptyWeekPlan();
+  }
   return createEmptyWeekPlan();
 }
 
@@ -16,7 +26,9 @@ function loadExtraItems(): ShoppingItem[] {
   try {
     const stored = localStorage.getItem(EXTRA_ITEMS_KEY);
     if (stored) return JSON.parse(stored);
-  } catch {}
+  } catch {
+    return [];
+  }
   return [];
 }
 
@@ -28,33 +40,40 @@ export function usePlannerStore(recipes: Recipe[]) {
   useEffect(() => { localStorage.setItem(PLAN_KEY, JSON.stringify(weekPlan)); }, [weekPlan]);
   useEffect(() => { localStorage.setItem(EXTRA_ITEMS_KEY, JSON.stringify(extraItems)); }, [extraItems]);
 
+  // Clean up plans saved by earlier versions where a soup could appear at dinner.
+  useEffect(() => {
+    setWeekPlan(current => {
+      let changed = false;
+      const next = { ...current };
+
+      WEEKDAYS.forEach(day => {
+        const dinner = recipes.find(recipe => recipe.id === current[day].dinner);
+        const dessertAllowed = day === 'Szombat' || day === 'Vasárnap';
+        const invalidDinner = Boolean(current[day].dinner && dinner?.category !== 'main');
+        const invalidDessert = Boolean(current[day].dessert && !dessertAllowed);
+
+        if (invalidDinner || invalidDessert) {
+          changed = true;
+          next[day] = {
+            ...current[day],
+            dinner: invalidDinner ? null : current[day].dinner,
+            dessert: invalidDessert ? null : current[day].dessert,
+          };
+        }
+      });
+
+      return changed ? next : current;
+    });
+  }, [recipes]);
+
   const updateDay = useCallback((day: WeekDay, updates: Partial<typeof weekPlan[typeof day]>) => {
     setWeekPlan(prev => ({ ...prev, [day]: { ...prev[day], ...updates } }));
   }, []);
 
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
-  const generateRandomPlan = useCallback((numLunches: number, numDinners: number) => {
-    const lunchRecipes = recipes.filter(r => (r.mealType === 'lunch' || r.mealType === 'both') && r.category !== 'dessert');
-    const dinnerRecipes = recipes.filter(r => (r.mealType === 'dinner' || r.mealType === 'both') && r.category !== 'dessert');
-
-    const pick = (arr: Recipe[], count: number): (string | null)[] => {
-      const shuffled = [...arr].sort(() => Math.random() - 0.5);
-      const result: (string | null)[] = [];
-      for (let i = 0; i < 7; i++) {
-        result.push(i < count ? shuffled[i % shuffled.length].id : null);
-      }
-      return result;
-    };
-
-    const lunches = pick(lunchRecipes, numLunches);
-    const dinners = pick(dinnerRecipes, numDinners);
-
-    const newPlan = createEmptyWeekPlan();
-    WEEKDAYS.forEach((day, i) => {
-      newPlan[day] = { lunch: lunches[i], dinner: dinners[i], lunchServings: 4, dinnerServings: 4, lunchDays: 1, dinnerDays: 1 };
-    });
-    setWeekPlan(newPlan);
+  const generateRandomPlan = useCallback((numLunches: number, numDinners: number, dessertMode: WeekendDessertMode) => {
+    setWeekPlan(generateWeekPlan(recipes, numLunches, numDinners, dessertMode));
   }, [recipes]);
 
   const shoppingList = useMemo(() => {
@@ -79,13 +98,14 @@ export function usePlannerStore(recipes: Recipe[]) {
       };
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
+      processSlot(plan.dessert, plan.dessertServings, 1);
     });
 
     return Array.from(items.values());
   }, [weekPlan, recipes]);
 
   const dailyShoppingList = useMemo(() => {
-    const result: Record<WeekDay, ShoppingItem[]> = {} as any;
+    const result = Object.fromEntries(WEEKDAYS.map(day => [day, []])) as Record<WeekDay, ShoppingItem[]>;
     WEEKDAYS.forEach((day, dayIndex) => {
       const plan = weekPlan[day];
       const items: ShoppingItem[] = [];
@@ -105,6 +125,7 @@ export function usePlannerStore(recipes: Recipe[]) {
       };
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
+      processSlot(plan.dessert, plan.dessertServings, 1);
       result[day] = items;
     });
     return result;

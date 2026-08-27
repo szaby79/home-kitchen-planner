@@ -1,9 +1,10 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore } from '@/hooks/usePlannerStore';
-import { Recipe, WeekPlan, WeekDay, ShoppingItem } from '@/types/recipe';
+import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, WeekendDessertMode } from '@/types/recipe';
+import { useFavorites } from '@/hooks/useFavorites';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -14,9 +15,9 @@ interface AppContextType {
   getByCategory: (c: string) => Recipe[];
   resetToDefault: () => void;
   weekPlan: WeekPlan;
-  updateDay: (day: WeekDay, updates: any) => void;
+  updateDay: (day: WeekDay, updates: Partial<DayPlan>) => void;
   clearPlan: () => void;
-  generateRandomPlan: (l: number, d: number) => void;
+  generateRandomPlan: (l: number, d: number, dessertMode: WeekendDessertMode) => void;
   shoppingList: ShoppingItem[];
   dailyShoppingList: Record<WeekDay, ShoppingItem[]>;
   extraItems: ShoppingItem[];
@@ -24,6 +25,9 @@ interface AppContextType {
   removeExtraItem: (index: number) => void;
   removedItems: Set<string>;
   toggleRemoved: (key: string) => void;
+  favoriteIds: string[];
+  toggleFavorite: (recipeId: string) => void;
+  isFavorite: (recipeId: string) => boolean;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -34,16 +38,18 @@ const navItems = [
   { to: '/recipes', icon: BookOpen, label: 'Receptek' },
   { to: '/planner', icon: CalendarDays, label: 'Heti terv' },
   { to: '/shopping', icon: ShoppingCart, label: 'Bevásárlólista' },
+  { to: '/budget', icon: WalletCards, label: 'Budget' },
   { to: '/admin', icon: Settings, label: 'Admin' },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const recipeStore = useRecipeStore();
   const plannerStore = usePlannerStore(recipeStore.recipes);
+  const favoritesStore = useFavorites();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const ctx: AppContextType = { ...recipeStore, ...plannerStore };
+  const ctx: AppContextType = { ...recipeStore, ...plannerStore, ...favoritesStore };
 
   return (
     <AppContext.Provider value={ctx}>
@@ -56,7 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               Plan & Pan
             </Link>
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1">
               {navItems.map(item => (
                 <Link
                   key={item.to}
@@ -73,13 +79,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
             {/* Mobile toggle */}
-            <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
           {/* Mobile nav */}
           {mobileOpen && (
-            <nav className="md:hidden border-t px-4 pb-3 pt-2 flex flex-col gap-1 animate-fade-in">
+            <nav className="lg:hidden border-t px-4 pb-3 pt-2 flex flex-col gap-1 animate-fade-in">
               {navItems.map(item => (
                 <Link
                   key={item.to}

@@ -1,49 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    --background: 30 25% 97%;
-    --foreground: 20 15% 15%;
+    --background: 36 100% 97%;
+    --foreground: 20 17% 17%;
 
-    --card: 30 20% 99%;
-    --card-foreground: 20 15% 15%;
+    --card: 36 60% 99%;
+    --card-foreground: 20 17% 17%;
 
     --popover: 30 20% 99%;
     --popover-foreground: 20 15% 15%;
 
-    --primary: 8 72% 50%;
+    --primary: 15 67% 54%;
     --primary-foreground: 30 25% 97%;
 
-    --secondary: 30 20% 92%;
-    --secondary-foreground: 20 15% 20%;
+    --secondary: 36 52% 89%;
+    --secondary-foreground: 20 17% 17%;
 
     --muted: 30 15% 94%;
     --muted-foreground: 20 8% 50%;
 
-    --accent: 140 25% 35%;
+    --accent: 105 14% 48%;
     --accent-foreground: 30 25% 97%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 88%;
-    --input: 30 15% 88%;
-    --ring: 8 72% 50%;
+    --border: 32 26% 84%;
+    --input: 32 26% 84%;
+    --ring: 15 67% 54%;
 
     --radius: 0.625rem;
 
     --sidebar-background: 30 20% 95%;
     --sidebar-foreground: 20 15% 15%;
-    --sidebar-primary: 8 72% 50%;
+    --sidebar-primary: 15 67% 54%;
     --sidebar-primary-foreground: 30 25% 97%;
     --sidebar-accent: 30 20% 90%;
     --sidebar-accent-foreground: 20 15% 15%;
     --sidebar-border: 30 15% 85%;
-    --sidebar-ring: 8 72% 50%;
+    --sidebar-ring: 15 67% 54%;
 
     --warm: 35 80% 55%;
     --warm-foreground: 20 15% 15%;

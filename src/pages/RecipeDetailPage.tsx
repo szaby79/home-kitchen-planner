@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, ChefHat, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { getRecipe } = useAppContext();
+  const { getRecipe, isFavorite, toggleFavorite } = useAppContext();
   const recipe = getRecipe(id || '');
   const [servings, setServings] = useState(recipe?.defaultServings || 4);
 
@@ -39,7 +39,18 @@ export default function RecipeDetailPage() {
           )}
         </div>
         <div className="p-5">
-          <h1 className="section-title mb-2">{recipe.name}</h1>
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="section-title mb-2">{recipe.name}</h1>
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label={isFavorite(recipe.id) ? 'Eltávolítás a kedvencekből' : 'Hozzáadás a kedvencekhez'}
+              onClick={() => toggleFavorite(recipe.id)}
+              className="shrink-0 text-primary"
+            >
+              <Heart className={`w-5 h-5 ${isFavorite(recipe.id) ? 'fill-current' : ''}`} />
+            </Button>
+          </div>
           <div className="flex gap-2 mb-4">
             <Badge variant="secondary">{CATEGORY_LABELS[recipe.category]}</Badge>
             <Badge variant="outline">{MEAL_TYPE_LABELS[recipe.mealType]}</Badge>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAppContext } from '@/components/Layout';
-import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe } from '@/types/recipe';
+import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Shuffle, Trash2, Minus, Plus } from 'lucide-react';
 
@@ -8,14 +8,17 @@ export default function PlannerPage() {
   const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan } = useAppContext();
   const [numLunches, setNumLunches] = useState(7);
   const [numDinners, setNumDinners] = useState(7);
+  const [weekendDessertMode, setWeekendDessertMode] = useState<WeekendDessertMode>('same');
 
   const recipeOptions = (mealSlot: 'lunch' | 'dinner') => {
     return recipes.filter(r => {
       if (r.category === 'dessert') return false;
       if (mealSlot === 'lunch') return r.mealType === 'lunch' || r.mealType === 'both';
-      return r.mealType === 'dinner' || r.mealType === 'both';
+      return r.category === 'main' && (r.mealType === 'dinner' || r.mealType === 'both');
     });
   };
+
+  const dessertOptions = recipes.filter(r => r.category === 'dessert');
 
   return (
     <div className="page-container">
@@ -39,7 +42,18 @@ export default function PlannerPage() {
             <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setNumDinners(Math.min(7, numDinners + 1))}><Plus className="w-3 h-3" /></Button>
           </div>
         </div>
-        <Button onClick={() => generateRandomPlan(numLunches, numDinners)} className="gap-2">
+        <div className="min-w-[210px]">
+          <label className="text-sm font-medium mb-1 block">Hétvégi desszert</label>
+          <select
+            value={weekendDessertMode}
+            onChange={event => setWeekendDessertMode(event.target.value as WeekendDessertMode)}
+            className="w-full h-8 bg-background border rounded-md px-2 text-sm"
+          >
+            <option value="same">Ugyanaz mindkét nap</option>
+            <option value="different">Különböző desszert</option>
+          </select>
+        </div>
+        <Button onClick={() => generateRandomPlan(numLunches, numDinners, weekendDessertMode)} className="gap-2">
           <Shuffle className="w-4 h-4" /> Generálás
         </Button>
         <Button variant="outline" onClick={clearPlan} className="gap-2">
@@ -80,6 +94,21 @@ export default function PlannerPage() {
                   onDaysChange={val => updateDay(day, { dinnerDays: val })}
                 />
               </div>
+              {(day === 'Szombat' || day === 'Vasárnap') && (
+                <div className="mt-4 border-t pt-4">
+                  <MealSlot
+                    label="Desszert ebéd után"
+                    value={plan.dessert}
+                    servings={plan.dessertServings}
+                    days={1}
+                    options={dessertOptions}
+                    recipes={recipes}
+                    onChange={val => updateDay(day, { dessert: val })}
+                    onServingsChange={val => updateDay(day, { dessertServings: val })}
+                    hideDays
+                  />
+                </div>
+              )}
             </div>
           );
         })}
@@ -88,7 +117,7 @@ export default function PlannerPage() {
   );
 }
 
-function MealSlot({ label, value, servings, days, options, recipes, onChange, onServingsChange, onDaysChange }: {
+function MealSlot({ label, value, servings, days, options, recipes, onChange, onServingsChange, onDaysChange, hideDays = false }: {
   label: string;
   value: string | null;
   servings: number;
@@ -97,7 +126,8 @@ function MealSlot({ label, value, servings, days, options, recipes, onChange, on
   recipes: Recipe[];
   onChange: (val: string | null) => void;
   onServingsChange: (val: number) => void;
-  onDaysChange: (val: number) => void;
+  onDaysChange?: (val: number) => void;
+  hideDays?: boolean;
 }) {
   const recipe = value ? recipes.find(r => r.id === value) : null;
 
@@ -124,12 +154,12 @@ function MealSlot({ label, value, servings, days, options, recipes, onChange, on
             <span className="font-bold">{servings}</span>
             <button onClick={() => onServingsChange(servings + 1)} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
           </div>
-          <div className="flex items-center gap-1">
+          {!hideDays && onDaysChange && <div className="flex items-center gap-1">
             <span className="text-muted-foreground">Napra:</span>
             <button onClick={() => onDaysChange(Math.max(1, days - 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">-</button>
             <span className="font-bold">{days}</span>
             <button onClick={() => onDaysChange(Math.min(7, days + 1))} className="bg-background border rounded w-5 h-5 flex items-center justify-center">+</button>
-          </div>
+          </div>}
         </div>
       )}
     </div>

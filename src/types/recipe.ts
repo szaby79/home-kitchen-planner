@@ -22,11 +22,15 @@ export interface Recipe {
 export interface DayPlan {
   lunch: string | null;       // recipe id
   dinner: string | null;      // recipe id
+  dessert: string | null;     // weekend dessert served after lunch
   lunchServings: number;
   dinnerServings: number;
+  dessertServings: number;
   lunchDays: number;          // cook for N days
   dinnerDays: number;
 }
+
+export type WeekendDessertMode = 'same' | 'different';
 
 export type WeekDay = 'Hétfő' | 'Kedd' | 'Szerda' | 'Csütörtök' | 'Péntek' | 'Szombat' | 'Vasárnap';
 
@@ -56,7 +60,16 @@ export const MEAL_TYPE_LABELS: Record<MealType, string> = {
 };
 
 export function createEmptyDayPlan(): DayPlan {
-  return { lunch: null, dinner: null, lunchServings: 4, dinnerServings: 4, lunchDays: 1, dinnerDays: 1 };
+  return {
+    lunch: null,
+    dinner: null,
+    dessert: null,
+    lunchServings: 4,
+    dinnerServings: 4,
+    dessertServings: 4,
+    lunchDays: 1,
+    dinnerDays: 1,
+  };
 }
 
 export function createEmptyWeekPlan(): WeekPlan {
