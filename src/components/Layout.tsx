@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <AppContext.Provider value={ctx}>
       <div className="min-h-screen flex flex-col">
         {/* Top nav */}
-        <header className="bg-card border-b sticky top-0 z-50">
+        <header className="bg-[#FFF8EE]/95 backdrop-blur border-b border-[#E4C7AA] sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
             <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-primary">
               <UtensilsCrossed className="w-6 h-6" />
@@ -107,7 +107,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className="flex-1">
           {children}
         </main>
-        <footer className="border-t py-4 text-center text-xs text-muted-foreground">
+        <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
           Plan & Pan © {new Date().getFullYear()} — Magyar családi ételtervező
         </footer>
       </div>
