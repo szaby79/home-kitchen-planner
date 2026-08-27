@@ -3,6 +3,7 @@ import { beginnerInstructions } from '@/data/beginnerInstructions';
 import { additionalSoups } from '@/data/additionalSoups';
 import { additionalMains } from '@/data/additionalMains';
 import { additionalDesserts } from '@/data/additionalDesserts';
+import { additionalSalads } from '@/data/additionalSalads';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -737,6 +738,7 @@ const allRecipeData = [
   ...defaultRecipeData,
   ...additionalSoups,
   ...additionalMains,
+  ...additionalSalads,
   ...additionalDesserts,
 ];
 

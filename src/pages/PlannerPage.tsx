@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
-import { Shuffle, Trash2, Minus, Plus } from 'lucide-react';
+import { Shuffle, Trash2, Minus, Plus, Zap } from 'lucide-react';
+import { isQuickRecipe } from '@/lib/recipeScheduling';
 
 export default function PlannerPage() {
   const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan } = useAppContext();
@@ -15,7 +16,7 @@ export default function PlannerPage() {
     return recipes.filter(r => {
       if (r.category === 'dessert') return false;
       if (mealSlot === 'lunch') return r.mealType === 'lunch' || r.mealType === 'both';
-      return r.category === 'main' && (r.mealType === 'dinner' || r.mealType === 'both');
+      return (r.category === 'main' || r.category === 'salad') && (r.mealType === 'dinner' || r.mealType === 'both');
     });
   };
 
@@ -24,6 +25,10 @@ export default function PlannerPage() {
   return (
     <div className="page-container">
       <h1 className="section-title">Heti menüterv</h1>
+      <div className="mb-5 flex items-start gap-2 rounded-lg border border-accent/30 bg-accent/10 p-3 text-sm">
+        <Zap className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+        <p><strong>Életszerű tervezés:</strong> hétköznap gyorsabb ételek, vasárnapi ebédre tartalmasabb fogás. A salátákat és a ⚡ jelölt gyors ételeket bármikor kézzel is kiválaszthatod.</p>
+      </div>
 
       {/* Generation controls */}
       <div className="bg-card border rounded-lg p-4 mb-6 flex flex-wrap items-end gap-4">
@@ -143,7 +148,7 @@ function MealSlot({ label, value, servings, days, options, recipes, onChange, on
         <option value="">— Nincs kiválasztva —</option>
         {options.map(r => (
           <option key={r.id} value={r.id}>
-            {r.name} ({CATEGORY_LABELS[r.category]})
+            {isQuickRecipe(r) ? '⚡ ' : ''}{r.name} ({CATEGORY_LABELS[r.category]})
           </option>
         ))}
       </select>

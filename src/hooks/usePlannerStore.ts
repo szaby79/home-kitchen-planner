@@ -49,7 +49,9 @@ export function usePlannerStore(recipes: Recipe[]) {
       WEEKDAYS.forEach(day => {
         const dinner = recipes.find(recipe => recipe.id === current[day].dinner);
         const dessertAllowed = day === 'Szombat' || day === 'Vasárnap';
-        const invalidDinner = Boolean(current[day].dinner && dinner?.category !== 'main');
+        const invalidDinner = Boolean(
+          current[day].dinner && dinner?.category !== 'main' && dinner?.category !== 'salad',
+        );
         const invalidDessert = Boolean(current[day].dessert && !dessertAllowed);
 
         if (invalidDinner || invalidDessert) {

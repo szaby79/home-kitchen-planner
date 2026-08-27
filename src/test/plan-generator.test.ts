@@ -2,15 +2,30 @@ import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 import { generateWeekPlan } from '@/lib/planGenerator';
 import { WEEKDAYS } from '@/types/recipe';
+import { isQuickRecipe, isSundayRecipe } from '@/lib/recipeScheduling';
 
 describe('weekly menu generation rules', () => {
-  it('never schedules soup or dessert for dinner', () => {
+  it('uses only quick mains or salads for dinner', () => {
     for (let attempt = 0; attempt < 20; attempt += 1) {
       const plan = generateWeekPlan(defaultRecipes, 7, 7, 'same');
 
       WEEKDAYS.forEach(day => {
         const dinner = defaultRecipes.find(recipe => recipe.id === plan[day].dinner);
-        expect(dinner?.category).toBe('main');
+        expect(['main', 'salad']).toContain(dinner?.category);
+        expect(dinner && isQuickRecipe(dinner)).toBe(true);
+      });
+    }
+  });
+
+  it('reserves serious Sunday dishes for Sunday lunch', () => {
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const plan = generateWeekPlan(defaultRecipes, 7, 7, 'same');
+      const sundayLunch = defaultRecipes.find(recipe => recipe.id === plan.Vasárnap.lunch);
+
+      expect(sundayLunch && isSundayRecipe(sundayLunch)).toBe(true);
+      WEEKDAYS.slice(0, 6).forEach(day => {
+        const meal = defaultRecipes.find(recipe => recipe.id === plan[day].lunch);
+        expect(meal && isSundayRecipe(meal)).toBe(false);
       });
     }
   });
