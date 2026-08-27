@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart } from 'lucide-react';
+import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,7 @@ export default function RecipeDetailPage() {
   }
 
   const multiplier = servings / recipe.defaultServings;
+  const showsBreadingVideo = ['main-1', 'main-2', 'main-3'].includes(recipe.id);
 
   return (
     <div className="page-container max-w-3xl">
@@ -99,6 +100,27 @@ export default function RecipeDetailPage() {
           )}
         </div>
       </div>
+
+      {showsBreadingVideo && (
+        <section className="mt-6 overflow-hidden rounded-xl border bg-card">
+          <div className="p-5 pb-3">
+            <h2 className="flex items-center gap-2 font-display text-lg font-semibold">
+              <PlayCircle className="h-5 w-5 text-primary" /> AI-próbavideó: panírozás
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">Rövid vizuális segítség kezdőknek: liszt, tojás, zsemlemorzsa, majd sütés.</p>
+          </div>
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster="/videos/panirozas-ai-storyboard.jpg"
+            className="mx-auto mb-5 aspect-[9/16] max-h-[620px] w-auto max-w-full rounded-lg bg-black"
+          >
+            <source src="/videos/panirozas-ai-proba.mp4" type="video/mp4" />
+            A böngésződ nem tudja lejátszani ezt a videót.
+          </video>
+        </section>
+      )}
     </div>
   );
 }

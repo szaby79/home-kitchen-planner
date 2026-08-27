@@ -1,5 +1,6 @@
 import {
   createEmptyWeekPlan,
+  GenerationSelection,
   Recipe,
   WEEKDAYS,
   WeekendDessertMode,
@@ -70,4 +71,39 @@ export function generateWeekPlan(
   if (sundayHasLunch) plan.Vasárnap.dessert = secondDessert;
 
   return plan;
+}
+
+
+export function generateSelectedPlan(
+  recipes: Recipe[],
+  currentPlan: WeekPlan,
+  selection: GenerationSelection,
+  weekendDessertMode: WeekendDessertMode,
+): WeekPlan {
+  const generated = generateWeekPlan(recipes, 7, 7, weekendDessertMode);
+  const next = Object.fromEntries(
+    WEEKDAYS.map(day => [day, { ...currentPlan[day] }]),
+  ) as WeekPlan;
+
+  WEEKDAYS.forEach(day => {
+    if (selection[day].lunch) {
+      next[day].lunch = generated[day].lunch;
+      next[day].lunchDays = 1;
+      if (day === 'Szombat' || day === 'Vasárnap') {
+        next[day].dessert = generated[day].dessert;
+      }
+    }
+    if (selection[day].dinner) {
+      next[day].dinner = generated[day].dinner;
+      next[day].dinnerDays = 1;
+    }
+  });
+
+  if (weekendDessertMode === 'same' && (selection.Szombat.lunch || selection.Vasárnap.lunch)) {
+    const sharedDessert = next.Szombat.dessert || next.Vasárnap.dessert;
+    if (next.Szombat.lunch) next.Szombat.dessert = sharedDessert;
+    if (next.Vasárnap.lunch) next.Vasárnap.dessert = sharedDessert;
+  }
+
+  return next;
 }

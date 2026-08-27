@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode } from '@/types/recipe';
-import { generateWeekPlan } from '@/lib/planGenerator';
+import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode, GenerationSelection } from '@/types/recipe';
+import { generateSelectedPlan } from '@/lib/planGenerator';
 
 const PLAN_KEY = 'plan-pan-weekplan';
 const EXTRA_ITEMS_KEY = 'plan-pan-extra-items';
+const SHOPPING_NOTES_KEY = 'plan-pan-shopping-notes';
 
 function loadPlan(): WeekPlan {
   try {
@@ -36,9 +37,11 @@ export function usePlannerStore(recipes: Recipe[]) {
   const [weekPlan, setWeekPlan] = useState<WeekPlan>(loadPlan);
   const [extraItems, setExtraItems] = useState<ShoppingItem[]>(loadExtraItems);
   const [removedItems, setRemovedItems] = useState<Set<string>>(new Set());
+  const [shoppingNotes, setShoppingNotes] = useState(() => localStorage.getItem(SHOPPING_NOTES_KEY) || '');
 
   useEffect(() => { localStorage.setItem(PLAN_KEY, JSON.stringify(weekPlan)); }, [weekPlan]);
   useEffect(() => { localStorage.setItem(EXTRA_ITEMS_KEY, JSON.stringify(extraItems)); }, [extraItems]);
+  useEffect(() => { localStorage.setItem(SHOPPING_NOTES_KEY, shoppingNotes); }, [shoppingNotes]);
 
   // Clean up plans saved by earlier versions where a soup could appear at dinner.
   useEffect(() => {
@@ -74,8 +77,8 @@ export function usePlannerStore(recipes: Recipe[]) {
 
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
-  const generateRandomPlan = useCallback((numLunches: number, numDinners: number, dessertMode: WeekendDessertMode) => {
-    setWeekPlan(generateWeekPlan(recipes, numLunches, numDinners, dessertMode));
+  const generateRandomPlan = useCallback((selection: GenerationSelection, dessertMode: WeekendDessertMode) => {
+    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, dessertMode));
   }, [recipes]);
 
   const shoppingList = useMemo(() => {
@@ -155,5 +158,6 @@ export function usePlannerStore(recipes: Recipe[]) {
     shoppingList, dailyShoppingList,
     extraItems, addExtraItem, removeExtraItem,
     removedItems, toggleRemoved,
+    shoppingNotes, setShoppingNotes,
   };
 }

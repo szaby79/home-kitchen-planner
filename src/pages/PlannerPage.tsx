@@ -1,16 +1,45 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
-import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode } from '@/types/recipe';
+import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode, createGenerationSelection, GenerationSelection, MealSlot as MealSlotType } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
-import { Shuffle, Trash2, Minus, Plus, Zap } from 'lucide-react';
+import { Shuffle, Trash2, Minus, Plus, Zap, ShoppingCart, Check } from 'lucide-react';
 import { isQuickRecipe } from '@/lib/recipeScheduling';
 
 export default function PlannerPage() {
   const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan } = useAppContext();
-  const [numLunches, setNumLunches] = useState(7);
-  const [numDinners, setNumDinners] = useState(7);
+  const [selection, setSelection] = useState<GenerationSelection>(() => createGenerationSelection(true));
   const [weekendDessertMode, setWeekendDessertMode] = useState<WeekendDessertMode>('same');
+  const [hasGenerated, setHasGenerated] = useState(false);
+
+  const selectedCount = WEEKDAYS.reduce(
+    (count, day) => count + Number(selection[day].lunch) + Number(selection[day].dinner),
+    0,
+  );
+
+  const setAll = (selected: boolean) => setSelection(createGenerationSelection(selected));
+
+  const setFromToday = () => {
+    const todayIndex = (new Date().getDay() + 6) % 7;
+    const next = createGenerationSelection(false);
+    WEEKDAYS.slice(todayIndex).forEach(day => {
+      next[day] = { lunch: true, dinner: true };
+    });
+    setSelection(next);
+  };
+
+  const toggleSelection = (day: WeekDay, slot: MealSlotType) => {
+    setSelection(current => ({
+      ...current,
+      [day]: { ...current[day], [slot]: !current[day][slot] },
+    }));
+  };
+
+  const handleGenerate = () => {
+    if (selectedCount === 0) return;
+    generateRandomPlan(selection, weekendDessertMode);
+    setHasGenerated(true);
+  };
 
   const recipeOptions = (mealSlot: 'lunch' | 'dinner') => {
     return recipes.filter(r => {
@@ -31,23 +60,39 @@ export default function PlannerPage() {
       </div>
 
       {/* Generation controls */}
-      <div className="bg-card border rounded-lg p-4 mb-6 flex flex-wrap items-end gap-4">
+      <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
         <div>
-          <label className="text-sm font-medium mb-1 block">Ebédek száma</label>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setNumLunches(Math.max(0, numLunches - 1))}><Minus className="w-3 h-3" /></Button>
-            <span className="w-6 text-center font-bold">{numLunches}</span>
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setNumLunches(Math.min(7, numLunches + 1))}><Plus className="w-3 h-3" /></Button>
-          </div>
+          <h2 className="font-semibold">Melyik napokra készüljön menü?</h2>
+          <p className="text-sm text-muted-foreground">Csak a kijelölt étkezések változnak, a többi megmarad.</p>
         </div>
-        <div>
-          <label className="text-sm font-medium mb-1 block">Vacsorák száma</label>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setNumDinners(Math.max(0, numDinners - 1))}><Minus className="w-3 h-3" /></Button>
-            <span className="w-6 text-center font-bold">{numDinners}</span>
-            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setNumDinners(Math.min(7, numDinners + 1))}><Plus className="w-3 h-3" /></Button>
-          </div>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" onClick={() => setAll(true)}>Teljes hét</Button>
+          <Button variant="outline" size="sm" onClick={setFromToday}>Mától vasárnapig</Button>
+          <Button variant="ghost" size="sm" onClick={() => setAll(false)}>Kijelölés törlése</Button>
         </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
+          {WEEKDAYS.map(day => (
+            <div key={day} className="rounded-lg border bg-secondary/20 p-3">
+              <p className="font-semibold text-sm mb-2">{day}</p>
+              <div className="flex gap-2">
+                {(['lunch', 'dinner'] as MealSlotType[]).map(slot => {
+                  const selected = selection[day][slot];
+                  return (
+                    <button
+                      key={slot}
+                      type="button"
+                      onClick={() => toggleSelection(day, slot)}
+                      className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium transition ${selected ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}
+                    >
+                      {selected && <Check className="h-3 w-3" />}{slot === 'lunch' ? 'Ebéd' : 'Vacsora'}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-end gap-3">
         <div className="min-w-[210px]">
           <label className="text-sm font-medium mb-1 block">Hétvégi desszert</label>
           <select
@@ -59,13 +104,24 @@ export default function PlannerPage() {
             <option value="different">Különböző desszert</option>
           </select>
         </div>
-        <Button onClick={() => generateRandomPlan(numLunches, numDinners, weekendDessertMode)} className="gap-2">
-          <Shuffle className="w-4 h-4" /> Generálás
+        <Button onClick={handleGenerate} disabled={selectedCount === 0} className="gap-2">
+          <Shuffle className="w-4 h-4" /> Generálás ({selectedCount})
         </Button>
-        <Button variant="outline" onClick={clearPlan} className="gap-2">
+        <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); }} className="gap-2">
           <Trash2 className="w-4 h-4" /> Törlés
         </Button>
+        </div>
       </div>
+
+      {hasGenerated && (
+        <div className="mb-6 rounded-xl border border-accent/40 bg-accent/10 p-4">
+          <p className="font-semibold">Kész a menü.</p>
+          <p className="mb-3 text-sm text-muted-foreground">Cseréld ki nyugodtan, ami nem tetszik. A bevásárlólista minden változtatás után automatikusan frissül.</p>
+          <Button asChild className="gap-2">
+            <Link to="/shopping"><ShoppingCart className="h-4 w-4" /> Bevásárlólista megtekintése</Link>
+          </Button>
+        </div>
+      )}
 
       {/* Week grid */}
       <div className="space-y-3">
