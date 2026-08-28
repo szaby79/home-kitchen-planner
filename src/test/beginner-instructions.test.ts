@@ -77,6 +77,6 @@ describe('beginner recipe instructions', () => {
     expect(result.current.recipes[0].ingredients).toEqual(defaultRecipes[0].ingredients);
     expect(result.current.recipes[1]).toEqual(userRecipe);
     expect(result.current.recipes).toHaveLength(149);
-    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('5');
+    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('6');
   });
 });
