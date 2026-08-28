@@ -38,6 +38,20 @@ export interface DayPlan {
 
 export type WeekendDessertMode = 'same' | 'different';
 
+export interface LunchGenerationOptions {
+  soup: boolean;
+  side: boolean;
+  pickle: boolean;
+  dessert: boolean;
+}
+
+export const DEFAULT_LUNCH_GENERATION_OPTIONS: LunchGenerationOptions = {
+  soup: false,
+  side: true,
+  pickle: false,
+  dessert: false,
+};
+
 export type MealSlot = 'lunch' | 'dinner';
 export type GenerationSelection = Record<WeekDay, Record<MealSlot, boolean>>;
 

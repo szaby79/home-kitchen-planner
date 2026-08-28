@@ -1,4 +1,4 @@
-import { createEmptyWeekPlan, GenerationSelection, Recipe, WEEKDAYS, WeekendDessertMode, WeekPlan } from '@/types/recipe';
+import { createEmptyWeekPlan, GenerationSelection, LunchGenerationOptions, Recipe, WEEKDAYS, WeekendDessertMode, WeekPlan } from '@/types/recipe';
 import { isQuickRecipe, isSundayRecipe } from '@/lib/recipeScheduling';
 
 function shuffled<T>(items: T[]): T[] { return [...items].sort(() => Math.random() - 0.5); }
@@ -12,6 +12,9 @@ function pickId(recipes: Recipe[], usedIds: Set<string>): string | null {
 
 function compatibleSideIds(main?: Recipe): string[] {
   const name = main?.name.toLocaleLowerCase('hu') ?? '';
+  // These are complete, starch-based or one-pot dishes. Adding a separate
+  // side would create pairings such as potato pasta with mashed potatoes.
+  if (/tészta|spagetti|makaróni|csusza|paprikás krumpli|rakott|rizses|tarhonyás|főzelék|lecsó|töltött káposzta|székelykáposzta|dödölle|nudli|gombóc/.test(name)) return [];
   if (/kacsa|liba/.test(name)) return ['side-9', 'side-6', 'side-1'];
   if (/pörkölt|paprikás|tokány|vadas/.test(name)) return ['side-4', 'side-5', 'side-3'];
   if (/rántott|fasírt|pecsenye|sült/.test(name)) return ['side-1', 'side-2', 'side-7', 'side-3'];
@@ -21,10 +24,13 @@ function compatibleSideIds(main?: Recipe): string[] {
 
 function pickCompatibleSide(recipes: Recipe[], main?: Recipe): string | null {
   const allowed = new Set(compatibleSideIds(main));
-  return shuffled(recipes.filter(recipe => allowed.has(recipe.id)))[0]?.id ?? shuffled(recipes)[0]?.id ?? null;
+  if (allowed.size === 0) return null;
+  return shuffled(recipes.filter(recipe => allowed.has(recipe.id)))[0]?.id ?? null;
 }
 
-export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinners: number, weekendDessertMode: WeekendDessertMode): WeekPlan {
+const ALL_LUNCH_EXTRAS: LunchGenerationOptions = { soup: true, side: true, pickle: true, dessert: true };
+
+export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinners: number, weekendDessertMode: WeekendDessertMode, lunchOptions: LunchGenerationOptions = ALL_LUNCH_EXTRAS): WeekPlan {
   const mains = recipes.filter(recipe => recipe.category === 'main' && (recipe.mealType === 'lunch' || recipe.mealType === 'both'));
   const weekdayMains = mains.filter(recipe => isQuickRecipe(recipe) && !isSundayRecipe(recipe));
   const saturdayMains = mains.filter(recipe => !isSundayRecipe(recipe));
@@ -47,15 +53,15 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
       if (day === 'Szombat') dayMains = saturdayMains;
       if (day === 'Vasárnap') dayMains = sundayMains.length ? sundayMains : mains;
       const lunch = pickId(dayMains, usedMains);
-      let dessert = pickId(desserts, usedDesserts);
-      if ((day === 'Szombat' || day === 'Vasárnap') && weekendDessertMode === 'same') {
+      let dessert = lunchOptions.dessert ? pickId(desserts, usedDesserts) : null;
+      if (lunchOptions.dessert && (day === 'Szombat' || day === 'Vasárnap') && weekendDessertMode === 'same') {
         sharedWeekendDessert ||= dessert;
         dessert = sharedWeekendDessert;
       }
       plan[day] = {
-        ...plan[day], soup: pickId(soups, usedSoups), lunch,
-        side: pickCompatibleSide(sides, recipes.find(recipe => recipe.id === lunch)),
-        pickle: shuffled(pickles)[0]?.id ?? null, dessert,
+        ...plan[day], soup: lunchOptions.soup ? pickId(soups, usedSoups) : null, lunch,
+        side: lunchOptions.side ? pickCompatibleSide(sides, recipes.find(recipe => recipe.id === lunch)) : null,
+        pickle: lunchOptions.pickle ? shuffled(pickles)[0]?.id ?? null : null, dessert,
       };
     }
     if (index < numDinners) plan[day].dinner = pickId(dinners, usedDinners);
@@ -63,8 +69,8 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
   return plan;
 }
 
-export function generateSelectedPlan(recipes: Recipe[], currentPlan: WeekPlan, selection: GenerationSelection, weekendDessertMode: WeekendDessertMode): WeekPlan {
-  const generated = generateWeekPlan(recipes, 7, 7, weekendDessertMode);
+export function generateSelectedPlan(recipes: Recipe[], currentPlan: WeekPlan, selection: GenerationSelection, weekendDessertMode: WeekendDessertMode, lunchOptions: LunchGenerationOptions = ALL_LUNCH_EXTRAS): WeekPlan {
+  const generated = generateWeekPlan(recipes, 7, 7, weekendDessertMode, lunchOptions);
   const next = Object.fromEntries(WEEKDAYS.map(day => [day, { ...currentPlan[day] }])) as WeekPlan;
   WEEKDAYS.forEach(day => {
     if (selection[day].lunch) next[day] = { ...next[day], soup: generated[day].soup, lunch: generated[day].lunch, side: generated[day].side, pickle: generated[day].pickle, dessert: generated[day].dessert, lunchDays: 1 };

@@ -30,15 +30,35 @@ describe('weekly menu generation rules', () => {
     }
   });
 
-  it('builds a complete lunch with separate soup, main, side, pickle and dessert', () => {
+  it('builds a selectable lunch and omits the side for complete dishes', () => {
     const plan = generateWeekPlan(defaultRecipes, 7, 7, 'different');
     WEEKDAYS.forEach(day => {
       expect(defaultRecipes.find(recipe => recipe.id === plan[day].soup)?.category).toBe('soup');
       expect(defaultRecipes.find(recipe => recipe.id === plan[day].lunch)?.category).toBe('main');
-      expect(defaultRecipes.find(recipe => recipe.id === plan[day].side)?.category).toBe('side');
+      const side = defaultRecipes.find(recipe => recipe.id === plan[day].side);
+      expect(side === undefined || side.category === 'side').toBe(true);
       expect(defaultRecipes.find(recipe => recipe.id === plan[day].pickle)?.category).toBe('pickle');
       expect(defaultRecipes.find(recipe => recipe.id === plan[day].dessert)?.category).toBe('dessert');
     });
+  });
+
+  it.each([
+    ['main-19', 'Paprikás krumpli'],
+    ['main-47', 'Krumplis tészta'],
+  ])('never adds a separate side to the complete dish %s', (mainId, _name) => {
+    const catalog = defaultRecipes.filter(recipe => recipe.category !== 'main' || recipe.id === mainId);
+    const plan = generateWeekPlan(catalog, 1, 0, 'different');
+    expect(plan.Hétfő.lunch).toBe(mainId);
+    expect(plan.Hétfő.side).toBeNull();
+  });
+
+  it('generates only the extras selected by the user', () => {
+    const plan = generateWeekPlan(defaultRecipes, 1, 0, 'different', { soup: false, side: false, pickle: true, dessert: false });
+    expect(plan.Hétfő.lunch).not.toBeNull();
+    expect(plan.Hétfő.soup).toBeNull();
+    expect(plan.Hétfő.side).toBeNull();
+    expect(plan.Hétfő.pickle).not.toBeNull();
+    expect(plan.Hétfő.dessert).toBeNull();
   });
 
   it('adds the same dessert after both weekend lunches when requested', () => {
