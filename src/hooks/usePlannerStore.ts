@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode, GenerationSelection } from '@/types/recipe';
+import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode, GenerationSelection, LunchGenerationOptions } from '@/types/recipe';
 import { generateSelectedPlan } from '@/lib/planGenerator';
 
 const PLAN_KEY = 'plan-pan-weekplan';
@@ -79,8 +79,8 @@ export function usePlannerStore(recipes: Recipe[]) {
 
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
-  const generateRandomPlan = useCallback((selection: GenerationSelection, dessertMode: WeekendDessertMode) => {
-    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, dessertMode));
+  const generateRandomPlan = useCallback((selection: GenerationSelection, dessertMode: WeekendDessertMode, lunchOptions: LunchGenerationOptions) => {
+    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, dessertMode, lunchOptions));
   }, [recipes]);
 
   const shoppingList = useMemo(() => {

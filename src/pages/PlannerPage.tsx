@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
-import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode, createGenerationSelection, GenerationSelection, MealSlot as MealSlotType } from '@/types/recipe';
+import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, WeekendDessertMode, createGenerationSelection, GenerationSelection, MealSlot as MealSlotType, DEFAULT_LUNCH_GENERATION_OPTIONS, LunchGenerationOptions } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Shuffle, Trash2, Zap, ShoppingCart, Check, Flame, Utensils } from 'lucide-react';
 import { isQuickRecipe } from '@/lib/recipeScheduling';
@@ -13,6 +13,7 @@ export default function PlannerPage() {
   const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite } = useAppContext();
   const [selection, setSelection] = useState<GenerationSelection>(() => createGenerationSelection(true));
   const [weekendDessertMode, setWeekendDessertMode] = useState<WeekendDessertMode>('same');
+  const [lunchOptions, setLunchOptions] = useState<LunchGenerationOptions>(DEFAULT_LUNCH_GENERATION_OPTIONS);
   const [sortMode, setSortMode] = useState<SortMode>('abc');
   const [randomSeed, setRandomSeed] = useState(1);
   const [hasGenerated, setHasGenerated] = useState(false);
@@ -35,7 +36,7 @@ export default function PlannerPage() {
     setSelection(next);
   };
   const toggleSelection = (day: WeekDay, slot: MealSlotType) => setSelection(current => ({ ...current, [day]: { ...current[day], [slot]: !current[day][slot] } }));
-  const handleGenerate = () => { if (selectedCount) { generateRandomPlan(selection, weekendDessertMode); setHasGenerated(true); } };
+  const handleGenerate = () => { if (selectedCount) { generateRandomPlan(selection, weekendDessertMode, lunchOptions); setHasGenerated(true); } };
   const changeSort = (mode: SortMode) => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); };
 
   return (
@@ -62,12 +63,23 @@ export default function PlannerPage() {
             </div>
           </div>)}
         </div>
+        <div>
+          <h3 className="mb-1 text-sm font-semibold">Mit tegyen a generált ebédhez?</h3>
+          <p className="mb-2 text-xs text-muted-foreground">A főétel mindig elkészül. A köretet csak olyan ételhez adja, amelyhez valóban szükséges.</p>
+          <div className="flex flex-wrap gap-2">
+            <OptionToggle label="Főétel" checked disabled onChange={() => undefined} />
+            <OptionToggle label="Leves" checked={lunchOptions.soup} onChange={checked => setLunchOptions(current => ({ ...current, soup: checked }))} />
+            <OptionToggle label="Köret, ha kell" checked={lunchOptions.side} onChange={checked => setLunchOptions(current => ({ ...current, side: checked }))} />
+            <OptionToggle label="Savanyúság" checked={lunchOptions.pickle} onChange={checked => setLunchOptions(current => ({ ...current, pickle: checked }))} />
+            <OptionToggle label="Desszert" checked={lunchOptions.dessert} onChange={checked => setLunchOptions(current => ({ ...current, dessert: checked }))} />
+          </div>
+        </div>
         <div className="flex flex-wrap items-end gap-3">
-          <label className="min-w-[210px] text-sm font-medium">Hétvégi desszert
+          {lunchOptions.dessert && <label className="min-w-[210px] text-sm font-medium">Hétvégi desszert
             <select value={weekendDessertMode} onChange={event => setWeekendDessertMode(event.target.value as WeekendDessertMode)} className="mt-1 h-9 w-full rounded-md border bg-background px-2 text-sm">
               <option value="same">Ugyanaz mindkét nap</option><option value="different">Különböző desszert</option>
             </select>
-          </label>
+          </label>}
           <Button onClick={handleGenerate} disabled={!selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> Generálás ({selectedCount})</Button>
           <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> Törlés</Button>
         </div>
@@ -109,6 +121,12 @@ export default function PlannerPage() {
 }
 
 function hash(value: string) { return [...value].reduce((total, char) => ((total << 5) - total + char.charCodeAt(0)) | 0, 0); }
+
+function OptionToggle({ label, checked, disabled = false, onChange }: { label: string; checked: boolean; disabled?: boolean; onChange: (checked: boolean) => void }) {
+  return <label className={`flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium ${checked ? 'border-primary bg-primary/10 text-primary' : 'bg-background text-muted-foreground'} ${disabled ? 'cursor-default opacity-70' : ''}`}>
+    <input type="checkbox" checked={checked} disabled={disabled} onChange={event => onChange(event.target.checked)} className="h-4 w-4 accent-primary" />{label}
+  </label>;
+}
 
 function MealSlot({ label, value, servings, days = 1, options, recipes, onChange, onServingsChange, onDaysChange }: { label: string; value: string | null; servings: number; days?: number; options: Recipe[]; recipes: Recipe[]; onChange: (value: string | null) => void; onServingsChange: (value: number) => void; onDaysChange?: (value: number) => void }) {
   const recipe = value ? recipes.find(item => item.id === value) : null;
