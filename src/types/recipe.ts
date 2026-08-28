@@ -1,4 +1,4 @@
-export type Category = 'soup' | 'main' | 'salad' | 'dessert';
+export type Category = 'soup' | 'main' | 'side' | 'pickle' | 'salad' | 'dessert';
 export type MealType = 'lunch' | 'dinner' | 'both';
 
 export interface Ingredient {
@@ -20,10 +20,16 @@ export interface Recipe {
 }
 
 export interface DayPlan {
-  lunch: string | null;       // recipe id
+  soup: string | null;        // complete lunch: optional soup
+  lunch: string | null;       // complete lunch: main dish
+  side: string | null;        // complete lunch: optional side dish
+  pickle: string | null;      // complete lunch: optional pickle
   dinner: string | null;      // recipe id
-  dessert: string | null;     // weekend dessert served after lunch
+  dessert: string | null;     // optional dessert after lunch on any day
+  soupServings: number;
   lunchServings: number;
+  sideServings: number;
+  pickleServings: number;
   dinnerServings: number;
   dessertServings: number;
   lunchDays: number;          // cook for N days
@@ -53,6 +59,8 @@ export const WEEKDAYS: WeekDay[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök',
 export const CATEGORY_LABELS: Record<Category, string> = {
   soup: 'Levesek',
   main: 'Főételek',
+  side: 'Köretek',
+  pickle: 'Savanyúságok',
   salad: 'Saláták',
   dessert: 'Desszertek',
 };
@@ -65,10 +73,16 @@ export const MEAL_TYPE_LABELS: Record<MealType, string> = {
 
 export function createEmptyDayPlan(): DayPlan {
   return {
+    soup: null,
     lunch: null,
+    side: null,
+    pickle: null,
     dinner: null,
     dessert: null,
+    soupServings: 4,
     lunchServings: 4,
+    sideServings: 4,
+    pickleServings: 4,
     dinnerServings: 4,
     dessertServings: 4,
     lunchDays: 1,

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
+import { estimateRecipeCalories } from '@/lib/calorieCalculator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
@@ -54,6 +55,7 @@ export default function RecipeDetailPage() {
           </div>
           <div className="flex gap-2 mb-4">
             <Badge variant="secondary">{CATEGORY_LABELS[recipe.category]}</Badge>
+            <Badge variant="outline">kb. {estimateRecipeCalories(recipe)} kcal/adag</Badge>
             <Badge variant="outline">{MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
           </div>
 

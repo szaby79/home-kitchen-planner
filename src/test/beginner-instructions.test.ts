@@ -7,35 +7,41 @@ import { sortRecipesByCategory } from '@/lib/recipeSort';
 import { Recipe } from '@/types/recipe';
 
 describe('beginner recipe instructions', () => {
-  it('groups soups, mains, salads and desserts in this order', () => {
+  it('groups every category in the intended order', () => {
     const sorted = sortRecipesByCategory(defaultRecipes);
 
     expect(sorted.slice(0, 30).every(recipe => recipe.category === 'soup')).toBe(true);
     expect(sorted.slice(30, 100).every(recipe => recipe.category === 'main')).toBe(true);
-    expect(sorted.slice(100, 110).every(recipe => recipe.category === 'salad')).toBe(true);
-    expect(sorted.slice(110).every(recipe => recipe.category === 'dessert')).toBe(true);
+    expect(sorted.slice(100, 110).every(recipe => recipe.category === 'side')).toBe(true);
+    expect(sorted.slice(110, 118).every(recipe => recipe.category === 'pickle')).toBe(true);
+    expect(sorted.slice(118, 128).every(recipe => recipe.category === 'salad')).toBe(true);
+    expect(sorted.slice(128).every(recipe => recipe.category === 'dessert')).toBe(true);
     expect([sorted[0].id, sorted[29].id]).toEqual(['soup-1', 'soup-30']);
     expect([sorted[30].id, sorted[99].id]).toEqual(['main-1', 'main-70']);
-    expect([sorted[100].id, sorted[109].id]).toEqual(['salad-1', 'salad-10']);
-    expect([sorted[110].id, sorted[129].id]).toEqual(['dessert-1', 'dessert-20']);
+    expect([sorted[100].id, sorted[109].id]).toEqual(['side-1', 'side-10']);
+    expect([sorted[110].id, sorted[117].id]).toEqual(['pickle-1', 'pickle-8']);
+    expect([sorted[118].id, sorted[127].id]).toEqual(['salad-1', 'salad-10']);
+    expect([sorted[128].id, sorted[147].id]).toEqual(['dessert-1', 'dessert-20']);
   });
 
   it('provides short, numbered instructions for every built-in recipe', () => {
     expect(Object.keys(beginnerInstructions)).toHaveLength(70);
-    expect(defaultRecipes).toHaveLength(130);
+    expect(defaultRecipes).toHaveLength(148);
 
     for (const recipe of defaultRecipes) {
       expect(recipe.description.match(/^\d+\./gm)?.length, recipe.name).toBeGreaterThanOrEqual(5);
     }
   });
 
-  it('contains 30 soups, 70 mains, 10 salads and 20 desserts without duplicates', () => {
+  it('contains the complete Hungarian catalog without duplicates', () => {
     expect(defaultRecipes.filter(recipe => recipe.category === 'soup')).toHaveLength(30);
     expect(defaultRecipes.filter(recipe => recipe.category === 'main')).toHaveLength(70);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'side')).toHaveLength(10);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'pickle')).toHaveLength(8);
     expect(defaultRecipes.filter(recipe => recipe.category === 'salad')).toHaveLength(10);
     expect(defaultRecipes.filter(recipe => recipe.category === 'dessert')).toHaveLength(20);
-    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(130);
-    expect(new Set(defaultRecipes.map(recipe => recipe.name.toLocaleLowerCase('hu'))).size).toBe(130);
+    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(148);
+    expect(new Set(defaultRecipes.map(recipe => recipe.name.toLocaleLowerCase('hu'))).size).toBe(148);
   });
 
   it('includes homemade csipetke ingredients and the paprika warning', () => {
@@ -70,7 +76,7 @@ describe('beginner recipe instructions', () => {
     expect(result.current.recipes[0].description).toBe(defaultRecipes[0].description);
     expect(result.current.recipes[0].ingredients).toEqual(defaultRecipes[0].ingredients);
     expect(result.current.recipes[1]).toEqual(userRecipe);
-    expect(result.current.recipes).toHaveLength(131);
-    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('4');
+    expect(result.current.recipes).toHaveLength(149);
+    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('5');
   });
 });

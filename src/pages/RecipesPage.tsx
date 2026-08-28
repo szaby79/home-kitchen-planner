@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { sortRecipesByCategory } from '@/lib/recipeSort';
 import { isQuickRecipe } from '@/lib/recipeScheduling';
+import { estimateRecipeCalories } from '@/lib/calorieCalculator';
 
 export default function RecipesPage() {
   const { recipes, isFavorite, toggleFavorite } = useAppContext();
@@ -15,6 +16,8 @@ export default function RecipesPage() {
   const [search, setSearch] = useState('');
   const quickOnly = params.get('quick') === '1';
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [sortMode, setSortMode] = useState<'category' | 'abc' | 'random'>('category');
+  const [randomSeed, setRandomSeed] = useState(1);
 
   const filtered = useMemo(() => {
     let list = recipes;
@@ -25,8 +28,10 @@ export default function RecipesPage() {
       const q = search.toLowerCase();
       list = list.filter(r => r.name.toLowerCase().includes(q));
     }
+    if (sortMode === 'abc') return [...list].sort((a, b) => a.name.localeCompare(b.name, 'hu'));
+    if (sortMode === 'random') return [...list].sort((a, b) => hash(`${a.id}-${randomSeed}`) - hash(`${b.id}-${randomSeed}`));
     return sortRecipesByCategory(list);
-  }, [recipes, activeCategory, search, favoritesOnly, quickOnly, isFavorite]);
+  }, [recipes, activeCategory, search, favoritesOnly, quickOnly, isFavorite, sortMode, randomSeed]);
 
   const setCategory = (category: string) => {
     const next = new URLSearchParams(params);
@@ -95,6 +100,13 @@ export default function RecipesPage() {
         </button>
       </div>
 
+      <div className="mb-5 flex flex-wrap items-center gap-2 text-sm">
+        <span className="font-medium">Sorrend:</span>
+        {([['category', 'Kategóriák'], ['abc', 'ABC'], ['random', 'Véletlenszerű']] as const).map(([mode, label]) => (
+          <button key={mode} onClick={() => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); }} className={`rounded-md border px-3 py-1.5 font-medium ${sortMode === mode ? 'border-primary bg-primary text-primary-foreground' : 'bg-card'}`}>{label}</button>
+        ))}
+      </div>
+
       {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map(recipe => (
@@ -122,6 +134,7 @@ export default function RecipesPage() {
                   <Badge variant="outline" className="text-xs">{MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
                   {isQuickRecipe(recipe) && <Badge className="text-xs bg-accent text-accent-foreground">Gyors</Badge>}
                 </div>
+                <p className="mt-2 text-xs text-muted-foreground">kb. {estimateRecipeCalories(recipe)} kcal/adag</p>
               </div>
             </Link>
           </div>
@@ -133,4 +146,8 @@ export default function RecipesPage() {
       )}
     </div>
   );
+}
+
+function hash(value: string) {
+  return [...value].reduce((total, char) => ((total << 5) - total + char.charCodeAt(0)) | 0, 0);
 }
