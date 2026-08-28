@@ -17,6 +17,7 @@ export default function PlannerPage() {
   const [sortMode, setSortMode] = useState<SortMode>('abc');
   const [randomSeed, setRandomSeed] = useState(1);
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [expandedExtras, setExpandedExtras] = useState<Set<WeekDay>>(new Set());
   const selectedCount = WEEKDAYS.reduce((count, day) => count + Number(selection[day].lunch) + Number(selection[day].dinner), 0);
 
   const sorted = (list: Recipe[]) => [...list].sort((a, b) => {
@@ -97,18 +98,23 @@ export default function PlannerPage() {
           const plan = weekPlan[day];
           const lunchIds = [plan.soup, plan.lunch, plan.side, plan.pickle, plan.dessert].filter(Boolean) as string[];
           const lunchCalories = lunchIds.reduce((sum, id) => sum + estimateRecipeCalories(recipes.find(recipe => recipe.id === id)!), 0);
+          const hasLunchExtras = Boolean(plan.soup || plan.side || plan.pickle || plan.dessert);
+          const showExtras = hasLunchExtras || expandedExtras.has(day);
           return <section key={day} className="animate-fade-in rounded-xl border bg-card p-4">
-            <div className="mb-3 flex flex-wrap items-center justify-between gap-2"><h3 className="font-display text-xl font-semibold">{day}</h3>{lunchCalories > 0 && <span className="flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"><Flame className="h-3.5 w-3.5" /> Komplett ebéd: kb. {lunchCalories} kcal/adag</span>}</div>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2"><h3 className="font-display text-xl font-semibold">{day}</h3>{lunchCalories > 0 && <span className="flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary"><Flame className="h-3.5 w-3.5" /> Ebéd összesen: kb. {lunchCalories} kcal/adag</span>}</div>
             <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
               <div className="rounded-lg border border-primary/20 bg-primary/[0.035] p-3">
-                <h4 className="mb-3 flex items-center gap-2 font-semibold"><Utensils className="h-4 w-4 text-primary" /> Komplett ebéd</h4>
+                <h4 className="mb-3 flex items-center gap-2 font-semibold"><Utensils className="h-4 w-4 text-primary" /> Ebéd</h4>
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <MealSlot label="Leves" value={plan.soup} servings={plan.soupServings} options={options('soup')} recipes={recipes} onChange={value => updateDay(day, { soup: value })} onServingsChange={value => updateDay(day, { soupServings: value })} />
-                  <MealSlot label="Főétel" value={plan.lunch} servings={plan.lunchServings} days={plan.lunchDays} options={options('main')} recipes={recipes} onChange={value => updateDay(day, { lunch: value })} onServingsChange={value => updateDay(day, { lunchServings: value })} onDaysChange={value => updateDay(day, { lunchDays: value })} />
-                  <MealSlot label="Köret" value={plan.side} servings={plan.sideServings} options={options('side')} recipes={recipes} onChange={value => updateDay(day, { side: value })} onServingsChange={value => updateDay(day, { sideServings: value })} />
-                  <MealSlot label="Savanyúság" value={plan.pickle} servings={plan.pickleServings} options={options('pickle')} recipes={recipes} onChange={value => updateDay(day, { pickle: value })} onServingsChange={value => updateDay(day, { pickleServings: value })} />
-                  <div className="sm:col-span-2"><MealSlot label="Desszert ebéd után (választható)" value={plan.dessert} servings={plan.dessertServings} options={options('dessert')} recipes={recipes} onChange={value => updateDay(day, { dessert: value })} onServingsChange={value => updateDay(day, { dessertServings: value })} /></div>
+                  <div className="sm:col-span-2"><MealSlot label="Főétel" value={plan.lunch} servings={plan.lunchServings} days={plan.lunchDays} options={options('main')} recipes={recipes} onChange={value => updateDay(day, { lunch: value })} onServingsChange={value => updateDay(day, { lunchServings: value })} onDaysChange={value => updateDay(day, { lunchDays: value })} /></div>
+                  {showExtras && <>
+                    <MealSlot label="Leves (választható)" value={plan.soup} servings={plan.soupServings} options={options('soup')} recipes={recipes} onChange={value => updateDay(day, { soup: value })} onServingsChange={value => updateDay(day, { soupServings: value })} />
+                    <MealSlot label="Köret (választható)" value={plan.side} servings={plan.sideServings} options={options('side')} recipes={recipes} onChange={value => updateDay(day, { side: value })} onServingsChange={value => updateDay(day, { sideServings: value })} />
+                    <MealSlot label="Savanyúság (választható)" value={plan.pickle} servings={plan.pickleServings} options={options('pickle')} recipes={recipes} onChange={value => updateDay(day, { pickle: value })} onServingsChange={value => updateDay(day, { pickleServings: value })} />
+                    <MealSlot label="Desszert (választható)" value={plan.dessert} servings={plan.dessertServings} options={options('dessert')} recipes={recipes} onChange={value => updateDay(day, { dessert: value })} onServingsChange={value => updateDay(day, { dessertServings: value })} />
+                  </>}
                 </div>
+                {!hasLunchExtras && <Button variant="ghost" size="sm" className="mt-3" onClick={() => setExpandedExtras(current => { const next = new Set(current); if (next.has(day)) next.delete(day); else next.add(day); return next; })}>{showExtras ? 'Kiegészítők bezárása' : '+ Ebéd kiegészítése'}</Button>}
               </div>
               <MealSlot label="Vacsora – gyors étel" value={plan.dinner} servings={plan.dinnerServings} days={plan.dinnerDays} options={dinnerOptions} recipes={recipes} onChange={value => updateDay(day, { dinner: value })} onServingsChange={value => updateDay(day, { dinnerServings: value })} onDaysChange={value => updateDay(day, { dinnerDays: value })} />
             </div>

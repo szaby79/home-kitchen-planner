@@ -12,7 +12,9 @@ describe('planner meal cards', () => {
 
     await waitFor(() => {
       const mealImages = screen.getAllByRole('img');
-      expect(mealImages.length).toBeGreaterThanOrEqual(16);
+      // Seven lunches and seven dinners are always visible; optional extras
+      // appear only when they were requested and suit the selected dish.
+      expect(mealImages.length).toBeGreaterThanOrEqual(14);
       expect(mealImages.every(image => image.getAttribute('src')?.startsWith('/recipes/'))).toBe(true);
     });
   });
