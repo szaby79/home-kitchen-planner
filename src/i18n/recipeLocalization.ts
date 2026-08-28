@@ -1,0 +1,125 @@
+import { Recipe } from '@/types/recipe';
+import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
+
+const INGREDIENTS: Record<string, string> = {
+  'alma': 'apple', 'avokádó': 'avocado', 'babérlevél': 'bay leaf', 'balzsamecet': 'balsamic vinegar',
+  'baracklekvár': 'apricot jam', 'bors': 'black pepper', 'brokkoli': 'broccoli', 'burgonya': 'potato',
+  'cérnametélt': 'fine egg noodles', 'citrom': 'lemon', 'citromhéj': 'lemon zest', 'cukor': 'sugar',
+  'csalamádé': 'mixed pickled vegetables', 'csemege uborka': 'sweet pickles', 'csemegekukorica': 'sweet corn',
+  'csiperke gomba': 'button mushrooms', 'csirkecomb': 'chicken thighs', 'csirkemáj': 'chicken liver',
+  'csirkemell': 'chicken breast', 'csusza tészta': 'csusza noodles', 'csuszatészta': 'csusza noodles',
+  'darabolt kakas': 'rooster pieces', 'darált dió': 'ground walnuts', 'darált hús': 'ground meat',
+  'darált marhahús': 'ground beef', 'darált sertéshús': 'ground pork', 'dió': 'walnuts', 'ecet': 'vinegar',
+  'ecetes almapaprika': 'pickled apple peppers', 'ecetes cékla': 'pickled beets',
+  'ecetes gyöngyhagyma': 'pickled pearl onions', 'egész bors': 'whole peppercorns', 'egész csirke': 'whole chicken',
+  'élesztő': 'yeast', 'előfőzött pacal': 'pre-cooked tripe', 'étcsokoládé': 'dark chocolate',
+  'fagyasztott spenót': 'frozen spinach', 'fahéj': 'cinnamon', 'fehérbab': 'white beans',
+  'fejes saláta': 'butter lettuce', 'fejeskáposzta': 'green cabbage', 'feta sajt': 'feta cheese',
+  'finomliszt': 'all-purpose flour', 'fodros nagykocka tészta': 'large square egg noodles', 'fokhagyma': 'garlic',
+  'forró víz': 'hot water', 'főtt sonka': 'cooked ham', 'friss bazsalikom': 'fresh basil',
+  'füstölt csülök': 'smoked pork hock', 'füstölt kolbász': 'smoked sausage',
+  'füstölt oldalas': 'smoked pork ribs', 'füstölt sonka': 'smoked ham', 'füstölt szalonna': 'smoked bacon',
+  'gomba': 'mushrooms', 'gríz': 'semolina', 'gyömbér': 'ginger', 'harcsa filé': 'catfish fillet',
+  'harcsafilé': 'catfish fillet', 'hekk filé': 'hake fillet', 'jégsaláta': 'iceberg lettuce',
+  'juhtúró': 'sheep cheese', 'kacsacomb': 'duck legs', 'kakaó': 'cocoa', 'kaliforniai paprika': 'bell pepper',
+  'kapor': 'dill', 'karalábé': 'kohlrabi', 'karfiol': 'cauliflower', 'kelkáposzta': 'savoy cabbage',
+  'kenyér': 'bread', 'kenyérkocka': 'bread cubes', 'kifli': 'crescent rolls', 'kockatészta': 'square egg noodles',
+  'koktélparadicsom': 'cherry tomatoes', 'kolbász': 'sausage', 'kovászos uborka': 'fermented dill pickles',
+  'kömény': 'caraway seeds', 'kukorica konzerv': 'canned corn', 'kuszkusz': 'couscous',
+  'lebbencstészta': 'lebbencs noodles', 'lekvár': 'jam', 'lencse': 'lentils', 'libacomb': 'goose legs',
+  'lilahagyma': 'red onion', 'lilakáposzta': 'red cabbage', 'lime': 'lime', 'liszt': 'all-purpose flour',
+  'magozott meggy': 'pitted sour cherries', 'majoránna': 'marjoram', 'mák': 'poppy seeds',
+  'marhacsont': 'beef bones', 'marhahús': 'beef', 'marhalábszár': 'beef shank', 'mazsola': 'raisins',
+  'meggy': 'sour cherries', 'méz': 'honey', 'mozzarella': 'mozzarella', 'mustár': 'mustard',
+  'natúr joghurt': 'plain yogurt', 'olaj': 'oil', 'olívabogyó': 'olives', 'olívaolaj': 'olive oil',
+  'oregánó': 'oregano', 'paradicsom': 'tomato', 'paradicsom szósz': 'tomato sauce',
+  'paradicsompüré': 'tomato paste', 'parmezán': 'Parmesan', 'petrezselyemgyökér': 'parsley root',
+  'petrezselyemzöld': 'fresh parsley', 'pirospaprika': 'Hungarian paprika', 'piskóta lap': 'sponge cake layer',
+  'ponty': 'carp', 'pontyfilé': 'carp fillet', 'porcukor': 'icing sugar', 'reszelt sajt': 'grated cheese',
+  'retek': 'radish', 'rizs': 'rice', 'római saláta': 'romaine lettuce', 'rum': 'rum', 'sajt': 'cheese',
+  'salátakeverék': 'mixed salad greens', 'sárgaborsó': 'yellow split peas', 'sárgarépa': 'carrot',
+  'savanyú káposzta': 'sauerkraut', 'savanyú uborka': 'pickles', 'sertés karaj': 'pork loin',
+  'sertés oldalas': 'pork ribs', 'sertésborda': 'pork chops', 'sertéscomb': 'pork leg',
+  'sertéscsülök': 'pork hock', 'sertéshús': 'pork', 'sertéskaraj': 'pork loin',
+  'sertésköröm': 'pork feet', 'sertéstarja': 'pork shoulder steaks', 'sertészsír': 'lard',
+  'só': 'salt', 'sóska': 'sorrel', 'spagetti': 'spaghetti', 'spenót': 'spinach', 'sütőpor': 'baking powder',
+  'sütőtök': 'butternut squash', 'szalonna': 'bacon', 'szárazbab': 'dry beans', 'száraztészta': 'dry pasta',
+  'szegfűszeg': 'cloves', 'szerecsendió': 'nutmeg', 'szilva': 'plums', 'szódabikarbóna': 'baking soda',
+  'tarhonya': 'egg barley', 'tarkabab': 'pinto beans', 'tárkony': 'tarragon', 'tartármártás': 'tartar sauce',
+  'tej': 'milk', 'tejföl': 'sour cream', 'tejszín': 'cream', 'tojás': 'egg', 'tonhalkonzerv': 'canned tuna',
+  'tök': 'marrow squash', 'tölteni való paprika': 'sweet peppers for stuffing', 'trappista sajt': 'Trappista cheese',
+  'túró': 'dry cottage cheese', 'uborka': 'cucumber', 'újhagyma': 'green onion', 'vaj': 'butter',
+  'vanília cukor': 'vanilla sugar', 'vanília pudingpor': 'vanilla custard powder', 'vaníliás cukor': 'vanilla sugar',
+  'vegyes darabos savanyúság': 'mixed pickles', 'virsli': 'wieners', 'víz': 'water',
+  'vörösbab konzerv': 'canned kidney beans', 'vöröshagyma': 'yellow onion', 'vöröslencse': 'red lentils',
+  'zeller': 'celeriac', 'zellerszár': 'celery stalks', 'zöldbab': 'green beans', 'zöldborsó': 'green peas',
+  'zöldpaprika': 'Hungarian wax pepper', 'zsemle': 'bread rolls', 'zsemlemorzsa': 'breadcrumbs',
+};
+
+const UNITS: Record<string, string> = {
+  db: 'pc', ek: 'tbsp', tk: 'tsp', csokor: 'bunch', gerezd: 'clove', szelet: 'slice', csomag: 'pkg',
+};
+
+const NOTES: Record<string, string> = {
+  'Vegetáriánus': 'Vegetarian', 'Vegetáriánus, 25 perces leves': 'Vegetarian • 25-minute soup',
+  '30 percen belül elkészül': 'Ready within 30 minutes', 'Gyors, laktató vacsora': 'Quick, filling dinner',
+  'Több napra is készíthető': 'Good for several days', 'Magyaros köret': 'Hungarian-style side dish',
+  'Magyaros savanyúság': 'Hungarian-style pickle', 'Ünnepi desszert': 'Celebration dessert',
+  '10 perc • főzés nélkül': '10 minutes • no cooking', '10 perc • húsmentes': '10 minutes • vegetarian',
+  '10 perc • húsmentes, főzés nélkül': '10 minutes • vegetarian, no cooking',
+  '15 perc • húsmentes': '15 minutes • vegetarian', '20 perc • húsmentes, laktató': '20 minutes • vegetarian and filling',
+  '20 perc • húsmentes, munkába vihető': '20 minutes • vegetarian, packable for work',
+  '25 perc • fehérjedús': '25 minutes • high protein', '25 perc • laktató munkahelyi ebéd': '25 minutes • filling work lunch',
+  '25 perc • tartalmas, munkába is vihető': '25 minutes • filling and packable for work',
+  '25 perc • édeskés, ropogós': '25 minutes • lightly sweet and crunchy',
+  'Alföldi bográcsétel otthoni változatban': 'Home-style version of an Alföld cauldron dish',
+  'Almás, habos kenyérpuding': 'Apple bread pudding with meringue',
+  'Babérleveles főzelék klasszikus feltéttel': 'Bay-leaf potato stew with a classic topping',
+  'Bundás hús tejföllel és sajttal': 'Potato-crusted pork with sour cream and cheese',
+  'Burgonyatésztás magyar desszert': 'Hungarian dessert made with potato dough',
+  'Diós-baracklekváros ünnepi sütemény': 'Celebration pastry with walnuts and apricot jam',
+  'Egyszerű, egyedényes családi ebéd': 'Simple one-pot family lunch',
+  'Gyors, húsmentes ebéd': 'Quick vegetarian lunch', 'Hagymás máj főtt burgonyával': 'Onion chicken liver with boiled potatoes',
+  'Hosszú főzésű magyar klasszikus': 'Slow-cooked Hungarian classic', 'Házi májgombóccal': 'With homemade liver dumplings',
+  'Húsmentes, ropogós fogás': 'Crisp vegetarian dish', 'Kapros, könnyű tavaszi fogás': 'Light spring dish with dill',
+  'Karfiolos, sajtos sült csirke': 'Baked chicken with cauliflower and cheese', 'Klasszikus tavaszi fogás': 'Classic spring dish',
+  'Klasszikus ünnepi fogás': 'Classic celebration dish', 'Kolbászos-burgonyás egytálétel': 'One-pot sausage and potato dish',
+  'Köményes, fokhagymás klasszikus': 'Classic dish with caraway and garlic',
+  'Könnyű, darált húsos rakottas': 'Light layered bake with ground pork',
+  'Lassan főtt ünnepi pörkölt': 'Slow-cooked celebration stew', 'Lassan főtt, tiszta ünnepi leves': 'Slow-cooked clear celebration soup',
+  'Nyári, hidegen tálalandó leves': 'Summer soup served cold', 'Olcsó, gyors hétköznapi étel': 'Affordable, quick weekday meal',
+  'Paprikás hal klasszikus körettel': 'Paprika fish with a classic side', 'Paprikás sertéshús rizzsel': 'Paprika pork with rice',
+  'Paprikás-tejfölös hal burgonyával': 'Paprika and sour-cream fish with potatoes',
+  'Petrezselymes-zsemlés töltelékkel': 'With parsley and bread-roll stuffing',
+  'Savanyú káposztás, kolbászos leves': 'Sauerkraut and sausage soup', 'Savanyú uborkás sertésragu': 'Pork stew with pickles',
+  'Sertéstarjából, fokhagymásan': 'Garlic-seasoned pork shoulder', 'Szaftos hús paprikával és paradicsommal': 'Tender pork with peppers and tomatoes',
+  'Szalonnás felvidéki kedvenc': 'Highland favourite with bacon', 'Szalonnás, burgonyás alföldi leves': 'Alföld bacon and potato soup',
+  'Sütőben készülő hétvégi étel': 'Oven-baked weekend dish', 'Sűrű szaftú, hagyományos étel': 'Traditional dish with a rich sauce',
+  'Tartalmas, egytálételnek is megfelelő leves': 'Hearty soup that can be a full meal',
+  'Tartalmas, tejfölös főzelék': 'Hearty sour-cream bean stew', 'Tejfölös, darált húsos egytálétel': 'One-dish bake with ground pork and sour cream',
+  'Túrós sütemény habrácsos tetővel': 'Cottage-cheese cake with a meringue lattice',
+  'Vaníliakrémes égetett tészta': 'Choux pastry with vanilla cream', 'Zalai burgonyás étel pirított hagymával': 'Zala potato dish with browned onions',
+  'Zöldbabos, tejfölös sertésragu': 'Pork and green-bean stew with sour cream',
+  'Édeskés-savanykás, húsmentes étel': 'Sweet-tart vegetarian dish', 'Édeskés-sós magyar tésztaétel': 'Sweet and savoury Hungarian noodle dish',
+  'Ünnepi magyar főétel': 'Hungarian celebration main dish', 'Ünnepi, ropogósra sült fogás': 'Crisp-roasted celebration dish',
+};
+
+export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
+
+export function localizeRecipe(recipe: Recipe, english: boolean): Recipe {
+  if (!english) return recipe;
+  return {
+    ...recipe,
+    description: ENGLISH_INSTRUCTIONS[recipe.id] ?? recipe.description,
+    note: NOTES[recipe.note] ?? recipe.note,
+    ingredients: recipe.ingredients.map(ingredient => ({
+      ...ingredient,
+      name: INGREDIENTS[ingredient.name] ?? ingredient.name,
+      unit: UNITS[ingredient.unit] ?? ingredient.unit,
+    })),
+  };
+}
+
+export function hasIngredientTranslation(name: string) {
+  return Boolean(INGREDIENTS[name]);
+}

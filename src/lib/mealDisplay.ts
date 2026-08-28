@@ -13,8 +13,9 @@ const SIDE_WITH_FORMS: Record<string, string> = {
   'side-10': 'kukoricás rizzsel',
 };
 
-export function formatMealName(main?: Recipe, side?: Recipe) {
+export function formatMealName(main?: Recipe, side?: Recipe, english = false) {
   if (!main) return '';
   if (!side) return main.name;
+  if (english) return `${main.name} with ${side.name}`;
   return `${main.name} ${SIDE_WITH_FORMS[side.id] || `+ ${side.name}`}`;
 }

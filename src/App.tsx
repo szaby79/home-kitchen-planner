@@ -12,29 +12,32 @@ import ShoppingPage from "@/pages/ShoppingPage";
 import AdminPage from "@/pages/AdminPage";
 import BudgetPage from "@/pages/BudgetPage";
 import NotFound from "@/pages/NotFound";
+import { LanguageProvider } from "@/i18n/LanguageContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/recipes" element={<RecipesPage />} />
-            <Route path="/recipes/:id" element={<RecipeDetailPage />} />
-            <Route path="/planner" element={<PlannerPage />} />
-            <Route path="/shopping" element={<ShoppingPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/budget" element={<BudgetPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/recipes" element={<RecipesPage />} />
+              <Route path="/recipes/:id" element={<RecipeDetailPage />} />
+              <Route path="/planner" element={<PlannerPage />} />
+              <Route path="/shopping" element={<ShoppingPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/budget" element={<BudgetPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 
