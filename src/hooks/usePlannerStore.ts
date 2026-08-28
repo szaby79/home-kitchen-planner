@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode, GenerationSelection, LunchGenerationOptions } from '@/types/recipe';
 import { generateSelectedPlan } from '@/lib/planGenerator';
+import { recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 
 const PLAN_KEY = 'plan-pan-weekplan';
 const EXTRA_ITEMS_KEY = 'plan-pan-extra-items';
@@ -57,14 +58,16 @@ export function usePlannerStore(recipes: Recipe[]) {
           current[day].dinner && dinner?.category !== 'main' && dinner?.category !== 'salad',
         );
         const invalidLunch = Boolean(current[day].lunch && lunch?.category !== 'main' && lunch?.category !== 'salad');
+        const invalidSide = Boolean(current[day].side && lunch && !recipeNeedsSeparateSide(lunch));
 
-        if (invalidDinner || invalidLunch) {
+        if (invalidDinner || invalidLunch || invalidSide) {
           changed = true;
           next[day] = {
             ...current[day],
             dinner: invalidDinner ? null : current[day].dinner,
             lunch: invalidLunch ? null : current[day].lunch,
             soup: legacySoup ?? current[day].soup,
+            side: invalidSide ? null : current[day].side,
           };
         }
       });
