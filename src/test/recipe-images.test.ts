@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 
 describe('default recipe images', () => {
-  it('assigns one bundled image to each of the 130 recipes', () => {
-    expect(defaultRecipes).toHaveLength(130);
-    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(130);
+  it('assigns one bundled image to every recipe', () => {
+    expect(defaultRecipes).toHaveLength(148);
+    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(148);
 
     for (const recipe of defaultRecipes) {
       expect(recipe.imageUrl).toBe(`/recipes/${recipe.id}.webp`);

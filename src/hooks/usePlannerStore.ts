@@ -43,7 +43,7 @@ export function usePlannerStore(recipes: Recipe[]) {
   useEffect(() => { localStorage.setItem(EXTRA_ITEMS_KEY, JSON.stringify(extraItems)); }, [extraItems]);
   useEffect(() => { localStorage.setItem(SHOPPING_NOTES_KEY, shoppingNotes); }, [shoppingNotes]);
 
-  // Clean up plans saved by earlier versions where a soup could appear at dinner.
+  // Clean up plans saved by earlier versions where a soup could appear in a main meal slot.
   useEffect(() => {
     setWeekPlan(current => {
       let changed = false;
@@ -51,18 +51,20 @@ export function usePlannerStore(recipes: Recipe[]) {
 
       WEEKDAYS.forEach(day => {
         const dinner = recipes.find(recipe => recipe.id === current[day].dinner);
-        const dessertAllowed = day === 'Szombat' || day === 'Vasárnap';
+        const lunch = recipes.find(recipe => recipe.id === current[day].lunch);
+        const legacySoup = lunch?.category === 'soup' ? current[day].lunch : null;
         const invalidDinner = Boolean(
           current[day].dinner && dinner?.category !== 'main' && dinner?.category !== 'salad',
         );
-        const invalidDessert = Boolean(current[day].dessert && !dessertAllowed);
+        const invalidLunch = Boolean(current[day].lunch && lunch?.category !== 'main' && lunch?.category !== 'salad');
 
-        if (invalidDinner || invalidDessert) {
+        if (invalidDinner || invalidLunch) {
           changed = true;
           next[day] = {
             ...current[day],
             dinner: invalidDinner ? null : current[day].dinner,
-            dessert: invalidDessert ? null : current[day].dessert,
+            lunch: invalidLunch ? null : current[day].lunch,
+            soup: legacySoup ?? current[day].soup,
           };
         }
       });
@@ -101,7 +103,10 @@ export function usePlannerStore(recipes: Recipe[]) {
           }
         });
       };
+      processSlot(plan.soup, plan.soupServings, 1);
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
+      processSlot(plan.side, plan.sideServings, 1);
+      processSlot(plan.pickle, plan.pickleServings, 1);
       processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
       processSlot(plan.dessert, plan.dessertServings, 1);
     });
@@ -128,7 +133,10 @@ export function usePlannerStore(recipes: Recipe[]) {
           }
         });
       };
+      processSlot(plan.soup, plan.soupServings, 1);
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
+      processSlot(plan.side, plan.sideServings, 1);
+      processSlot(plan.pickle, plan.pickleServings, 1);
       processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
       processSlot(plan.dessert, plan.dessertServings, 1);
       result[day] = items;

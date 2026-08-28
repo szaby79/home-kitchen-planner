@@ -16,6 +16,8 @@ export default function HomePage() {
   const counts: Record<Category, number> = {
     soup: recipes.filter(r => r.category === 'soup').length,
     main: recipes.filter(r => r.category === 'main').length,
+    side: recipes.filter(r => r.category === 'side').length,
+    pickle: recipes.filter(r => r.category === 'pickle').length,
     salad: recipes.filter(r => r.category === 'salad').length,
     dessert: recipes.filter(r => r.category === 'dessert').length,
   };
@@ -43,7 +45,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto mb-10">
+      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
         {(Object.keys(CATEGORY_LABELS) as Category[]).map(cat => (
           <Link
             key={cat}

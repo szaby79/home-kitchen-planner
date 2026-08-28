@@ -4,7 +4,7 @@ import { defaultRecipes } from '@/data/recipes';
 
 const STORAGE_KEY = 'plan-pan-recipes';
 const CONTENT_VERSION_KEY = 'plan-pan-recipes-content-version';
-const CONTENT_VERSION = '4';
+const CONTENT_VERSION = '5';
 
 const defaultRecipesById = new Map(
   defaultRecipes.map(recipe => [recipe.id, recipe] as const),

@@ -25,7 +25,10 @@ export default function BudgetPage() {
     const meals = WEEKDAYS.flatMap(day => {
       const plan = weekPlan[day];
       return [
-        { id: plan.lunch, servings: plan.lunchServings, label: `${day} ebéd` },
+        { id: plan.soup, servings: plan.soupServings, label: `${day} leves` },
+        { id: plan.lunch, servings: plan.lunchServings, label: `${day} főétel` },
+        { id: plan.side, servings: plan.sideServings, label: `${day} köret` },
+        { id: plan.pickle, servings: plan.pickleServings, label: `${day} savanyúság` },
         { id: plan.dinner, servings: plan.dinnerServings, label: `${day} vacsora` },
         { id: plan.dessert, servings: plan.dessertServings, label: `${day} desszert` },
       ];

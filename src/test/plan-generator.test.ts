@@ -30,6 +30,17 @@ describe('weekly menu generation rules', () => {
     }
   });
 
+  it('builds a complete lunch with separate soup, main, side, pickle and dessert', () => {
+    const plan = generateWeekPlan(defaultRecipes, 7, 7, 'different');
+    WEEKDAYS.forEach(day => {
+      expect(defaultRecipes.find(recipe => recipe.id === plan[day].soup)?.category).toBe('soup');
+      expect(defaultRecipes.find(recipe => recipe.id === plan[day].lunch)?.category).toBe('main');
+      expect(defaultRecipes.find(recipe => recipe.id === plan[day].side)?.category).toBe('side');
+      expect(defaultRecipes.find(recipe => recipe.id === plan[day].pickle)?.category).toBe('pickle');
+      expect(defaultRecipes.find(recipe => recipe.id === plan[day].dessert)?.category).toBe('dessert');
+    });
+  });
+
   it('adds the same dessert after both weekend lunches when requested', () => {
     const plan = generateWeekPlan(defaultRecipes, 7, 7, 'same');
 
@@ -44,11 +55,14 @@ describe('weekly menu generation rules', () => {
     expect(plan.Vasárnap.dessert).not.toBe(plan.Szombat.dessert);
   });
 
-  it('does not add a dessert on a weekend day without lunch', () => {
+  it('does not add complete lunch extras on a day without lunch', () => {
     const plan = generateWeekPlan(defaultRecipes, 5, 7, 'same');
 
     expect(plan.Szombat.lunch).toBeNull();
     expect(plan.Szombat.dessert).toBeNull();
+    expect(plan.Szombat.soup).toBeNull();
+    expect(plan.Szombat.side).toBeNull();
+    expect(plan.Szombat.pickle).toBeNull();
     expect(plan.Vasárnap.lunch).toBeNull();
     expect(plan.Vasárnap.dessert).toBeNull();
   });
