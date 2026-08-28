@@ -9,12 +9,15 @@ import { estimateRecipeCalories } from '@/lib/calorieCalculator';
 import { formatMealName } from '@/lib/mealDisplay';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS, EN_WEEKDAYS } from '@/i18n/labels';
+import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
+import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 
 type SortMode = 'abc' | 'random' | 'favorites';
 
 export default function PlannerPage() {
-  const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite } = useAppContext();
+  const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite, favoriteIds } = useAppContext();
   const { isEnglish, tr } = useLanguage();
+  const { preferences, savePreferences, hasSavedPreferences } = useMenuPreferences();
   const [selection, setSelection] = useState<GenerationSelection>(() => createGenerationSelection(true));
   const [menuProfile, setMenuProfile] = useState<MenuProfile>('balanced');
   const [sortMode, setSortMode] = useState<SortMode>('abc');
@@ -46,7 +49,7 @@ export default function PlannerPage() {
     setSelection(next);
   };
   const toggleSelection = (day: WeekDay, slot: MealSlotType) => setSelection(current => ({ ...current, [day]: { ...current[day], [slot]: !current[day][slot] } }));
-  const handleGenerate = () => { if (selectedCount) { generateRandomPlan(selection, menuProfile); setHasGenerated(true); setMobileEditing(false); setChangeMessage(tr('Elkészült a menü. Amit nem szeretsz, egyszerűen lecserélheted.', 'Your menu is ready. You can easily replace any dish you do not want.')); } };
+  const handleGenerate = () => { if (selectedCount) { generateRandomPlan(selection, menuProfile, preferences, favoriteIds); setHasGenerated(true); setMobileEditing(false); setChangeMessage(tr('Elkészült a személyre szabott menü. Amit nem szeretsz, egyszerűen lecserélheted.', 'Your personalized menu is ready. You can easily replace any dish you do not want.')); } };
   const changeSort = (mode: SortMode) => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); };
   const updateMobileDay = (day: WeekDay, updates: Partial<typeof weekPlan[WeekDay]>) => {
     const previous = Object.fromEntries(Object.keys(updates).map(key => [key, weekPlan[day][key as keyof typeof updates]])) as Partial<typeof weekPlan[WeekDay]>;
@@ -71,6 +74,8 @@ export default function PlannerPage() {
         <Zap className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
         <p><strong>{tr('Életszerű tervezés:', 'Practical planning:')}</strong> {tr('hétköznap egyszerűbb, hétvégén tartalmasabb ebéd készül. Vacsorára csak gyors étel vagy saláta kerül.', 'weekday lunches are simpler, while weekend lunches can be more substantial. Dinner is always a quick meal or salad.')}</p>
       </div>
+
+      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} />
 
       <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
         <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground">{tr('Csak a kijelölt étkezések változnak. Az „Ebéd” a teljes ebédet állítja össze.', 'Only selected meals will change. Lunch creates the complete lunch menu.')}</p></div>
