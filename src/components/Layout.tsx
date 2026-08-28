@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore } from '@/hooks/usePlannerStore';
-import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuProfile } from '@/types/recipe';
+import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile } from '@/types/recipe';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
@@ -19,7 +19,7 @@ interface AppContextType {
   weekPlan: WeekPlan;
   updateDay: (day: WeekDay, updates: Partial<DayPlan>) => void;
   clearPlan: () => void;
-  generateRandomPlan: (selection: GenerationSelection, profile: MenuProfile) => void;
+  generateRandomPlan: (selection: GenerationSelection, profile: MenuProfile, preferences: MenuPreferences, favoriteIds: string[]) => void;
   shoppingList: ShoppingItem[];
   dailyShoppingList: Record<WeekDay, ShoppingItem[]>;
   extraItems: ShoppingItem[];
@@ -127,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
-          Plan & Pan v1.13 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
+          Plan & Pan v1.14 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
         </footer>
       </div>
     </AppContext.Provider>

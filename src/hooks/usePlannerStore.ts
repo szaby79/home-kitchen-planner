@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, GenerationSelection, MenuProfile } from '@/types/recipe';
+import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, GenerationSelection, MenuPreferences, MenuProfile } from '@/types/recipe';
 import { generateSelectedPlan } from '@/lib/planGenerator';
 import { recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 
@@ -82,8 +82,8 @@ export function usePlannerStore(recipes: Recipe[]) {
 
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
-  const generateRandomPlan = useCallback((selection: GenerationSelection, profile: MenuProfile) => {
-    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, profile));
+  const generateRandomPlan = useCallback((selection: GenerationSelection, profile: MenuProfile, preferences: MenuPreferences, favoriteIds: string[]) => {
+    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, profile, preferences, favoriteIds));
   }, [recipes]);
 
   const shoppingList = useMemo(() => {
@@ -108,11 +108,12 @@ export function usePlannerStore(recipes: Recipe[]) {
       };
       const previousSoup = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]].soup : null;
       const nextSoup = dayIndex < WEEKDAYS.length - 1 ? weekPlan[WEEKDAYS[dayIndex + 1]].soup : null;
+      const previousPlan = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]] : null;
       if (plan.soup !== previousSoup) processSlot(plan.soup, plan.soupServings, plan.soup && plan.soup === nextSoup ? 2 : 1);
-      processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
+      if (plan.lunch !== previousPlan?.lunch || (plan.lunchDays === 1 && previousPlan?.lunchDays === 1)) processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.side, plan.sideServings, 1);
       processSlot(plan.pickle, plan.pickleServings, 1);
-      processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
+      if (plan.dinner !== previousPlan?.dinner || (plan.dinnerDays === 1 && previousPlan?.dinnerDays === 1)) processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
       processSlot(plan.dessert, plan.dessertServings, 1);
     });
 
@@ -140,11 +141,12 @@ export function usePlannerStore(recipes: Recipe[]) {
       };
       const previousSoup = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]].soup : null;
       const nextSoup = dayIndex < WEEKDAYS.length - 1 ? weekPlan[WEEKDAYS[dayIndex + 1]].soup : null;
+      const previousPlan = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]] : null;
       if (plan.soup !== previousSoup) processSlot(plan.soup, plan.soupServings, plan.soup && plan.soup === nextSoup ? 2 : 1);
-      processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
+      if (plan.lunch !== previousPlan?.lunch || (plan.lunchDays === 1 && previousPlan?.lunchDays === 1)) processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.side, plan.sideServings, 1);
       processSlot(plan.pickle, plan.pickleServings, 1);
-      processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
+      if (plan.dinner !== previousPlan?.dinner || (plan.dinnerDays === 1 && previousPlan?.dinnerDays === 1)) processSlot(plan.dinner, plan.dinnerServings, plan.dinnerDays);
       processSlot(plan.dessert, plan.dessertServings, 1);
       result[day] = items;
     });

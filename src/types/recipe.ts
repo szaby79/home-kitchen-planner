@@ -38,6 +38,33 @@ export interface DayPlan {
 
 export type MenuProfile = 'balanced' | 'soup' | 'simple';
 
+export type DietPreference = 'none' | 'vegetarian' | 'vegan';
+export type CookingTimePreference = 'any' | '30' | '45' | '60';
+export type FoodStylePreference = 'traditional' | 'light' | 'quick' | 'meatless';
+export type FoodRestriction = 'gluten' | 'milk' | 'lactose' | 'egg' | 'nuts' | 'fish' | 'soy';
+
+export interface MenuPreferences {
+  familySize: number;
+  diet: DietPreference;
+  allergies: FoodRestriction[];
+  intolerances: FoodRestriction[];
+  dislikedIngredients: string[];
+  preferredStyles: FoodStylePreference[];
+  maxCookingTime: CookingTimePreference;
+  batchDays: 1 | 2 | 3;
+}
+
+export const DEFAULT_MENU_PREFERENCES: MenuPreferences = {
+  familySize: 4,
+  diet: 'none',
+  allergies: [],
+  intolerances: [],
+  dislikedIngredients: [],
+  preferredStyles: [],
+  maxCookingTime: 'any',
+  batchDays: 1,
+};
+
 export type MealSlot = 'lunch' | 'dinner';
 export type GenerationSelection = Record<WeekDay, Record<MealSlot, boolean>>;
 
