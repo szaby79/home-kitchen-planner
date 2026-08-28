@@ -5,6 +5,8 @@ import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuProfile } from '@/types/recipe';
 import { useFavorites } from '@/hooks/useFavorites';
+import { useLanguage } from '@/i18n/LanguageContext';
+import { localizeRecipe } from '@/i18n/recipeLocalization';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -35,23 +37,34 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | null>(null);
 export const useAppContext = () => useContext(AppContext)!;
 
-const navItems = [
-  { to: '/', icon: UtensilsCrossed, label: 'Főoldal' },
-  { to: '/recipes', icon: BookOpen, label: 'Receptek' },
-  { to: '/planner', icon: CalendarDays, label: 'Heti terv' },
-  { to: '/shopping', icon: ShoppingCart, label: 'Bevásárlólista' },
-  { to: '/budget', icon: WalletCards, label: 'Budget' },
-  { to: '/admin', icon: Settings, label: 'Admin' },
-];
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   const recipeStore = useRecipeStore();
-  const plannerStore = usePlannerStore(recipeStore.recipes);
+  const { language, isEnglish, setLanguage, tr } = useLanguage();
+  const recipes = React.useMemo(
+    () => recipeStore.recipes.map(recipe => localizeRecipe(recipe, isEnglish)),
+    [recipeStore.recipes, isEnglish],
+  );
+  const plannerStore = usePlannerStore(recipes);
   const favoritesStore = useFavorites();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navItems = [
+    { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home') },
+    { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes') },
+    { to: '/planner', icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
+    { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list') },
+    { to: '/budget', icon: WalletCards, label: tr('Budget', 'Budget') },
+    { to: '/admin', icon: Settings, label: tr('Admin', 'Admin') },
+  ];
 
-  const ctx: AppContextType = { ...recipeStore, ...plannerStore, ...favoritesStore };
+  const ctx: AppContextType = {
+    ...recipeStore,
+    ...plannerStore,
+    ...favoritesStore,
+    recipes,
+    getRecipe: (id: string) => recipes.find(recipe => recipe.id === id) ?? null,
+    getByCategory: (category: string) => recipes.filter(recipe => recipe.category === category),
+  };
 
   return (
     <AppContext.Provider value={ctx}>
@@ -80,6 +93,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               ))}
             </nav>
+            <div className="ml-auto mr-1 flex rounded-md border bg-card p-0.5 lg:ml-2">
+              <button type="button" onClick={() => setLanguage('hu')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'hu' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="Magyar nyelv">HU</button>
+              <button type="button" onClick={() => setLanguage('en')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'en' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="English language">EN</button>
+            </div>
             {/* Mobile toggle */}
             <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -110,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
-          Plan & Pan v1.12 © {new Date().getFullYear()} — Magyar családi ételtervező
+          Plan & Pan v1.13 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
         </footer>
       </div>
     </AppContext.Provider>
