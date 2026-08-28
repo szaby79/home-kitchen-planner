@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, WeekendDessertMode, GenerationSelection, LunchGenerationOptions } from '@/types/recipe';
+import { WeekPlan, WeekDay, WEEKDAYS, createEmptyWeekPlan, ShoppingItem, Recipe, GenerationSelection, MenuProfile } from '@/types/recipe';
 import { generateSelectedPlan } from '@/lib/planGenerator';
 import { recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 
@@ -82,8 +82,8 @@ export function usePlannerStore(recipes: Recipe[]) {
 
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
-  const generateRandomPlan = useCallback((selection: GenerationSelection, dessertMode: WeekendDessertMode, lunchOptions: LunchGenerationOptions) => {
-    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, dessertMode, lunchOptions));
+  const generateRandomPlan = useCallback((selection: GenerationSelection, profile: MenuProfile) => {
+    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, profile));
   }, [recipes]);
 
   const shoppingList = useMemo(() => {
@@ -106,7 +106,9 @@ export function usePlannerStore(recipes: Recipe[]) {
           }
         });
       };
-      processSlot(plan.soup, plan.soupServings, 1);
+      const previousSoup = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]].soup : null;
+      const nextSoup = dayIndex < WEEKDAYS.length - 1 ? weekPlan[WEEKDAYS[dayIndex + 1]].soup : null;
+      if (plan.soup !== previousSoup) processSlot(plan.soup, plan.soupServings, plan.soup && plan.soup === nextSoup ? 2 : 1);
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.side, plan.sideServings, 1);
       processSlot(plan.pickle, plan.pickleServings, 1);
@@ -136,7 +138,9 @@ export function usePlannerStore(recipes: Recipe[]) {
           }
         });
       };
-      processSlot(plan.soup, plan.soupServings, 1);
+      const previousSoup = dayIndex > 0 ? weekPlan[WEEKDAYS[dayIndex - 1]].soup : null;
+      const nextSoup = dayIndex < WEEKDAYS.length - 1 ? weekPlan[WEEKDAYS[dayIndex + 1]].soup : null;
+      if (plan.soup !== previousSoup) processSlot(plan.soup, plan.soupServings, plan.soup && plan.soup === nextSoup ? 2 : 1);
       processSlot(plan.lunch, plan.lunchServings, plan.lunchDays);
       processSlot(plan.side, plan.sideServings, 1);
       processSlot(plan.pickle, plan.pickleServings, 1);
