@@ -353,7 +353,7 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
 4. Serpenyőben melegíts kb. 1 cm olajat közepes lángon. Süsd a fasírtokat oldalanként 4–5 percig barnára.
 
-5. A burgonyát hámozd meg, kockázd fel, és sós vízben főzd 15–20 percig. A fasírtból vágj ketté egyet: belül ne legyen rózsaszín. Csepegtesd le, majd a burgonyával tálald.`,
+5. A fasírtból vágj ketté egyet: belül ne legyen rózsaszín. Ha átsült, szedd papírtörlőre, majd tálald a menüben külön kiválasztott körettel.`,
 
   'main-15': `1. Három tojást tegyél hideg vízbe, forrástól számítva főzd 10 percig, majd hűtsd le és pucold meg. A zsemléket áztasd be, majd jól nyomkodd ki.
 

@@ -364,9 +364,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'tojás', quantity: 1, unit: 'db' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
       { name: 'fokhagyma', quantity: 2, unit: 'gerezd' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'olaj', quantity: 100, unit: 'ml' },
-      { name: 'burgonya', quantity: 600, unit: 'g' },
     ],
-    description: 'A zsemlyét beáztatjuk, a húshoz keverjük tojással, hagymával, fokhagymával. Fasírtokat formálunk, olajban kisütjük. Burgonyapürével tálaljuk.'
+    description: 'A zsemlyét beáztatjuk, a húshoz keverjük tojással, hagymával, fokhagymával. Fasírtokat formálunk, olajban kisütjük. A külön kiválasztott körettel tálaljuk.'
   },
   {
     id: 'main-15', name: 'Stefánia vagdalt', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',

@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import App from '@/App';
+import { defaultRecipes } from '@/data/recipes';
+import { formatMealName } from '@/lib/mealDisplay';
 
 describe('planner meal cards', () => {
   it('shows proportional recipe images after generating a weekly menu', async () => {
@@ -44,5 +46,24 @@ describe('planner meal cards', () => {
     fireEvent.click(within(mobilePlanner).getByRole('button', { name: /másik ételt kérek/i }));
     expect(within(mobilePlanner).getByRole('button', { name: /szerkesztés kész/i })).toBeInTheDocument();
     expect(within(mobilePlanner).getAllByRole('combobox').length).toBe(6);
+  });
+
+  it('offers a direct replacement button that changes only one meal', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/planner');
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
+
+    const mobilePlanner = await screen.findByTestId('mobile-planner');
+    const replaceButtons = within(mobilePlanner).getAllByRole('button', { name: 'Csere' });
+    expect(replaceButtons.length).toBeGreaterThan(0);
+    fireEvent.click(replaceButtons[0]);
+    expect(screen.getByRole('dialog')).toHaveTextContent('Csak ez az egy étel változik meg');
+  });
+
+  it('shows the meal period clearly and combines a main with its selected side', () => {
+    const main = defaultRecipes.find(recipe => recipe.id === 'main-14');
+    const side = defaultRecipes.find(recipe => recipe.id === 'side-2');
+    expect(formatMealName(main, side)).toBe(`${main?.name} burgonyapürével`);
   });
 });

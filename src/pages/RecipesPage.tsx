@@ -35,6 +35,7 @@ export default function RecipesPage() {
 
   const setCategory = (category: string) => {
     const next = new URLSearchParams(params);
+    next.delete('quick');
     if (category === 'all') next.delete('category');
     else next.set('category', category);
     setParams(next);
@@ -43,7 +44,10 @@ export default function RecipesPage() {
   const toggleQuick = () => {
     const next = new URLSearchParams(params);
     if (quickOnly) next.delete('quick');
-    else next.set('quick', '1');
+    else {
+      next.delete('category');
+      next.set('quick', '1');
+    }
     setParams(next);
   };
 

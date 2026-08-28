@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, createGenerationSelection, GenerationSelection, MealSlot as MealSlotType, MenuProfile } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
-import { Shuffle, Trash2, Zap, ShoppingCart, Check, Flame, Utensils, Pencil, List, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Shuffle, Trash2, Zap, ShoppingCart, Check, Flame, Utensils, Pencil, List, RotateCcw, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { isQuickRecipe } from '@/lib/recipeScheduling';
 import { estimateRecipeCalories } from '@/lib/calorieCalculator';
+import { formatMealName } from '@/lib/mealDisplay';
 
 type SortMode = 'abc' | 'random' | 'favorites';
 
@@ -180,13 +181,16 @@ type MobilePlanProps = {
 };
 
 function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOverview, setShowWeekOverview, weekPlan, recipes, options, dinnerOptions, updateDay, changeMessage, canUndo, onUndo }: MobilePlanProps) {
+  const [replaceSlot, setReplaceSlot] = useState<MobileSlot | null>(null);
   const plan = weekPlan[activeDay];
   const dayIndex = WEEKDAYS.indexOf(activeDay);
   const recipeFor = (id: string | null) => id ? recipes.find(recipe => recipe.id === id) : undefined;
   const mealRows = [
-    ['Leves', plan.soup], ['Főétel', plan.lunch], ['Köret', plan.side], ['Savanyúság', plan.pickle], ['Desszert', plan.dessert], ['Vacsora', plan.dinner],
+    ['Leves', plan.soup, 'soup'], ['Főétel', plan.lunch, 'lunch'], ['Köret', plan.side, 'side'], ['Savanyúság', plan.pickle, 'pickle'], ['Desszert', plan.dessert, 'dessert'], ['Vacsora', plan.dinner, 'dinner'],
   ] as const;
   const visibleRows = mealRows.filter(([, id]) => Boolean(id));
+  const replacementOptions = replaceSlot === 'dinner' ? dinnerOptions : replaceSlot ? options(slotCategory(replaceSlot)) : [];
+  const selectedReplacement = replaceSlot ? plan[replaceSlot] : null;
 
   return <div className="md:hidden" data-testid="mobile-planner">
     <div className="sticky top-14 z-30 -mx-4 mb-4 border-y bg-[#FFF8EE]/95 px-3 py-2 backdrop-blur">
@@ -219,19 +223,46 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
         <MealSlot label="Desszert" value={plan.dessert} servings={plan.dessertServings} options={options('dessert')} recipes={recipes} onChange={value => updateDay(activeDay, { dessert: value })} onServingsChange={value => updateDay(activeDay, { dessertServings: value })} />
         <MealSlot label="Vacsora – gyors étel" value={plan.dinner} servings={plan.dinnerServings} days={plan.dinnerDays} options={dinnerOptions} recipes={recipes} onChange={value => updateDay(activeDay, { dinner: value })} onServingsChange={value => updateDay(activeDay, { dinnerServings: value })} onDaysChange={value => updateDay(activeDay, { dinnerDays: value })} />
       </div> : <div className="space-y-2">
-        {visibleRows.length ? visibleRows.map(([label, id]) => <CompactMeal key={label} label={label} recipe={recipeFor(id)} servings={servingsForLabel(label, plan)} />) : <p className="rounded-lg bg-secondary/30 p-5 text-center text-sm text-muted-foreground">Erre a napra még nincs menü.</p>}
+        {visibleRows.length ? visibleRows.map(([label, id, slot]) => <CompactMeal key={label} label={mobileMealLabel(label, slot)} recipe={recipeFor(id)} displayName={slot === 'lunch' ? formatMealName(recipeFor(id), recipeFor(plan.side)) : undefined} servings={servingsForLabel(label, plan)} onReplace={() => setReplaceSlot(slot)} />) : <p className="rounded-lg bg-secondary/30 p-5 text-center text-sm text-muted-foreground">Erre a napra még nincs menü.</p>}
       </div>}
     </section>}
+    {replaceSlot && <div className="fixed inset-0 z-[70] flex items-end bg-black/40" role="dialog" aria-label={`${slotLabel(replaceSlot)} cseréje`}>
+      <div className="w-full rounded-t-2xl bg-card p-5 shadow-xl">
+        <div className="mb-4 flex items-center justify-between"><div><p className="text-xs font-extrabold uppercase tracking-wider text-primary">{replaceSlot === 'dinner' ? 'Vacsora' : 'Ebéd'}</p><h3 className="text-lg font-semibold">{slotLabel(replaceSlot)} cseréje</h3></div><Button variant="ghost" size="icon" aria-label="Csere bezárása" onClick={() => setReplaceSlot(null)}><X className="h-5 w-5" /></Button></div>
+        <label className="mb-2 block text-sm font-medium" htmlFor="mobile-replacement">Válassz másik ételt</label>
+        <select id="mobile-replacement" value={selectedReplacement || ''} onChange={event => { updateDay(activeDay, { [replaceSlot]: event.target.value || null }); setReplaceSlot(null); }} className="w-full rounded-lg border bg-background px-3 py-3 text-base">
+          <option value="">— Nincs kiválasztva —</option>
+          {replacementOptions.map(recipe => <option key={recipe.id} value={recipe.id}>{recipe.name}</option>)}
+        </select>
+        <p className="mt-3 text-xs text-muted-foreground">Csak ez az egy étel változik meg. A nap többi része változatlan marad.</p>
+      </div>
+    </div>}
   </div>;
 }
 
-function CompactMeal({ label, recipe, servings }: { label: string; recipe?: Recipe; servings: number }) {
+function CompactMeal({ label, recipe, displayName, servings, onReplace }: { label: string; recipe?: Recipe; displayName?: string; servings: number; onReplace: () => void }) {
   if (!recipe) return null;
-  return <Link to={`/recipes/${recipe.id}`} className="flex items-center gap-3 rounded-xl border bg-secondary/20 p-2.5">
-    <img src={recipe.imageUrl} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
-    <div className="min-w-0 flex-1"><p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</p><p className="line-clamp-2 text-sm font-semibold">{recipe.name}</p><p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground"><Flame className="h-3 w-3" /> kb. {estimateRecipeCalories(recipe)} kcal · {servings} adag</p></div>
-    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-  </Link>;
+  return <div className="flex items-center gap-3 rounded-xl border bg-secondary/20 p-2.5">
+    <Link to={`/recipes/${recipe.id}`} className="flex min-w-0 flex-1 items-center gap-3">
+      <img src={recipe.imageUrl} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
+      <div className="min-w-0 flex-1"><p className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">{label}</p><p className="line-clamp-2 text-sm font-semibold">{displayName || recipe.name}</p><p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground"><Flame className="h-3 w-3" /> kb. {estimateRecipeCalories(recipe)} kcal · {servings} adag</p></div>
+    </Link>
+    <Button type="button" variant="outline" size="sm" className="h-9 shrink-0 border-primary px-3 font-bold text-primary" onClick={onReplace}>Csere</Button>
+  </div>;
+}
+
+type MobileSlot = 'soup' | 'lunch' | 'side' | 'pickle' | 'dessert' | 'dinner';
+
+function slotCategory(slot: MobileSlot): Recipe['category'] {
+  return ({ soup: 'soup', lunch: 'main', side: 'side', pickle: 'pickle', dessert: 'dessert', dinner: 'main' } as const)[slot];
+}
+
+function slotLabel(slot: MobileSlot) {
+  return ({ soup: 'Leves', lunch: 'Főétel', side: 'Köret', pickle: 'Savanyúság', dessert: 'Desszert', dinner: 'Vacsora' } as const)[slot];
+}
+
+function mobileMealLabel(label: string, slot: MobileSlot) {
+  return slot === 'dinner' ? 'VACSORA' : `EBÉD · ${label.toLocaleUpperCase('hu')}`;
 }
 
 function mobileDayLabel(day: WeekDay) {

@@ -61,6 +61,14 @@ describe('weekly menu generation rules', () => {
     expect(generateWeekPlan(catalog, 1, 0, 'balanced').Hétfő.side).toBeNull();
   });
 
+  it('keeps the side of fasírt selectable instead of baking mashed potatoes into the recipe', () => {
+    const catalog = defaultRecipes.filter(recipe => recipe.category !== 'main' || recipe.id === 'main-14');
+    const plan = generateWeekPlan(catalog, 1, 0, 'balanced');
+    expect(plan.Hétfő.lunch).toBe('main-14');
+    expect(plan.Hétfő.side).not.toBeNull();
+    expect(defaultRecipes.find(recipe => recipe.id === 'main-14')?.ingredients.some(ingredient => ingredient.name === 'burgonya')).toBe(false);
+  });
+
   it('does not repeat a dish between lunches and dinners in the same week', () => {
     const plan = generateWeekPlan(defaultRecipes, 7, 7, 'simple');
     const mealIds = WEEKDAYS.flatMap(day => [plan[day].lunch, plan[day].dinner]).filter(Boolean);
