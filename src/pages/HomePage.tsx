@@ -7,7 +7,7 @@ const features = [
   { to: '/planner', icon: CalendarDays, title: 'Heti menütervező', desc: 'Készíts ebéd- és vacsoratervet néhány kattintással', color: 'bg-[#F7D8C8] text-[#B74624]', card: 'bg-[#FFF1E8] border-[#E9BDA7]' },
   { to: '/shopping', icon: ShoppingCart, title: 'Bevásárlólista', desc: 'A menü alapján automatikusan összeállítva', color: 'bg-[#DCE8D7] text-[#526A4B]', card: 'bg-[#F2F7EF] border-[#C8D8C1]' },
   { to: '/recipes', icon: BookOpen, title: 'Receptek', desc: 'Kezdőknek is érthető receptek, lépésről lépésre', color: 'bg-[#F3E2C7] text-[#775A35]', card: 'bg-[#FFF8EC] border-[#E7D1AD]' },
-  { to: '/budget', icon: WalletCards, title: 'Budget', desc: 'Heti étkezési keret tervezése — hamarosan', color: 'bg-[#E7E2D8] text-[#5F554A]', card: 'bg-[#F8F5EF] border-[#D9D0C2]' },
+  { to: '/budget', icon: WalletCards, title: 'Budget', desc: 'Becsült heti költség és keretfigyelés', color: 'bg-[#E7E2D8] text-[#5F554A]', card: 'bg-[#F8F5EF] border-[#D9D0C2]' },
 ];
 
 export default function HomePage() {
