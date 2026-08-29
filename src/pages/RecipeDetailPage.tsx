@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS, EN_MEAL_TYPE_LABELS } from '@/i18n/labels';
+import RecipeNarrator from '@/components/RecipeNarrator';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -77,6 +78,8 @@ export default function RecipeDetailPage() {
           </div>
         </div>
       </div>
+
+      {recipe.id === 'soup-2' && <RecipeNarrator recipeName={recipe.name} description={recipe.description} />}
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Ingredients */}
