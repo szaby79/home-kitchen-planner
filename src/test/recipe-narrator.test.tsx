@@ -60,8 +60,8 @@ describe('Gulyásleves spoken guidance', () => {
 
     const utterance = speech.speak.mock.calls.at(-1)?.[0] as MockUtterance;
     expect(utterance.lang).toBe('hu-HU');
-    expect(utterance.rate).toBe(0.95);
-    expect(utterance.pitch).toBe(0.92);
+    expect(utterance.rate).toBe(0.84);
+    expect(utterance.pitch).toBe(1);
     fireEvent.click(screen.getByRole('button', { name: 'Szünet' }));
     expect(speech.pause).toHaveBeenCalled();
     expect(screen.getByRole('button', { name: 'Folytatás' })).toBeInTheDocument();
@@ -76,6 +76,8 @@ describe('Gulyásleves spoken guidance', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Play' }));
     const utterance = speech.speak.mock.calls.at(-1)?.[0] as MockUtterance;
     expect(utterance.lang).toBe('en-CA');
+    expect(utterance.rate).toBe(0.78);
+    expect(utterance.pitch).toBe(1);
     fireEvent.click(screen.getByRole('button', { name: 'Next step' }));
     expect(screen.getByText('Step 2 of 3')).toBeInTheDocument();
     expect((speech.speak.mock.calls.at(-1)?.[0] as MockUtterance).text).toContain('Step 2');

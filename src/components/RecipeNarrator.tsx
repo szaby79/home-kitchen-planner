@@ -10,6 +10,9 @@ type Props = {
 
 type PlaybackStatus = 'idle' | 'playing' | 'paused' | 'finished';
 
+const HUNGARIAN_RATE = 0.84;
+const ENGLISH_RATE = 0.78;
+
 export default function RecipeNarrator({ recipeName, description }: Props) {
   const { isEnglish, tr } = useLanguage();
   const steps = useMemo(() => splitSteps(description), [description]);
@@ -56,8 +59,8 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     const prefix = segmentIndex === 0 ? tr(`${stepIndex + 1}. lépés. `, `Step ${stepIndex + 1}. `) : '';
     const utterance = new SpeechSynthesisUtterance(`${prefix}${segments[stepIndex][segmentIndex]}`);
     utterance.lang = isEnglish ? 'en-CA' : 'hu-HU';
-    utterance.rate = 0.95;
-    utterance.pitch = 0.92;
+    utterance.rate = isEnglish ? ENGLISH_RATE : HUNGARIAN_RATE;
+    utterance.pitch = 1;
     utterance.volume = 1;
     utterance.voice = chooseWarmVoice(voices.current, isEnglish) ?? null;
     utterance.onstart = () => { if (activeRun === runId.current) setStatus('playing'); };
@@ -101,8 +104,8 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"><Volume2 className="h-5 w-5" /></span>
       <div>
         <h2 className="font-display text-lg font-semibold">{tr('Nagymama hangos segítsége', "Grandma's cooking guidance")}</h2>
-        <p className="text-sm text-muted-foreground">{tr(`A ${recipeName} elkészítése lépésről lépésre, normál tempóban.`, `Step-by-step guidance for ${recipeName}, spoken at a natural pace.`)}</p>
-        <span className="mt-2 inline-flex rounded-full bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent-foreground">{isEnglish ? 'English voice' : 'Magyar hang'} · {tr('próbaverzió', 'demo')}</span>
+        <p className="text-sm text-muted-foreground">{tr(`A ${recipeName} elkészítése lépésről lépésre, nyugodt tempóban.`, `Step-by-step guidance for ${recipeName}, spoken at an easy-to-follow pace.`)}</p>
+        <span className="mt-2 inline-flex rounded-full bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent-foreground">{isEnglish ? 'English voice' : 'Magyar hang'} · {tr('természetesebb hangteszt', 'natural voice test')}</span>
       </div>
     </div>
 
@@ -141,7 +144,7 @@ function chooseWarmVoice(voices: SpeechSynthesisVoice[], english: boolean) {
   const language = english ? /^en(?:-|_)/i : /^hu(?:-|_)/i;
   const candidates = voices.filter(voice => language.test(voice.lang));
   const preferredNames = english
-    ? ['Samantha', 'Karen', 'Moira', 'Serena', 'Susan', 'Zira', 'Female']
-    : ['Tünde', 'Mariska', 'Eszter', 'Hungarian Female', 'Google magyar'];
+    ? ['Natural', 'Neural', 'Premium', 'Enhanced', 'Siri Female', 'Samantha', 'Karen', 'Moira', 'Serena', 'Susan', 'Zira', 'Female']
+    : ['Natural', 'Neural', 'Premium', 'Enhanced', 'Siri', 'Tünde', 'Mariska', 'Eszter', 'Hungarian Female', 'Google magyar'];
   return preferredNames.map(name => candidates.find(voice => voice.name.toLocaleLowerCase().includes(name.toLocaleLowerCase()))).find(Boolean) ?? candidates[0];
 }
