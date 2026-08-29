@@ -127,7 +127,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
-          Plan & Pan v1.14 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
+          Plan & Pan v1.15 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
         </footer>
       </div>
     </AppContext.Provider>
