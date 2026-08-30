@@ -72,7 +72,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         const response = await fetch('/api/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ text, language: isEnglish ? 'en' : 'hu' }),
           signal: controller.signal,
         });
         if (!response.ok) throw new Error('tts-failed');
@@ -120,7 +120,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         setError(tr('A hang lejátszása nem sikerült. Próbáld újra.', 'Audio playback failed. Please try again.'));
       }
     }
-  }, [steps, stopAudio, tr]);
+  }, [steps, stopAudio, tr, isEnglish]);
 
   const resumeAudio = (audio: HTMLAudioElement) => {
     const activeRun = runId.current;

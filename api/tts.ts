@@ -16,9 +16,17 @@ export default async function handler(request: Request): Promise<Response> {
   }
 
   let text = '';
+  let language: 'hu' | 'en' = 'en';
   try {
-    const body = (await request.json()) as { text?: unknown };
+    const body = (await request.json()) as { text?: unknown; language?: unknown };
     if (typeof body?.text === 'string') text = body.text.trim();
+    // Preserve the legacy voice for older clients that omit the language.
+    if (body?.language !== undefined) {
+      if (body.language !== 'hu' && body.language !== 'en') {
+        return json({ error: 'Unsupported language.' }, 400);
+      }
+      language = body.language;
+    }
   } catch {
     return json({ error: 'Invalid request.' }, 400);
   }
@@ -27,7 +35,9 @@ export default async function handler(request: Request): Promise<Response> {
   if (text.length > MAX_LENGTH) return json({ error: 'This step is too long to read aloud.' }, 413);
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
-  const voiceId = process.env.ELEVENLABS_VOICE_ID;
+  const voiceId = language === 'hu'
+    ? process.env.ELEVENLABS_VOICE_ID_HU
+    : process.env.ELEVENLABS_VOICE_ID;
   if (!apiKey || !voiceId) {
     return json({ error: 'Voice guidance is not available right now.' }, 503);
   }
