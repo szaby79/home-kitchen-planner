@@ -67,19 +67,28 @@ describe('Gulyásleves spoken guidance', () => {
     expect(screen.getByRole('button', { name: 'Folytatás' })).toBeInTheDocument();
   });
 
-  it('narrates and labels the same feature in English', () => {
+  it('uses the secure /api/tts endpoint for English narration', async () => {
     localStorage.setItem('plan-pan-language', 'en');
+    const fetchMock = vi.fn(async () => new Response(new Blob(['audio'], { type: 'audio/mpeg' }), { status: 200 }));
+    vi.stubGlobal('fetch', fetchMock);
+    Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: vi.fn(() => 'blob:audio') });
+    Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn() });
+    HTMLMediaElement.prototype.play = vi.fn(async () => undefined);
+    HTMLMediaElement.prototype.pause = vi.fn();
+
     render(<LanguageProvider><RecipeNarrator recipeName="Gulyásleves" description={englishSteps} /></LanguageProvider>);
 
     expect(screen.getByText("Grandma's cooking guidance")).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Back 10 sec' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
+
     fireEvent.click(screen.getByRole('button', { name: 'Play' }));
-    const utterance = speech.speak.mock.calls.at(-1)?.[0] as MockUtterance;
-    expect(utterance.lang).toBe('en-CA');
-    expect(utterance.rate).toBe(0.78);
-    expect(utterance.pitch).toBe(1);
-    fireEvent.click(screen.getByRole('button', { name: 'Next step' }));
-    expect(screen.getByText('Step 2 of 3')).toBeInTheDocument();
-    expect((speech.speak.mock.calls.at(-1)?.[0] as MockUtterance).text).toContain('Step 2');
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe('/api/tts');
+    expect(JSON.parse(String(init.body))).toEqual({ text: 'Cut the beef. Chop the onion.' });
+    expect(speech.speak).not.toHaveBeenCalled();
+    await vi.waitFor(() => expect(HTMLMediaElement.prototype.play).toHaveBeenCalled());
   });
+
 });
