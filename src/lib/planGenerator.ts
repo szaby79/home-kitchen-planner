@@ -92,10 +92,16 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
 }
 
 export function generateSelectedPlan(recipes: Recipe[], currentPlan: WeekPlan, selection: GenerationSelection, profile: MenuProfile = 'balanced', preferences: MenuPreferences = DEFAULT_MENU_PREFERENCES, favoriteIds: string[] = []): WeekPlan {
+  if (!WEEKDAYS.some(day => selection[day].lunch || selection[day].dinner)) return currentPlan;
   const previousRecipeIds = WEEKDAYS.flatMap(day => [currentPlan[day].soup, currentPlan[day].lunch, currentPlan[day].side, currentPlan[day].pickle, currentPlan[day].dinner, currentPlan[day].dessert]).filter(Boolean) as string[];
   const generated = generateWeekPlan(recipes, 7, 7, profile, preferences, favoriteIds, previousRecipeIds);
-  const next = Object.fromEntries(WEEKDAYS.map(day => [day, { ...currentPlan[day] }])) as WeekPlan;
+  // Generate replaces the active plan; the previous plan is only a variety hint.
+  // Build and validate the entire result before the store commits it.
+  const next = createEmptyWeekPlan();
   WEEKDAYS.forEach(day => {
+    if ((selection[day].lunch && !generated[day].lunch) || (selection[day].dinner && !generated[day].dinner)) {
+      throw new Error('No suitable recipe for a selected meal');
+    }
     if (selection[day].lunch) next[day] = {
       ...next[day], soup: generated[day].soup, lunch: generated[day].lunch, side: generated[day].side,
       pickle: generated[day].pickle, dessert: generated[day].dessert, lunchDays: generated[day].lunchDays,

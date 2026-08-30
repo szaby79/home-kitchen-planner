@@ -32,7 +32,7 @@ export default function ShoppingPage() {
         <ArrowLeft className="h-4 w-4" /> {tr('Vissza a menühöz', 'Back to menu')}
       </Link>
       <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
-      <p className="mb-4 text-sm text-muted-foreground">{tr('A lista a menü és az ételcserék alapján automatikusan frissül.', 'The list updates automatically when the menu or a dish changes.')}</p>
+      <p className="mb-4 text-sm text-muted-foreground">{tr('A lista csak az aktuális terv hozzávalóit és a saját tételeidet tartalmazza. Új terv vagy ételcsere után automatikusan frissül.', 'The list contains only ingredients for the active plan and your manually added items. It updates automatically after a new plan or a dish replacement.')}</p>
 
       {/* View toggle */}
       <div className="flex gap-2 mb-4">

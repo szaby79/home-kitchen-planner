@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 import { generateSelectedPlan, generateWeekPlan } from '@/lib/planGenerator';
-import { createGenerationSelection, WEEKDAYS } from '@/types/recipe';
+import { createEmptyDayPlan, createGenerationSelection, DEFAULT_MENU_PREFERENCES, WEEKDAYS } from '@/types/recipe';
 import { isQuickRecipe, isSundayRecipe, recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 
 describe('weekly menu generation rules', () => {
@@ -92,15 +92,59 @@ describe('weekly menu generation rules', () => {
     }
   });
 
-  it('changes only the meals selected by the user', () => {
+  it('replaces a full week with only the selected dinner without mutating the original', () => {
     const original = generateWeekPlan(defaultRecipes, 7, 7, 'balanced');
+    const snapshot = structuredClone(original);
     const selection = createGenerationSelection(false);
     selection.Szerda.dinner = true;
     const updated = generateSelectedPlan(defaultRecipes, original, selection, 'balanced');
     WEEKDAYS.forEach(day => {
-      expect(updated[day].lunch).toBe(original[day].lunch);
-      if (day !== 'Szerda') expect(updated[day].dinner).toBe(original[day].dinner);
+      expect(updated[day].lunch).toBeNull();
+      expect(updated[day].soup).toBeNull();
+      expect(updated[day].side).toBeNull();
+      expect(updated[day].pickle).toBeNull();
+      expect(updated[day].dessert).toBeNull();
+      if (day !== 'Szerda') expect(updated[day]).toEqual(createEmptyDayPlan());
     });
     expect(updated.Szerda.dinner).not.toBeNull();
+    expect(original).toEqual(snapshot);
+  });
+
+  it.each([1, 2, 3] as const)('replaces fourteen meals with four weekend meals (batch days: %s)', batchDays => {
+    const original = generateWeekPlan(defaultRecipes, 7, 7);
+    const selection = createGenerationSelection(false);
+    selection.Szombat = { lunch: true, dinner: true };
+    selection.Vasárnap = { lunch: true, dinner: true };
+    const next = generateSelectedPlan(defaultRecipes, original, selection, 'balanced', { ...DEFAULT_MENU_PREFERENCES, familySize: 6, batchDays });
+    WEEKDAYS.slice(0, 5).forEach(day => expect(next[day]).toEqual(createEmptyDayPlan()));
+    expect(WEEKDAYS.flatMap(day => [next[day].lunch, next[day].dinner]).filter(Boolean)).toHaveLength(4);
+    for (const day of ['Szombat', 'Vasárnap'] as const) {
+      expect(next[day].soup).toBeTruthy();
+      expect(next[day].dessert).toBeTruthy();
+      expect(next[day].lunchServings).toBe(6);
+      expect(next[day].lunchDays).toBeLessThanOrEqual(2);
+      expect(next[day].dinnerDays).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it('keeps nonconsecutive lunches separate and clears all other slots', () => {
+    const selection = createGenerationSelection(false);
+    selection.Hétfő.lunch = true;
+    selection.Szerda.lunch = true;
+    const next = generateSelectedPlan(defaultRecipes, generateWeekPlan(defaultRecipes, 7, 7), selection, 'simple', { ...DEFAULT_MENU_PREFERENCES, batchDays: 3 });
+    expect(next.Hétfő.lunchDays).toBe(1);
+    expect(next.Szerda.lunchDays).toBe(1);
+    WEEKDAYS.forEach(day => {
+      expect(next[day].dinner).toBeNull();
+      if (!selection[day].lunch) expect(next[day]).toEqual(createEmptyDayPlan());
+    });
+  });
+
+  it('does not clear the plan for an empty selection or mutate it on failure', () => {
+    const original = generateWeekPlan(defaultRecipes, 7, 7);
+    const snapshot = structuredClone(original);
+    expect(generateSelectedPlan(defaultRecipes, original, createGenerationSelection(false))).toBe(original);
+    expect(() => generateSelectedPlan([], original, createGenerationSelection(true))).toThrow('No suitable recipe');
+    expect(original).toEqual(snapshot);
   });
 });
