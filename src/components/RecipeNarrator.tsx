@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Pause, Play, Repeat2, Rewind, SkipBack, SkipForward, Volume2 } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Loader2, Pause, Play, Repeat2, Rewind, SkipBack, SkipForward, Square, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 
@@ -20,9 +20,23 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
   const [supported, setSupported] = useState(true);
   const [status, setStatus] = useState<PlaybackStatus>('idle');
   const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const currentSegment = useRef(0);
   const runId = useRef(0);
   const voices = useRef<SpeechSynthesisVoice[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioCache = useRef(new Map<string, string>());
+  const pendingText = useRef<string | null>(null);
+
+  const stopAudio = useCallback(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    pendingText.current = null;
+  }, []);
 
   useEffect(() => {
     if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
@@ -39,14 +53,24 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     };
   }, []);
 
+  // Clean up audio element and cached object URLs on unmount.
+  useEffect(() => () => {
+    audioRef.current?.pause();
+    audioRef.current = null;
+    audioCache.current.forEach(url => URL.revokeObjectURL(url));
+    audioCache.current.clear();
+  }, []);
+
   useEffect(() => {
-    if (!supported || !('speechSynthesis' in window)) return;
     runId.current += 1;
-    window.speechSynthesis.cancel();
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    stopAudio();
     currentSegment.current = 0;
     setCurrentStep(0);
     setStatus('idle');
-  }, [isEnglish, description, supported]);
+    setError(null);
+    setLoading(false);
+  }, [isEnglish, description, stopAudio]);
 
   const speakSegment = (stepIndex: number, segmentIndex: number) => {
     if (!supported || !segments[stepIndex]?.[segmentIndex]) return;
@@ -56,13 +80,13 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     setCurrentStep(stepIndex);
     currentSegment.current = segmentIndex;
 
-    const prefix = segmentIndex === 0 ? tr(`${stepIndex + 1}. lépés. `, `Step ${stepIndex + 1}. `) : '';
+    const prefix = segmentIndex === 0 ? `${stepIndex + 1}. lépés. ` : '';
     const utterance = new SpeechSynthesisUtterance(`${prefix}${segments[stepIndex][segmentIndex]}`);
-    utterance.lang = isEnglish ? 'en-CA' : 'hu-HU';
-    utterance.rate = isEnglish ? ENGLISH_RATE : HUNGARIAN_RATE;
+    utterance.lang = 'hu-HU';
+    utterance.rate = HUNGARIAN_RATE;
     utterance.pitch = 1;
     utterance.volume = 1;
-    utterance.voice = chooseWarmVoice(voices.current, isEnglish) ?? null;
+    utterance.voice = chooseWarmVoice(voices.current, false) ?? null;
     utterance.onstart = () => { if (activeRun === runId.current) setStatus('playing'); };
     utterance.onend = () => {
       if (activeRun !== runId.current) return;
@@ -79,7 +103,74 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     synth.speak(utterance);
   };
 
+  const playStepWithCustomVoice = useCallback(async (stepIndex: number) => {
+    const text = steps[stepIndex]?.trim();
+    if (!text) return;
+    if (pendingText.current === text) return; // prevent duplicate requests
+    const activeRun = ++runId.current;
+    stopAudio();
+    setCurrentStep(stepIndex);
+    setError(null);
+
+    let url = audioCache.current.get(text);
+    if (!url) {
+      pendingText.current = text;
+      setLoading(true);
+      try {
+        const response = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text }),
+        });
+        if (!response.ok) throw new Error('tts-failed');
+        const blob = await response.blob();
+        url = URL.createObjectURL(blob);
+        audioCache.current.set(text, url);
+      } catch {
+        if (activeRun === runId.current) {
+          setLoading(false);
+          setStatus('idle');
+          setError(tr('A hangos segítség most nem elérhető. Próbáld újra.', 'Voice guidance is unavailable right now. Please try again.'));
+        }
+        pendingText.current = null;
+        return;
+      } finally {
+        pendingText.current = null;
+        if (activeRun === runId.current) setLoading(false);
+      }
+    }
+    if (activeRun !== runId.current) return;
+
+    let audio = audioRef.current;
+    if (!audio) {
+      audio = new Audio();
+      audioRef.current = audio;
+    }
+    audio.onended = () => { if (activeRun === runId.current) setStatus('finished'); };
+    audio.onerror = () => { if (activeRun === runId.current) setStatus('idle'); };
+    audio.src = url;
+    audio.currentTime = 0;
+    try {
+      await audio.play();
+      if (activeRun === runId.current) setStatus('playing');
+    } catch {
+      if (activeRun === runId.current) setStatus('idle');
+    }
+  }, [steps, stopAudio, tr]);
+
   const playOrPause = () => {
+    if (isEnglish) {
+      const audio = audioRef.current;
+      if (status === 'playing' && audio) {
+        audio.pause();
+        setStatus('paused');
+      } else if (status === 'paused' && audio) {
+        void audio.play().then(() => setStatus('playing')).catch(() => setStatus('idle'));
+      } else {
+        void playStepWithCustomVoice(currentStep);
+      }
+      return;
+    }
     const synth = window.speechSynthesis;
     if (status === 'playing') {
       synth.pause();
@@ -91,13 +182,42 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       speakSegment(status === 'finished' ? 0 : currentStep, status === 'finished' ? 0 : currentSegment.current);
     }
   };
-  const jumpToStep = (stepIndex: number) => speakSegment(Math.max(0, Math.min(steps.length - 1, stepIndex)), 0);
+
+  const stopPlayback = () => {
+    runId.current += 1;
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    stopAudio();
+    setLoading(false);
+    setStatus('idle');
+  };
+
+  const jumpToStep = (stepIndex: number) => {
+    const target = Math.max(0, Math.min(steps.length - 1, stepIndex));
+    if (isEnglish) {
+      runId.current += 1;
+      stopAudio();
+      setStatus('idle');
+      void playStepWithCustomVoice(target);
+      return;
+    }
+    speakSegment(target, 0);
+  };
+
   const rewindTenSeconds = () => {
+    if (isEnglish) {
+      const audio = audioRef.current;
+      if (!audio || !audio.src) return;
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+      void audio.play().then(() => setStatus('playing')).catch(() => undefined);
+      return;
+    }
     const segmentIndex = currentSegment.current;
     if (segmentIndex > 0) speakSegment(currentStep, segmentIndex - 1);
     else if (currentStep > 0) speakSegment(currentStep - 1, Math.max(0, segments[currentStep - 1].length - 1));
     else speakSegment(0, 0);
   };
+
+  const unavailable = !isEnglish && !supported;
 
   return <section className="mb-6 overflow-hidden rounded-xl border border-primary/25 bg-card shadow-sm" data-testid="recipe-narrator">
     <div className="flex items-start gap-3 border-b bg-primary/[0.045] p-4 sm:p-5">
@@ -109,23 +229,25 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       </div>
     </div>
 
-    {!supported ? <p className="p-5 text-sm text-muted-foreground">{tr('Ezen az eszközön a hangos felolvasás nem támogatott.', 'Spoken guidance is not supported on this device.')}</p> : <div className="space-y-4 p-4 sm:p-5">
+    {unavailable ? <p className="p-5 text-sm text-muted-foreground">{tr('Ezen az eszközön a hangos felolvasás nem támogatott.', 'Spoken guidance is not supported on this device.')}</p> : <div className="space-y-4 p-4 sm:p-5">
       <div className="rounded-lg border bg-secondary/25 p-4" aria-live="polite">
         <p className="mb-1 text-xs font-extrabold uppercase tracking-wider text-primary">{tr(`${currentStep + 1}. lépés / ${steps.length}`, `Step ${currentStep + 1} of ${steps.length}`)}</p>
         <p className="text-sm leading-relaxed">{steps[currentStep]}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-        <Button type="button" size="lg" onClick={playOrPause} className="gap-2">
-          {status === 'playing' ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {status === 'playing' ? tr('Szünet', 'Pause') : status === 'paused' ? tr('Folytatás', 'Continue') : tr('Lejátszás', 'Play')}
+        <Button type="button" size="lg" onClick={playOrPause} disabled={loading} className="gap-2">
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : status === 'playing' ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          {loading ? tr('Készítem…', 'Preparing…') : status === 'playing' ? tr('Szünet', 'Pause') : status === 'paused' ? tr('Folytatás', 'Continue') : tr('Lejátszás', 'Play')}
         </Button>
         <Button type="button" variant="outline" size="lg" onClick={rewindTenSeconds} className="gap-2"><Rewind className="h-4 w-4" /> {tr('10 mp vissza', 'Back 10 sec')}</Button>
         <Button type="button" variant="outline" size="lg" onClick={() => jumpToStep(currentStep)} className="gap-2"><Repeat2 className="h-4 w-4" /> {tr('Lépés ismétlése', 'Repeat step')}</Button>
+        <Button type="button" variant="ghost" size="lg" onClick={stopPlayback} className="gap-2"><Square className="h-4 w-4" /> {tr('Leállítás', 'Stop')}</Button>
         <Button type="button" variant="ghost" size="lg" disabled={currentStep === 0} onClick={() => jumpToStep(currentStep - 1)} className="gap-2"><SkipBack className="h-4 w-4" /> {tr('Előző lépés', 'Previous step')}</Button>
         <Button type="button" variant="ghost" size="lg" disabled={currentStep === steps.length - 1} onClick={() => jumpToStep(currentStep + 1)} className="gap-2"><SkipForward className="h-4 w-4" /> {tr('Következő lépés', 'Next step')}</Button>
       </div>
-      <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az előző rövid mondattól folytatja, hogy biztosan semmi ne maradjon ki.', '“Back 10 sec” restarts from the previous short sentence so you do not miss anything.')}</p>
+      {error && <p className="text-sm font-medium text-destructive" role="alert">{error}</p>}
+      <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az előző rövid mondattól folytatja, hogy biztosan semmi ne maradjon ki.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>
     </div>}
   </section>;
 }
