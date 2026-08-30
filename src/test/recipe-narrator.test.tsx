@@ -80,7 +80,7 @@ describe('Hungarian and English custom voice guidance', () => {
     expect(fetchMock).not.toHaveBeenCalled();
     fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
     await screen.findByRole('button', { name: 'Szünet' });
-    expect(JSON.parse(String(fetchMock.mock.calls[0][1]?.body))).toEqual({ text: 'Keverd össze, majd tálald.' });
+    expect(JSON.parse(String(fetchMock.mock.calls[0][1]?.body))).toEqual({ text: 'Keverd össze, majd tálald.', language: 'hu' });
   });
 
   it.each(defaultRecipes.flatMap(recipe => (['hu', 'en'] as const).map(language => ({ recipe, language }))))(
@@ -97,7 +97,7 @@ describe('Hungarian and English custom voice guidance', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
       const [url, init] = fetchMock.mock.calls[0];
       expect(url).toBe('/api/tts');
-      expect(JSON.parse(String(init?.body))).toEqual({ text: steps[0] });
+      expect(JSON.parse(String(init?.body))).toEqual({ text: steps[0], language });
       expect(audioElements[0].play).toHaveBeenCalledOnce();
       expect(speech.speak).not.toHaveBeenCalled();
     },
@@ -121,7 +121,7 @@ describe('Hungarian and English custom voice guidance', () => {
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe('/api/tts');
     expect(init?.method).toBe('POST');
-    expect(JSON.parse(String(init?.body))).toEqual({ text: en ? 'Cut the beef. Chop the onion.' : 'Vágd fel a húst. Aprítsd fel a hagymát.' });
+    expect(JSON.parse(String(init?.body))).toEqual({ text: en ? 'Cut the beef. Chop the onion.' : 'Vágd fel a húst. Aprítsd fel a hagymát.', language });
     expect(audioElements[0].play).toHaveBeenCalledOnce();
     expect(speech.speak).not.toHaveBeenCalled();
   });

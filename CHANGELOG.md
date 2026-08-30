@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.20.0
+
+- Hungarian narration uses a dedicated server-side `ELEVENLABS_VOICE_ID_HU`; English continues to use the existing `ELEVENLABS_VOICE_ID`.
+- The player sends the selected UI language (`hu` or `en`) with each step. Unsupported language values return 400; older clients without a language retain the legacy voice.
+- Voice identifiers and API credentials stay in server environment variables, not in public source or browser code. Client-supplied voice IDs are not used.
+- Missing Hungarian configuration returns the existing friendly error rather than silently using the old English voice. English remains usable independently.
+- Model (`eleven_v3`), `[warmly] [gently]` tags, playback speed, audio format, caching and manual step controls are unchanged. A different voice may have its own natural rhythm; identical delivery to a single preview recording is not guaranteed.
+
+### Setup before merge / acceptance check
+
+1. In the Vercel project's Environment Variables, add `ELEVENLABS_VOICE_ID_HU` with the owner-selected Hungarian voice ID. Enable Production and Preview where the voice is to be tested. Do not replace the existing English voice variable or API key.
+2. Redeploy the preview after saving the variable. Open a recipe in Hungarian and press Play; compare the result with the approved ElevenLabs sample.
+3. Switch to English and verify the original English voice remains. Switch during playback/loading and check no old-language audio continues.
+4. No audio is requested on recipe open. Check repeat, pause/resume, stop and step navigation. Test on phone and desktop with the same text.
+
+The code/build tests use a simulated provider and do not consume credits or verify the real voice's accessibility. Real playback needs the Vercel configuration and uses ElevenLabs credits. Production merge requires separate owner approval.
+
 ## 1.19.0
 
 - Enable on-demand cooking guidance on every recipe detail page with directions, removing the Gulyásleves-only restriction. All 148 built-in recipes reuse their existing Hungarian and English instructions; no recipe content is rewritten.
