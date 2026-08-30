@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.21.0
+
+- After Play, narration automatically advances through the remaining recipe steps in both Hungarian and English; the last step stops and displays a completion message.
+- Reuse the same audio element and request only the next step when the current recording ends. Cached steps are reused. Opening a recipe still generates nothing; subsequent uncached steps consume the normal provider credits.
+- Pause suspends continuation; resume continues it. Stop cancels pending next-step loading. Recipe/language changes, manual navigation and stale/duplicate end events cannot start an obsolete step.
+- Provider or playback errors stop the sequence at the affected step for manual retry, without skipping instructions or falling back to a system voice.
+- Existing voices, language selection, model, warmth tags and playback speed remain unchanged. No new environment variables.
+
+### Acceptance check (Vercel, phone and desktop)
+
+1. Open any recipe in HU and press Play once. Each completed step should advance its text and audio automatically, then stop after the last step. Repeat in EN.
+2. Pause mid-step, wait, then Continue: no step should advance during the pause. Stop during next-step loading: no late audio should start.
+3. Try repeat, previous/next, rewind, changing language and leaving the recipe. Verify no old audio continues or extra steps are skipped.
+4. Next-step generation can cause a short loading gap; this release does not promise gapless playback. If a mobile browser blocks playback, use Play to retry the current cached step. Check this on a real iPhone before accepting the release.
+
+Automated tests use simulated audio/provider responses, not paid ElevenLabs requests. Merge/production deployment requires separate owner approval.
+
 ## 1.20.0
 
 - Hungarian narration uses a dedicated server-side `ELEVENLABS_VOICE_ID_HU`; English continues to use the existing `ELEVENLABS_VOICE_ID`.
