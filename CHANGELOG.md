@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.18.0
+
+- Hungarian cooking guidance now uses the same server-side ElevenLabs voice as English, replacing the browser's Hungarian system voice.
+- Reuse the existing `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`. The server's `eleven_v3` model, `[warmly] [gently]` delivery tags, and English request text/settings are unchanged.
+- Both languages have Play/Pause/Continue, Stop, step navigation, cached repeat, and an actual ten-second rewind. No speech is generated just by opening a recipe.
+- Stop, language/recipe changes and unmount cancel pending requests and prevent stale audio from playing. Object URLs are released; errors never fall back to the old system voice.
+- Playback remains per-step, like the existing English player. Automatic continuation and further voice-warmth tuning are not part of this release.
+
+### Voice acceptance check (Vercel preview)
+
+1. Open Gulyásleves in Hungarian. No audio/request should start before pressing **Lejátszás**.
+2. Press **Lejátszás**; check **Készítem…**, then the approved custom voice reading Hungarian. Test pause/continue, rewind, repeat, stop and next/previous step.
+3. Repeat the current step: it should reuse the session cache, without another generation request.
+4. Switch to English: old Hungarian playback stops; English playback uses the same previously configured voice and settings.
+5. Test Stop and switching language while audio is loading. A late response must not start the previous audio.
+6. If the service fails, a localized retry message appears, without a browser-voice fallback.
+
+`/api/tts` runs on Vercel, not the standalone Vite dev server. Existing environment variables must be available to the preview deployment. No new credentials are needed. Merge requires separate owner approval.
+
 ## 1.17.0
 
 - Generating a menu replaces the active plan with only the selected lunch/dinner slots. A lunch includes its soup, main, side, pickles and dessert where applicable.
