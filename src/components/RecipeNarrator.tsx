@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Loader2, Pause, Play, Repeat2, Rewind, SkipBack, SkipForward, Square, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { splitRecipeSteps } from '@/lib/recipeSteps';
 
 type Props = {
   recipeName: string;
@@ -12,7 +13,7 @@ type PlaybackStatus = 'idle' | 'playing' | 'paused' | 'finished';
 
 export default function RecipeNarrator({ recipeName, description }: Props) {
   const { isEnglish, tr } = useLanguage();
-  const steps = useMemo(() => splitSteps(description), [description]);
+  const steps = useMemo(() => splitRecipeSteps(description), [description]);
   const [status, setStatus] = useState<PlaybackStatus>('idle');
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -196,9 +197,4 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az aktuális lépés hangját tekeri vissza tíz másodperccel.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>
     </div>
   </section>;
-}
-
-function splitSteps(description: string) {
-  const matches = [...description.matchAll(/(?:^|\n\n)(\d+)\.\s*([\s\S]*?)(?=\n\n\d+\.|$)/g)];
-  return matches.length ? matches.map(match => match[2].trim()) : [description.trim()];
 }

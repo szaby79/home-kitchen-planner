@@ -79,7 +79,9 @@ export default function RecipeDetailPage() {
         </div>
       </div>
 
-      {recipe.id === 'soup-2' && <RecipeNarrator recipeName={recipe.name} description={recipe.description} />}
+      {recipe.description.trim() && (
+        <RecipeNarrator key={recipe.id} recipeName={recipe.name} description={recipe.description} />
+      )}
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Ingredients */}

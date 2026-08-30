@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.19.0
+
+- Enable on-demand cooking guidance on every recipe detail page with directions, removing the Gulyásleves-only restriction. All 148 built-in recipes reuse their existing Hungarian and English instructions; no recipe content is rewritten.
+- Split both single-newline and blank-line numbered instructions into individual spoken steps, including side dishes and pickles. Preserve trailing cautions and introductory text.
+- Reuse the existing ElevenLabs voice, model, server endpoint and credentials. No generation on page open; playback, repeat, pause, stop and manual step navigation are unchanged.
+- Key the narrator by recipe ID so navigation cannot retain another recipe's player or pending audio. Hide the player when a custom recipe has no directions.
+- Automated catalogue checks cover every HU/EN direction and the 1,200-character server limit; route tests verify on-demand playback for every built-in recipe in both languages, using a simulated provider (no paid API calls).
+- No menu, shopping list, secret or deployment changes. Automatic step continuation remains a separate task. Merge requires owner approval.
+
+### Acceptance check (Vercel preview)
+
+1. Open recipes from all six categories: soup, main, side, pickle, salad and dessert. Each should show cooking guidance without starting audio.
+2. Try Húsleves, Rántott csirkemell and Burgonyapüré in HU and EN. Press Play; verify the selected voice reads that recipe's displayed step.
+3. Test next/previous, repeat, pause/resume and stop. Single-line numbered recipes must expose separate steps, not one long recording.
+4. Navigate away during loading/playback and open another recipe. Old audio must stop and the new player must start idle at its first step.
+5. A custom recipe with directions also has a player; a blank description does not. Custom text is read as stored, not automatically translated.
+
+The preview needs the existing server environment variables; no new API key or voice ID is needed. Real voice quality must be checked manually on Vercel.
+
 ## 1.18.0
 
 - Hungarian cooking guidance now uses the same server-side ElevenLabs voice as English, replacing the browser's Hungarian system voice.
