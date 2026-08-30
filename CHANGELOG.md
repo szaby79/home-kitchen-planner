@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.23.0
+
+- Improve readability without changing the cream, terracotta and sage brand palette, recipe content or app behavior.
+- Darken secondary text in light mode and brighten it in dark mode; native input/textarea placeholders use the same opaque, readable color.
+- Increase small supporting text to 14px in menu preferences, weekly meal metadata, recipe calories, shopping notes, voice guidance and the footer. Add medium weight and more line spacing to supporting copy on these screens and the homepage.
+- Fix the pale voice-test badge: use dark text on its tinted background. Disabled controls retain their distinct appearance and behavior.
+- Add contrast regression tests for secondary text on standard and tinted surfaces. This is a targeted readability improvement, not a full accessibility audit.
+- No new audio generation, provider changes or credit usage. Voice guidance remains limited to Gulyásleves. No new environment variables.
+
+### Compare before approval
+
+Open production (v1.22) and this branch's Vercel preview (v1.23) on the same phone. Compare homepage card descriptions, expanded family-preference hints/placeholders, generated meal calories, saved-menu message, shopping notes and the Gulyásleves voice badge. Repeat in EN and check narrow screens. Do not press Play for this visual check: live voice generation still consumes credits. Merge only after owner approval.
+
 ## 1.22.0
 
 - Temporarily restrict voice guidance to Gulyásleves (soup-2), in HU and EN. Other built-in and custom recipes keep written instructions but no voice player.

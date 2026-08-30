@@ -188,8 +188,8 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"><Volume2 className="h-5 w-5" /></span>
       <div>
         <h2 className="font-display text-lg font-semibold">{tr('Nagymama hangos segítsége', "Grandma's cooking guidance")}</h2>
-        <p className="text-sm text-muted-foreground">{tr(`A ${recipeName} elkészítése lépésről lépésre, nyugodt tempóban.`, `Step-by-step guidance for ${recipeName}, spoken at an easy-to-follow pace.`)}</p>
-        <span className="mt-2 inline-flex rounded-full bg-accent/15 px-2.5 py-1 text-xs font-semibold text-accent-foreground">{isEnglish ? 'English voice' : 'Magyar hang'} · {tr('természetesebb hangteszt', 'natural voice test')}</span>
+        <p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr(`A ${recipeName} elkészítése lépésről lépésre, nyugodt tempóban.`, `Step-by-step guidance for ${recipeName}, spoken at an easy-to-follow pace.`)}</p>
+        <span className="mt-2 inline-flex rounded-full bg-accent/15 px-2.5 py-1 text-sm font-semibold text-foreground">{isEnglish ? 'English voice' : 'Magyar hang'} · {tr('természetesebb hangteszt', 'natural voice test')}</span>
       </div>
     </div>
 
@@ -211,10 +211,10 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         <Button type="button" variant="ghost" size="lg" disabled={currentStep === steps.length - 1} onClick={() => jumpToStep(currentStep + 1)} className="gap-2"><SkipForward className="h-4 w-4" /> {tr('Következő lépés', 'Next step')}</Button>
       </div>
       {error && <p className="text-sm font-medium text-destructive" role="alert">{error}</p>}
-      <p className="text-xs text-muted-foreground">{tr('Tesztfunkció, egyelőre csak a gulyásleveshez. Minden új lépéshang generálása ElevenLabs-kreditet fogyaszt. A hangok nincsenek tartósan mentve: új megnyitáskor ismét kreditet használhatnak.', 'Test feature, currently only for Gulyásleves. Generating each new step recording uses ElevenLabs credits. Recordings are not stored permanently: reopening may use credits again.')}</p>
-      <p className="text-xs text-muted-foreground">{tr('A lépések automatikusan követik egymást. Főzés közben a Szünet gombbal megállíthatod a felolvasást. A következő hang betöltése rövid szünetet okozhat.', 'Steps play automatically in order. Press Pause whenever you need time to cook. Loading the next recording may cause a short pause.')}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('Tesztfunkció, egyelőre csak a gulyásleveshez. Minden új lépéshang generálása ElevenLabs-kreditet fogyaszt. A hangok nincsenek tartósan mentve: új megnyitáskor ismét kreditet használhatnak.', 'Test feature, currently only for Gulyásleves. Generating each new step recording uses ElevenLabs credits. Recordings are not stored permanently: reopening may use credits again.')}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('A lépések automatikusan követik egymást. Főzés közben a Szünet gombbal megállíthatod a felolvasást. A következő hang betöltése rövid szünetet okozhat.', 'Steps play automatically in order. Press Pause whenever you need time to cook. Loading the next recording may cause a short pause.')}</p>
       {status === 'finished' && <p role="status" className="text-sm font-medium">{tr('A recept felolvasása véget ért.', 'Recipe narration complete.')}</p>}
-      <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az aktuális lépés hangját tekeri vissza tíz másodperccel.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('A „10 mp vissza” az aktuális lépés hangját tekeri vissza tíz másodperccel.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>
     </div>
   </section>;
 }

@@ -32,7 +32,7 @@ export default function HomePage() {
           <ChefHat className="w-8 h-8 text-primary" />
         </div>
         <h1 className="section-title text-3xl sm:text-4xl mb-2">Plan & Pan</h1>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
           {tr('A Plan & Pan megtervezi a család heti ebédjeit és vacsoráit, segít az ételek elkészítésében, majd egy közös bevásárlólistát készít. Nem csupán receptgyűjtemény: leveszi a heti menütervezés terhét a válladról.', 'Plan & Pan plans your family’s weekly lunches and dinners, helps you cook each dish, and creates one combined shopping list. It is more than a recipe collection—it takes the work out of weekly meal planning.')}
         </p>
         <div className="flex flex-wrap justify-center gap-3">
@@ -55,12 +55,12 @@ export default function HomePage() {
             className="bg-[#FFF1E2] rounded-lg p-4 text-center card-hover border border-[#E8C9AA]"
           >
             <p className="text-2xl font-bold text-primary">{counts[cat]}</p>
-            <p className="text-sm text-muted-foreground">{isEnglish ? EN_CATEGORY_LABELS[cat] : CATEGORY_LABELS[cat]}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed font-medium">{isEnglish ? EN_CATEGORY_LABELS[cat] : CATEGORY_LABELS[cat]}</p>
           </Link>
         ))}
       </section>
 
-      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-8">
+      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-8 leading-relaxed font-medium">
         <Heart className="w-4 h-4 text-primary" /> {tr('Jelöld meg a kedvenc ételeidet, hogy később könnyen megtaláld őket.', 'Mark favourite dishes so you can find them easily later.')}
       </div>
 
@@ -76,7 +76,7 @@ export default function HomePage() {
               <f.icon className="w-5 h-5" />
             </div>
             <h3 className="font-semibold mb-1">{f.title}</h3>
-            <p className="text-sm text-muted-foreground">{f.desc}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed font-medium">{f.desc}</p>
           </Link>
         ))}
       </section>

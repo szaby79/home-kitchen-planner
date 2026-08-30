@@ -97,7 +97,7 @@ export default function PlannerPage() {
       <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} />
 
       <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
-        <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>
+        <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={() => setAll(true)}>{tr('Teljes hét', 'Full week')}</Button>
           <Button variant="outline" size="sm" onClick={setFromToday}>{tr('Mától vasárnapig', 'Today through Sunday')}</Button>
@@ -120,7 +120,7 @@ export default function PlannerPage() {
               <option value="simple">{tr('Egyszerű hét', 'Simple week')}</option>
             </select>
           </label>
-          <p className="max-w-md text-xs text-muted-foreground">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
+          <p className="max-w-md text-sm text-muted-foreground leading-relaxed font-medium">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
           <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {tr('Generálás', 'Generate')} ({selectedCount})</Button>
           <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
         </div>
@@ -146,7 +146,7 @@ export default function PlannerPage() {
         {([['abc', 'ABC'], ['random', tr('Véletlenszerű', 'Random')], ['favorites', tr('Kedvencek elöl', 'Favourites first')]] as const).map(([mode, label]) => <Button key={mode} size="sm" variant={sortMode === mode ? 'default' : 'outline'} onClick={() => changeSort(mode)}>{label}</Button>)}
       </div>
 
-      {hasGenerated && <div className="mb-6 hidden rounded-xl border border-accent/40 bg-accent/10 p-4 md:block"><p className="font-semibold">{tr('Kész a menü.', 'Your menu is ready.')}</p><p className="mb-3 text-sm text-muted-foreground">{tr('Minden elemet külön cserélhetsz. A bevásárlólista automatikusan frissül.', 'You can replace each item separately. The shopping list updates automatically.')}</p><Button asChild className="gap-2"><Link to="/shopping"><ShoppingCart className="h-4 w-4" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button></div>}
+      {hasGenerated && <div className="mb-6 hidden rounded-xl border border-accent/40 bg-accent/10 p-4 md:block"><p className="font-semibold">{tr('Kész a menü.', 'Your menu is ready.')}</p><p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{tr('Minden elemet külön cserélhetsz. A bevásárlólista automatikusan frissül.', 'You can replace each item separately. The shopping list updates automatically.')}</p><Button asChild className="gap-2"><Link to="/shopping"><ShoppingCart className="h-4 w-4" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button></div>}
 
       <div className="hidden space-y-4 md:block">
         {(hasPlan ? activeDays : WEEKDAYS).map(day => {
@@ -195,10 +195,10 @@ export default function PlannerPage() {
 
       {hasPlan && <div className="mt-6 rounded-xl border border-accent/40 bg-accent/10 p-5 text-center">
         <p className="text-lg font-semibold">✓ {tr('Kész a menü', 'Menu complete')}</p>
-        <p className="mb-4 text-sm text-muted-foreground">{tr('A menü automatikusan el van mentve, és a bevásárlólista naprakész.', 'The menu is saved automatically and the shopping list is up to date.')}</p>
+        <p className="mb-4 text-sm text-muted-foreground leading-relaxed font-medium">{tr('A menü automatikusan el van mentve, és a bevásárlólista naprakész.', 'The menu is saved automatically and the shopping list is up to date.')}</p>
         <Button asChild size="lg" className="gap-2"><Link to="/shopping"><ShoppingCart className="h-5 w-5" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button>
       </div>}
-      <p className="mt-4 text-center text-xs text-muted-foreground">{tr('A kalóriaérték tervezési becslés, nem orvosi vagy dietetikusi adat.', 'Calories are planning estimates, not medical or dietetic advice.')}</p>
+      <p className="mt-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">{tr('A kalóriaérték tervezési becslés, nem orvosi vagy dietetikusi adat.', 'Calories are planning estimates, not medical or dietetic advice.')}</p>
       {hasPlan && <div className="h-20 md:hidden" />}
       {hasPlan && <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 p-3 backdrop-blur md:hidden"><Button asChild className="w-full gap-2"><Link to="/shopping"><ShoppingCart className="h-4 w-4" /> {tr('Bevásárlólista', 'Shopping list')}</Link></Button></div>}
     </div>
@@ -255,7 +255,7 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
       {activeDays.map(day => {
         const dayPlan = weekPlan[day];
         const names = [dayPlan.soup, dayPlan.lunch, dayPlan.dinner].map(recipeFor).filter(Boolean).map(recipe => recipe!.name);
-        return <button key={day} type="button" onClick={() => { setActiveDay(day); setShowWeekOverview(false); }} className="flex w-full items-center justify-between gap-3 rounded-lg border bg-secondary/20 p-3 text-left"><span className="w-20 shrink-0 font-semibold">{isEnglish ? EN_WEEKDAYS[day] : day}</span><span className="line-clamp-2 flex-1 text-xs text-muted-foreground">{names.join(' • ') || tr('Nincs még menü', 'No menu yet')}</span><ChevronRight className="h-4 w-4" /></button>;
+        return <button key={day} type="button" onClick={() => { setActiveDay(day); setShowWeekOverview(false); }} className="flex w-full items-center justify-between gap-3 rounded-lg border bg-secondary/20 p-3 text-left"><span className="w-20 shrink-0 font-semibold">{isEnglish ? EN_WEEKDAYS[day] : day}</span><span className="line-clamp-2 flex-1 text-sm text-muted-foreground leading-relaxed font-medium">{names.join(' • ') || tr('Nincs még menü', 'No menu yet')}</span><ChevronRight className="h-4 w-4" /></button>;
       })}
     </div> : <section className="rounded-xl border bg-card p-4">
       <div className="mb-4 flex items-center justify-between"><Button variant="ghost" size="icon" aria-label={tr('Előző tervezett nap', 'Previous planned day')} disabled={dayIndex <= 0} onClick={() => setActiveDay(activeDays[dayIndex - 1])}><ChevronLeft /></Button><h2 className="font-display text-2xl font-semibold">{isEnglish ? EN_WEEKDAYS[activeDay] : activeDay}</h2><Button variant="ghost" size="icon" aria-label={tr('Következő tervezett nap', 'Next planned day')} disabled={dayIndex >= activeDays.length - 1} onClick={() => setActiveDay(activeDays[dayIndex + 1])}><ChevronRight /></Button></div>
@@ -267,7 +267,7 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
         <MealSlot label={tr('Desszert', 'Dessert')} value={plan.dessert} servings={plan.dessertServings} options={options('dessert')} recipes={recipes} onChange={value => updateDay(activeDay, { dessert: value })} onServingsChange={value => updateDay(activeDay, { dessertServings: value })} />
         <MealSlot label={tr('Vacsora – gyors étel', 'Dinner – quick meal')} value={plan.dinner} servings={plan.dinnerServings} days={plan.dinnerDays} options={dinnerOptions} recipes={recipes} onChange={value => updateDay(activeDay, { dinner: value })} onServingsChange={value => updateDay(activeDay, { dinnerServings: value })} onDaysChange={value => updateDay(activeDay, { dinnerDays: value })} />
       </div> : <div className="space-y-2">
-        {visibleRows.length ? visibleRows.map(([label, id, slot]) => <CompactMeal key={label} label={mobileMealLabel(label, slot, isEnglish)} recipe={recipeFor(id)} displayName={slot === 'lunch' ? formatMealName(recipeFor(id), recipeFor(plan.side), isEnglish) : undefined} servings={servingsForLabel(label, plan)} onReplace={() => setReplaceSlot(slot)} />) : <p className="rounded-lg bg-secondary/30 p-5 text-center text-sm text-muted-foreground">{tr('Erre a napra még nincs menü.', 'There is no menu for this day yet.')}</p>}
+        {visibleRows.length ? visibleRows.map(([label, id, slot]) => <CompactMeal key={label} label={mobileMealLabel(label, slot, isEnglish)} recipe={recipeFor(id)} displayName={slot === 'lunch' ? formatMealName(recipeFor(id), recipeFor(plan.side), isEnglish) : undefined} servings={servingsForLabel(label, plan)} onReplace={() => setReplaceSlot(slot)} />) : <p className="rounded-lg bg-secondary/30 p-5 text-center text-sm text-muted-foreground leading-relaxed font-medium">{tr('Erre a napra még nincs menü.', 'There is no menu for this day yet.')}</p>}
       </div>}
     </section>}
     {replaceSlot && <div className="fixed inset-0 z-[70] flex items-end bg-black/40" role="dialog" aria-label={tr(`${slotLabel(replaceSlot, false)} cseréje`, `Replace ${slotLabel(replaceSlot, true)}`)}>
@@ -278,7 +278,7 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
           <option value="">{tr('— Nincs kiválasztva —', '— Nothing selected —')}</option>
           {replacementOptions.map(recipe => <option key={recipe.id} value={recipe.id}>{recipe.name}</option>)}
         </select>
-        <p className="mt-3 text-xs text-muted-foreground">{tr('Csak ez az egy étel változik meg. A nap többi része változatlan marad.', 'Only this dish will change. The rest of the day stays the same.')}</p>
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-medium">{tr('Csak ez az egy étel változik meg. A nap többi része változatlan marad.', 'Only this dish will change. The rest of the day stays the same.')}</p>
       </div>
     </div>}
   </div>;
@@ -290,7 +290,7 @@ function CompactMeal({ label, recipe, displayName, servings, onReplace }: { labe
   return <div className="flex items-center gap-3 rounded-xl border bg-secondary/20 p-2.5">
     <Link to={`/recipes/${recipe.id}`} className="flex min-w-0 flex-1 items-center gap-3">
       <img src={recipe.imageUrl} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
-      <div className="min-w-0 flex-1"><p className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">{label}</p><p className="line-clamp-2 text-sm font-semibold">{displayName || recipe.name}</p><p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} kcal · {servings} {tr('adag', 'servings')}</p></div>
+      <div className="min-w-0 flex-1"><p className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">{label}</p><p className="line-clamp-2 text-sm font-semibold">{displayName || recipe.name}</p><p className="mt-1 flex flex-wrap items-center gap-1 text-sm text-muted-foreground leading-relaxed font-medium"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} kcal · {servings} {tr('adag', 'servings')}</p></div>
     </Link>
     <Button type="button" variant="outline" size="sm" className="h-9 shrink-0 border-primary px-3 font-bold text-primary" onClick={onReplace}>{tr('Csere', 'Replace')}</Button>
   </div>;
@@ -337,7 +337,7 @@ function MealSlot({ label, value, servings, days = 1, options, recipes, onChange
   const recipe = value ? recipes.find(item => item.id === value) : null;
   const { isEnglish, tr } = useLanguage();
   return <div className="rounded-lg bg-secondary/35 p-3">
-    <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</label>
+    <label className="mb-2 block text-sm font-semibold uppercase tracking-wider text-muted-foreground leading-relaxed">{label}</label>
     <select value={value || ''} onChange={event => onChange(event.target.value || null)} className="mb-2 w-full rounded-md border bg-background px-3 py-2 text-sm">
       <option value="">{tr('— Nincs kiválasztva —', '— Nothing selected —')}</option>
       {options.map(item => <option key={item.id} value={item.id}>{isQuickRecipe(item) ? '⚡ ' : ''}{item.name} ({isEnglish ? EN_CATEGORY_LABELS[item.category] : CATEGORY_LABELS[item.category]})</option>)}
@@ -345,7 +345,7 @@ function MealSlot({ label, value, servings, days = 1, options, recipes, onChange
     {recipe && <div className="flex gap-3 rounded-lg border bg-card p-2.5">
       <Link to={`/recipes/${recipe.id}`} className="shrink-0 overflow-hidden rounded-md"><img src={recipe.imageUrl} alt={recipe.name} className="h-[70px] w-24 object-cover" /></Link>
       <div className="min-w-0 flex-1"><Link to={`/recipes/${recipe.id}`} className="line-clamp-2 text-sm font-semibold hover:text-primary">{recipe.name}</Link><Link to={`/recipes/${recipe.id}`} className="text-xs text-primary hover:underline">{tr('Recept megnyitása', 'Open recipe')}</Link>
-        <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
+        <p className="mt-1 flex flex-wrap items-center gap-1 text-sm text-muted-foreground leading-relaxed font-medium"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
         <div className="mt-2 flex flex-wrap gap-3 text-xs"><Counter label={tr('Adag', 'Servings')} value={servings} min={1} onChange={onServingsChange} />{onDaysChange && <Counter label={tr('Napra', 'Days')} value={days} min={1} max={7} onChange={onDaysChange} />}</div>
       </div>
     </div>}

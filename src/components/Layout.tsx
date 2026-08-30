@@ -126,8 +126,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className="flex-1">
           {children}
         </main>
-        <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-xs text-muted-foreground">
-          Plan & Pan v1.22 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
+        <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
+          Plan & Pan v1.23 © {new Date().getFullYear()} — {tr('Magyar családi ételtervező', 'Hungarian family meal planner')}
         </footer>
       </div>
     </AppContext.Provider>
