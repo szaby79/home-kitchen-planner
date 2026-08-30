@@ -141,7 +141,7 @@ export default function RecipesPage() {
                   <Badge variant="outline" className="text-xs">{isEnglish ? EN_MEAL_TYPE_LABELS[recipe.mealType] : MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
                   {isQuickRecipe(recipe) && <Badge className="text-xs bg-accent text-accent-foreground">{tr('Gyors', 'Quick')}</Badge>}
                 </div>
-                <p className="mt-2 text-xs text-muted-foreground">{tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed font-medium">{tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
               </div>
             </Link>
           </div>

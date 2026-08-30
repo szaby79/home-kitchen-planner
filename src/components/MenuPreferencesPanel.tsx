@@ -42,7 +42,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"><Users className="h-5 w-5" /></span>
       <span className="min-w-0 flex-1">
         <span className="block text-base font-bold sm:text-lg">{tr('Családi beállítások', 'Family preferences')}</span>
-        <span className="block text-sm text-muted-foreground">{hasSavedPreferences ? summary : tr('Mondd el röviden, mit szeret a család. Ezt csak egyszer kell beállítani.', 'Tell us what your family enjoys. You only need to set this up once.')}</span>
+        <span className="block text-sm text-muted-foreground leading-relaxed font-medium">{hasSavedPreferences ? summary : tr('Mondd el röviden, mit szeret a család. Ezt csak egyszer kell beállítani.', 'Tell us what your family enjoys. You only need to set this up once.')}</span>
       </span>
       {open ? <ChevronUp className="h-5 w-5 shrink-0" /> : <ChevronDown className="h-5 w-5 shrink-0" />}
     </button>
@@ -69,7 +69,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       </PreferenceStep>
 
       <PreferenceStep number="5" title={tr('Mit nem szerettek?', 'Which ingredients do you dislike?')} hint={tr('Vesszővel válaszd el. Példa: gomba, máj, kapor', 'Separate items with commas. Example: mushrooms, liver, dill')}>
-        <textarea value={dislikedText} onChange={event => setDislikedText(event.target.value)} rows={2} className="w-full rounded-lg border bg-background px-3 py-3 text-base" placeholder={tr('Például: gomba, máj, kapor', 'For example: mushrooms, liver, dill')} />
+        <textarea value={dislikedText} onChange={event => setDislikedText(event.target.value)} rows={2} className="w-full rounded-lg border bg-background px-3 py-3 text-base placeholder:text-muted-foreground" placeholder={tr('Például: gomba, máj, kapor', 'For example: mushrooms, liver, dill')} />
       </PreferenceStep>
 
       <PreferenceStep number="6" title={tr('Milyen ételeket szerettek?', 'What kind of meals do you enjoy?')} hint={tr('Ez csak előnyben részesíti ezeket, más ételeket nem tilt le.', 'These choices are preferred, but other suitable meals can still appear.')}>
@@ -90,7 +90,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       </div>
 
       <div className="flex flex-col gap-3 border-t pt-5 sm:flex-row sm:items-center sm:justify-between">
-        <p className="flex max-w-xl gap-2 text-xs text-muted-foreground"><ShieldCheck className="h-4 w-4 shrink-0" /> {tr('Súlyos allergia esetén mindig ellenőrizd a recept hozzávalóit és a termékek csomagolását is.', 'For serious allergies, always check the recipe ingredients and product labels as well.')}</p>
+        <p className="flex max-w-xl gap-2 text-sm text-muted-foreground leading-relaxed font-medium"><ShieldCheck className="h-4 w-4 shrink-0" /> {tr('Súlyos allergia esetén mindig ellenőrizd a recept hozzávalóit és a termékek csomagolását is.', 'For serious allergies, always check the recipe ingredients and product labels as well.')}</p>
         <Button type="button" size="lg" onClick={save} disabled={!matchingCount} className="min-w-48">{tr('Beállítások mentése', 'Save preferences')}</Button>
       </div>
     </div>}
@@ -100,7 +100,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
 function PreferenceStep({ number, title, hint, children }: { number: string; title: string; hint?: string; children: React.ReactNode }) {
   return <div className="grid gap-3 sm:grid-cols-[2rem_1fr]">
     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">{number}</span>
-    <div><h3 className="mb-1 font-semibold">{title}</h3>{hint && <p className="mb-3 text-xs text-muted-foreground">{hint}</p>}<div className="mt-2">{children}</div></div>
+    <div><h3 className="mb-1 font-semibold">{title}</h3>{hint && <p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{hint}</p>}<div className="mt-2">{children}</div></div>
   </div>;
 }
 

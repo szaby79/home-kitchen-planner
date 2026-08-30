@@ -28,11 +28,11 @@ export default function ShoppingPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <Link to="/planner" className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+      <Link to="/planner" className="mb-4 inline-flex flex-wrap items-center gap-1 text-sm text-muted-foreground hover:text-foreground leading-relaxed font-medium">
         <ArrowLeft className="h-4 w-4" /> {tr('Vissza a menühöz', 'Back to menu')}
       </Link>
       <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
-      <p className="mb-4 text-sm text-muted-foreground">{tr('A lista csak az aktuális terv hozzávalóit és a saját tételeidet tartalmazza. Új terv vagy ételcsere után automatikusan frissül.', 'The list contains only ingredients for the active plan and your manually added items. It updates automatically after a new plan or a dish replacement.')}</p>
+      <p className="mb-4 text-sm text-muted-foreground leading-relaxed font-medium">{tr('A lista csak az aktuális terv hozzávalóit és a saját tételeidet tartalmazza. Új terv vagy ételcsere után automatikusan frissül.', 'The list contains only ingredients for the active plan and your manually added items. It updates automatically after a new plan or a dish replacement.')}</p>
 
       {/* View toggle */}
       <div className="flex gap-2 mb-4">
@@ -82,7 +82,7 @@ export default function ShoppingPage() {
                   {removed && <Check className="w-3 h-3 text-success-foreground" />}
                 </button>
                 <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
-                <span className="text-sm text-muted-foreground font-medium">
+                <span className="text-sm text-muted-foreground font-medium leading-relaxed">
                   {Math.round(item.quantity * 10) / 10} {item.unit}
                 </span>
                 {item.manual && (
@@ -122,7 +122,7 @@ export default function ShoppingPage() {
                           {removed && <Check className="w-3 h-3 text-success-foreground" />}
                         </button>
                         <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
-                        <span className="text-sm text-muted-foreground">{Math.round(item.quantity * 10) / 10} {item.unit}</span>
+                        <span className="text-sm text-muted-foreground leading-relaxed font-medium">{Math.round(item.quantity * 10) / 10} {item.unit}</span>
                       </div>
                     );
                   })}
@@ -135,7 +135,7 @@ export default function ShoppingPage() {
 
       <div className="mt-6 rounded-lg border bg-card p-4">
         <label htmlFor="shopping-notes" className="mb-1 block text-sm font-semibold">{tr('Saját jegyzet', 'Personal notes')}</label>
-        <p className="mb-3 text-xs text-muted-foreground">{tr('Írj ide bármit, amit még nem szeretnél elfelejteni. A jegyzet automatikusan mentődik.', 'Write down anything else you do not want to forget. Notes save automatically.')}</p>
+        <p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{tr('Írj ide bármit, amit még nem szeretnél elfelejteni. A jegyzet automatikusan mentődik.', 'Write down anything else you do not want to forget. Notes save automatically.')}</p>
         <Textarea
           id="shopping-notes"
           value={shoppingNotes}
