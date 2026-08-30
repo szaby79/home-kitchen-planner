@@ -177,13 +177,101 @@ describe('Hungarian and English custom voice guidance', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 
-  it('keeps existing per-step playback instead of automatically generating the next step', async () => {
-    renderNarrator('en');
-    fireEvent.click(screen.getByRole('button', { name: 'Play' }));
-    await screen.findByRole('button', { name: 'Pause' });
-    act(() => audioElements[0].onended?.());
-    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+  it.each(['hu', 'en'] as const)('automatically reads every step once and finishes (%s)', async language => {
+    renderNarrator(language);
+    const en = language === 'en';
+    const steps = splitRecipeSteps(en ? englishSteps : hungarianSteps);
+    fireEvent.click(screen.getByRole('button', { name: en ? 'Play' : 'Lejátszás' }));
+    for (let i = 0; i < steps.length; i++) {
+      await screen.findByRole('button', { name: en ? 'Pause' : 'Szünet' });
+      expect(screen.getByTestId('recipe-narrator')).toHaveTextContent(steps[i]);
+      expect(fetchMock).toHaveBeenCalledTimes(i + 1);
+      expect(JSON.parse(String(fetchMock.mock.calls[i][1]?.body))).toEqual({ text: steps[i], language });
+      const ended = audioElements[0].onended;
+      act(() => { ended?.(); ended?.(); }); // Duplicate/late events cannot skip a step.
+    }
+    expect(screen.getByText(en ? 'Recipe narration complete.' : 'A recept felolvasása véget ért.')).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+    expect(audioElements).toHaveLength(1); // Reuse the player across steps, including on mobile.
+  });
+
+  it('does not advance while paused or after Stop, but resumes continuation', async () => {
+    renderNarrator();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'Szünet' }));
+    const ended = audioElements[0].onended;
+    act(() => ended?.());
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByRole('button', { name: 'Folytatás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    act(() => ended?.());
+    await screen.findByRole('button', { name: 'Szünet' });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const secondEnded = audioElements[0].onended;
+    fireEvent.click(screen.getByRole('button', { name: 'Leállítás' }));
+    act(() => secondEnded?.());
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('cancels loading the automatic next step when Stop is pressed', async () => {
+    let resolve!: (response: Response) => void;
+    fetchMock.mockImplementationOnce(async () => audioResponse())
+      .mockImplementationOnce(() => new Promise<Response>(done => { resolve = done; }));
+    renderNarrator();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    act(() => audioElements[0].onended?.());
+    expect(screen.getByRole('button', { name: 'Készítem…' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Leállítás' }));
+    expect(fetchMock.mock.calls[1][1]?.signal?.aborted).toBe(true);
+    await act(async () => { resolve(audioResponse()); });
+    expect(audioElements[0].play).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('stops on next-step failure and retries that step without skipping it', async () => {
+    fetchMock.mockImplementationOnce(async () => audioResponse())
+      .mockRejectedValueOnce(new Error('offline'));
+    renderNarrator();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    act(() => audioElements[0].onended?.());
+    await screen.findByRole('alert');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    expect(fetchMock.mock.calls[2][1]?.body).toBe(fetchMock.mock.calls[1][1]?.body);
+  });
+
+  it('ignores stale end events after manual navigation and reuses cached steps', async () => {
+    renderNarrator();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    const oldEnded = audioElements[0].onended;
+    fireEvent.click(screen.getByRole('button', { name: 'Következő lépés' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    act(() => oldEnded?.());
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    fireEvent.click(screen.getByRole('button', { name: 'Előző lépés' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    act(() => audioElements[0].onended?.());
+    await screen.findByRole('button', { name: 'Szünet' });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(screen.getByTestId('recipe-narrator')).toHaveTextContent('2. lépés / 3');
+  });
+
+  it('does not advance after a blocked automatic play and allows a manual retry', async () => {
+    renderNarrator();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    audioElements[0].play.mockRejectedValueOnce(new Error('NotAllowedError'));
+    act(() => audioElements[0].onended?.());
+    await screen.findByRole('alert');
+    act(() => audioElements[0].onended?.());
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('deduplicates pending requests and prevents late playback after Stop', async () => {

@@ -19,12 +19,14 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const runId = useRef(0);
+  const continuePlayback = useRef(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioCache = useRef(new Map<string, string>());
   const pendingText = useRef<string | null>(null);
   const pendingRequest = useRef<AbortController | null>(null);
 
   const stopAudio = useCallback(() => {
+    continuePlayback.current = false;
     pendingRequest.current?.abort();
     pendingRequest.current = null;
     const audio = audioRef.current;
@@ -51,12 +53,13 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     };
   }, [isEnglish, description, stopAudio]);
 
-  const playStepWithCustomVoice = useCallback(async (stepIndex: number) => {
+  const playStepWithCustomVoice = useCallback(async function playStep(stepIndex: number) {
     const text = steps[stepIndex]?.trim();
     if (!text) return;
     if (pendingText.current === text) return; // prevent duplicate requests
     const activeRun = ++runId.current;
     stopAudio();
+    continuePlayback.current = true;
     setCurrentStep(stepIndex);
     setStatus('idle');
     setLoading(false);
@@ -82,6 +85,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         audioCache.current.set(text, url);
       } catch {
         if (activeRun === runId.current) {
+          continuePlayback.current = false;
           setLoading(false);
           setStatus('idle');
           setError(tr('A hangos segítség most nem elérhető. Próbáld újra.', 'Voice guidance is unavailable right now. Please try again.'));
@@ -102,9 +106,18 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
       audio = new Audio();
       audioRef.current = audio;
     }
-    audio.onended = () => { if (activeRun === runId.current) setStatus('finished'); };
+    audio.onended = () => {
+      if (activeRun !== runId.current || !continuePlayback.current) return;
+      continuePlayback.current = false;
+      if (stepIndex + 1 < steps.length) {
+        void playStep(stepIndex + 1);
+      } else {
+        setStatus('finished');
+      }
+    };
     audio.onerror = () => {
       if (activeRun === runId.current) {
+        continuePlayback.current = false;
         setStatus('idle');
         setError(tr('A hang lejátszása nem sikerült. Próbáld újra.', 'Audio playback failed. Please try again.'));
       }
@@ -113,9 +126,10 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
     audio.currentTime = 0;
     try {
       await audio.play();
-      if (activeRun === runId.current) setStatus('playing');
+      if (activeRun === runId.current && continuePlayback.current) setStatus('playing');
     } catch {
       if (activeRun === runId.current) {
+        continuePlayback.current = false;
         setStatus('idle');
         setError(tr('A hang lejátszása nem sikerült. Próbáld újra.', 'Audio playback failed. Please try again.'));
       }
@@ -124,11 +138,13 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
 
   const resumeAudio = (audio: HTMLAudioElement) => {
     const activeRun = runId.current;
+    continuePlayback.current = true;
     setError(null);
     void audio.play().then(() => {
-      if (activeRun === runId.current) setStatus('playing');
+      if (activeRun === runId.current && continuePlayback.current) setStatus('playing');
     }).catch(() => {
       if (activeRun === runId.current) {
+        continuePlayback.current = false;
         setStatus('paused');
         setError(tr('A hang lejátszása nem sikerült. Próbáld újra.', 'Audio playback failed. Please try again.'));
       }
@@ -138,6 +154,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
   const playOrPause = () => {
     const audio = audioRef.current;
     if (status === 'playing' && audio) {
+      continuePlayback.current = false;
       audio.pause();
       setStatus('paused');
     } else if (status === 'paused' && audio) {
@@ -194,6 +211,8 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         <Button type="button" variant="ghost" size="lg" disabled={currentStep === steps.length - 1} onClick={() => jumpToStep(currentStep + 1)} className="gap-2"><SkipForward className="h-4 w-4" /> {tr('Következő lépés', 'Next step')}</Button>
       </div>
       {error && <p className="text-sm font-medium text-destructive" role="alert">{error}</p>}
+      <p className="text-xs text-muted-foreground">{tr('A lépések automatikusan követik egymást. Főzés közben a Szünet gombbal megállíthatod a felolvasást. A következő hang betöltése rövid szünetet okozhat.', 'Steps play automatically in order. Press Pause whenever you need time to cook. Loading the next recording may cause a short pause.')}</p>
+      {status === 'finished' && <p role="status" className="text-sm font-medium">{tr('A recept felolvasása véget ért.', 'Recipe narration complete.')}</p>}
       <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az aktuális lépés hangját tekeri vissza tíz másodperccel.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>
     </div>
   </section>;
