@@ -73,21 +73,25 @@ describe('Hungarian and English custom voice guidance', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('offers playback for a custom recipe with unnumbered directions', async () => {
+  it('hides playback for a custom recipe even with directions', () => {
     localStorage.setItem('plan-pan-recipes', JSON.stringify([{ ...defaultRecipes[0], id: 'custom-test', description: 'Keverd össze, majd tálald.' }]));
     window.history.pushState({}, '', '/recipes/custom-test');
     render(<App />);
     expect(fetchMock).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
-    await screen.findByRole('button', { name: 'Szünet' });
-    expect(JSON.parse(String(fetchMock.mock.calls[0][1]?.body))).toEqual({ text: 'Keverd össze, majd tálald.', language: 'hu' });
+    expect(screen.queryByTestId('recipe-narrator')).not.toBeInTheDocument();
   });
 
   it.each(defaultRecipes.flatMap(recipe => (['hu', 'en'] as const).map(language => ({ recipe, language }))))(
-    'offers on-demand guidance on $recipe.id in $language', async ({ recipe, language }) => {
+    'only offers test guidance for soup-2: $recipe.id in $language', async ({ recipe, language }) => {
       localStorage.setItem('plan-pan-language', language);
       window.history.pushState({}, '', `/recipes/${recipe.id}`);
       render(<App />);
+      if (recipe.id !== 'soup-2') {
+        expect(screen.queryByTestId('recipe-narrator')).not.toBeInTheDocument();
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(audioElements).toHaveLength(0);
+        return;
+      }
       const en = language === 'en';
       const steps = splitRecipeSteps(localizeRecipe(recipe, en).description);
       expect(screen.getByTestId('recipe-narrator')).toHaveTextContent(steps[0]);
@@ -97,7 +101,7 @@ describe('Hungarian and English custom voice guidance', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
       const [url, init] = fetchMock.mock.calls[0];
       expect(url).toBe('/api/tts');
-      expect(JSON.parse(String(init?.body))).toEqual({ text: steps[0], language });
+      expect(JSON.parse(String(init?.body))).toEqual({ text: steps[0], language, recipeId: 'soup-2' });
       expect(audioElements[0].play).toHaveBeenCalledOnce();
       expect(speech.speak).not.toHaveBeenCalled();
     },
@@ -121,7 +125,7 @@ describe('Hungarian and English custom voice guidance', () => {
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe('/api/tts');
     expect(init?.method).toBe('POST');
-    expect(JSON.parse(String(init?.body))).toEqual({ text: en ? 'Cut the beef. Chop the onion.' : 'Vágd fel a húst. Aprítsd fel a hagymát.', language });
+    expect(JSON.parse(String(init?.body))).toEqual({ text: en ? 'Cut the beef. Chop the onion.' : 'Vágd fel a húst. Aprítsd fel a hagymát.', language, recipeId: 'soup-2' });
     expect(audioElements[0].play).toHaveBeenCalledOnce();
     expect(speech.speak).not.toHaveBeenCalled();
   });
@@ -186,7 +190,7 @@ describe('Hungarian and English custom voice guidance', () => {
       await screen.findByRole('button', { name: en ? 'Pause' : 'Szünet' });
       expect(screen.getByTestId('recipe-narrator')).toHaveTextContent(steps[i]);
       expect(fetchMock).toHaveBeenCalledTimes(i + 1);
-      expect(JSON.parse(String(fetchMock.mock.calls[i][1]?.body))).toEqual({ text: steps[i], language });
+      expect(JSON.parse(String(fetchMock.mock.calls[i][1]?.body))).toEqual({ text: steps[i], language, recipeId: 'soup-2' });
       const ended = audioElements[0].onended;
       act(() => { ended?.(); ended?.(); }); // Duplicate/late events cannot skip a step.
     }

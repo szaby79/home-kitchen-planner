@@ -75,7 +75,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         const response = await fetch('/api/tts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text, language: isEnglish ? 'en' : 'hu' }),
+          body: JSON.stringify({ text, language: isEnglish ? 'en' : 'hu', recipeId: 'soup-2' }),
           signal: controller.signal,
         });
         if (!response.ok) throw new Error('tts-failed');
@@ -211,6 +211,7 @@ export default function RecipeNarrator({ recipeName, description }: Props) {
         <Button type="button" variant="ghost" size="lg" disabled={currentStep === steps.length - 1} onClick={() => jumpToStep(currentStep + 1)} className="gap-2"><SkipForward className="h-4 w-4" /> {tr('Következő lépés', 'Next step')}</Button>
       </div>
       {error && <p className="text-sm font-medium text-destructive" role="alert">{error}</p>}
+      <p className="text-xs text-muted-foreground">{tr('Tesztfunkció, egyelőre csak a gulyásleveshez. Minden új lépéshang generálása ElevenLabs-kreditet fogyaszt. A hangok nincsenek tartósan mentve: új megnyitáskor ismét kreditet használhatnak.', 'Test feature, currently only for Gulyásleves. Generating each new step recording uses ElevenLabs credits. Recordings are not stored permanently: reopening may use credits again.')}</p>
       <p className="text-xs text-muted-foreground">{tr('A lépések automatikusan követik egymást. Főzés közben a Szünet gombbal megállíthatod a felolvasást. A következő hang betöltése rövid szünetet okozhat.', 'Steps play automatically in order. Press Pause whenever you need time to cook. Loading the next recording may cause a short pause.')}</p>
       {status === 'finished' && <p role="status" className="text-sm font-medium">{tr('A recept felolvasása véget ért.', 'Recipe narration complete.')}</p>}
       <p className="text-xs text-muted-foreground">{tr('A „10 mp vissza” az aktuális lépés hangját tekeri vissza tíz másodperccel.', '“Back 10 sec” rewinds the current step by ten seconds.')}</p>

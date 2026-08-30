@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import handler from '../../api/tts';
 
 const fetchMock = vi.fn<typeof fetch>();
-const request = (text: string, language?: unknown) => new Request('https://example.test/api/tts', { method: 'POST', body: JSON.stringify({ text, language }) });
+const request = (text: string, language?: unknown) => new Request('https://example.test/api/tts', { method: 'POST', body: JSON.stringify({ text, language, recipeId: 'soup-2' }) });
 
 beforeEach(() => {
   vi.stubEnv('ELEVENLABS_API_KEY', 'test-only-fake-key');
@@ -15,6 +15,14 @@ beforeEach(() => {
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 
 describe('language-specific Hungarian/English voice endpoint', () => {
+  it.each([undefined, null, '', 'soup-1', 'side-1', 'custom-test', 2])('rejects disabled or missing recipe ID %j without spending credits', async recipeId => {
+    const response = await handler(new Request('https://example.test/api/tts', {
+      method: 'POST', body: JSON.stringify({ text: 'Read this.', language: 'hu', recipeId }),
+    }));
+    expect(response.status).toBe(403);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
   it.each([
     { text: 'Vágjuk apróra a vöröshagymát.', language: 'hu', voice: 'test-only-hungarian-voice' },
     { text: 'Chop the onion.', language: 'en', voice: 'test-only-voice' },
@@ -52,7 +60,7 @@ describe('language-specific Hungarian/English voice endpoint', () => {
 
   it('never accepts a client-supplied voice ID', async () => {
     const response = await handler(new Request('https://example.test/api/tts', {
-      method: 'POST', body: JSON.stringify({ text: 'Szia.', language: 'hu', voiceId: 'untrusted-voice' }),
+      method: 'POST', body: JSON.stringify({ text: 'Szia.', language: 'hu', recipeId: 'soup-2', voiceId: 'untrusted-voice' }),
     }));
     expect(response.status).toBe(200);
     expect(String(fetchMock.mock.calls[0][0])).toContain('/test-only-hungarian-voice?');
