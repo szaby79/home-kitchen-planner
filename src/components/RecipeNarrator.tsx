@@ -11,7 +11,6 @@ type Props = {
 type PlaybackStatus = 'idle' | 'playing' | 'paused' | 'finished';
 
 const HUNGARIAN_RATE = 0.84;
-const ENGLISH_RATE = 0.78;
 
 export default function RecipeNarrator({ recipeName, description }: Props) {
   const { isEnglish, tr } = useLanguage();
