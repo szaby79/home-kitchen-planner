@@ -18,7 +18,11 @@ export default async function handler(request: Request): Promise<Response> {
   let text = '';
   let language: 'hu' | 'en' = 'en';
   try {
-    const body = (await request.json()) as { text?: unknown; language?: unknown };
+    const body = (await request.json()) as { text?: unknown; language?: unknown; recipeId?: unknown };
+    // Fail closed for other recipes and older app tabs that omit the ID.
+    if (body?.recipeId !== 'soup-2') {
+      return json({ error: 'Voice testing is only enabled for Gulyásleves.' }, 403);
+    }
     if (typeof body?.text === 'string') text = body.text.trim();
     // Preserve the legacy voice for older clients that omit the language.
     if (body?.language !== undefined) {

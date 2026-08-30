@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.22.0
+
+- Temporarily restrict voice guidance to Gulyásleves (soup-2), in HU and EN. Other built-in and custom recipes keep written instructions but no voice player.
+- Require soup-2 recipe ID at the TTS endpoint; reject other/missing IDs before contacting ElevenLabs, including older open app tabs. Reload after deployment.
+- Keep voices, speed and automatic continuation. Disclose credit usage and lack of permanent audio storage.
+- This recipe-ID gate is not authentication or comprehensive abuse protection. It does not fix the reported provider/playback error or replenish credits.
+- Tests use a mocked provider, with no paid generation. Production merge requires owner approval.
+
 ## 1.21.0
 
 - After Play, narration automatically advances through the remaining recipe steps in both Hungarian and English; the last step stops and displays a completion message.

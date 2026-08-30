@@ -79,7 +79,7 @@ export default function RecipeDetailPage() {
         </div>
       </div>
 
-      {recipe.description.trim() && (
+      {recipe.id === 'soup-2' && recipe.description.trim() && (
         <RecipeNarrator key={recipe.id} recipeName={recipe.name} description={recipe.description} />
       )}
 
