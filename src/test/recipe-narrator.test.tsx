@@ -3,6 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import RecipeNarrator from '@/components/RecipeNarrator';
 import { LanguageProvider, useLanguage } from '@/i18n/LanguageContext';
 import App from '@/App';
+import { defaultRecipes } from '@/data/recipes';
+import { localizeRecipe } from '@/i18n/recipeLocalization';
+import { splitRecipeSteps } from '@/lib/recipeSteps';
 
 const hungarianSteps = `1. Vágd fel a húst. Aprítsd fel a hagymát.
 
@@ -62,6 +65,44 @@ afterEach(() => {
 });
 
 describe('Hungarian and English custom voice guidance', () => {
+  it.each(['', '   '])('hides playback for a custom recipe without directions (%j)', description => {
+    localStorage.setItem('plan-pan-recipes', JSON.stringify([{ ...defaultRecipes[0], id: 'custom-empty', description }]));
+    window.history.pushState({}, '', '/recipes/custom-empty');
+    render(<App />);
+    expect(screen.queryByTestId('recipe-narrator')).not.toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('offers playback for a custom recipe with unnumbered directions', async () => {
+    localStorage.setItem('plan-pan-recipes', JSON.stringify([{ ...defaultRecipes[0], id: 'custom-test', description: 'Keverd össze, majd tálald.' }]));
+    window.history.pushState({}, '', '/recipes/custom-test');
+    render(<App />);
+    expect(fetchMock).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Lejátszás' }));
+    await screen.findByRole('button', { name: 'Szünet' });
+    expect(JSON.parse(String(fetchMock.mock.calls[0][1]?.body))).toEqual({ text: 'Keverd össze, majd tálald.' });
+  });
+
+  it.each(defaultRecipes.flatMap(recipe => (['hu', 'en'] as const).map(language => ({ recipe, language }))))(
+    'offers on-demand guidance on $recipe.id in $language', async ({ recipe, language }) => {
+      localStorage.setItem('plan-pan-language', language);
+      window.history.pushState({}, '', `/recipes/${recipe.id}`);
+      render(<App />);
+      const en = language === 'en';
+      const steps = splitRecipeSteps(localizeRecipe(recipe, en).description);
+      expect(screen.getByTestId('recipe-narrator')).toHaveTextContent(steps[0]);
+      expect(fetchMock).not.toHaveBeenCalled();
+      fireEvent.click(screen.getByRole('button', { name: en ? 'Play' : 'Lejátszás' }));
+      await screen.findByRole('button', { name: en ? 'Pause' : 'Szünet' });
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const [url, init] = fetchMock.mock.calls[0];
+      expect(url).toBe('/api/tts');
+      expect(JSON.parse(String(init?.body))).toEqual({ text: steps[0] });
+      expect(audioElements[0].play).toHaveBeenCalledOnce();
+      expect(speech.speak).not.toHaveBeenCalled();
+    },
+  );
+
   it('appears on the Gulyásleves recipe page without generating audio', () => {
     window.history.pushState({}, '', '/recipes/soup-2');
     render(<App />);
