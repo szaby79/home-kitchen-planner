@@ -11,6 +11,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS, EN_WEEKDAYS } from '@/i18n/labels';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 type SortMode = 'abc' | 'random' | 'favorites';
 
@@ -23,14 +24,18 @@ export default function PlannerPage() {
   const [sortMode, setSortMode] = useState<SortMode>('abc');
   const [randomSeed, setRandomSeed] = useState(1);
   const [hasGenerated, setHasGenerated] = useState(false);
+  const [confirmGenerate, setConfirmGenerate] = useState(false);
+  const [generationError, setGenerationError] = useState(false);
   const [expandedExtras, setExpandedExtras] = useState<Set<WeekDay>>(new Set());
-  const [mobileDay, setMobileDay] = useState<WeekDay>('Hétfő');
+  const [mobileDay, setMobileDay] = useState<WeekDay>(() => WEEKDAYS.find(day => hasDayMeals(weekPlan[day])) ?? 'Hétfő');
   const [mobileEditing, setMobileEditing] = useState(false);
   const [showWeekOverview, setShowWeekOverview] = useState(false);
   const [changeMessage, setChangeMessage] = useState('');
   const [undoChange, setUndoChange] = useState<{ day: WeekDay; values: Partial<typeof weekPlan[WeekDay]> } | null>(null);
   const selectedCount = WEEKDAYS.reduce((count, day) => count + Number(selection[day].lunch) + Number(selection[day].dinner), 0);
-  const hasPlan = WEEKDAYS.some(day => Boolean(weekPlan[day].lunch || weekPlan[day].dinner || weekPlan[day].soup));
+  const activeDays = WEEKDAYS.filter(day => hasDayMeals(weekPlan[day]));
+  const hasPlan = activeDays.length > 0;
+  const plannedCount = WEEKDAYS.reduce((count, day) => count + Number(Boolean(weekPlan[day].lunch || weekPlan[day].soup || weekPlan[day].side || weekPlan[day].pickle || weekPlan[day].dessert)) + Number(Boolean(weekPlan[day].dinner)), 0);
 
   const sorted = (list: Recipe[]) => [...list].sort((a, b) => {
     if (sortMode === 'favorites') {
@@ -49,7 +54,21 @@ export default function PlannerPage() {
     setSelection(next);
   };
   const toggleSelection = (day: WeekDay, slot: MealSlotType) => setSelection(current => ({ ...current, [day]: { ...current[day], [slot]: !current[day][slot] } }));
-  const handleGenerate = () => { if (selectedCount) { generateRandomPlan(selection, menuProfile, preferences, favoriteIds); setHasGenerated(true); setMobileEditing(false); setChangeMessage(tr('Elkészült a személyre szabott menü. Amit nem szeretsz, egyszerűen lecserélheted.', 'Your personalized menu is ready. You can easily replace any dish you do not want.')); } };
+  const handleGenerate = () => {
+    if (!selectedCount) return;
+    if (!generateRandomPlan(selection, menuProfile, preferences, favoriteIds)) {
+      setGenerationError(true);
+      return;
+    }
+    setGenerationError(false);
+    setHasGenerated(true);
+    setMobileDay(WEEKDAYS.find(day => selection[day].lunch || selection[day].dinner)!);
+    setMobileEditing(false);
+    setShowWeekOverview(false);
+    setExpandedExtras(new Set());
+    setUndoChange(null);
+    setChangeMessage(tr('Elkészült az új menü, a bevásárlólista csak ezt a tervet tartalmazza.', 'Your new menu is ready. The shopping list now reflects only this plan.'));
+  };
   const changeSort = (mode: SortMode) => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); };
   const updateMobileDay = (day: WeekDay, updates: Partial<typeof weekPlan[WeekDay]>) => {
     const previous = Object.fromEntries(Object.keys(updates).map(key => [key, weekPlan[day][key as keyof typeof updates]])) as Partial<typeof weekPlan[WeekDay]>;
@@ -78,7 +97,7 @@ export default function PlannerPage() {
       <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} />
 
       <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
-        <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground">{tr('Csak a kijelölt étkezések változnak. Az „Ebéd” a teljes ebédet állítja össze.', 'Only selected meals will change. Lunch creates the complete lunch menu.')}</p></div>
+        <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={() => setAll(true)}>{tr('Teljes hét', 'Full week')}</Button>
           <Button variant="outline" size="sm" onClick={setFromToday}>{tr('Mától vasárnapig', 'Today through Sunday')}</Button>
@@ -87,7 +106,7 @@ export default function PlannerPage() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
           {WEEKDAYS.map(day => <div key={day} className="rounded-lg border bg-secondary/20 p-3">
             <p className="font-semibold text-sm mb-2">{isEnglish ? EN_WEEKDAYS[day] : day}</p><div className="flex gap-2">
-              {(['lunch', 'dinner'] as MealSlotType[]).map(slot => <button key={slot} type="button" onClick={() => toggleSelection(day, slot)} className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium transition ${selection[day][slot] ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>
+              {(['lunch', 'dinner'] as MealSlotType[]).map(slot => <button key={slot} type="button" aria-pressed={selection[day][slot]} onClick={() => toggleSelection(day, slot)} className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium transition ${selection[day][slot] ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>
                 {selection[day][slot] && <Check className="h-3 w-3" />}{slot === 'lunch' ? tr('Ebéd', 'Lunch') : tr('Vacsora', 'Dinner')}
               </button>)}
             </div>
@@ -102,10 +121,25 @@ export default function PlannerPage() {
             </select>
           </label>
           <p className="max-w-md text-xs text-muted-foreground">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
-          <Button onClick={handleGenerate} disabled={!selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {tr('Generálás', 'Generate')} ({selectedCount})</Button>
-          <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
+          <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {tr('Generálás', 'Generate')} ({selectedCount})</Button>
+          <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
         </div>
+        {generationError && <p role="alert" className="text-sm text-destructive">{tr('Nem sikerült minden kijelölt étkezéshez megfelelő ételt találni. A korábbi terv és bevásárlólista megmaradt. Módosítsd a kijelölést vagy az étkezési beállításokat.', 'We could not find a suitable dish for every selected meal. Your previous plan and shopping list are unchanged. Adjust the selection or meal preferences.')}</p>}
       </div>
+
+      <AlertDialog open={confirmGenerate} onOpenChange={setConfirmGenerate}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tr('Lecseréled a jelenlegi tervet?', 'Replace the current plan?')}</AlertDialogTitle>
+            <AlertDialogDescription>{tr(`Az új terv ${selectedCount} kijelölt étkezést tartalmaz majd. A többi nap korábbi menüje és hozzávalói kikerülnek. A saját bevásárlótételeid és jegyzeteid megmaradnak.`, `The new plan will contain ${selectedCount} selected meals. Previous meals on other days and their ingredients will be removed. Your manually added shopping items and notes will stay.`)}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tr('Mégse', 'Cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleGenerate}>{tr('Új terv készítése', 'Create new plan')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      {hasPlan && <p role="status" className="mb-4 text-sm font-semibold">{tr(`Aktív terv: ${activeDays.length} nap, ${plannedCount} étkezés.`, `Active plan: ${activeDays.length} days, ${plannedCount} meals.`)}</p>}
 
       <div className="mb-5 hidden flex-wrap items-center gap-2 rounded-lg border bg-card p-3 text-sm md:flex">
         <span className="font-medium">{tr('Ételek sorrendje:', 'Dish order:')}</span>
@@ -115,7 +149,7 @@ export default function PlannerPage() {
       {hasGenerated && <div className="mb-6 hidden rounded-xl border border-accent/40 bg-accent/10 p-4 md:block"><p className="font-semibold">{tr('Kész a menü.', 'Your menu is ready.')}</p><p className="mb-3 text-sm text-muted-foreground">{tr('Minden elemet külön cserélhetsz. A bevásárlólista automatikusan frissül.', 'You can replace each item separately. The shopping list updates automatically.')}</p><Button asChild className="gap-2"><Link to="/shopping"><ShoppingCart className="h-4 w-4" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button></div>}
 
       <div className="hidden space-y-4 md:block">
-        {WEEKDAYS.map(day => {
+        {(hasPlan ? activeDays : WEEKDAYS).map(day => {
           const plan = weekPlan[day];
           const lunchIds = [plan.soup, plan.lunch, plan.side, plan.pickle, plan.dessert].filter(Boolean) as string[];
           const lunchCalories = lunchIds.reduce((sum, id) => sum + estimateRecipeCalories(recipes.find(recipe => recipe.id === id)!), 0);
@@ -143,7 +177,7 @@ export default function PlannerPage() {
         })}
       </div>
       {hasPlan && <MobilePlan
-        activeDay={mobileDay}
+        activeDay={activeDays.includes(mobileDay) ? mobileDay : activeDays[0]}
         setActiveDay={day => { setMobileDay(day); setMobileEditing(false); }}
         editing={mobileEditing}
         setEditing={setMobileEditing}
@@ -160,7 +194,7 @@ export default function PlannerPage() {
       />}
 
       {hasPlan && <div className="mt-6 rounded-xl border border-accent/40 bg-accent/10 p-5 text-center">
-        <p className="text-lg font-semibold">✓ {tr('Kész a heti menü', 'Weekly menu complete')}</p>
+        <p className="text-lg font-semibold">✓ {tr('Kész a menü', 'Menu complete')}</p>
         <p className="mb-4 text-sm text-muted-foreground">{tr('A menü automatikusan el van mentve, és a bevásárlólista naprakész.', 'The menu is saved automatically and the shopping list is up to date.')}</p>
         <Button asChild size="lg" className="gap-2"><Link to="/shopping"><ShoppingCart className="h-5 w-5" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button>
       </div>}
@@ -192,7 +226,8 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
   const [replaceSlot, setReplaceSlot] = useState<MobileSlot | null>(null);
   const { isEnglish, tr } = useLanguage();
   const plan = weekPlan[activeDay];
-  const dayIndex = WEEKDAYS.indexOf(activeDay);
+  const activeDays = WEEKDAYS.filter(day => hasDayMeals(weekPlan[day]));
+  const dayIndex = activeDays.indexOf(activeDay);
   const recipeFor = (id: string | null) => id ? recipes.find(recipe => recipe.id === id) : undefined;
   const mealRows = [
     ['Leves', plan.soup, 'soup'], ['Főétel', plan.lunch, 'lunch'], ['Köret', plan.side, 'side'], ['Savanyúság', plan.pickle, 'pickle'], ['Desszert', plan.dessert, 'dessert'], ['Vacsora', plan.dinner, 'dinner'],
@@ -204,7 +239,7 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
   return <div className="md:hidden" data-testid="mobile-planner">
     <div className="sticky top-14 z-30 -mx-4 mb-4 border-y bg-[#FFF8EE]/95 px-3 py-2 backdrop-blur">
       <div className="grid grid-cols-7 gap-1">
-        {WEEKDAYS.map(day => <button key={day} type="button" onClick={() => setActiveDay(day)} className={`rounded-lg py-2 text-xs font-semibold ${day === activeDay ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground'}`}>{mobileDayLabel(day, isEnglish)}</button>)}
+        {activeDays.map(day => <button key={day} type="button" onClick={() => setActiveDay(day)} className={`rounded-lg py-2 text-xs font-semibold ${day === activeDay ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground'}`}>{mobileDayLabel(day, isEnglish)}</button>)}
       </div>
     </div>
 
@@ -216,14 +251,14 @@ function MobilePlan({ activeDay, setActiveDay, editing, setEditing, showWeekOver
     {changeMessage && <div className="mb-3 flex items-center justify-between gap-2 rounded-lg border border-accent/30 bg-accent/10 p-3 text-xs"><span>✓ {changeMessage}</span>{canUndo && <Button variant="ghost" size="sm" className="h-7 shrink-0 gap-1 px-2" onClick={onUndo}><RotateCcw className="h-3 w-3" /> {tr('Visszavonás', 'Undo')}</Button>}</div>}
 
     {showWeekOverview ? <div className="space-y-2 rounded-xl border bg-card p-3">
-      <h2 className="font-display text-xl font-semibold">{tr('A teljes hét', 'Full week')}</h2>
-      {WEEKDAYS.map(day => {
+      <h2 className="font-display text-xl font-semibold">{tr('Az aktuális terv', 'Current plan')}</h2>
+      {activeDays.map(day => {
         const dayPlan = weekPlan[day];
         const names = [dayPlan.soup, dayPlan.lunch, dayPlan.dinner].map(recipeFor).filter(Boolean).map(recipe => recipe!.name);
         return <button key={day} type="button" onClick={() => { setActiveDay(day); setShowWeekOverview(false); }} className="flex w-full items-center justify-between gap-3 rounded-lg border bg-secondary/20 p-3 text-left"><span className="w-20 shrink-0 font-semibold">{isEnglish ? EN_WEEKDAYS[day] : day}</span><span className="line-clamp-2 flex-1 text-xs text-muted-foreground">{names.join(' • ') || tr('Nincs még menü', 'No menu yet')}</span><ChevronRight className="h-4 w-4" /></button>;
       })}
     </div> : <section className="rounded-xl border bg-card p-4">
-      <div className="mb-4 flex items-center justify-between"><Button variant="ghost" size="icon" disabled={dayIndex === 0} onClick={() => setActiveDay(WEEKDAYS[dayIndex - 1])}><ChevronLeft /></Button><h2 className="font-display text-2xl font-semibold">{isEnglish ? EN_WEEKDAYS[activeDay] : activeDay}</h2><Button variant="ghost" size="icon" disabled={dayIndex === 6} onClick={() => setActiveDay(WEEKDAYS[dayIndex + 1])}><ChevronRight /></Button></div>
+      <div className="mb-4 flex items-center justify-between"><Button variant="ghost" size="icon" aria-label={tr('Előző tervezett nap', 'Previous planned day')} disabled={dayIndex <= 0} onClick={() => setActiveDay(activeDays[dayIndex - 1])}><ChevronLeft /></Button><h2 className="font-display text-2xl font-semibold">{isEnglish ? EN_WEEKDAYS[activeDay] : activeDay}</h2><Button variant="ghost" size="icon" aria-label={tr('Következő tervezett nap', 'Next planned day')} disabled={dayIndex >= activeDays.length - 1} onClick={() => setActiveDay(activeDays[dayIndex + 1])}><ChevronRight /></Button></div>
       {editing ? <div className="space-y-3">
         <MealSlot label={tr('Leves', 'Soup')} value={plan.soup} servings={plan.soupServings} options={options('soup')} recipes={recipes} onChange={value => updateDay(activeDay, { soup: value })} onServingsChange={value => updateDay(activeDay, { soupServings: value })} />
         <MealSlot label={tr('Főétel', 'Main dish')} value={plan.lunch} servings={plan.lunchServings} days={plan.lunchDays} options={options('main')} recipes={recipes} onChange={value => updateDay(activeDay, { lunch: value })} onServingsChange={value => updateDay(activeDay, { lunchServings: value })} onDaysChange={value => updateDay(activeDay, { lunchDays: value })} />
@@ -262,6 +297,10 @@ function CompactMeal({ label, recipe, displayName, servings, onReplace }: { labe
 }
 
 type MobileSlot = 'soup' | 'lunch' | 'side' | 'pickle' | 'dessert' | 'dinner';
+
+function hasDayMeals(plan: ReturnType<typeof useAppContext>['weekPlan'][WeekDay]) {
+  return Boolean(plan.soup || plan.lunch || plan.side || plan.pickle || plan.dessert || plan.dinner);
+}
 
 function slotCategory(slot: MobileSlot): Recipe['category'] {
   return ({ soup: 'soup', lunch: 'main', side: 'side', pickle: 'pickle', dessert: 'dessert', dinner: 'main' } as const)[slot];

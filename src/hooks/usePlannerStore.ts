@@ -83,8 +83,18 @@ export function usePlannerStore(recipes: Recipe[]) {
   const clearPlan = useCallback(() => { setWeekPlan(createEmptyWeekPlan()); }, []);
 
   const generateRandomPlan = useCallback((selection: GenerationSelection, profile: MenuProfile, preferences: MenuPreferences, favoriteIds: string[]) => {
-    setWeekPlan(current => generateSelectedPlan(recipes, current, selection, profile, preferences, favoriteIds));
-  }, [recipes]);
+    if (!WEEKDAYS.some(day => selection[day].lunch || selection[day].dinner)) return false;
+    try {
+      const next = generateSelectedPlan(recipes, weekPlan, selection, profile, preferences, favoriteIds);
+      setWeekPlan(next);
+      // A new menu needs a fresh checklist, but keep manually added items/notes.
+      const manualKeys = new Set(extraItems.map(item => `${item.name}-${item.unit}`));
+      setRemovedItems(current => new Set([...current].filter(key => manualKeys.has(key))));
+      return true;
+    } catch {
+      return false;
+    }
+  }, [recipes, weekPlan, extraItems]);
 
   const shoppingList = useMemo(() => {
     const items = new Map<string, ShoppingItem>();
