@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Clock3, Heart, Leaf, PackageOpen, PiggyBank, Shuffle, Sparkles, Users } from 'lucide-react';
+import { Check, Clock3, Heart, Leaf, PackageOpen, ShoppingCart, Shuffle, Sparkles, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
@@ -37,8 +37,8 @@ export default function AutopilotPlannerPage() {
   const [generated, setGenerated] = useState(false);
   const [generationError, setGenerationError] = useState(false);
 
-  const goals: Array<{ id: WeeklyGoal; icon: typeof PiggyBank; hu: string; en: string }> = [
-    { id: 'save-money', icon: PiggyBank, hu: 'Spórolás', en: 'Save money' },
+  const goals: Array<{ id: WeeklyGoal; icon: typeof ShoppingCart; hu: string; en: string }> = [
+    { id: 'save-money', icon: ShoppingCart, hu: 'Okos bevásárlás', en: 'Smart shopping' },
     { id: 'cook-fast', icon: Clock3, hu: 'Gyors főzés', en: 'Cook fast' },
     { id: 'family-favourites', icon: Heart, hu: 'Családi kedvencek', en: 'Family favourites' },
     { id: 'use-pantry', icon: PackageOpen, hu: 'Használjuk, ami otthon van', en: 'Use what I already have' },
