@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_WEEKDAYS } from '@/i18n/labels';
-import { createDefaultAutopilotSettings, createGenerationSelection, DayMode, WEEKDAYS, WeekDay, WeeklyAutopilotSettings, WeeklyGoal } from '@/types/recipe';
+import { createDefaultAutopilotSettings, createGenerationSelection, DayMode, MenuPreferences, WEEKDAYS, WeekDay, WeeklyAutopilotSettings, WeeklyGoal } from '@/types/recipe';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
+import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 
 const STORAGE_KEY = 'plan-pan-weekly-autopilot';
 
@@ -31,7 +32,7 @@ function loadSettings(familySize: number): WeeklyAutopilotSettings {
 export default function AutopilotPlannerPage() {
   const { generateRandomPlan, weekPlan, recipes, favoriteIds } = useAppContext();
   const { tr, isEnglish } = useLanguage();
-  const { preferences } = useMenuPreferences();
+  const { preferences, savePreferences, hasSavedPreferences } = useMenuPreferences();
   const [settings, setSettings] = useState<WeeklyAutopilotSettings>(() => loadSettings(preferences.familySize));
   const [pantryText, setPantryText] = useState(() => settings.pantryIngredients.join(', '));
   const [generated, setGenerated] = useState(false);
@@ -55,6 +56,19 @@ export default function AutopilotPlannerPage() {
 
   const updateDay = (day: WeekDay, updates: Partial<WeeklyAutopilotSettings['days'][WeekDay]>) => {
     setSettings(current => ({ ...current, days: { ...current.days, [day]: { ...current.days[day], ...updates } } }));
+    setGenerated(false);
+  };
+
+  const saveFamilyPreferences = (next: MenuPreferences) => {
+    const previousFamilySize = preferences.familySize;
+    savePreferences(next);
+    setSettings(current => ({
+      ...current,
+      days: Object.fromEntries(WEEKDAYS.map(day => [day, {
+        ...current.days[day],
+        people: current.days[day].people === previousFamilySize ? next.familySize : current.days[day].people,
+      }])) as WeeklyAutopilotSettings['days'],
+    }));
     setGenerated(false);
   };
 
@@ -97,19 +111,24 @@ export default function AutopilotPlannerPage() {
     <div className="page-container max-w-6xl space-y-6 pb-28 md:pb-10">
       <div className="max-w-3xl">
         <div className="mb-2 flex items-center gap-2 text-primary"><Sparkles className="h-5 w-5" /><span className="text-sm font-bold uppercase tracking-wide">{tr('Családi étel-autopilóta', 'Family food autopilot')}</span></div>
-        <h1 className="section-title mb-2">{tr('Mi a legfontosabb ezen a héten?', 'What matters this week?')}</h1>
-        <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Mondd el röviden, milyen lesz a hetetek. A menüt, a maradékokat és a bevásárlást ehhez igazítjuk.', 'Tell us briefly what your week looks like. We will adapt the meals, leftovers and shopping to it.')}</p>
+        <h1 className="section-title mb-2">{tr('Állítsuk össze a heteteket', 'Build your week')}</h1>
+        <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Először ellenőrizd a családi beállításokat. Utána add meg, milyen lesz ez a hét, és csak ezután generáljuk a menüt.', 'First review your family preferences. Then tell us what this week looks like, and only then generate the menu.')}</p>
       </div>
 
-      <section className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-        {goals.map(goal => {
-          const Icon = goal.icon;
-          const selected = settings.goal === goal.id;
-          return <button key={goal.id} type="button" aria-pressed={selected} onClick={() => { setSettings(current => ({ ...current, goal: goal.id })); setGenerated(false); }} className={`flex min-h-20 items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? 'border-primary bg-primary/10 ring-1 ring-primary' : 'bg-card hover:bg-secondary/40'}`}>
-            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${selected ? 'bg-primary text-primary-foreground' : 'bg-secondary'}`}><Icon className="h-5 w-5" /></span>
-            <span className="font-semibold">{isEnglish ? goal.en : goal.hu}</span>{selected && <Check className="ml-auto h-5 w-5 text-primary" />}
-          </button>;
-        })}
+      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} />
+
+      <section>
+        <h2 className="mb-3 text-lg font-bold">{tr('Mi a legfontosabb ezen a héten?', 'What matters this week?')}</h2>
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {goals.map(goal => {
+            const Icon = goal.icon;
+            const selected = settings.goal === goal.id;
+            return <button key={goal.id} type="button" aria-pressed={selected} onClick={() => { setSettings(current => ({ ...current, goal: goal.id })); setGenerated(false); }} className={`flex min-h-20 items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? 'border-primary bg-primary/10 ring-1 ring-primary' : 'bg-card hover:bg-secondary/40'}`}>
+              <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${selected ? 'bg-primary text-primary-foreground' : 'bg-secondary'}`}><Icon className="h-5 w-5" /></span>
+              <span className="font-semibold">{isEnglish ? goal.en : goal.hu}</span>{selected && <Check className="ml-auto h-5 w-5 text-primary" />}
+            </button>;
+          })}
+        </div>
       </section>
 
       {settings.goal === 'save-money' && <section className="rounded-xl border bg-card p-4">
@@ -149,7 +168,7 @@ export default function AutopilotPlannerPage() {
 
       <div className="sticky bottom-3 z-30 rounded-xl border bg-card/95 p-3 shadow-lg backdrop-blur md:static md:flex md:items-center md:justify-between md:shadow-none">
         <div className="mb-2 text-sm font-medium md:mb-0"><strong>{activeDays.length}</strong> {tr('tervezett nap', 'planned days')} · <strong>{averagePeople}</strong> {tr('fő átlagosan', 'people on average')}</div>
-        <Button size="lg" onClick={createWeek} className="w-full gap-2 md:w-auto"><Sparkles className="h-4 w-4" />{tr('Készítsd el a hetem', 'Create my week')}</Button>
+        <Button size="lg" onClick={createWeek} className="w-full gap-2 md:w-auto"><Sparkles className="h-4 w-4" />{tr('Heti menü generálása', 'Generate weekly menu')}</Button>
       </div>
 
       {generationError && <p role="alert" className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm font-semibold text-destructive">{tr('Nem sikerült minden naphoz megfelelő ételt találni. Próbálj hosszabb főzési időt vagy kevesebb korlátozást.', 'We could not find a suitable meal for every day. Try allowing more cooking time or fewer restrictions.')}</p>}
