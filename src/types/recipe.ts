@@ -7,6 +7,9 @@ export interface Ingredient {
   unit: string;
 }
 
+export type CostCategory = '$' | '$$' | '$$$';
+export type RecipeDifficulty = 'easy' | 'medium' | 'advanced';
+
 export interface Recipe {
   id: string;
   name: string;
@@ -17,22 +20,38 @@ export interface Recipe {
   defaultServings: number;
   note: string;
   imageUrl: string;
+  preparationTime?: number;
+  cookingTime?: number;
+  totalTime?: number;
+  difficulty?: RecipeDifficulty;
+  estimatedCostCategory?: CostCategory;
+  childFriendly?: boolean;
+  suitableForLeftovers?: boolean;
+  reheatsWell?: boolean;
+  mainIngredients?: string[];
+  cuisine?: string;
+  vegetarian?: boolean;
+  vegan?: boolean;
+  commonAllergens?: string[];
+  quickMeal?: boolean;
+  weekendMeal?: boolean;
+  suitableSideDishes?: string[];
 }
 
 export interface DayPlan {
-  soup: string | null;        // complete lunch: optional soup
-  lunch: string | null;       // complete lunch: main dish
-  side: string | null;        // complete lunch: optional side dish
-  pickle: string | null;      // complete lunch: optional pickle
-  dinner: string | null;      // recipe id
-  dessert: string | null;     // optional dessert after lunch on any day
+  soup: string | null;
+  lunch: string | null;
+  side: string | null;
+  pickle: string | null;
+  dinner: string | null;
+  dessert: string | null;
   soupServings: number;
   lunchServings: number;
   sideServings: number;
   pickleServings: number;
   dinnerServings: number;
   dessertServings: number;
-  lunchDays: number;          // cook for N days
+  lunchDays: number;
   dinnerDays: number;
 }
 
@@ -69,8 +88,32 @@ export type MealSlot = 'lunch' | 'dinner';
 export type GenerationSelection = Record<WeekDay, Record<MealSlot, boolean>>;
 
 export type WeekDay = 'Hétfő' | 'Kedd' | 'Szerda' | 'Csütörtök' | 'Péntek' | 'Szombat' | 'Vasárnap';
-
 export type WeekPlan = Record<WeekDay, DayPlan>;
+
+export type WeeklyGoal = 'save-money' | 'cook-fast' | 'family-favourites' | 'use-pantry' | 'eat-healthier' | 'surprise-me';
+export type DayMode = 'normal' | 'busy' | 'leftovers' | 'no-meal';
+
+export interface DaySchedule {
+  people: number;
+  maxCookingTime: number | null;
+  mode: DayMode;
+}
+
+export interface WeeklyAutopilotSettings {
+  goal: WeeklyGoal;
+  groceryTarget?: number | null;
+  pantryIngredients: string[];
+  days: Record<WeekDay, DaySchedule>;
+}
+
+export function createDefaultAutopilotSettings(familySize = 4): WeeklyAutopilotSettings {
+  return {
+    goal: 'cook-fast',
+    groceryTarget: null,
+    pantryIngredients: [],
+    days: Object.fromEntries(WEEKDAYS.map(day => [day, { people: familySize, maxCookingTime: null, mode: 'normal' }])) as Record<WeekDay, DaySchedule>,
+  };
+}
 
 export interface ShoppingItem {
   name: string;
@@ -122,7 +165,5 @@ export function createEmptyWeekPlan(): WeekPlan {
 }
 
 export function createGenerationSelection(selected = false): GenerationSelection {
-  return Object.fromEntries(
-    WEEKDAYS.map(day => [day, { lunch: selected, dinner: selected }]),
-  ) as GenerationSelection;
+  return Object.fromEntries(WEEKDAYS.map(day => [day, { lunch: selected, dinner: selected }])) as GenerationSelection;
 }
