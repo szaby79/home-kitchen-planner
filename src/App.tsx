@@ -9,6 +9,7 @@ import RecipesPage from "@/pages/RecipesPage";
 import RecipeDetailPage from "@/pages/RecipeDetailPage";
 import PlannerPage from "@/pages/PlannerPage";
 import AutopilotPlannerPage from "@/pages/AutopilotPlannerPage";
+import FamilySettingsPage from "@/pages/FamilySettingsPage";
 import ShoppingPage from "@/pages/ShoppingPage";
 import AdminPage from "@/pages/AdminPage";
 import BudgetPage from "@/pages/BudgetPage";
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/" element={<HomePage />} />
               <Route path="/recipes" element={<RecipesPage />} />
               <Route path="/recipes/:id" element={<RecipeDetailPage />} />
+              <Route path="/family-settings" element={<FamilySettingsPage />} />
               <Route path="/planner" element={<AutopilotPlannerPage />} />
               <Route path="/planner/week" element={<PlannerPage />} />
               <Route path="/shopping" element={<ShoppingPage />} />
