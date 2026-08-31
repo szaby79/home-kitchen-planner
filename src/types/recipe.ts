@@ -53,6 +53,8 @@ export interface DayPlan {
   dessertServings: number;
   lunchDays: number;
   dinnerDays: number;
+  lunchFromLeftovers?: boolean;
+  dinnerFromLeftovers?: boolean;
 }
 
 export type MenuProfile = 'balanced' | 'soup' | 'simple';
@@ -157,6 +159,8 @@ export function createEmptyDayPlan(): DayPlan {
     dessertServings: 4,
     lunchDays: 1,
     dinnerDays: 1,
+    lunchFromLeftovers: false,
+    dinnerFromLeftovers: false,
   };
 }
 
