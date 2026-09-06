@@ -57,12 +57,12 @@ describe('weekly menu generation rules', () => {
   });
 
   it.each(['main-19', 'main-47', 'main-28', 'main-7'])('never adds a separate side to complete dish %s', mainId => {
-    const catalog = defaultRecipes.filter(recipe => recipe.category !== 'main' || recipe.id === mainId);
+    const catalog = defaultRecipes.filter(recipe => (recipe.category !== 'main' && recipe.category !== 'stew') || recipe.id === mainId);
     expect(generateWeekPlan(catalog, 1, 0, 'balanced').Hétfő.side).toBeNull();
   });
 
   it('keeps the side of fasírt selectable instead of baking mashed potatoes into the recipe', () => {
-    const catalog = defaultRecipes.filter(recipe => recipe.category !== 'main' || recipe.id === 'main-14');
+    const catalog = defaultRecipes.filter(recipe => (recipe.category !== 'main' && recipe.category !== 'stew') || recipe.id === 'main-14');
     const plan = generateWeekPlan(catalog, 1, 0, 'balanced');
     expect(plan.Hétfő.lunch).toBe('main-14');
     expect(plan.Hétfő.side).not.toBeNull();

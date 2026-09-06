@@ -97,7 +97,7 @@ function addRecipeIngredients(recipeId: string | null, recipes: Recipe[], reused
 export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinners: number, profile: MenuProfile = 'balanced', preferences: MenuPreferences = DEFAULT_MENU_PREFERENCES, favoriteIds: string[] = [], previousRecipeIds: string[] = [], autopilot?: WeeklyAutopilotSettings): WeekPlan {
   const settings = autopilot ?? createDefaultAutopilotSettings(preferences.familySize);
   const eligibleRecipes = recipes.filter(recipe => recipeMatchesSafetyPreferences(recipe, preferences));
-  const mains = eligibleRecipes.filter(recipe => recipe.category === 'main' && (recipe.mealType === 'lunch' || recipe.mealType === 'both'));
+  const mains = eligibleRecipes.filter(recipe => (recipe.category === 'main' || recipe.category === 'stew') && (recipe.mealType === 'lunch' || recipe.mealType === 'both'));
   const weekdayMains = mains.filter(recipe => !isSundayRecipe(recipe));
   const saturdayMains = mains.filter(recipe => !isSundayRecipe(recipe));
   const sundayMains = mains.filter(isSundayRecipe);

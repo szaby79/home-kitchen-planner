@@ -3,6 +3,7 @@ import { Category, MealType, WeekDay } from '@/types/recipe';
 export const EN_CATEGORY_LABELS: Record<Category, string> = {
   soup: 'Soups',
   main: 'Main dishes',
+  stew: 'Vegetable stews',
   side: 'Side dishes',
   pickle: 'Pickles',
   salad: 'Salads',

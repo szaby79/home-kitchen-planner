@@ -18,6 +18,7 @@ export default function HomePage() {
   const counts: Record<Category, number> = {
     soup: recipes.filter(r => r.category === 'soup').length,
     main: recipes.filter(r => r.category === 'main').length,
+    stew: recipes.filter(r => r.category === 'stew').length,
     side: recipes.filter(r => r.category === 'side').length,
     pickle: recipes.filter(r => r.category === 'pickle').length,
     salad: recipes.filter(r => r.category === 'salad').length,
@@ -45,7 +46,7 @@ export default function HomePage() {
         <p className="mt-3 text-sm font-medium text-muted-foreground">{tr('Az Autopilot megnyitása után először átnézheted a családi beállításokat, majd összeállíthatod a hetet.', 'After opening Autopilot, you can review family preferences first, then build your week.')}</p>
       </section>
 
-      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
+      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
         {(Object.keys(CATEGORY_LABELS) as Category[]).map(cat => (
           <Link key={cat} to={`/recipes?category=${cat}`} className="bg-[#FFF1E2] rounded-lg p-4 text-center card-hover border border-[#E8C9AA]">
             <p className="text-2xl font-bold text-primary">{counts[cat]}</p>

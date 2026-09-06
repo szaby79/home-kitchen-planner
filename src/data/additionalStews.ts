@@ -52,7 +52,7 @@ const englishSteps = ({ topping, cook }: Stew) => [
 ];
 
 export const additionalStews: Recipe[] = stews.map(stew => ({
-  id: `main-${stew.id}`, name: stew.name, category: 'main', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
+  id: `main-${stew.id}`, name: stew.name, category: 'stew', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
   ingredients: stew.ingredients.map(([name, quantity, unit]): Ingredient => ({ name, quantity, unit })),
   description: hungarianSteps(stew).map((step, index) => `${index + 1}. ${step}`).join('\n\n'),
 }));
