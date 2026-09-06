@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.28.0
+
+- Add 20 new Hungarian főzelék meals with traditional toppings, bringing the built-in főzelék selection to 30.
+- Each new meal includes four-person ingredient quantities, five clear cooking steps, English directions, shopping-list support, calorie and budget estimates, and a bundled image.
+- Refresh saved catalogues so the new meals appear automatically without changing user-created recipes.
+
 ## 1.23.0
 
 - Improve readability without changing the cream, terracotta and sage brand palette, recipe content or app behavior.

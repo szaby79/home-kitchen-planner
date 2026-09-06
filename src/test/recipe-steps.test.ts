@@ -5,7 +5,7 @@ import { splitRecipeSteps } from '@/lib/recipeSteps';
 
 describe('Catalogue narration coverage', () => {
   it.each([false, true])('preserves every instruction within the server limit (English: %s)', english => {
-    expect(defaultRecipes).toHaveLength(148);
+    expect(defaultRecipes).toHaveLength(168);
     for (const recipe of defaultRecipes) {
       const description = localizeRecipe(recipe, english).description;
       const steps = splitRecipeSteps(description);

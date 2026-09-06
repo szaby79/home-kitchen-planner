@@ -2,6 +2,7 @@ import { Recipe } from '@/types/recipe';
 import { beginnerInstructions } from '@/data/beginnerInstructions';
 import { additionalSoups } from '@/data/additionalSoups';
 import { additionalMains } from '@/data/additionalMains';
+import { additionalStews } from '@/data/additionalStews';
 import { additionalDesserts } from '@/data/additionalDesserts';
 import { additionalSalads } from '@/data/additionalSalads';
 import { additionalSides } from '@/data/additionalSides';
@@ -739,6 +740,7 @@ const allRecipeData = [
   ...defaultRecipeData,
   ...additionalSoups,
   ...additionalMains,
+  ...additionalStews,
   ...additionalSides,
   ...additionalPickles,
   ...additionalSalads,

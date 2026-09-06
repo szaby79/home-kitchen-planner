@@ -4,7 +4,7 @@ import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
 const INGREDIENTS: Record<string, string> = {
   'alma': 'apple', 'avokádó': 'avocado', 'babérlevél': 'bay leaf', 'balzsamecet': 'balsamic vinegar',
   'baracklekvár': 'apricot jam', 'bors': 'black pepper', 'brokkoli': 'broccoli', 'burgonya': 'potato',
-  'cérnametélt': 'fine egg noodles', 'citrom': 'lemon', 'citromhéj': 'lemon zest', 'cukor': 'sugar',
+  'cérnametélt': 'fine egg noodles', 'citrom': 'lemon', 'citromhéj': 'lemon zest', 'csicseriborsó konzerv': 'canned chickpeas', 'cukor': 'sugar', 'cukkini': 'zucchini',
   'csalamádé': 'mixed pickled vegetables', 'csemege uborka': 'sweet pickles', 'csemegekukorica': 'sweet corn',
   'csiperke gomba': 'button mushrooms', 'csirkecomb': 'chicken thighs', 'csirkemáj': 'chicken liver',
   'csirkemell': 'chicken breast', 'csusza tészta': 'csusza noodles', 'csuszatészta': 'csusza noodles',
