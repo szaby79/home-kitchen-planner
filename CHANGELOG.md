@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.29.0
+
+- Add a separate Főzelékek / Vegetable stews recipe category.
+- Move all 30 főzelék meals out of Főételek while keeping them available for lunch planning.
+- Update category filters, homepage counts, recipe forms, sorting, saved-catalogue migration, and the visible version number.
+
 ## 1.28.0
 
 - Add 20 new Hungarian főzelék meals with traditional toppings, bringing the built-in főzelék selection to 30.

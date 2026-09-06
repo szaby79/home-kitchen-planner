@@ -14,6 +14,8 @@ const makeMain = (id: number, name: string, note: string, rows: IngredientRow[],
   description: steps.map((step, index) => `${index + 1}. ${step}`).join('\n\n'),
 });
 
+const makeStew = (...args: Parameters<typeof makeMain>): Recipe => ({ ...makeMain(...args), category: 'stew' });
+
 export const additionalMains: Recipe[] = [
   makeMain(36, 'Cigánypecsenye', 'Sertéstarjából, fokhagymásan', [
     ['sertéstarja', 600, 'g'], ['füstölt szalonna', 150, 'g'], ['fokhagyma', 4, 'gerezd'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'], ['bors', 0.5, 'tk'], ['burgonya', 800, 'g'],
@@ -150,7 +152,7 @@ export const additionalMains: Recipe[] = [
     'A hagymát vágd félkarikára és olajon pirítsd aranybarnára. Olajos kanállal szaggass dödölléket a serpenyőbe.',
     'Pirítsd körbe a darabokat 8–10 perc alatt, majd tejföllel és a hagymával tálald.',
   ]),
-  makeMain(51, 'Krumplifőzelék fasírttal', 'Babérleveles főzelék klasszikus feltéttel', [
+  makeStew(51, 'Krumplifőzelék fasírttal', 'Babérleveles főzelék klasszikus feltéttel', [
     ['burgonya', 900, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['babérlevél', 2, 'db'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['vöröshagyma', 1, 'db'], ['olaj', 250, 'ml'], ['só', 1, 'tk'],
   ], [
     'A burgonyát karikázd fel, tedd fazékba babérlevéllel és sóval, majd önts rá annyi vizet, hogy éppen ellepje. Főzd 15 percig.',
@@ -159,7 +161,7 @@ export const additionalMains: Recipe[] = [
     'A tejfölt keverd simára a liszttel és egy merőkanál főzőlével, majd lassan öntsd a puha burgonyához.',
     'Kevergetve forrald 3 percig. Ha túl sűrű, adj hozzá kevés vizet, majd a fasírttal tálald.',
   ]),
-  makeMain(52, 'Babfőzelék füstölt kolbásszal', 'Tartalmas, tejfölös főzelék', [
+  makeStew(52, 'Babfőzelék füstölt kolbásszal', 'Tartalmas, tejfölös főzelék', [
     ['szárazbab', 500, 'g'], ['füstölt kolbász', 300, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['fokhagyma', 2, 'gerezd'], ['babérlevél', 2, 'db'], ['pirospaprika', 1, 'tk'], ['só', 1, 'tk'],
   ], [
     'A babot előző este áztasd be bő hideg vízbe. Másnap öntsd le róla az áztatóvizet és öblítsd át.',
@@ -168,7 +170,7 @@ export const additionalMains: Recipe[] = [
     'A tejfölt keverd simára liszttel, pirospaprikával és egy merőkanál főzőlével.',
     'Öntsd a babhoz, kevergetve forrald 3–4 percig. A végén kóstold meg és állítsd be a sót.',
   ]),
-  makeMain(53, 'Spenótfőzelék tükörtojással', 'Gyors, húsmentes ebéd', [
+  makeStew(53, 'Spenótfőzelék tükörtojással', 'Gyors, húsmentes ebéd', [
     ['fagyasztott spenót', 700, 'g'], ['tej', 500, 'ml'], ['zsemle', 2, 'db'], ['fokhagyma', 3, 'gerezd'], ['liszt', 2, 'ek'], ['olaj', 2, 'ek'], ['tojás', 4, 'db'], ['só', 1, 'tk'],
   ], [
     'A zsemlét tépd darabokra, áztasd a tej felébe 10 percre, majd villával nyomkodd szét.',
@@ -177,7 +179,7 @@ export const additionalMains: Recipe[] = [
     'Add hozzá a spenótot és az áztatott zsemlét. Kis lángon, gyakran keverve főzd 8–10 percig, majd sózd.',
     'Kevés olajon süss négy tükörtojást addig, amíg a fehérje megszilárdul, majd tedd a főzelék tetejére.',
   ]),
-  makeMain(54, 'Sóskafőzelék főtt tojással', 'Édeskés-savanykás, húsmentes étel', [
+  makeStew(54, 'Sóskafőzelék főtt tojással', 'Édeskés-savanykás, húsmentes étel', [
     ['sóska', 700, 'g'], ['tej', 400, 'ml'], ['tejföl', 150, 'ml'], ['liszt', 2, 'ek'], ['cukor', 2, 'ek'], ['olaj', 2, 'ek'], ['tojás', 4, 'db'], ['só', 0.5, 'tk'],
   ], [
     'A tojásokat tedd hideg vízbe, forrástól számítva főzd 10 percig, majd hideg vízben hűtsd le és hámozd meg.',
@@ -186,7 +188,7 @@ export const additionalMains: Recipe[] = [
     'Kis lángon főzd 5 percig, majd botmixerrel turmixold simára. A mixer fejét tartsd a folyadék alatt.',
     'Keverd hozzá a tejfölt, cukrot és sót, melegítsd át, majd félbevágott főtt tojással tálald.',
   ]),
-  makeMain(55, 'Karalábéfőzelék húsgombóccal', 'Kapros, könnyű tavaszi fogás', [
+  makeStew(55, 'Karalábéfőzelék húsgombóccal', 'Kapros, könnyű tavaszi fogás', [
     ['karalábé', 900, 'g'], ['darált sertéshús', 500, 'g'], ['tojás', 1, 'db'], ['rizs', 80, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['kapor', 0.5, 'csokor'], ['só', 1, 'tk'],
   ], [
     'A karalábét hámozd meg és vágd 1 cm-es kockákra. Tedd fazékba, önts rá annyi vizet, hogy ellepje, és sózd meg.',
@@ -195,7 +197,7 @@ export const additionalMains: Recipe[] = [
     'A tejfölt keverd simára liszttel és egy merőkanál főzőlével, majd öntsd vissza a fazékba.',
     'Óvatosan keverve forrald 3 percig, végül add hozzá az aprított kaprot.',
   ]),
-  makeMain(56, 'Kelkáposzta-főzelék fasírttal', 'Köményes, fokhagymás klasszikus', [
+  makeStew(56, 'Kelkáposzta-főzelék fasírttal', 'Köményes, fokhagymás klasszikus', [
     ['kelkáposzta', 800, 'g'], ['burgonya', 500, 'g'], ['fokhagyma', 3, 'gerezd'], ['liszt', 2, 'ek'], ['kömény', 1, 'tk'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['olaj', 250, 'ml'], ['só', 1, 'tk'],
   ], [
     'A káposztát csíkozd, a burgonyát kockázd fel. Tedd fazékba köménnyel, sóval és annyi vízzel, hogy majdnem ellepje.',

@@ -456,7 +456,7 @@ const defaultRecipeData: Recipe[] = [
     description: 'Hagymát dinsztelünk, darált húst hozzáadjuk. Káposztát csíkozzuk, paradicsomszósszal összefőzzük. Rizzsel tálaljuk.'
   },
   {
-    id: 'main-24', name: 'Zöldbabfőzelék fasírttal', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
+    id: 'main-24', name: 'Zöldbabfőzelék fasírttal', category: 'stew', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'zöldbab', quantity: 600, unit: 'g' }, { name: 'darált hús', quantity: 400, unit: 'g' },
       { name: 'liszt', quantity: 2, unit: 'ek' }, { name: 'tejföl', quantity: 150, unit: 'ml' },
@@ -468,7 +468,7 @@ const defaultRecipeData: Recipe[] = [
     description: 'A zöldbabot puhára főzzük, rántással beteszítjük, tejföllel, ecettel ízesítjük. A darált húsból fasírtokat formálunk és kisütjük. Együtt tálaljuk.'
   },
   {
-    id: 'main-25', name: 'Borsófőzelék pörkölttel', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
+    id: 'main-25', name: 'Borsófőzelék pörkölttel', category: 'stew', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'zöldborsó', quantity: 500, unit: 'g' }, { name: 'sertéshús', quantity: 400, unit: 'g' },
       { name: 'vöröshagyma', quantity: 2, unit: 'db' }, { name: 'pirospaprika', quantity: 1, unit: 'tk' },
@@ -479,7 +479,7 @@ const defaultRecipeData: Recipe[] = [
     description: 'A borsót puhára főzzük, rántással beteszítjük. A húsból pörköltet készítünk. Együtt tálaljuk.'
   },
   {
-    id: 'main-26', name: 'Lencsefőzelék sült hússal', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
+    id: 'main-26', name: 'Lencsefőzelék sült hússal', category: 'stew', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'lencse', quantity: 300, unit: 'g' }, { name: 'sertés karaj', quantity: 400, unit: 'g' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'liszt', quantity: 2, unit: 'ek' },
@@ -490,7 +490,7 @@ const defaultRecipeData: Recipe[] = [
     description: 'A lencsét puhára főzzük, rántással beteszítjük, ecettel-cukorral ízesítjük. A húst szeleteljük, megsütjük. Együtt tálaljuk.'
   },
   {
-    id: 'main-27', name: 'Tökfőzelék fasírttal', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
+    id: 'main-27', name: 'Tökfőzelék fasírttal', category: 'stew', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'tök', quantity: 800, unit: 'g' }, { name: 'darált hús', quantity: 400, unit: 'g' },
       { name: 'liszt', quantity: 2, unit: 'ek' }, { name: 'tejföl', quantity: 150, unit: 'ml' },

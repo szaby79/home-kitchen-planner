@@ -52,10 +52,10 @@ export function recipePreferenceScore(recipe: Recipe, styles: FoodStylePreferenc
   if (styles.includes('quick') && isQuickRecipe(recipe)) score += 5;
   if (styles.includes('meatless') && isVegetarianRecipe(recipe)) score += 5;
   if (styles.includes('light') && (recipe.category === 'salad' || /zöldség|főzelék|krémleves|saláta|vegetable|salad/i.test(recipeText(recipe)))) score += 5;
-  if (styles.includes('traditional') && (recipe.category === 'main' || recipe.category === 'soup') && !isQuickRecipe(recipe)) score += 4;
+  if (styles.includes('traditional') && (recipe.category === 'main' || recipe.category === 'stew' || recipe.category === 'soup') && !isQuickRecipe(recipe)) score += 4;
   return score;
 }
 
 export function countMatchingMainRecipes(recipes: Recipe[], preferences: MenuPreferences) {
-  return recipes.filter(recipe => recipe.category === 'main' && recipeMatchesSafetyPreferences(recipe, preferences)).length;
+  return recipes.filter(recipe => (recipe.category === 'main' || recipe.category === 'stew') && recipeMatchesSafetyPreferences(recipe, preferences)).length;
 }

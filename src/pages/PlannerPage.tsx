@@ -45,7 +45,9 @@ export default function PlannerPage() {
     if (sortMode === 'random') return hash(`${a.id}-${randomSeed}`) - hash(`${b.id}-${randomSeed}`);
     return a.name.localeCompare(b.name, 'hu');
   });
-  const options = (category: Recipe['category']) => sorted(recipes.filter(recipe => recipe.category === category));
+  const options = (category: Recipe['category']) => sorted(recipes.filter(recipe =>
+    category === 'main' ? recipe.category === 'main' || recipe.category === 'stew' : recipe.category === category
+  ));
   const dinnerOptions = sorted(recipes.filter(recipe => (recipe.category === 'main' || recipe.category === 'salad') && isQuickRecipe(recipe) && (recipe.mealType === 'dinner' || recipe.mealType === 'both')));
   const setAll = (selected: boolean) => setSelection(createGenerationSelection(selected));
   const setFromToday = () => {
