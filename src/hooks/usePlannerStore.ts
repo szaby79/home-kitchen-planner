@@ -54,7 +54,7 @@ export function usePlannerStore(recipes: Recipe[]) {
         const lunch = recipes.find(recipe => recipe.id === current[day].lunch);
         const legacySoup = lunch?.category === 'soup' ? current[day].lunch : null;
         const invalidDinner = Boolean(current[day].dinner && dinner?.category !== 'main' && dinner?.category !== 'salad');
-        const invalidLunch = Boolean(current[day].lunch && lunch?.category !== 'main' && lunch?.category !== 'salad');
+        const invalidLunch = Boolean(current[day].lunch && lunch?.category !== 'main' && lunch?.category !== 'stew' && lunch?.category !== 'salad');
         const invalidSide = Boolean(current[day].side && lunch && !recipeNeedsSeparateSide(lunch));
 
         if (invalidDinner || invalidLunch || invalidSide) {
