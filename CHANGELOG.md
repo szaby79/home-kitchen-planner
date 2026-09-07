@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.30.0
+
+- Fix saved recipe migration so existing users see 60 main dishes and 30 vegetable stews after updating.
+- Refresh the category of every built-in recipe from the current catalogue while preserving user-created recipes.
+
 ## 1.29.0
 
 - Add a separate Főzelékek / Vegetable stews recipe category.

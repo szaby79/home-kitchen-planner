@@ -4,7 +4,7 @@ import { defaultRecipes } from '@/data/recipes';
 
 const STORAGE_KEY = 'plan-pan-recipes';
 const CONTENT_VERSION_KEY = 'plan-pan-recipes-content-version';
-const CONTENT_VERSION = '8';
+const CONTENT_VERSION = '9';
 
 const defaultRecipesById = new Map(
   defaultRecipes.map(recipe => [recipe.id, recipe] as const),
@@ -19,6 +19,7 @@ function refreshDefaultRecipeContent(recipes: Recipe[]): Recipe[] {
 
     return {
       ...recipe,
+      category: defaultRecipe.category,
       imageUrl: defaultRecipe.imageUrl,
       ...(needsContentMigration
         ? {

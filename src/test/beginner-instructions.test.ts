@@ -65,7 +65,8 @@ describe('beginner recipe instructions', () => {
   });
 
   it('migrates cached built-in content without changing a user recipe', () => {
-    const cachedBuiltIn = { ...defaultRecipes[0], description: 'Régi rövid leírás', ingredients: [] };
+    const stew = defaultRecipes.find(recipe => recipe.category === 'stew')!;
+    const cachedBuiltIn = { ...stew, category: 'main' as const, description: 'Régi rövid leírás', ingredients: [] };
     const userRecipe: Recipe = {
       id: 'user-recipe',
       name: 'Saját recept',
@@ -83,10 +84,11 @@ describe('beginner recipe instructions', () => {
 
     const { result } = renderHook(() => useRecipeStore());
 
-    expect(result.current.recipes[0].description).toBe(defaultRecipes[0].description);
-    expect(result.current.recipes[0].ingredients).toEqual(defaultRecipes[0].ingredients);
+    expect(result.current.recipes[0].description).toBe(stew.description);
+    expect(result.current.recipes[0].ingredients).toEqual(stew.ingredients);
+    expect(result.current.recipes[0].category).toBe('stew');
     expect(result.current.recipes[1]).toEqual(userRecipe);
     expect(result.current.recipes).toHaveLength(169);
-    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('8');
+    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('9');
   });
 });
