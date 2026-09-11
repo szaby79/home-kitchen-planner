@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.32.0
+
+- Audit and correct recipe photography across the built-in catalogue.
+- Replace mismatched vegetable-stew images with recipe-specific images for all 20 newly added stews.
+- Replace the shared placeholder-style side-dish and pickle images with individual recipe-specific images for all 10 sides and 8 pickles.
+- Keep the existing recipe IDs and image-path contract unchanged so saved menus and catalogue migrations remain compatible.
+
 ## 1.31.0
 
 - Add optional passwordless Supabase email authentication while preserving unrestricted guest mode.
