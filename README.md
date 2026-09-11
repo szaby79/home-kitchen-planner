@@ -1,6 +1,15 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.31 adds optional passwordless accounts while keeping every existing feature available in guest mode.
+Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.32 corrects and completes the built-in recipe photography while preserving the optional passwordless accounts and guest mode from v1.31.
+
+## Tervezett PR-sorozat
+
+- PR #31 / v1.31 – felhasználói adatbázis-alap (kész)
+- PR #32 / v1.32 – recept- és ételfotó-audit (folyamatban)
+- PR #33 / v1.33 – családi beállítások mentése
+- PR #34 / v1.34 – heti menük és bevásárlólisták mentése
+- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők
+- Ezután: keto étrend mód (a következő szabad PR-számmal)
 
 ## Local development
 
