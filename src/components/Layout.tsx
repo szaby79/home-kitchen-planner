@@ -1,12 +1,14 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
+import { useAuth } from '@/auth/AuthContext';
+import AuthDialog from '@/components/AuthDialog';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -45,6 +47,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const favoritesStore = useFavorites();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [authOpen, setAuthOpen] = React.useState(() => new URLSearchParams(window.location.hash.slice(1)).has('error'));
+  const { user, loading: authLoading } = useAuth();
   const navItems = [
     { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home') },
     { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes') },
@@ -83,6 +87,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <button type="button" onClick={() => setLanguage('hu')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'hu' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="Magyar nyelv">HU</button>
               <button type="button" onClick={() => setLanguage('en')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'en' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="English language">EN</button>
             </div>
+            <button
+              type="button"
+              onClick={() => setAuthOpen(true)}
+              className="mr-1 inline-flex max-w-[9rem] items-center gap-1.5 rounded-md border bg-card px-2.5 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
+              aria-label={user ? tr('Fiók megnyitása', 'Open account') : tr('Bejelentkezés e-mail-címmel', 'Sign in with Email')}
+            >
+              <UserRound className="h-4 w-4 shrink-0" />
+              <span className="hidden max-w-[6rem] truncate sm:inline">
+                {authLoading ? tr('Betöltés…', 'Loading…') : user?.email ?? tr('Belépés', 'Sign in')}
+              </span>
+            </button>
             <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -97,9 +112,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </nav>
           )}
         </header>
+        <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
-          Plan & Pan v1.30 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
+          Plan & Pan v1.31 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
       </div>
     </AppContext.Provider>

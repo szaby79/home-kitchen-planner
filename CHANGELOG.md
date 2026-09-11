@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.31.0
+
+- Add optional passwordless Supabase email authentication while preserving unrestricted guest mode.
+- Restore authenticated sessions after refresh and create a minimal user profile automatically.
+- Add strict Row Level Security policies and a repository-managed profile migration.
+- Add bilingual account states and a bilingual beta privacy notice with explicit acceptance.
+- Document safe Supabase and Vercel setup without committing credentials.
+
 ## 1.30.0
 
 - Fix saved recipe migration so existing users see 60 main dishes and 30 vegetable stews after updating.
