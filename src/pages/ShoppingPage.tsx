@@ -8,6 +8,8 @@ import { Check, Plus, Trash2, ShoppingCart, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_WEEKDAYS } from '@/i18n/labels';
+import SavedWeeksBar from '@/components/SavedWeeksBar';
+import { localizeIngredient } from '@/i18n/recipeLocalization';
 
 export default function ShoppingPage() {
   const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved, shoppingNotes, setShoppingNotes } = useAppContext();
@@ -32,6 +34,7 @@ export default function ShoppingPage() {
         <ArrowLeft className="h-4 w-4" /> {tr('Vissza a menühöz', 'Back to menu')}
       </Link>
       <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
+      <SavedWeeksBar />
       <p className="mb-4 text-sm text-muted-foreground leading-relaxed font-medium">{tr('A lista csak az aktuális terv hozzávalóit és a saját tételeidet tartalmazza. Új terv vagy ételcsere után automatikusan frissül.', 'The list contains only ingredients for the active plan and your manually added items. It updates automatically after a new plan or a dish replacement.')}</p>
 
       {/* View toggle */}
@@ -68,6 +71,7 @@ export default function ShoppingPage() {
           {allItems.map((item, i) => {
             const key = `${item.name}-${item.unit}`;
             const removed = removedItems.has(key);
+            const display = item.manual ? { name: item.name, unit: item.unit } : localizeIngredient(item.name, item.unit, isEnglish);
             return (
               <div
                 key={`${key}-${i}`}
@@ -81,9 +85,9 @@ export default function ShoppingPage() {
                 >
                   {removed && <Check className="w-3 h-3 text-success-foreground" />}
                 </button>
-                <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
+                <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{display.name}</span>
                 <span className="text-sm text-muted-foreground font-medium leading-relaxed">
-                  {Math.round(item.quantity * 10) / 10} {item.unit}
+                  {Math.round(item.quantity * 10) / 10} {display.unit}
                 </span>
                 {item.manual && (
                   <button onClick={() => removeExtraItem(i - shoppingList.length)} className="text-destructive hover:text-destructive/80">
@@ -111,6 +115,7 @@ export default function ShoppingPage() {
                   {items.map((item, i) => {
                     const key = `${item.name}-${item.unit}`;
                     const removed = removedItems.has(key);
+                    const display = localizeIngredient(item.name, item.unit, isEnglish);
                     return (
                       <div key={`${key}-${i}`} className={`flex items-center gap-3 px-4 py-2.5 ${removed ? 'opacity-40' : ''}`}>
                         <button
@@ -121,8 +126,8 @@ export default function ShoppingPage() {
                         >
                           {removed && <Check className="w-3 h-3 text-success-foreground" />}
                         </button>
-                        <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{item.name}</span>
-                        <span className="text-sm text-muted-foreground leading-relaxed font-medium">{Math.round(item.quantity * 10) / 10} {item.unit}</span>
+                        <span className={`flex-1 text-sm ${removed ? 'line-through' : ''}`}>{display.name}</span>
+                        <span className="text-sm text-muted-foreground leading-relaxed font-medium">{Math.round(item.quantity * 10) / 10} {display.unit}</span>
                       </div>
                     );
                   })}

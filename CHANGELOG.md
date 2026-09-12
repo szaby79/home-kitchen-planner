@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.34.0
+
+- Automatically save and restore each signed-in user's exact weekly menu, portions, replacements, and linked shopping-list state through Supabase.
+- Add compact bilingual saved-week navigation and require confirmation before replacing an existing plan in both weekly-planner flows.
+- Keep guest menus and shopping lists device-local, migrate a valid matching local week only when no cloud row exists, and restore the separate guest state immediately after sign-out.
+- Debounce cloud writes, retain failed changes in user-and-week-scoped pending storage, and show bilingual loading, saving, saved, pending, and offline states.
+- Add a one-row-per-user/week `weekly_plans` migration with stable recipe IDs, UUID ownership, timestamps, idempotent uniqueness, history indexing, and strict CRUD Row Level Security.
+- Preserve unavailable recipe IDs and show a safe fallback message instead of silently substituting or crashing.
+
 ## 1.33.0
 
 - Securely synchronize the complete existing family-settings state for signed-in users while keeping guest settings device-local.

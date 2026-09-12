@@ -2,13 +2,14 @@ import React, { createContext, useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
-import { usePlannerStore } from '@/hooks/usePlannerStore';
+import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
 import { useAuth } from '@/auth/AuthContext';
 import AuthDialog from '@/components/AuthDialog';
+import type { StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -31,6 +32,16 @@ interface AppContextType {
   toggleRemoved: (key: string) => void;
   shoppingNotes: string;
   setShoppingNotes: (notes: string) => void;
+  plannerReady: boolean;
+  cloudSyncEnabled: boolean;
+  cloudSyncStatus: WeeklyPlanSyncStatus;
+  savedWeeks: StoredWeeklyPlan[];
+  displayedWeekStart: string;
+  currentWeekStart: string;
+  openSavedWeek: (weekStart: string) => boolean;
+  returnToCurrentWeek: () => boolean;
+  canSwitchWeeks: boolean;
+  missingRecipeIds: string[];
   favoriteIds: string[];
   toggleFavorite: (recipeId: string) => void;
   isFavorite: (recipeId: string) => boolean;
@@ -43,12 +54,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const recipeStore = useRecipeStore();
   const { language, isEnglish, setLanguage, tr } = useLanguage();
   const recipes = React.useMemo(() => recipeStore.recipes.map(recipe => localizeRecipe(recipe, isEnglish)), [recipeStore.recipes, isEnglish]);
-  const plannerStore = usePlannerStore(recipes);
+  const { user, loading: authLoading } = useAuth();
+  const plannerStore = usePlannerStore(recipeStore.recipes, { userId: user?.id ?? null, authLoading });
   const favoritesStore = useFavorites();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(() => new URLSearchParams(window.location.hash.slice(1)).has('error'));
-  const { user, loading: authLoading } = useAuth();
   const navItems = [
     { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home') },
     { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes') },
@@ -115,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
-          Plan & Pan v1.33 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
+          Plan & Pan v1.34.0 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
       </div>
     </AppContext.Provider>

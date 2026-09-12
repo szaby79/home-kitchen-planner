@@ -12,11 +12,12 @@ import { EN_CATEGORY_LABELS, EN_WEEKDAYS } from '@/i18n/labels';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
+import SavedWeeksBar from '@/components/SavedWeeksBar';
 
 type SortMode = 'abc' | 'random' | 'favorites';
 
 export default function PlannerPage() {
-  const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite, favoriteIds } = useAppContext();
+  const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite, favoriteIds, plannerReady } = useAppContext();
   const { isEnglish, tr } = useLanguage();
   const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
   const [selection, setSelection] = useState<GenerationSelection>(() => createGenerationSelection(true));
@@ -57,7 +58,7 @@ export default function PlannerPage() {
   };
   const toggleSelection = (day: WeekDay, slot: MealSlotType) => setSelection(current => ({ ...current, [day]: { ...current[day], [slot]: !current[day][slot] } }));
   const handleGenerate = () => {
-    if (!selectedCount) return;
+    if (!plannerReady || !selectedCount) return;
     if (!generateRandomPlan(selection, menuProfile, preferences, favoriteIds)) {
       setGenerationError(true);
       return;
@@ -88,6 +89,7 @@ export default function PlannerPage() {
   return (
     <div className="page-container max-w-6xl">
       <h1 className="section-title">{tr('Heti menüterv', 'Weekly meal plan')}</h1>
+      <SavedWeeksBar />
       <div className="mb-4 grid grid-cols-4 gap-1 rounded-xl border bg-card p-2 text-center text-[10px] md:hidden">
         {[tr('Napok', 'Days'), tr('Generálás', 'Generate'), tr('Ellenőrzés', 'Review'), tr('Bevásárlás', 'Shop')].map((step, index) => <div key={step} className="rounded-lg px-1 py-2"><span className="mx-auto mb-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">{index + 1}</span>{step}</div>)}
       </div>
@@ -123,8 +125,8 @@ export default function PlannerPage() {
             </select>
           </label>
           <p className="max-w-md text-sm text-muted-foreground leading-relaxed font-medium">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
-          <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {tr('Generálás', 'Generate')} ({selectedCount})</Button>
-          <Button variant="outline" onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
+          <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!plannerReady || !selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {plannerReady ? tr('Generálás', 'Generate') : tr('Betöltés…', 'Loading…')} ({selectedCount})</Button>
+          <Button variant="outline" disabled={!plannerReady} onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
         </div>
         {generationError && <p role="alert" className="text-sm text-destructive">{tr('Nem sikerült minden kijelölt étkezéshez megfelelő ételt találni. A korábbi terv és bevásárlólista megmaradt. Módosítsd a kijelölést vagy az étkezési beállításokat.', 'We could not find a suitable dish for every selected meal. Your previous plan and shopping list are unchanged. Adjust the selection or meal preferences.')}</p>}
       </div>
@@ -154,7 +156,7 @@ export default function PlannerPage() {
         {(hasPlan ? activeDays : WEEKDAYS).map(day => {
           const plan = weekPlan[day];
           const lunchIds = [plan.soup, plan.lunch, plan.side, plan.pickle, plan.dessert].filter(Boolean) as string[];
-          const lunchCalories = lunchIds.reduce((sum, id) => sum + estimateRecipeCalories(recipes.find(recipe => recipe.id === id)!), 0);
+          const lunchCalories = lunchIds.map(id => recipes.find(recipe => recipe.id === id)).filter((recipe): recipe is Recipe => Boolean(recipe)).reduce((sum, recipe) => sum + estimateRecipeCalories(recipe), 0);
           const hasLunchExtras = Boolean(plan.soup || plan.side || plan.pickle || plan.dessert);
           const showExtras = hasLunchExtras || expandedExtras.has(day);
           return <section key={day} className="animate-fade-in rounded-xl border bg-card p-4">
