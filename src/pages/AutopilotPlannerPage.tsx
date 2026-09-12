@@ -32,7 +32,7 @@ function loadSettings(familySize: number): WeeklyAutopilotSettings {
 export default function AutopilotPlannerPage() {
   const { generateRandomPlan, weekPlan, recipes, favoriteIds } = useAppContext();
   const { tr, isEnglish } = useLanguage();
-  const { preferences, savePreferences, hasSavedPreferences } = useMenuPreferences();
+  const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
   const [settings, setSettings] = useState<WeeklyAutopilotSettings>(() => loadSettings(preferences.familySize));
   const [pantryText, setPantryText] = useState(() => settings.pantryIngredients.join(', '));
   const [generated, setGenerated] = useState(false);
@@ -115,7 +115,7 @@ export default function AutopilotPlannerPage() {
         <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Először ellenőrizd a családi beállításokat. Utána add meg, milyen lesz ez a hét, és csak ezután generáljuk a menüt.', 'First review your family preferences. Then tell us what this week looks like, and only then generate the menu.')}</p>
       </div>
 
-      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} />
+      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 
       <section>
         <h2 className="mb-3 text-lg font-bold">{tr('Mi a legfontosabb ezen a héten?', 'What matters this week?')}</h2>

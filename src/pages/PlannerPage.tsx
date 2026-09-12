@@ -18,7 +18,7 @@ type SortMode = 'abc' | 'random' | 'favorites';
 export default function PlannerPage() {
   const { recipes, weekPlan, updateDay, clearPlan, generateRandomPlan, isFavorite, favoriteIds } = useAppContext();
   const { isEnglish, tr } = useLanguage();
-  const { preferences, savePreferences, hasSavedPreferences } = useMenuPreferences();
+  const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
   const [selection, setSelection] = useState<GenerationSelection>(() => createGenerationSelection(true));
   const [menuProfile, setMenuProfile] = useState<MenuProfile>('balanced');
   const [sortMode, setSortMode] = useState<SortMode>('abc');
@@ -96,7 +96,7 @@ export default function PlannerPage() {
         <p><strong>{tr('Életszerű tervezés:', 'Practical planning:')}</strong> {tr('hétköznap egyszerűbb, hétvégén tartalmasabb ebéd készül. Vacsorára csak gyors étel vagy saláta kerül.', 'weekday lunches are simpler, while weekend lunches can be more substantial. Dinner is always a quick meal or salad.')}</p>
       </div>
 
-      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} />
+      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 
       <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
         <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>

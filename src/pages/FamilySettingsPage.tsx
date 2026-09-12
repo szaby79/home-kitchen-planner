@@ -9,7 +9,7 @@ import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 export default function FamilySettingsPage() {
   const { recipes } = useAppContext();
   const { tr } = useLanguage();
-  const { preferences, savePreferences, hasSavedPreferences } = useMenuPreferences();
+  const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
 
   return (
     <div className="page-container max-w-4xl">
@@ -19,7 +19,7 @@ export default function FamilySettingsPage() {
         <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Itt állíthatod be, hány főre főztök, milyen étrendet követtek, mit nem szerettek és mennyi időt szánnátok a főzésre. Az Autopilot ezeket automatikusan használja.', 'Set your family size, diet, dislikes and preferred cooking time here. Autopilot will use these automatically.')}</p>
       </div>
 
-      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} />
+      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 
       <div className="flex justify-end">
         <Button asChild size="lg" className="gap-2">

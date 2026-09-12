@@ -4,19 +4,22 @@ import { Button } from '@/components/ui/button';
 import { CookingTimePreference, DietPreference, FoodRestriction, FoodStylePreference, MenuPreferences, Recipe } from '@/types/recipe';
 import { countMatchingMainRecipes } from '@/lib/menuPreferences';
 import { useLanguage } from '@/i18n/LanguageContext';
+import type { FamilySettingsSyncStatus } from '@/hooks/useMenuPreferences';
 
 type Props = {
   preferences: MenuPreferences;
   hasSavedPreferences: boolean;
   recipes: Recipe[];
   onSave: (preferences: MenuPreferences) => void;
+  cloudSyncEnabled?: boolean;
+  syncStatus?: FamilySettingsSyncStatus;
 };
 
 const allergyOptions: FoodRestriction[] = ['gluten', 'milk', 'egg', 'nuts', 'fish', 'soy'];
 const intoleranceOptions: FoodRestriction[] = ['lactose', 'gluten'];
 const styleOptions: FoodStylePreference[] = ['traditional', 'light', 'quick', 'meatless'];
 
-export default function MenuPreferencesPanel({ preferences, hasSavedPreferences, recipes, onSave }: Props) {
+export default function MenuPreferencesPanel({ preferences, hasSavedPreferences, recipes, onSave, cloudSyncEnabled = false, syncStatus = 'idle' }: Props) {
   const { tr } = useLanguage();
   const [open, setOpen] = useState(!hasSavedPreferences);
   const [draft, setDraft] = useState(preferences);
@@ -43,6 +46,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       <span className="min-w-0 flex-1">
         <span className="block text-base font-bold sm:text-lg">{tr('Családi beállítások', 'Family preferences')}</span>
         <span className="block text-sm text-muted-foreground leading-relaxed font-medium">{hasSavedPreferences ? summary : tr('Mondd el röviden, mit szeret a család. Ezt csak egyszer kell beállítani.', 'Tell us what your family enjoys. You only need to set this up once.')}</span>
+        {cloudSyncEnabled && <CloudSyncStatus status={syncStatus} tr={tr} />}
       </span>
       {open ? <ChevronUp className="h-5 w-5 shrink-0" /> : <ChevronDown className="h-5 w-5 shrink-0" />}
     </button>
@@ -95,6 +99,21 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       </div>
     </div>}
   </section>;
+}
+
+function CloudSyncStatus({ status, tr }: { status: FamilySettingsSyncStatus; tr: (hu: string, en: string) => string }) {
+  if (status === 'idle') return null;
+  if (status === 'error') return (
+    <span className="mt-1 block text-sm font-semibold text-destructive" role="alert">
+      {tr('A felhőmentés most nem sikerült. A módosítás ezen az eszközön megmaradt; újra megpróbáljuk, amikor helyreáll a kapcsolat.', 'Cloud saving is temporarily unavailable. Your change remains on this device and will retry when the connection returns.')}
+    </span>
+  );
+  const label = status === 'loading'
+    ? tr('Betöltés…', 'Loading…')
+    : status === 'saving'
+      ? tr('Mentés…', 'Saving…')
+      : tr('Mentve', 'Saved');
+  return <span className="mt-1 block text-sm font-semibold text-primary" aria-live="polite">{label}</span>;
 }
 
 function PreferenceStep({ number, title, hint, children }: { number: string; title: string; hint?: string; children: React.ReactNode }) {

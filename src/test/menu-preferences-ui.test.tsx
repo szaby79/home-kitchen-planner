@@ -1,11 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import { LanguageProvider } from '@/i18n/LanguageContext';
 import { defaultRecipes } from '@/data/recipes';
 import { DEFAULT_MENU_PREFERENCES } from '@/types/recipe';
 
 describe('family preferences panel', () => {
+  beforeEach(() => localStorage.clear());
+
   it('presents simple Hungarian questions and saves the selected family profile', () => {
     const onSave = vi.fn();
     render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences={false} recipes={defaultRecipes} onSave={onSave} /></LanguageProvider>);
@@ -26,5 +28,15 @@ describe('family preferences panel', () => {
     expect(screen.getByText('Family preferences')).toBeInTheDocument();
     expect(screen.getByText('How many people are you cooking for?')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Save preferences' })).toBeInTheDocument();
+  });
+
+  it('shows bilingual cloud saving states without changing the settings form', () => {
+    const view = render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences recipes={defaultRecipes} onSave={() => undefined} cloudSyncEnabled syncStatus="saving" /></LanguageProvider>);
+    expect(screen.getByText('Mentés…')).toBeInTheDocument();
+
+    localStorage.setItem('plan-pan-language', 'en');
+    view.unmount();
+    render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences recipes={defaultRecipes} onSave={() => undefined} cloudSyncEnabled syncStatus="saved" /></LanguageProvider>);
+    expect(screen.getByText('Saved')).toBeInTheDocument();
   });
 });

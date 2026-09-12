@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.33.0
+
+- Securely synchronize the complete existing family-settings state for signed-in users while keeping guest settings device-local.
+- Migrate valid local settings on first sign-in only when the account has no cloud record; existing cloud settings remain authoritative.
+- Debounce writes, retain failed changes in user-scoped pending storage, and show bilingual loading, saving, saved, retry, and friendly error states.
+- Add a one-row-per-user `family_settings` migration with UUID ownership, timestamps, automatic `updated_at`, and strict select/insert/update/delete Row Level Security policies.
+- Clear authenticated settings from in-memory UI state on sign-out and restore the separate guest profile without changing menu-generation behavior.
+
 ## 1.32.0
 
 - Audit and correct recipe photography across the built-in catalogue.
