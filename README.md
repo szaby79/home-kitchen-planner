@@ -1,13 +1,13 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.33 securely synchronizes the existing family settings for signed-in users while preserving device-local guest mode.
+Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.34.0 securely saves each signed-in user's weekly menus and linked shopping lists while preserving device-local guest mode.
 
 ## Tervezett PR-sorozat
 
 - PR #31 / v1.31 – felhasználói adatbázis-alap (kész)
 - PR #32 / v1.32 – recept- és ételfotó-audit (kész)
-- PR #33 / v1.33 – családi beállítások mentése (folyamatban)
-- PR #34 / v1.34 – heti menük és bevásárlólisták mentése
+- PR #33 / v1.33 – családi beállítások mentése (kész)
+- PR #34 / v1.34 – heti menük és bevásárlólisták mentése (folyamatban)
 - PR #35 / v1.35 – fiók- és adatvédelmi vezérlők
 - Ezután: keto étrend mód (a következő szabad PR-számmal)
 
@@ -32,12 +32,13 @@ npm test
 npm run build
 ```
 
-## Supabase Free setup for v1.31–v1.33
+## Supabase Free setup for v1.31–v1.34
 
 1. Create or select the Plan & Pan project in Supabase.
 2. Apply the committed migrations in filename order:
    - `supabase/migrations/20260911000000_create_profiles.sql`
    - `supabase/migrations/20260911010000_create_family_settings.sql`
+   - `supabase/migrations/20260912000000_create_weekly_plans.sql`
    Open **SQL Editor**, create a new query for each unapplied migration, paste its complete contents, and run it once. If the project is linked to the Supabase CLI instead, run `supabase db push` from this repository.
 3. In **Authentication → Providers → Email**, keep email authentication enabled. The current UI uses passwordless magic links; no telephone number or application password is collected.
 4. In **Authentication → URL Configuration**, configure the URLs below.
@@ -77,13 +78,15 @@ Supabase's built-in test email sender only delivers to pre-authorized project-te
 - Authentication credentials stay exclusively in Supabase Auth; passwords are not requested or copied into `public` tables.
 - `public.profiles` stores only a user UUID, privacy-notice acceptance metadata, and timestamps.
 - `public.family_settings` stores one JSON settings object per authenticated user, containing only the existing menu-generation preferences and timestamps. Its UUID primary key is also the owner-lookup index.
+- `public.weekly_plans` stores one UUID-addressed active menu per user and Monday-based week. It keeps stable recipe IDs in `menu_data` and the linked quantities, units, manual items, checkmarks, and notes in `shopping_list`.
 - A database trigger creates the profile when a new `auth.users` record is created.
 - Row Level Security allows an authenticated user to select and update only the profile whose UUID matches `auth.uid()`.
 - Row Level Security allows authenticated users to select, insert, update, and delete only the family-settings row whose `user_id` matches `auth.uid()`. The anonymous role has no table privileges.
+- Row Level Security applies the same owner-only select, insert, update, and delete boundary to every weekly-plan record. A unique `(user_id, week_start)` constraint makes upload and retry idempotent, and an owner/week index supports saved-week history.
 - The anonymous role has no profile-table privileges or public profile policy.
-- Guest menus, preferences, favourites, and shopping data remain device-local. Guest family settings are never written to a signed-in account except for the intentional first-sign-in migration when that account has no cloud settings yet.
+- Guest menus, preferences, favourites, and shopping data remain device-local. Guest data is never written to a signed-in account except for an intentional first-sign-in migration when that account has no matching cloud record.
 - Signed-in family-setting changes are debounced before upload. A failed change is retained in user-scoped local pending storage and can be retried without exposing it to guest mode or another account.
-- Cloud saving of weekly menus and shopping lists remains deferred to a later PR.
+- Signed-in weekly-menu, replacement, portion, manual shopping-item, checkmark, and note changes are debounced and saved together. Failed changes remain in user-and-week-scoped pending storage for safe retry; cloud records stay authoritative when they already exist.
 
 ## Verification with a configured Supabase project
 
@@ -117,3 +120,27 @@ commit;
 ```
 
 The application can then be rolled back to v1.32; guest local settings are unaffected.
+
+### Verify weekly-plan and shopping-list sync
+
+1. Apply `supabase/migrations/20260912000000_create_weekly_plans.sql` once before testing v1.34.
+2. As a guest, generate a menu, add a manual shopping item, check an item, and add a note. Refresh and confirm the same local state remains.
+3. Sign in to an account with no record for the displayed week. A valid matching guest menu and shopping state should upload once. In **Table Editor → weekly_plans**, verify one row exists for that user's UUID and `week_start`.
+4. Change a meal or portion and a shopping checkmark. Wait for **Mentve / Saved**, refresh, close and reopen the browser, then sign in from a second browser. The exact same menu and list state should load.
+5. Generate another calendar week or use existing test rows, then choose it under **Mentett hét / Saved weeks**. Confirm the week label changes and **Vissza az aktuális héthez / Return to current week** restores the current week.
+6. Regenerate an existing week and confirm the bilingual replacement dialog appears before any data changes. Cancel once; then confirm once and verify the same database row is updated rather than duplicated.
+7. Test with two accounts. Each client must return only its own rows; selecting, updating, or deleting another user's UUID must affect zero rows or return an authorization error.
+
+### Roll back the v1.34 database migration
+
+Rollback permanently removes all cloud-saved weekly menus and shopping lists. Back up required data first, then run this only when v1.34 must be reverted:
+
+```sql
+begin;
+drop trigger if exists weekly_plans_set_updated_at on public.weekly_plans;
+drop function if exists public.set_weekly_plans_updated_at();
+drop table if exists public.weekly_plans;
+commit;
+```
+
+The application can then be rolled back to v1.33; guest-local menus and shopping lists are unaffected.

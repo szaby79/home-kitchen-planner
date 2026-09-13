@@ -123,3 +123,7 @@ export function localizeRecipe(recipe: Recipe, english: boolean): Recipe {
 export function hasIngredientTranslation(name: string) {
   return Boolean(INGREDIENTS[name]);
 }
+
+export function localizeIngredient(name: string, unit: string, english: boolean) {
+  return english ? { name: INGREDIENTS[name] ?? name, unit: UNITS[unit] ?? unit } : { name, unit };
+}

@@ -8,6 +8,8 @@ import { EN_WEEKDAYS } from '@/i18n/labels';
 import { createDefaultAutopilotSettings, createGenerationSelection, DayMode, MenuPreferences, WEEKDAYS, WeekDay, WeeklyAutopilotSettings, WeeklyGoal } from '@/types/recipe';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
+import SavedWeeksBar from '@/components/SavedWeeksBar';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 const STORAGE_KEY = 'plan-pan-weekly-autopilot';
 
@@ -30,13 +32,15 @@ function loadSettings(familySize: number): WeeklyAutopilotSettings {
 }
 
 export default function AutopilotPlannerPage() {
-  const { generateRandomPlan, weekPlan, recipes, favoriteIds } = useAppContext();
+  const { generateRandomPlan, weekPlan, recipes, favoriteIds, plannerReady } = useAppContext();
   const { tr, isEnglish } = useLanguage();
   const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
   const [settings, setSettings] = useState<WeeklyAutopilotSettings>(() => loadSettings(preferences.familySize));
   const [pantryText, setPantryText] = useState(() => settings.pantryIngredients.join(', '));
   const [generated, setGenerated] = useState(false);
   const [generationError, setGenerationError] = useState(false);
+  const [confirmGenerate, setConfirmGenerate] = useState(false);
+  const hasPlan = WEEKDAYS.some(day => Boolean(weekPlan[day].soup || weekPlan[day].lunch || weekPlan[day].side || weekPlan[day].pickle || weekPlan[day].dinner || weekPlan[day].dessert));
 
   const goals: Array<{ id: WeeklyGoal; icon: typeof ShoppingCart; hu: string; en: string }> = [
     { id: 'save-money', icon: ShoppingCart, hu: 'Okos bevásárlás', en: 'Smart shopping' },
@@ -94,6 +98,7 @@ export default function AutopilotPlannerPage() {
   }, [weekPlan, recipes]);
 
   const createWeek = () => {
+    if (!plannerReady) return;
     const pantryIngredients = pantryText.split(',').map(value => value.trim()).filter(Boolean);
     const nextSettings = { ...settings, pantryIngredients };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSettings));
@@ -114,6 +119,8 @@ export default function AutopilotPlannerPage() {
         <h1 className="section-title mb-2">{tr('Állítsuk össze a heteteket', 'Build your week')}</h1>
         <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Először ellenőrizd a családi beállításokat. Utána add meg, milyen lesz ez a hét, és csak ezután generáljuk a menüt.', 'First review your family preferences. Then tell us what this week looks like, and only then generate the menu.')}</p>
       </div>
+
+      <SavedWeeksBar />
 
       <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 
@@ -168,8 +175,21 @@ export default function AutopilotPlannerPage() {
 
       <div className="sticky bottom-3 z-30 rounded-xl border bg-card/95 p-3 shadow-lg backdrop-blur md:static md:flex md:items-center md:justify-between md:shadow-none">
         <div className="mb-2 text-sm font-medium md:mb-0"><strong>{activeDays.length}</strong> {tr('tervezett nap', 'planned days')} · <strong>{averagePeople}</strong> {tr('fő átlagosan', 'people on average')}</div>
-        <Button size="lg" onClick={createWeek} className="w-full gap-2 md:w-auto"><Sparkles className="h-4 w-4" />{tr('Heti menü generálása', 'Generate weekly menu')}</Button>
+        <Button size="lg" disabled={!plannerReady} onClick={() => hasPlan ? setConfirmGenerate(true) : createWeek()} className="w-full gap-2 md:w-auto"><Sparkles className="h-4 w-4" />{plannerReady ? tr('Heti menü generálása', 'Generate weekly menu') : tr('Mentett terv betöltése…', 'Loading saved plan…')}</Button>
       </div>
+
+      <AlertDialog open={confirmGenerate} onOpenChange={setConfirmGenerate}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{tr('Lecseréled a jelenlegi heti tervet?', 'Replace the current weekly plan?')}</AlertDialogTitle>
+            <AlertDialogDescription>{tr('A most mentett menü és a hozzá tartozó bevásárlólista új tervre cserélődik. Ha a generálás nem sikerül, a jelenlegi terv változatlanul megmarad.', 'The saved menu and its linked shopping list will be replaced with a new plan. If generation fails, the current plan will remain unchanged.')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{tr('Mégse', 'Cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={createWeek}>{tr('Terv lecserélése', 'Replace plan')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {generationError && <p role="alert" className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm font-semibold text-destructive">{tr('Nem sikerült minden naphoz megfelelő ételt találni. Próbálj hosszabb főzési időt vagy kevesebb korlátozást.', 'We could not find a suitable meal for every day. Try allowing more cooking time or fewer restrictions.')}</p>}
 
