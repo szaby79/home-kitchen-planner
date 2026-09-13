@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.36.0
+
+- Restore a clean automated baseline by updating stale route and language tests to match the current application flow.
+- Make the existing two- and three-day batch-cooking preference effective for consecutive, compatible days while keeping partial regeneration and shopping quantities accurate.
+- Add a free GitHub Actions pull-request gate for type-checking, linting, the complete test suite, and the production build.
+- Add a durable manual release checklist, including the still-pending PR #34 shopping-list multi-device checks and PR #35 destructive account checks.
+
 ## 1.35.0
 
 - Add a responsive bilingual Account and Privacy screen with account metadata, cloud status, current-user storage counts, and a concise free-beta privacy summary.

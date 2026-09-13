@@ -94,6 +94,61 @@ function addRecipeIngredients(recipeId: string | null, recipes: Recipe[], reused
   normalizedIngredients(recipe).slice(0, 8).forEach(ingredient => reused.add(ingredient));
 }
 
+function applyBatchCooking(plan: WeekPlan, settings: WeeklyAutopilotSettings, preferences: MenuPreferences, numLunches: number, numDinners: number) {
+  if (preferences.batchDays === 1) return;
+
+  const applySlot = (slot: 'lunch' | 'dinner', daysField: 'lunchDays' | 'dinnerDays', mealCount: number) => {
+    for (let start = 0; start < mealCount; start += preferences.batchDays) {
+      const batchDays = WEEKDAYS.slice(start, Math.min(start + preferences.batchDays, mealCount));
+      const firstDay = batchDays[0];
+      const firstSchedule = settings.days[firstDay];
+      const eligibleDays: WeekDay[] = [];
+      for (const day of batchDays) {
+        const schedule = settings.days[day];
+        const eligible = schedule.mode !== 'no-meal'
+          && schedule.mode !== 'leftovers'
+          && Math.max(1, schedule.people || preferences.familySize) === Math.max(1, firstSchedule.people || preferences.familySize);
+        if (!eligible) break;
+        eligibleDays.push(day);
+      }
+      const recipeId = plan[firstDay][slot];
+      if (!recipeId || eligibleDays[0] !== firstDay) continue;
+
+      eligibleDays.forEach(day => {
+        plan[day][slot] = recipeId;
+        plan[day][daysField] = eligibleDays.length;
+        if (slot === 'lunch') plan[day].side = plan[firstDay].side;
+      });
+    }
+  };
+
+  applySlot('lunch', 'lunchDays', numLunches);
+  applySlot('dinner', 'dinnerDays', numDinners);
+}
+
+function normalizeSelectedBatchDays(plan: WeekPlan, selection: GenerationSelection, slot: 'lunch' | 'dinner', daysField: 'lunchDays' | 'dinnerDays') {
+  let start = 0;
+  while (start < WEEKDAYS.length) {
+    const firstDay = WEEKDAYS[start];
+    const recipeId = selection[firstDay][slot] ? plan[firstDay][slot] : null;
+    if (!recipeId) {
+      plan[firstDay][daysField] = 1;
+      start += 1;
+      continue;
+    }
+
+    let end = start + 1;
+    while (end < WEEKDAYS.length) {
+      const day = WEEKDAYS[end];
+      if (!selection[day][slot] || plan[day][slot] !== recipeId) break;
+      end += 1;
+    }
+    const length = end - start;
+    for (let index = start; index < end; index += 1) plan[WEEKDAYS[index]][daysField] = length;
+    start = end;
+  }
+}
+
 export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinners: number, profile: MenuProfile = 'balanced', preferences: MenuPreferences = DEFAULT_MENU_PREFERENCES, favoriteIds: string[] = [], previousRecipeIds: string[] = [], autopilot?: WeeklyAutopilotSettings): WeekPlan {
   const settings = autopilot ?? createDefaultAutopilotSettings(preferences.familySize);
   const eligibleRecipes = recipes.filter(recipe => recipeMatchesSafetyPreferences(recipe, preferences));
@@ -171,6 +226,7 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
       addRecipeIngredients(plan[day].dinner, recipes, reusedIngredients);
     }
   });
+  applyBatchCooking(plan, settings, preferences, numLunches, numDinners);
   return plan;
 }
 
@@ -197,5 +253,7 @@ export function generateSelectedPlan(recipes: Recipe[], currentPlan: WeekPlan, s
       dinnerServings: generated[day].dinnerServings, dinnerFromLeftovers: generated[day].dinnerFromLeftovers,
     };
   });
+  normalizeSelectedBatchDays(next, selection, 'lunch', 'lunchDays');
+  normalizeSelectedBatchDays(next, selection, 'dinner', 'dinnerDays');
   return next;
 }

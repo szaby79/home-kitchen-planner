@@ -1,6 +1,6 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.35.0 adds secure account and privacy controls, personal-data export and deletion while preserving device-local guest mode.
+Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.36.0 adds a clean automated release gate, restores the batch-cooking preference, and documents the remaining real-device checks.
 
 ## Tervezett PR-sorozat
 
@@ -8,7 +8,8 @@ Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.35.0 
 - PR #32 / v1.32 – recept- és ételfotó-audit (kész)
 - PR #33 / v1.33 – családi beállítások mentése (kész)
 - PR #34 / v1.34 – heti menük és bevásárlólisták mentése (kész)
-- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (folyamatban)
+- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (kézi ellenőrzésre vár)
+- PR #36 / v1.36 – stabilizáció és automatikus kiadási ellenőrzések (folyamatban)
 - Ezután: keto étrend mód (a következő szabad PR-számmal)
 
 ## Local development
@@ -31,6 +32,8 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+The same commands run automatically for pull requests through `.github/workflows/ci.yml`. Real-device and configured-cloud checks remain explicit manual gates in [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md); in particular, PR #34 shopping-list synchronization is not considered manually verified yet.
 
 ## Supabase Free setup for v1.31–v1.35
 

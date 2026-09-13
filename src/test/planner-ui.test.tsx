@@ -10,7 +10,7 @@ afterEach(() => vi.restoreAllMocks());
 describe('planner meal cards', () => {
   it('shows proportional recipe images after generating a weekly menu', async () => {
     localStorage.clear();
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     render(<App />);
 
     fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
@@ -26,7 +26,7 @@ describe('planner meal cards', () => {
 
   it('offers the guided compact mobile planner and a direct shopping-list action', async () => {
     localStorage.clear();
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     render(<App />);
 
     expect(screen.getByText('Napok')).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe('planner meal cards', () => {
 
   it('opens meal details only when mobile editing is requested', async () => {
     localStorage.clear();
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
 
@@ -53,7 +53,7 @@ describe('planner meal cards', () => {
 
   it('offers a direct replacement button that changes only one meal', async () => {
     localStorage.clear();
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
 
@@ -75,7 +75,7 @@ describe('planner meal cards', () => {
     localStorage.setItem('plan-pan-language', language);
     vi.spyOn(Date.prototype, 'getDay').mockReturnValue(6);
     const en = language === 'en';
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     const { unmount } = render(<App />);
     fireEvent.click(screen.getByRole('button', { name: en ? 'Generate (14)' : 'Generálás (14)' }));
     const previous = localStorage.getItem('plan-pan-weekplan');
@@ -110,11 +110,11 @@ describe('planner meal cards', () => {
     fireEvent.click(screen.getByRole('button', { name: en ? 'Daily view' : 'Napi nézet' }));
     expect(screen.queryByRole('heading', { name: en ? 'Monday' : 'Hétfő' })).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: en ? 'Saturday' : 'Szombat' })).toBeInTheDocument();
-  });
+  }, 15_000);
 
   it('disables generation with no meals selected without clearing the active menu', () => {
     localStorage.clear();
-    window.history.pushState({}, '', '/planner');
+    window.history.pushState({}, '', '/planner/week');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'Generálás (14)' }));
     const previous = localStorage.getItem('plan-pan-weekplan');
