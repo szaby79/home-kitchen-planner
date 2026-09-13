@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Loader2, LogOut, Mail, ShieldCheck, UserRound } from 'lucide-react';
-import { useAuth } from '@/auth/AuthContext';
+import { Loader2, Mail, Settings, ShieldCheck, UserRound } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { PRIVACY_NOTICE_VERSION, useAuth } from '@/auth/AuthContext';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -15,8 +16,9 @@ type AuthDialogProps = {
 };
 
 export default function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
-  const { configured, loading, user, profileUnavailable, sendMagicLink, signOut } = useAuth();
+  const { configured, loading, user, profile, profileUnavailable, sendMagicLink, acceptPrivacyNotice } = useAuth();
   const { tr } = useLanguage();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [accepted, setAccepted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -60,14 +62,18 @@ export default function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
     }
   };
 
-  const handleSignOut = async () => {
+  const handlePrivacyAcceptance = async () => {
+    if (!accepted) {
+      setError(tr('A folytatáshoz fogadd el a frissített béta adatvédelmi tájékoztatót.', 'Accept the updated beta privacy notice to continue.'));
+      return;
+    }
     setSubmitting(true);
     setError('');
     try {
-      await signOut();
+      await acceptPrivacyNotice();
       onOpenChange(false);
     } catch {
-      setError(tr('A kijelentkezés nem sikerült. Próbáld újra.', 'Sign out failed. Please try again.'));
+      setError(tr('Az elfogadást most nem sikerült rögzíteni. Próbáld újra.', 'We could not record your acceptance. Please try again.'));
     } finally {
       setSubmitting(false);
     }
@@ -83,7 +89,7 @@ export default function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
           </DialogTitle>
           <DialogDescription>
             {user
-              ? tr('Bejelentkezve. A felhőalapú mentés a következő fejlesztési szakaszokban érkezik.', 'You are signed in. Cloud saving will be added in the next development phases.')
+              ? tr('Bejelentkezve. A fiók- és adatvédelmi beállításokat a profilmenüben kezelheted.', 'You are signed in. You can manage your account and privacy settings from the profile menu.')
               : tr('Adataid mentéséhez jelentkezz be, vagy használd tovább az alkalmazást vendégként.', 'Sign in to save your data, or keep using the app as a guest.')}
           </DialogDescription>
         </DialogHeader>
@@ -103,10 +109,22 @@ export default function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
                 <AlertDescription>{tr('A profiladatok most nem érhetők el. A vendég funkciókat továbbra is használhatod.', 'Profile data is temporarily unavailable. Guest features remain available.')}</AlertDescription>
               </Alert>
             )}
+            {profile?.privacy_notice_version !== PRIVACY_NOTICE_VERSION && !profileUnavailable && (
+              <div className="space-y-3 rounded-lg border border-[#E4C7AA] bg-[#FFF8EE] p-3 text-sm leading-relaxed">
+                <p className="flex items-center gap-2 font-semibold"><ShieldCheck className="h-4 w-4 text-accent" />{tr('Frissített béta adatvédelmi tájékoztató', 'Updated beta privacy notice')}</p>
+                <p className="text-muted-foreground">{tr('A családi beállításokat, heti terveket és bevásárlólistákat a szinkronizáláshoz tároljuk. Az adataidat nem adjuk el. A fiók- és adatvédelmi beállításokat a profilmenüben kezelheted.', 'Family settings, weekly plans and shopping lists are stored for synchronisation. We do not sell your data. You can manage your account and privacy settings from the profile menu.')}</p>
+                <div className="flex items-start gap-3">
+                  <Checkbox id="updated-privacy-acceptance" checked={accepted} onCheckedChange={(value) => setAccepted(value === true)} disabled={submitting} />
+                  <Label htmlFor="updated-privacy-acceptance" className="cursor-pointer text-sm font-normal leading-relaxed">{tr('Elolvastam és elfogadom a frissített béta adatvédelmi tájékoztatót.', 'I have read and accept the updated beta privacy notice.')}</Label>
+                </div>
+                <Button type="button" className="w-full" onClick={handlePrivacyAcceptance} disabled={submitting}>
+                  {submitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{tr('Elfogadás rögzítése', 'Record acceptance')}
+                </Button>
+              </div>
+            )}
             {error && <Alert variant="destructive"><AlertDescription>{error}</AlertDescription></Alert>}
-            <Button type="button" variant="outline" className="w-full" onClick={handleSignOut} disabled={submitting}>
-              {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogOut className="mr-2 h-4 w-4" />}
-              {tr('Kijelentkezés', 'Sign Out')}
+            <Button type="button" variant="outline" className="w-full" onClick={() => { onOpenChange(false); navigate('/account'); }} disabled={submitting}>
+              <Settings className="mr-2 h-4 w-4" />{tr('Fiók és adatvédelem', 'Account and Privacy')}
             </Button>
           </div>
         ) : emailSent ? (
@@ -133,8 +151,8 @@ export default function AuthDialog({ open, onOpenChange }: AuthDialogProps) {
               <p className="mb-2 flex items-center gap-2 font-semibold"><ShieldCheck className="h-4 w-4 text-accent" />{tr('Béta adatvédelmi tájékoztató', 'Beta privacy notice')}</p>
               <p className="text-muted-foreground">
                 {tr(
-                  'Az e-mail-címedet kizárólag a fiókod eléréséhez használjuk. A Plan & Pan jelenleg ingyenes béta. Csak a működéshez szükséges adatokat gyűjtjük, és az adataidat nem adjuk el. A teljes fiók- és adatvédelmi vezérlés a v1.34 verzióban bővül.',
-                  'Your email address is used only for account access. Plan & Pan is currently a free beta. We collect only the data needed to operate the app and do not sell your data. Full account and privacy controls will be expanded in v1.34.',
+                  'Az e-mail-címedet kizárólag a fiókod eléréséhez használjuk. A Plan & Pan jelenleg ingyenes béta. Csak a működéshez szükséges adatokat gyűjtjük, és az adataidat nem adjuk el. A fiók- és adatvédelmi beállításokat a profilmenüben kezelheted.',
+                  'Your email address is used only for account access. Plan & Pan is currently a free beta. We collect only the data needed to operate the app and do not sell your data. You can manage your account and privacy settings from the profile menu.',
                 )}
               </p>
             </div>

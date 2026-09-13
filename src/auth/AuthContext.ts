@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import { createContext, useContext } from 'react';
 
-export const PRIVACY_NOTICE_VERSION = 'beta-2026-09-v1';
+export const PRIVACY_NOTICE_VERSION = 'beta-2026-09-v2';
 
 export type UserProfile = {
   id: string;
@@ -18,7 +18,8 @@ export type AuthContextValue = {
   profile: UserProfile | null;
   profileUnavailable: boolean;
   sendMagicLink: (email: string) => Promise<void>;
-  signOut: () => Promise<void>;
+  acceptPrivacyNotice: () => Promise<void>;
+  signOut: (scope?: 'local' | 'global') => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextValue | null>(null);
@@ -28,4 +29,3 @@ export function useAuth() {
   if (!context) throw new Error('useAuth must be used inside AuthProvider');
   return context;
 }
-

@@ -1,14 +1,14 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.34.0 securely saves each signed-in user's weekly menus and linked shopping lists while preserving device-local guest mode.
+Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.35.0 adds secure account and privacy controls, personal-data export and deletion while preserving device-local guest mode.
 
 ## Tervezett PR-sorozat
 
 - PR #31 / v1.31 – felhasználói adatbázis-alap (kész)
 - PR #32 / v1.32 – recept- és ételfotó-audit (kész)
 - PR #33 / v1.33 – családi beállítások mentése (kész)
-- PR #34 / v1.34 – heti menük és bevásárlólisták mentése (folyamatban)
-- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők
+- PR #34 / v1.34 – heti menük és bevásárlólisták mentése (kész)
+- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (folyamatban)
 - Ezután: keto étrend mód (a következő szabad PR-számmal)
 
 ## Local development
@@ -32,13 +32,14 @@ npm test
 npm run build
 ```
 
-## Supabase Free setup for v1.31–v1.34
+## Supabase Free setup for v1.31–v1.35
 
 1. Create or select the Plan & Pan project in Supabase.
 2. Apply the committed migrations in filename order:
    - `supabase/migrations/20260911000000_create_profiles.sql`
    - `supabase/migrations/20260911010000_create_family_settings.sql`
    - `supabase/migrations/20260912000000_create_weekly_plans.sql`
+   - `supabase/migrations/20260913000000_add_account_privacy_controls.sql`
    Open **SQL Editor**, create a new query for each unapplied migration, paste its complete contents, and run it once. If the project is linked to the Supabase CLI instead, run `supabase db push` from this repository.
 3. In **Authentication → Providers → Email**, keep email authentication enabled. The current UI uses passwordless magic links; no telephone number or application password is collected.
 4. In **Authentication → URL Configuration**, configure the URLs below.
@@ -144,3 +145,67 @@ commit;
 ```
 
 The application can then be rolled back to v1.33; guest-local menus and shopping lists are unaffected.
+
+## Account and privacy controls (v1.35)
+
+The profile control opens `/account` for signed-in users. The bilingual screen shows safe account metadata, privacy-notice metadata, cloud-sync status, and current-user-only record counts. It provides:
+
+- a UTF-8 JSON export named `plan-and-pan-data-export-YYYY-MM-DD.json`;
+- deletion of family settings and weekly-plan/shopping-list records while keeping the Auth account;
+- separate local-device and Supabase global sign-out;
+- permanent account deletion through the authenticated server-only `/api/delete-account` endpoint;
+- a guest-only reset that removes only browser keys beginning with `plan-pan-`.
+
+The export schema is `plan-and-pan-export-v1`. It contains the export timestamp, safe account metadata (email and creation date), profile/privacy acceptance metadata, family settings, weekly plans, and their linked shopping-list snapshots. It deliberately excludes passwords, access/refresh tokens, credentials, service keys, and database row IDs.
+
+### Privacy acceptance history, RLS, and deletion integrity
+
+`supabase/migrations/20260913000000_add_account_privacy_controls.sql` creates `public.privacy_notice_acceptances`, backfills the current profile acceptance, and records future notice-version acceptance through a trigger. The table references `auth.users(id) ON DELETE CASCADE`; authenticated users receive read-only access to their own history through RLS. The browser cannot insert, update, or delete audit rows.
+
+The same migration adds the `delete_my_plan_pan_data()` security-invoker RPC. It derives ownership exclusively from `auth.uid()` and deletes that user's `weekly_plans` and `family_settings` in one database transaction. It does not delete the profile, acceptance history, or authentication account. Existing profile, family-settings, and weekly-plan ownership policies remain unchanged and are not weakened.
+
+All user-owned public tables (`profiles`, `family_settings`, `weekly_plans`, and `privacy_notice_acceptances`) reference `auth.users` with `ON DELETE CASCADE`. Permanent Auth-user deletion therefore removes all related Plan & Pan rows without orphans.
+
+The privacy-notice version is `beta-2026-09-v2`. Existing users are shown the updated notice and must explicitly accept it; updating the profile records the new version while the prior acceptance remains in the history table.
+
+### Secure account-deletion endpoint setup
+
+`api/delete-account.ts` is deployed automatically as a Vercel Edge Function with the branch or production deployment. It accepts no user ID. It verifies the caller's bearer access token using the browser-safe Supabase publishable key, derives the authenticated user UUID from that verified token, and only then calls Supabase Admin deletion for that UUID. The endpoint returns generic errors and does not log tokens or user data.
+
+Before testing permanent deletion, add this server-only variable in **Vercel → Project → Settings → Environment Variables**:
+
+```text
+SUPABASE_SERVICE_ROLE_KEY=<the project's server-only service-role key>
+```
+
+Apply it to Preview and Production as appropriate, then redeploy those environments. Obtain the value directly from **Supabase → Project Settings → API Keys**. Never prefix it with `VITE_`, never expose it in browser code, never commit it, and never paste it into an issue, PR, log, or chat. The endpoint reuses the existing `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` server environment values; optional server aliases `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` are also supported.
+
+### Verify v1.35
+
+Use disposable test accounts for destructive testing—never Szabolcs's real account.
+
+1. Apply `supabase/migrations/20260913000000_add_account_privacy_controls.sql`, add the server-only Vercel variable, and redeploy the preview.
+2. Open **Fiók és adatvédelem / Account and Privacy** from the profile control in HU and EN, on narrow and desktop viewports.
+3. Confirm the summary matches only the signed-in test user's family-settings and weekly-plan records.
+4. Download the JSON and inspect it: expected application data is present; tokens, passwords, service keys, internal IDs, and another user's records are absent.
+5. Confirm neither deletion button enables until the exact localized word `TÖRLÉS` or `DELETE` is typed. Cancel once and verify nothing changes.
+6. Delete saved data. Verify the Auth account remains signed in, related application rows are gone, local pending queues are cleared, and refresh does not recreate them.
+7. Verify local sign-out clears this browser session. With two disposable sessions, verify global sign-out invalidates the other session according to Supabase's global sign-out behavior.
+8. With a separate disposable account, test permanent deletion. Also test an expired/invalid token and verify it deletes nothing. Confirm the user and all cascaded rows are gone after success.
+9. As a guest, generate a menu and shopping list, then clear guest data. Confirm unrelated local-storage keys remain.
+10. Run `npm run lint`, `npm run typecheck`, `npm test`, and `npm run build`.
+
+### Roll back v1.35
+
+First roll the application deployment back to v1.34. The SQL below removes v1.35's acceptance-history table and saved-data RPC; it does not restore any data already deleted by a user:
+
+```sql
+begin;
+drop function if exists public.delete_my_plan_pan_data();
+drop trigger if exists profiles_record_privacy_notice_acceptance on public.profiles;
+drop function if exists public.record_privacy_notice_acceptance();
+drop table if exists public.privacy_notice_acceptances;
+commit;
+```
+
+Remove `SUPABASE_SERVICE_ROLE_KEY` from Vercel only after the v1.34 rollback is active, then redeploy. Existing profile, family-settings, and weekly-plan tables remain intact.

@@ -13,6 +13,7 @@ import FamilySettingsPage from "@/pages/FamilySettingsPage";
 import ShoppingPage from "@/pages/ShoppingPage";
 import AdminPage from "@/pages/AdminPage";
 import BudgetPage from "@/pages/BudgetPage";
+import AccountPrivacyPage from "@/pages/AccountPrivacyPage";
 import NotFound from "@/pages/NotFound";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { AuthProvider } from "@/auth/AuthProvider";
@@ -40,6 +41,7 @@ const App = () => (
                   <Route path="/shopping" element={<ShoppingPage />} />
                   <Route path="/admin" element={<AdminPage />} />
                   <Route path="/budget" element={<BudgetPage />} />
+                  <Route path="/account" element={<AccountPrivacyPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>

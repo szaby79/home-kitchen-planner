@@ -2,25 +2,31 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import AuthDialog from '@/components/AuthDialog';
 import { LanguageProvider } from '@/i18n/LanguageContext';
+import { MemoryRouter } from 'react-router-dom';
 
 const authState = vi.hoisted(() => ({
   configured: true,
   loading: false,
   user: null as { email?: string } | null,
+  profile: null as { privacy_notice_version: string | null } | null,
   profileUnavailable: false,
   sendMagicLink: vi.fn<() => Promise<void>>(),
+  acceptPrivacyNotice: vi.fn<() => Promise<void>>(),
   signOut: vi.fn<() => Promise<void>>(),
 }));
 
 vi.mock('@/auth/AuthContext', () => ({
+  PRIVACY_NOTICE_VERSION: 'beta-2026-09-v2',
   useAuth: () => authState,
 }));
 
 function renderDialog(onOpenChange = vi.fn()) {
   render(
-    <LanguageProvider>
-      <AuthDialog open onOpenChange={onOpenChange} />
-    </LanguageProvider>,
+    <MemoryRouter>
+      <LanguageProvider>
+        <AuthDialog open onOpenChange={onOpenChange} />
+      </LanguageProvider>
+    </MemoryRouter>,
   );
   return onOpenChange;
 }
@@ -31,8 +37,10 @@ describe('account dialog', () => {
     authState.configured = true;
     authState.loading = false;
     authState.user = null;
+    authState.profile = null;
     authState.profileUnavailable = false;
     authState.sendMagicLink.mockReset().mockResolvedValue(undefined);
+    authState.acceptPrivacyNotice.mockReset().mockResolvedValue(undefined);
     authState.signOut.mockReset().mockResolvedValue(undefined);
   });
 
@@ -68,5 +76,18 @@ describe('account dialog', () => {
     expect(screen.getByRole('heading', { name: 'Create Account / Sign In' })).toBeInTheDocument();
     expect(screen.getByText('Beta privacy notice')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Continue as Guest' })).toBeInTheDocument();
+  });
+
+  it('does not silently accept an updated notice for an existing signed-in user', async () => {
+    authState.user = { email: 'tester@example.com' };
+    authState.profile = { privacy_notice_version: 'beta-2026-09-v1' };
+    renderDialog();
+
+    expect(screen.getByText('Frissített béta adatvédelmi tájékoztató')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Elfogadás rögzítése' }));
+    expect(authState.acceptPrivacyNotice).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByLabelText('Elolvastam és elfogadom a frissített béta adatvédelmi tájékoztatót.'));
+    fireEvent.click(screen.getByRole('button', { name: 'Elfogadás rögzítése' }));
+    await waitFor(() => expect(authState.acceptPrivacyNotice).toHaveBeenCalledTimes(1));
   });
 });
