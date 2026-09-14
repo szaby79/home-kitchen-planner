@@ -10,7 +10,8 @@ Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.37.0 
 - PR #34 / v1.34 – heti menük és bevásárlólisták mentése (kész)
 - PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (kész; kézi destruktív ellenőrzések később)
 - PR #36 / v1.36 – stabilizáció, automatikus kiadási ellenőrzések és kétnyelvű Súgó (kész)
-- PR #37 / v1.37 – Lovable-függetlenítés és platformtisztítás (folyamatban)
+- PR #37 / v1.37 – Lovable-függetlenítés és platformtisztítás (kész)
+- PR #38 / v1.38 – iOS/Android kezdőképernyős Plan & Pan arculat (folyamatban)
 - Ezután: keto étrend mód (a következő szabad PR-számmal)
 
 ## Local development
@@ -228,3 +229,10 @@ After PR #37 is merged:
 - [ ] Archive or delete the Lovable project only as a separate, explicit owner-approved action.
 
 The PR #34 manual shopping-list checks remain tracked in [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md) and are not replaced by this cleanup.
+
+
+## iOS and Android home-screen identity (v1.38)
+
+The application exposes `public/manifest.webmanifest` and a dedicated Plan & Pan PNG icon. iOS uses the Apple touch icon and `Plan & Pan` mobile-web-app title; Android uses the same manifest name, theme colors, standalone display mode, and maskable-safe icon source.
+
+After deployment, remove any previously installed “Lovable App” home-screen shortcut and add the production URL again. Existing shortcuts and operating-system icon caches may retain their old name or image until they are removed and reinstalled. Removing only the shortcut does not remove cloud records; do not clear browser website data when preserving guest-local state.

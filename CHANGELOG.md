@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.38.0
+
+- Add a complete Plan & Pan web-app identity for iOS and Android home screens.
+- Add an installable bilingual web-app manifest with the owner-selected full promotional artwork as the application icon.
+- Replace the legacy browser and Apple touch icon references with Plan & Pan branding.
+- Preserve the existing application behavior, Vercel deployment, Supabase integration, guest mode, and social-sharing preview.
+
+
 ## 1.37.0
 
 - Remove the Lovable-only build tagger and its unused transitive lockfile entries while preserving the React/Vite application.
