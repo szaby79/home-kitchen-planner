@@ -1,6 +1,6 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.36.0 adds a clean automated release gate, restores the batch-cooking preference, and documents the remaining real-device checks.
+Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.37.0 removes Lovable-specific build tooling and metadata while preserving the existing Vercel, Supabase, guest-mode, Help Centre, design, and application behavior.
 
 ## Tervezett PR-sorozat
 
@@ -8,8 +8,9 @@ Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.36.0 
 - PR #32 / v1.32 – recept- és ételfotó-audit (kész)
 - PR #33 / v1.33 – családi beállítások mentése (kész)
 - PR #34 / v1.34 – heti menük és bevásárlólisták mentése (kész)
-- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (kézi ellenőrzésre vár)
-- PR #36 / v1.36 – stabilizáció, automatikus kiadási ellenőrzések és kétnyelvű Súgó (folyamatban)
+- PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (kész; kézi destruktív ellenőrzések később)
+- PR #36 / v1.36 – stabilizáció, automatikus kiadási ellenőrzések és kétnyelvű Súgó (kész)
+- PR #37 / v1.37 – Lovable-függetlenítés és platformtisztítás (folyamatban)
 - Ezután: keto étrend mód (a következő szabad PR-számmal)
 
 ## Local development
@@ -212,3 +213,18 @@ commit;
 ```
 
 Remove `SUPABASE_SERVICE_ROLE_KEY` from Vercel only after the v1.34 rollback is active, then redeploy. Existing profile, family-settings, and weekly-plan tables remain intact.
+
+
+## Lovable separation post-merge checklist
+
+PR #37 removes the Lovable-only build dependency, tagger plugin, and generated-page metadata. It does not change the React/Vite application, Vercel routing, Supabase environment-variable names, authentication, cloud storage, guest mode, Help Centre, or application design.
+
+After PR #37 is merged:
+
+- [ ] Verify the production Vercel deployment opens and the core planner flow works.
+- [ ] Verify Supabase sign-in, family-settings sync, weekly-plan save, and shopping-list cloud save with a disposable test account.
+- [ ] Verify guest-mode planning and shopping-list persistence in a separate browser session.
+- [ ] Only after those checks pass, revoke the Lovable GitHub App access.
+- [ ] Archive or delete the Lovable project only as a separate, explicit owner-approved action.
+
+The PR #34 manual shopping-list checks remain tracked in [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md) and are not replaced by this cleanup.
