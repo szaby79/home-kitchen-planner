@@ -1,0 +1,19 @@
+{
+  "name": "Plan & Pan – Családi ételtervező",
+  "short_name": "Plan & Pan",
+  "description": "Családi ételtervező és bevásárlólista / Family meal planner and shopping list",
+  "lang": "hu",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFF8EE",
+  "theme_color": "#D95F3B",
+  "icons": [
+    {
+      "src": "/plan-and-pan-app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
