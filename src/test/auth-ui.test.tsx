@@ -10,7 +10,8 @@ const authState = vi.hoisted(() => ({
   user: null as { email?: string } | null,
   profile: null as { privacy_notice_version: string | null } | null,
   profileUnavailable: false,
-  sendMagicLink: vi.fn<() => Promise<void>>(),
+  sendEmailOtp: vi.fn<() => Promise<void>>(),
+  verifyEmailOtp: vi.fn<() => Promise<void>>(),
   acceptPrivacyNotice: vi.fn<() => Promise<void>>(),
   signOut: vi.fn<() => Promise<void>>(),
 }));
@@ -31,6 +32,13 @@ function renderDialog(onOpenChange = vi.fn()) {
   return onOpenChange;
 }
 
+async function requestOtp() {
+  fireEvent.change(screen.getByLabelText('E-mail-cím'), { target: { value: 'tester@example.com' } });
+  fireEvent.click(screen.getByLabelText('Elolvastam és elfogadom a béta adatvédelmi tájékoztatót.'));
+  fireEvent.click(screen.getByRole('button', { name: 'Belépési kód küldése' }));
+  await screen.findByLabelText('Belépési kód');
+}
+
 describe('account dialog', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -39,7 +47,8 @@ describe('account dialog', () => {
     authState.user = null;
     authState.profile = null;
     authState.profileUnavailable = false;
-    authState.sendMagicLink.mockReset().mockResolvedValue(undefined);
+    authState.sendEmailOtp.mockReset().mockResolvedValue(undefined);
+    authState.verifyEmailOtp.mockReset().mockResolvedValue(undefined);
     authState.acceptPrivacyNotice.mockReset().mockResolvedValue(undefined);
     authState.signOut.mockReset().mockResolvedValue(undefined);
   });
@@ -50,31 +59,61 @@ describe('account dialog', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
-  it('requires explicit privacy acceptance before requesting a link', () => {
+  it('shows a restoring state before deciding whether the user is signed in', () => {
+    authState.loading = true;
     renderDialog();
-    fireEvent.change(screen.getByLabelText('E-mail-cím'), { target: { value: 'tester@example.com' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Bejelentkezés e-mail-címmel' }));
 
-    expect(screen.getByText('A folytatáshoz fogadd el a béta adatvédelmi tájékoztatót.')).toBeInTheDocument();
-    expect(authState.sendMagicLink).not.toHaveBeenCalled();
+    expect(screen.getByRole('status')).toHaveTextContent('Munkamenet visszaállítása…');
+    expect(screen.queryByLabelText('E-mail-cím')).not.toBeInTheDocument();
   });
 
-  it('requests a magic link and shows the success state', async () => {
+  it('requires explicit privacy acceptance before requesting a code', () => {
+    renderDialog();
+    fireEvent.change(screen.getByLabelText('E-mail-cím'), { target: { value: 'tester@example.com' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Belépési kód küldése' }));
+
+    expect(screen.getByText('A folytatáshoz fogadd el a béta adatvédelmi tájékoztatót.')).toBeInTheDocument();
+    expect(authState.sendEmailOtp).not.toHaveBeenCalled();
+  });
+
+  it('requests an email code and keeps verification inside the dialog', async () => {
+    renderDialog();
+    await requestOtp();
+
+    expect(authState.sendEmailOtp).toHaveBeenCalledWith('tester@example.com');
+    expect(screen.getByRole('heading', { name: 'Ellenőrizd az e-mailed' })).toBeInTheDocument();
+    expect(screen.getByText(/tester@example.com/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Kód újraküldése/ })).toBeDisabled();
+  });
+
+  it('verifies the email OTP and closes after successful sign-in', async () => {
+    const onOpenChange = renderDialog();
+    await requestOtp();
+    fireEvent.change(screen.getByLabelText('Belépési kód'), { target: { value: '123456' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Belépés' }));
+
+    await waitFor(() => expect(authState.verifyEmailOtp).toHaveBeenCalledWith('tester@example.com', '123456'));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it('shows a safe Hungarian rate-limit message', async () => {
+    authState.sendEmailOtp.mockRejectedValueOnce({ status: 429, message: 'rate limit' });
     renderDialog();
     fireEvent.change(screen.getByLabelText('E-mail-cím'), { target: { value: 'tester@example.com' } });
     fireEvent.click(screen.getByLabelText('Elolvastam és elfogadom a béta adatvédelmi tájékoztatót.'));
-    fireEvent.click(screen.getByRole('button', { name: 'Bejelentkezés e-mail-címmel' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Belépési kód küldése' }));
 
-    await waitFor(() => expect(authState.sendMagicLink).toHaveBeenCalledWith('tester@example.com'));
-    expect(await screen.findByText('Ellenőrizd az e-mail-fiókodat.')).toBeInTheDocument();
+    expect(await screen.findByText(/Túl sok belépési kérést/)).toBeInTheDocument();
+    expect(screen.queryByLabelText('Belépési kód')).not.toBeInTheDocument();
   });
 
-  it('shows the English account and privacy text', () => {
+  it('shows the English OTP sign-in text', () => {
     localStorage.setItem('plan-pan-language', 'en');
     renderDialog();
 
-    expect(screen.getByRole('heading', { name: 'Create Account / Sign In' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Sign in' })).toBeInTheDocument();
     expect(screen.getByText('Beta privacy notice')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Send sign-in code' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Continue as Guest' })).toBeInTheDocument();
   });
 
