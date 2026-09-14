@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.40.0
+
+- Replace magic-link-first authentication with an in-app email OTP verification flow.
+- Keep browser and installed-PWA sessions persistent while session restoration is resolved.
+- Add bilingual OTP, resend cooldown, invalid-code, and email-rate-limit states.
+- Preserve existing Supabase users, profiles, family settings, weekly plans, and shopping lists.
+- Add automated authentication regression coverage and manual Supabase template instructions.
+
+
 ## 1.39.0
 
 - Refresh only the homepage hero copy and typography with a warmer, more focused bilingual message.
