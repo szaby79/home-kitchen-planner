@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.37.0
+
+- Remove the Lovable-only build tagger and its unused transitive lockfile entries while preserving the React/Vite application.
+- Replace generated Lovable page metadata with bilingual Plan & Pan title, description, author, and social metadata without adding an unverified sharing image.
+- Keep Vercel routing, Supabase authentication and cloud storage, guest mode, the Help Centre, and existing application behavior unchanged.
+- Document the owner-controlled post-merge sequence: verify production first, then separately revoke GitHub App access or archive the external project only with explicit approval.
+
 ## 1.36.0
 
 - Add a prominent bilingual Help Centre with accurate guides for Autopilot, planning, weekly and daily shopping views, guest/account storage, cloud saving, privacy controls, and troubleshooting.
