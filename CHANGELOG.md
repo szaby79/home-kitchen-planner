@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.39.0
+
+- Refresh only the homepage hero copy and typography with a warmer, more focused bilingual message.
+- Preserve the existing homepage layout, controls, navigation, cards, colors, and application behavior.
+
+
 ## 1.38.0
 
 - Add a complete Plan & Pan web-app identity for iOS and Android home screens.
