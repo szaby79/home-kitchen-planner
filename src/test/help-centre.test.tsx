@@ -73,6 +73,7 @@ describe('Help Centre', () => {
     render(<App />);
 
     expect(screen.getByRole('link', { name: /Először jársz itt/i })).toHaveAttribute('href', '/help');
+    expect(screen.getByRole('link', { name: 'Súgó megnyitása' })).toHaveAttribute('href', '/help');
     expect(screen.getAllByRole('link', { name: 'Súgó' }).length).toBeGreaterThan(0);
   });
 });

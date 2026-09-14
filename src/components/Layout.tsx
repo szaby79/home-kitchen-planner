@@ -94,8 +94,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex flex-col">
         <header className="bg-[#FFF8EE]/95 backdrop-blur border-b border-[#E4C7AA] sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
-            <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-primary">
-              <UtensilsCrossed className="w-6 h-6" />
+            <Link to="/" className="flex min-w-0 items-center gap-1 font-display text-lg font-bold text-primary sm:gap-2 sm:text-xl">
+              <UtensilsCrossed className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
               Plan & Pan
             </Link>
             <nav className="hidden lg:flex items-center gap-1">
@@ -109,6 +109,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <button type="button" onClick={() => setLanguage('hu')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'hu' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="Magyar nyelv">HU</button>
               <button type="button" onClick={() => setLanguage('en')} className={`rounded px-2 py-1 text-xs font-bold ${language === 'en' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`} aria-label="English language">EN</button>
             </div>
+            <Link
+              to="/help"
+              aria-label={tr('Súgó megnyitása', 'Open Help Centre')}
+              title={tr('Súgó', 'Help')}
+              className={`mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${location.pathname === '/help' ? 'bg-primary text-primary-foreground' : 'bg-card text-primary hover:bg-secondary'}`}
+            >
+              <CircleHelp className="h-5 w-5" aria-hidden="true" />
+            </Link>
             <button
               type="button"
               onClick={() => user ? navigate('/account') : setAuthOpen(true)}
