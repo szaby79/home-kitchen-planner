@@ -7,6 +7,7 @@ import { fetchFamilySettings, upsertFamilySettings } from '@/lib/familySettings'
 import { normalizePreferences } from '@/lib/menuPreferencesValidation';
 import { DEFAULT_MENU_PREFERENCES } from '@/types/recipe';
 import type { MenuPreferences } from '@/types/recipe';
+import { markCloudDataActive, wasCloudDataDeleted } from '@/lib/localPlanPanData';
 
 const PENDING_KEY_PREFIX = 'plan-pan-family-settings-pending-v1:';
 const SAVE_DEBOUNCE_MS = 650;
@@ -112,6 +113,13 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
       }
 
       cloudUpdatedAt.current = null;
+      if (wasCloudDataDeleted(userId)) {
+        localStorage.removeItem(pendingKey(userId));
+        setPreferences(DEFAULT_MENU_PREFERENCES);
+        setHasSavedPreferences(false);
+        setSyncStatus('idle');
+        return;
+      }
       const guest = loadGuestPreferences();
       const initial = pending ?? (guest.saved ? {
         settings: guest.preferences,
@@ -192,6 +200,7 @@ export function MenuPreferencesProvider({ children }: { children: ReactNode }) {
       return;
     }
 
+    markCloudDataActive(user.id);
     saveSequence.current += 1;
     const pending: PendingSettings = {
       settings: normalized,

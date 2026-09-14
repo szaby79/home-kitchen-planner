@@ -2,6 +2,7 @@ import type { Session } from '@supabase/supabase-js';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { AuthContext, AuthContextValue, PRIVACY_NOTICE_VERSION, UserProfile } from '@/auth/AuthContext';
 import { isSupabaseConfigured, supabase } from '@/lib/supabase';
+import { clearUserCloudCaches } from '@/lib/localPlanPanData';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
@@ -75,13 +76,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
       if (error) throw error;
     },
-    signOut: async () => {
+    acceptPrivacyNotice: async () => {
+      if (!supabase || !session?.user) throw new Error('AUTH_NOT_CONFIGURED');
+      const acceptedAt = new Date().toISOString();
+      const { data, error } = await supabase
+        .from('profiles')
+        .update({ privacy_notice_version: PRIVACY_NOTICE_VERSION, privacy_notice_accepted_at: acceptedAt })
+        .eq('id', session.user.id)
+        .select('id, privacy_notice_version, privacy_notice_accepted_at, created_at, updated_at')
+        .single();
+      if (error || !data) throw new Error('PROFILE_UPDATE_FAILED');
+      setProfile(data as UserProfile);
+      setProfileUnavailable(false);
+    },
+    signOut: async (scope = 'local') => {
       if (!supabase) return;
-      const { error } = await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut({ scope });
       if (error) throw error;
+      if (session?.user.id) clearUserCloudCaches(session.user.id);
     },
   }), [loading, profile, profileUnavailable, session]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
-

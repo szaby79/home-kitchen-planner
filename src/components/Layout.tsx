@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
@@ -7,7 +7,7 @@ import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, 
 import { useFavorites } from '@/hooks/useFavorites';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
-import { useAuth } from '@/auth/AuthContext';
+import { PRIVACY_NOTICE_VERSION, useAuth } from '@/auth/AuthContext';
 import AuthDialog from '@/components/AuthDialog';
 import type { StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
 
@@ -54,12 +54,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const recipeStore = useRecipeStore();
   const { language, isEnglish, setLanguage, tr } = useLanguage();
   const recipes = React.useMemo(() => recipeStore.recipes.map(recipe => localizeRecipe(recipe, isEnglish)), [recipeStore.recipes, isEnglish]);
-  const { user, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const plannerStore = usePlannerStore(recipeStore.recipes, { userId: user?.id ?? null, authLoading });
   const favoritesStore = useFavorites();
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(() => new URLSearchParams(window.location.hash.slice(1)).has('error'));
+
+  React.useEffect(() => {
+    const wantsSignIn = new URLSearchParams(location.search).has('signin');
+    if (!user && wantsSignIn) setAuthOpen(true);
+  }, [location.search, user]);
+
+  React.useEffect(() => {
+    if (user && profile && profile.privacy_notice_version !== PRIVACY_NOTICE_VERSION) setAuthOpen(true);
+  }, [profile, user]);
   const navItems = [
     { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home') },
     { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes') },
@@ -100,7 +110,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
             <button
               type="button"
-              onClick={() => setAuthOpen(true)}
+              onClick={() => user ? navigate('/account') : setAuthOpen(true)}
               className="mr-1 inline-flex max-w-[9rem] items-center gap-1.5 rounded-md border bg-card px-2.5 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
               aria-label={user ? tr('Fiók megnyitása', 'Open account') : tr('Bejelentkezés e-mail-címmel', 'Sign in with Email')}
             >
@@ -126,7 +136,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
-          Plan & Pan v1.34.0 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
+          Plan & Pan v1.35.0 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
       </div>
     </AppContext.Provider>

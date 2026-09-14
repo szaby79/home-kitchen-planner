@@ -5,6 +5,7 @@ import { recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 import { fetchWeeklyPlans, upsertWeeklyPlan } from '@/lib/weeklyPlans';
 import { getWeekStart, isDateKey } from '@/lib/weekDates';
 import { hasPlanMeals, normalizeShoppingItems, normalizeWeekPlan, StoredWeeklyPlan, weeklyPlanFingerprint, WeeklyPlanState } from '@/lib/weeklyPlanValidation';
+import { markCloudDataActive, wasCloudDataDeleted } from '@/lib/localPlanPanData';
 
 const PLAN_KEY = 'plan-pan-weekplan';
 const EXTRA_ITEMS_KEY = 'plan-pan-extra-items';
@@ -173,6 +174,13 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
       }
       lastSavedFingerprint.current = null;
       cloudUpdatedAt.current = null;
+      if (wasCloudDataDeleted(userId)) {
+        localStorage.removeItem(pendingKey(userId, currentWeekStart));
+        applyState({ weekPlan: createEmptyWeekPlan(), extraItems: [], checkedItemKeys: [], shoppingNotes: '' });
+        setCloudSyncStatus('idle');
+        setPlannerReady(true);
+        return;
+      }
       const guest = loadGuestState();
       const initial = pending?.state ?? (guest.weekStart === currentWeekStart && hasPlanMeals(guest.weekPlan) ? guest : null);
       if (initial) {
@@ -227,17 +235,20 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
   }, [recipes]);
 
   const updateDay = useCallback((day: WeekDay, updates: Partial<typeof weekPlan[typeof day]>) => {
+    if (userId) markCloudDataActive(userId);
     setWeekPlan(previous => ({ ...previous, [day]: { ...previous[day], ...updates } }));
     setDirtyRevision(revision => revision + 1);
-  }, []);
+  }, [userId]);
   const clearPlan = useCallback(() => {
+    if (userId) markCloudDataActive(userId);
     setWeekPlan(createEmptyWeekPlan());
     setDirtyRevision(revision => revision + 1);
-  }, []);
+  }, [userId]);
   const generateRandomPlan = useCallback((selection: GenerationSelection, profile: MenuProfile, preferences: MenuPreferences, favoriteIds: string[], autopilot?: WeeklyAutopilotSettings) => {
     if (!plannerReady || !WEEKDAYS.some(day => selection[day].lunch || selection[day].dinner)) return false;
     try {
       const next = generateSelectedPlan(recipes, weekPlan, selection, profile, preferences, favoriteIds, autopilot);
+      if (userId) markCloudDataActive(userId);
       setWeekPlan(next);
       const manualKeys = new Set(extraItems.map(shoppingItemKey));
       setRemovedItems(current => new Set([...current].filter(key => manualKeys.has(key))));
@@ -246,7 +257,7 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
     } catch {
       return false;
     }
-  }, [extraItems, plannerReady, recipes, weekPlan]);
+  }, [extraItems, plannerReady, recipes, userId, weekPlan]);
 
   const shoppingList = useMemo(() => buildShoppingList(weekPlan, recipes), [weekPlan, recipes]);
   const dailyShoppingList = useMemo(() => buildDailyShoppingList(weekPlan, recipes), [weekPlan, recipes]);
@@ -302,23 +313,27 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
   }, [cloudSyncStatus, userId]);
 
   const addExtraItem = useCallback((item: ShoppingItem) => {
+    if (userId) markCloudDataActive(userId);
     setExtraItems(previous => [...previous, { ...item, manual: true }]);
     setDirtyRevision(revision => revision + 1);
-  }, []);
+  }, [userId]);
   const removeExtraItem = useCallback((index: number) => {
+    if (userId) markCloudDataActive(userId);
     const removed = extraItems[index];
     setExtraItems(previous => previous.filter((_, itemIndex) => itemIndex !== index));
     if (removed) setRemovedItems(keys => { const next = new Set(keys); next.delete(shoppingItemKey(removed)); return next; });
     setDirtyRevision(revision => revision + 1);
-  }, [extraItems]);
+  }, [extraItems, userId]);
   const toggleRemoved = useCallback((itemKey: string) => {
+    if (userId) markCloudDataActive(userId);
     setRemovedItems(previous => { const next = new Set(previous); if (next.has(itemKey)) next.delete(itemKey); else next.add(itemKey); return next; });
     setDirtyRevision(revision => revision + 1);
-  }, []);
+  }, [userId]);
   const setShoppingNotes = useCallback((notes: string) => {
+    if (userId) markCloudDataActive(userId);
     setShoppingNotesState(notes);
     setDirtyRevision(revision => revision + 1);
-  }, []);
+  }, [userId]);
 
   const openSavedWeek = useCallback((weekStart: string) => {
     if (dirtyRevision > 0) return false;

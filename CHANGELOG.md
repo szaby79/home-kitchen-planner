@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.35.0
+
+- Add a responsive bilingual Account and Privacy screen with account metadata, cloud status, current-user storage counts, and a concise free-beta privacy summary.
+- Add a human-readable UTF-8 JSON export containing safe account metadata, privacy-acceptance history, family settings, weekly plans, and linked shopping-list state—never sessions, tokens, passwords, or credentials.
+- Add deliberately confirmed deletion of the signed-in user's saved application data while keeping the account, clearing pending sync state, and preventing stale offline queues from recreating deleted records.
+- Add separate current-device and all-device sign-out controls, plus a strongly confirmed permanent-account deletion flow through an authenticated server-only endpoint.
+- Preserve privacy-notice acceptance history in a new owner-readable RLS table and update the beta notice to `beta-2026-09-v2` without silently accepting it for existing users.
+- Keep guest mode available and add a scoped local-data reset that only removes Plan & Pan browser-storage keys.
+
 ## 1.34.0
 
 - Automatically save and restore each signed-in user's exact weekly menu, portions, replacements, and linked shopping-list state through Supabase.
