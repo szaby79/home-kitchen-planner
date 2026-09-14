@@ -33,17 +33,18 @@ export default function HomePage() {
         </div>
         <h1 className="section-title text-3xl sm:text-4xl mb-5">Plan & Pan</h1>
         <h2 className="mx-auto mb-5 max-w-3xl font-display text-[32px] font-semibold leading-[1.1] text-[#3A2E2A] sm:text-[46px]">
-          {tr(
-            <>
-              <span className="block">Kevesebb tervezés.</span>
-              <span className="block">Kevesebb kapkodás.</span>
-              <span className="block">Több idő együtt.</span>
-            </>,
+          {isEnglish ? (
             <>
               <span className="block">Less planning.</span>
               <span className="block">Less rushing.</span>
               <span className="block">More time together.</span>
-            </>,
+            </>
+          ) : (
+            <>
+              <span className="block">Kevesebb tervezés.</span>
+              <span className="block">Kevesebb kapkodás.</span>
+              <span className="block">Több idő együtt.</span>
+            </>
           )}
         </h2>
         <p className="mx-auto mb-7 max-w-2xl text-[20px] font-medium leading-[1.5] text-[#5A4A44]">
