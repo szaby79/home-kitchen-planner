@@ -5,6 +5,7 @@ import { CookingTimePreference, DietPreference, FoodRestriction, FoodStylePrefer
 import { countMatchingMainRecipes } from '@/lib/menuPreferences';
 import { useLanguage } from '@/i18n/LanguageContext';
 import type { FamilySettingsSyncStatus } from '@/hooks/useMenuPreferences';
+import HelpLink from '@/components/HelpLink';
 
 type Props = {
   preferences: MenuPreferences;
@@ -84,7 +85,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
         <ChoiceRow options={(['30', '45', '60', 'any'] as CookingTimePreference[])} selected={[draft.maxCookingTime]} labels={{ '30': tr('30 perc', '30 minutes'), '45': tr('45 perc', '45 minutes'), '60': tr('60 perc', '60 minutes'), any: tr('Mindegy', 'Any time') }} onToggle={value => setDraft(current => ({ ...current, maxCookingTime: value }))} single />
       </PreferenceStep>
 
-      <PreferenceStep number="8" title={tr('Általában hány napra főzzünk ugyanabból?', 'How many days should one batch usually cover?')}>
+      <PreferenceStep number="8" title={tr('Általában hány napra főzzünk ugyanabból?', 'How many days should one batch usually cover?')} helpSection="leftovers-batch">
         <ChoiceRow options={[1, 2, 3] as const} selected={[draft.batchDays]} labels={{ 1: tr('1 napra', '1 day'), 2: tr('2 napra', '2 days'), 3: tr('3 napra', '3 days') }} onToggle={value => setDraft(current => ({ ...current, batchDays: value }))} single />
       </PreferenceStep>
 
@@ -116,10 +117,10 @@ function CloudSyncStatus({ status, tr }: { status: FamilySettingsSyncStatus; tr:
   return <span className="mt-1 block text-sm font-semibold text-primary" aria-live="polite">{label}</span>;
 }
 
-function PreferenceStep({ number, title, hint, children }: { number: string; title: string; hint?: string; children: React.ReactNode }) {
+function PreferenceStep({ number, title, hint, helpSection, children }: { number: string; title: string; hint?: string; helpSection?: string; children: React.ReactNode }) {
   return <div className="grid gap-3 sm:grid-cols-[2rem_1fr]">
     <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">{number}</span>
-    <div><h3 className="mb-1 font-semibold">{title}</h3>{hint && <p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{hint}</p>}<div className="mt-2">{children}</div></div>
+    <div><div className="flex items-center gap-1"><h3 className="mb-1 font-semibold">{title}</h3>{helpSection && <HelpLink section={helpSection} label={title} />}</div>{hint && <p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{hint}</p>}<div className="mt-2">{children}</div></div>
   </div>;
 }
 

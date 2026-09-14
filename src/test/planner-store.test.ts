@@ -27,6 +27,15 @@ function expectedTotals(plan: WeekPlan) {
 describe('active plan and shopping list replacement', () => {
   beforeEach(() => localStorage.clear());
 
+  it('counts a generated two-day batch exactly once for the required number of meals', () => {
+    const { result } = renderHook(() => usePlannerStore(recipes));
+    act(() => {
+      result.current.generateRandomPlan(createGenerationSelection(true), 'simple', { ...DEFAULT_MENU_PREFERENCES, familySize: 4, batchDays: 2 }, []);
+    });
+    expect(result.current.weekPlan.Hétfő.lunch).toBe(result.current.weekPlan.Kedd.lunch);
+    expect(Object.fromEntries(result.current.shoppingList.map(item => [`${item.name}-${item.unit}`, item.quantity]))).toEqual(expectedTotals(result.current.weekPlan));
+  });
+
   it.each([1, 2, 3] as const)('replaces a stored week and calculates only weekend groceries, batchDays=%s', batchDays => {
     const { result, unmount } = renderHook(() => usePlannerStore(recipes));
     act(() => {

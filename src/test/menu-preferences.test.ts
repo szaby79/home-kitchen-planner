@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 import { generateSelectedPlan, generateWeekPlan } from '@/lib/planGenerator';
 import { estimatedCookingMinutes, isVegetarianRecipe, recipeMatchesSafetyPreferences } from '@/lib/menuPreferences';
-import { createEmptyWeekPlan, createGenerationSelection, DEFAULT_MENU_PREFERENCES, MenuPreferences, WEEKDAYS } from '@/types/recipe';
+import { createDefaultAutopilotSettings, createEmptyWeekPlan, createGenerationSelection, DEFAULT_MENU_PREFERENCES, MenuPreferences, WEEKDAYS } from '@/types/recipe';
 
 function preferences(overrides: Partial<MenuPreferences>): MenuPreferences {
   return { ...DEFAULT_MENU_PREFERENCES, ...overrides };
@@ -59,6 +59,16 @@ describe('personalized weekly menu generation', () => {
     const plan = generateSelectedPlan(defaultRecipes, createEmptyWeekPlan(), selection, 'simple', preferences({ batchDays: 3 }));
     expect(plan.Kedd.lunch).toBeTruthy();
     expect(plan.Kedd.lunchDays).toBe(1);
+  });
+
+  it('does not combine batch portions when consecutive days have different household sizes', () => {
+    const settings = createDefaultAutopilotSettings(4);
+    settings.days.Kedd.people = 5;
+    const plan = generateWeekPlan(defaultRecipes, 7, 7, 'simple', preferences({ familySize: 4, batchDays: 2 }), [], [], settings);
+    expect(plan.Hétfő.lunchDays).toBe(1);
+    expect(plan.Kedd.lunchDays).toBe(1);
+    expect(plan.Hétfő.lunchServings).toBe(4);
+    expect(plan.Kedd.lunchServings).toBe(5);
   });
 
   it('prioritizes a suitable favourite without repeating it all week', () => {

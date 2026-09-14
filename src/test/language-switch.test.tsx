@@ -27,9 +27,9 @@ describe('language switch', () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'English language' }));
     expect(screen.getByText(/takes the work out of weekly meal planning/i)).toBeInTheDocument();
-    expect(screen.getAllByText('Quick meals').length).toBeGreaterThan(0);
     fireEvent.click(screen.getAllByRole('link', { name: /Recipes/i })[0]);
     expect(await screen.findByText('Húsleves')).toBeInTheDocument();
+    expect(screen.getAllByText('Quick meals').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Soups').length).toBeGreaterThan(0);
   });
 });

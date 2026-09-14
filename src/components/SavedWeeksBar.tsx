@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { formatWeekLabel } from '@/lib/weekDates';
+import HelpLink from '@/components/HelpLink';
 
 export default function SavedWeeksBar() {
   const {
@@ -23,8 +24,11 @@ export default function SavedWeeksBar() {
           </div>
         </div>
         {cloudSyncEnabled && (
-          <div className={`flex items-center gap-1.5 text-sm font-semibold ${cloudSyncStatus === 'error' ? 'text-destructive' : 'text-primary'}`} role={cloudSyncStatus === 'error' ? 'alert' : 'status'}>
-            {cloudSyncStatus === 'error' ? <CloudOff className="h-4 w-4" /> : <Cloud className="h-4 w-4" />}{status}
+          <div className="flex items-center gap-1">
+            <div className={`flex items-center gap-1.5 text-sm font-semibold ${cloudSyncStatus === 'error' ? 'text-destructive' : 'text-primary'}`} role={cloudSyncStatus === 'error' ? 'alert' : 'status'}>
+              {cloudSyncStatus === 'error' ? <CloudOff className="h-4 w-4" aria-hidden="true" /> : <Cloud className="h-4 w-4" aria-hidden="true" />}{status}
+            </div>
+            <HelpLink section="cloud-saving" label={tr('Felhőmentés', 'Cloud saving')} />
           </div>
         )}
       </div>

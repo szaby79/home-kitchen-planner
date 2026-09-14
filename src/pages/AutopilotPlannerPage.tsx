@@ -9,6 +9,7 @@ import { createDefaultAutopilotSettings, createGenerationSelection, DayMode, Men
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
+import HelpLink from '@/components/HelpLink';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 const STORAGE_KEY = 'plan-pan-weekly-autopilot';
@@ -116,7 +117,10 @@ export default function AutopilotPlannerPage() {
     <div className="page-container max-w-6xl space-y-6 pb-28 md:pb-10">
       <div className="max-w-3xl">
         <div className="mb-2 flex items-center gap-2 text-primary"><Sparkles className="h-5 w-5" /><span className="text-sm font-bold uppercase tracking-wide">{tr('Családi étel-autopilóta', 'Family food autopilot')}</span></div>
-        <h1 className="section-title mb-2">{tr('Állítsuk össze a heteteket', 'Build your week')}</h1>
+        <div className="flex items-center gap-1">
+          <h1 className="section-title mb-2">{tr('Állítsuk össze a heteteket', 'Build your week')}</h1>
+          <HelpLink section="autopilot" label="Autopilot" />
+        </div>
         <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Először ellenőrizd a családi beállításokat. Utána add meg, milyen lesz ez a hét, és csak ezután generáljuk a menüt.', 'First review your family preferences. Then tell us what this week looks like, and only then generate the menu.')}</p>
       </div>
 

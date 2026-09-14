@@ -14,6 +14,7 @@ import ShoppingPage from "@/pages/ShoppingPage";
 import AdminPage from "@/pages/AdminPage";
 import BudgetPage from "@/pages/BudgetPage";
 import AccountPrivacyPage from "@/pages/AccountPrivacyPage";
+import HelpPage from "@/pages/HelpPage";
 import NotFound from "@/pages/NotFound";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { AuthProvider } from "@/auth/AuthProvider";
@@ -42,6 +43,7 @@ const App = () => (
                   <Route path="/admin" element={<AdminPage />} />
                   <Route path="/budget" element={<BudgetPage />} />
                   <Route path="/account" element={<AccountPrivacyPage />} />
+                  <Route path="/help" element={<HelpPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Layout>

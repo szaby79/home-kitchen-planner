@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ChefHat, ArrowRight, Heart, Sparkles, Users } from 'lucide-react';
+import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ChefHat, ArrowRight, Heart, Sparkles, Users, CircleHelp } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, Category } from '@/types/recipe';
 import { useLanguage } from '@/i18n/LanguageContext';
@@ -44,6 +44,10 @@ export default function HomePage() {
           </Link>
         </div>
         <p className="mt-3 text-sm font-medium text-muted-foreground">{tr('Az Autopilot megnyitása után először átnézheted a családi beállításokat, majd összeállíthatod a hetet.', 'After opening Autopilot, you can review family preferences first, then build your week.')}</p>
+        <Link to="/help" className="mx-auto mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-primary/30 bg-card/80 px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <CircleHelp className="h-5 w-5" aria-hidden="true" />
+          {tr('Először jársz itt? Ismerd meg a Plan & Pant', 'New here? Learn how Plan & Pan works')}
+        </Link>
       </section>
 
       <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
