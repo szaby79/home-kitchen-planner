@@ -10,6 +10,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_WEEKDAYS } from '@/i18n/labels';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
 import { localizeIngredient } from '@/i18n/recipeLocalization';
+import HelpLink from '@/components/HelpLink';
 
 export default function ShoppingPage() {
   const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved, shoppingNotes, setShoppingNotes } = useAppContext();
@@ -33,7 +34,10 @@ export default function ShoppingPage() {
       <Link to="/planner" className="mb-4 inline-flex flex-wrap items-center gap-1 text-sm text-muted-foreground hover:text-foreground leading-relaxed font-medium">
         <ArrowLeft className="h-4 w-4" /> {tr('Vissza a menühöz', 'Back to menu')}
       </Link>
-      <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
+      <div className="flex items-center gap-1">
+        <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
+        <HelpLink section={view === 'weekly' ? 'weekly-shopping' : 'daily-shopping'} label={tr(`${view === 'weekly' ? 'Heti' : 'Napi'} bevásárlólista`, `${view === 'weekly' ? 'Weekly' : 'Daily'} shopping list`)} />
+      </div>
       <SavedWeeksBar />
       <p className="mb-4 text-sm text-muted-foreground leading-relaxed font-medium">{tr('A lista csak az aktuális terv hozzávalóit és a saját tételeidet tartalmazza. Új terv vagy ételcsere után automatikusan frissül.', 'The list contains only ingredients for the active plan and your manually added items. It updates automatically after a new plan or a dish replacement.')}</p>
 

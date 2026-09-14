@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound, CircleHelp } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
@@ -76,6 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: '/planner', icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
     { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list') },
     { to: '/budget', icon: WalletCards, label: tr('Budget', 'Budget') },
+    { to: '/help', icon: CircleHelp, label: tr('Súgó', 'Help') },
     { to: '/admin', icon: Settings, label: tr('Admin', 'Admin') },
   ];
 
@@ -119,14 +120,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {authLoading ? tr('Betöltés…', 'Loading…') : user?.email ?? tr('Belépés', 'Sign in')}
               </span>
             </button>
-            <button className="lg:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
+            <button type="button" className="inline-flex h-10 w-10 items-center justify-center rounded-md lg:hidden" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? tr('Menü bezárása', 'Close menu') : tr('Menü megnyitása', 'Open menu')} aria-expanded={mobileOpen}>
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
           {mobileOpen && (
             <nav className="lg:hidden border-t px-4 pb-3 pt-2 flex flex-col gap-1 animate-fade-in">
               {navItems.map(item => (
-                <Link key={item.to} to={item.to} onClick={() => setMobileOpen(false)} className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === item.to ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary'}`}>
+                <Link key={item.to} to={item.to} onClick={() => setMobileOpen(false)} className={`flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${location.pathname === item.to ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary'}`}>
                   <item.icon className="w-4 h-4" />{item.label}
                 </Link>
               ))}

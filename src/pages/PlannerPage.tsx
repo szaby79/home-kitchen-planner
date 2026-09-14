@@ -13,6 +13,7 @@ import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
+import HelpLink from '@/components/HelpLink';
 
 type SortMode = 'abc' | 'random' | 'favorites';
 
@@ -88,7 +89,10 @@ export default function PlannerPage() {
 
   return (
     <div className="page-container max-w-6xl">
-      <h1 className="section-title">{tr('Heti menüterv', 'Weekly meal plan')}</h1>
+      <div className="flex items-center gap-1">
+        <h1 className="section-title">{tr('Heti menüterv', 'Weekly meal plan')}</h1>
+        <HelpLink section="weekly-plan" label={tr('Heti és napi terv', 'Weekly and daily plan')} />
+      </div>
       <SavedWeeksBar />
       <div className="mb-4 grid grid-cols-4 gap-1 rounded-xl border bg-card p-2 text-center text-[10px] md:hidden">
         {[tr('Napok', 'Days'), tr('Generálás', 'Generate'), tr('Ellenőrzés', 'Review'), tr('Bevásárlás', 'Shop')].map((step, index) => <div key={step} className="rounded-lg px-1 py-2"><span className="mx-auto mb-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">{index + 1}</span>{step}</div>)}

@@ -5,6 +5,7 @@ import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
+import HelpLink from '@/components/HelpLink';
 
 export default function FamilySettingsPage() {
   const { recipes } = useAppContext();
@@ -15,7 +16,10 @@ export default function FamilySettingsPage() {
     <div className="page-container max-w-4xl">
       <div className="mb-6 max-w-2xl">
         <div className="mb-2 flex items-center gap-2 text-primary"><Users className="h-5 w-5" /><span className="text-sm font-bold uppercase tracking-wide">{tr('Családi profil', 'Family profile')}</span></div>
-        <h1 className="section-title mb-2">{tr('Családi beállítások', 'Family preferences')}</h1>
+        <div className="flex items-center gap-1">
+          <h1 className="section-title mb-2">{tr('Családi beállítások', 'Family preferences')}</h1>
+          <HelpLink section="family-settings" label={tr('Családi beállítások', 'Family preferences')} />
+        </div>
         <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Itt állíthatod be, hány főre főztök, milyen étrendet követtek, mit nem szerettek és mennyi időt szánnátok a főzésre. Az Autopilot ezeket automatikusan használja.', 'Set your family size, diet, dislikes and preferred cooking time here. Autopilot will use these automatically.')}</p>
       </div>
 

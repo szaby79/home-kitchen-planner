@@ -2,6 +2,8 @@
 
 ## 1.36.0
 
+- Add a prominent bilingual Help Centre with accurate guides for Autopilot, planning, weekly and daily shopping views, guest/account storage, cloud saving, privacy controls, and troubleshooting.
+- Add accessible contextual help beside the most easily misunderstood controls, plus a clearly visible first-visit guide link on the home page.
 - Restore a clean automated baseline by updating stale route and language tests to match the current application flow.
 - Make the existing two- and three-day batch-cooking preference effective for consecutive, compatible days while keeping partial regeneration and shopping quantities accurate.
 - Add a free GitHub Actions pull-request gate for type-checking, linting, the complete test suite, and the production build.

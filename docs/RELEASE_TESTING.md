@@ -34,6 +34,17 @@ This checklist records checks that require a configured preview, real browsers, 
 - [ ] Confirm guest reset removes only `plan-pan-` browser data and leaves an unrelated local-storage test key intact.
 - [ ] Confirm Szabolcs's real account was not used for destructive testing.
 
+## PR #36 / v1.36 stabilization and Help Centre
+
+- [ ] Open the Help Centre from desktop and mobile navigation, and from the prominent first-visit link on the home page.
+- [ ] Expand every help section in HU and EN; confirm language switching never mixes the two languages.
+- [ ] Follow the contextual help links from Autopilot, Family Settings, weekly/day plan, weekly/daily shopping list, batch cooking, and cloud-save status.
+- [ ] Confirm each contextual link opens the matching Help Centre section and keyboard focus remains visible.
+- [ ] At narrow mobile width, confirm readable touch targets and no horizontal scrolling.
+- [ ] Confirm the Help Centre does not describe pantry inventory, automatic future-week ingredient deduction, or any other unfinished feature as available.
+- [ ] Re-run the PR #34 shopping-list checks above; they remain required and are not replaced by the automated quantity-duplication regression tests.
+- [ ] Complete the PR #35 disposable-account checks before PR #36 is eligible to merge.
+
 ## Approval record
 
 - [ ] Record the preview URL and test date in the PR conversation.
