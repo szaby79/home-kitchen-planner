@@ -145,7 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
-          Plan & Pan v1.36.0 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
+          Plan & Pan v1.37.0 © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
       </div>
     </AppContext.Provider>
