@@ -31,9 +31,26 @@ export default function HomePage() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#F6D0BD] mb-4 shadow-sm">
           <ChefHat className="w-8 h-8 text-primary" />
         </div>
-        <h1 className="section-title text-3xl sm:text-4xl mb-2">Plan & Pan</h1>
-        <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6 leading-relaxed font-medium">
-          {tr('A Plan & Pan megtervezi a család heti ebédjeit és vacsoráit, segít az ételek elkészítésében, majd egy közös bevásárlólistát készít. Nem csupán receptgyűjtemény: leveszi a heti menütervezés terhét a válladról.', 'Plan & Pan plans your family’s weekly lunches and dinners, helps you cook each dish, and creates one combined shopping list. It is more than a recipe collection—it takes the work out of weekly meal planning.')}
+        <h1 className="section-title text-3xl sm:text-4xl mb-5">Plan & Pan</h1>
+        <h2 className="mx-auto mb-5 max-w-3xl font-display text-[32px] font-semibold leading-[1.1] text-[#3A2E2A] sm:text-[46px]">
+          {tr(
+            <>
+              <span className="block">Kevesebb tervezés.</span>
+              <span className="block">Kevesebb kapkodás.</span>
+              <span className="block">Több idő együtt.</span>
+            </>,
+            <>
+              <span className="block">Less planning.</span>
+              <span className="block">Less rushing.</span>
+              <span className="block">More time together.</span>
+            </>,
+          )}
+        </h2>
+        <p className="mx-auto mb-7 max-w-2xl text-[20px] font-medium leading-[1.5] text-[#5A4A44]">
+          {tr(
+            'A Plan & Pan megtervezi a heti étkezést, segít a főzésben, és automatikusan összeállítja a bevásárlólistát — a családodhoz igazítva.',
+            'Plan & Pan plans your weekly meals, helps with cooking, and automatically creates the shopping list — tailored to your family.',
+          )}
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-3 max-w-xl mx-auto">
           <Link to="/planner" className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90">
