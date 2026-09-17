@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
@@ -15,13 +15,17 @@ export default function RecipeDetailPage() {
   const { getRecipe, isFavorite, toggleFavorite } = useAppContext();
   const { isEnglish, tr } = useLanguage();
   const recipe = getRecipe(id || '');
-  const [servings, setServings] = useState(recipe?.defaultServings || 4);
+  const [searchParams] = useSearchParams();
+  const fromPlan = searchParams.get('from') === 'plan';
+  const requestedServings = Number(searchParams.get('servings'));
+  const [servings, setServings] = useState(() => fromPlan && Number.isInteger(requestedServings) && requestedServings > 0 && requestedServings <= 100
+    ? requestedServings : recipe?.defaultServings || 4);
 
   if (!recipe) {
     return (
       <div className="page-container text-center py-16">
         <p className="text-muted-foreground">{tr('Recept nem található.', 'Recipe not found.')}</p>
-        <Link to="/recipes" className="text-primary underline mt-2 inline-block">{tr('Vissza a receptekhez', 'Back to recipes')}</Link>
+        <Link to={fromPlan ? "/planner/week" : "/recipes"} className="text-primary underline mt-2 inline-block">{tr('Vissza a receptekhez', 'Back to recipes')}</Link>
       </div>
     );
   }
@@ -31,7 +35,8 @@ export default function RecipeDetailPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <Link to="/recipes" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
+      {fromPlan && <p className="mb-3 text-sm text-muted-foreground">{tr('Itt a recept mennyiségeit számolhatod át. A heti terv adagjait a menü szerkesztésében módosíthatod.', 'Adjust recipe quantities here. To change saved servings, edit the weekly menu.')}</p>}
+      <Link to={fromPlan ? "/planner/week" : "/recipes"} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="w-4 h-4" /> {tr('Vissza', 'Back')}
       </Link>
 

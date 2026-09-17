@@ -125,6 +125,8 @@ export default function AutopilotPlannerPage() {
       </div>
 
       <SavedWeeksBar />
+      {hasPlan && !generated && <Button asChild className="mb-5"><Link to="/planner/week">{tr('Heti menü megnyitása', 'Open weekly menu')}</Link></Button>}
+      <p className="mb-4 text-sm text-muted-foreground">{tr('Az alábbi beállítások az új menü generálására vonatkoznak. A mentett ételek adagjait a heti menüben szerkesztheted.', 'The settings below apply to generating a new menu. Edit saved meal servings in the weekly menu.')}</p>
 
       <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.39.1
+
+- Restore each signed-in user's selected saved week after reload when the cloud record still exists.
+- Open saved menus from Autopilot without regenerating; return from shopping directly to the menu.
+- Carry planned servings into recipe viewing and return to the weekly menu.
+- Clarify mobile meal/serving editing and recipe-only quantity adjustments.
+- Keep cloud-save status visible while scrolling.
+- Record manual findings and outstanding PWA/auth and Autopilot draft issues.
+
 ## 1.39.0
 
 - Refresh only the homepage hero copy and typography with a warmer, more focused bilingual message.

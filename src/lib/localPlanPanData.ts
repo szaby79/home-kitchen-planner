@@ -1,4 +1,5 @@
 const USER_CACHE_PREFIXES = [
+  'plan-pan-selected-week-v1:',
   'plan-pan-family-settings-pending-v1:',
   'plan-pan-weekly-plan-pending-v1:',
 ] as const;
