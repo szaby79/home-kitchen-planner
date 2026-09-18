@@ -33,9 +33,10 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run test:e2e
 ```
 
-The same commands run automatically for pull requests through `.github/workflows/ci.yml`. Real-device and configured-cloud checks remain explicit manual gates in [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md); in particular, PR #34 shopping-list synchronization is not considered manually verified yet.
+The same checks run automatically for pull requests through `.github/workflows/ci.yml`. Playwright covers desktop Chromium, an iPhone-sized Chromium viewport, and an iPhone-sized WebKit viewport; setup and safety boundaries are documented in [`docs/AUTOMATED_TESTING.md`](docs/AUTOMATED_TESTING.md). Real-device and configured-cloud checks remain explicit manual gates in [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md); in particular, PR #34 shopping-list synchronization is not considered manually verified yet.
 
 ## Supabase Free setup for v1.31–v1.35
 
