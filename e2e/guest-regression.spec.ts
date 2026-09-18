@@ -18,7 +18,8 @@ test('favourites and recipe serving quantities persist and calculate correctly',
   const servingControl = page.getByText('Servings:', { exact: true }).locator('..');
   await servingControl.getByRole('button').last().click();
   await expect(servingControl.getByText('5', { exact: true })).toBeVisible();
-  await expect(page.getByText('chicken breast').locator('..')).toContainText('750 g');
+  const ingredients = page.getByRole('heading', { name: 'Ingredients' }).locator('..');
+  await expect(ingredients.getByText('chicken breast', { exact: true }).locator('..')).toContainText('750 g');
 });
 
 test('portion editing stays on the planner, updates shopping quantities, and survives reload', async ({ page }) => {
