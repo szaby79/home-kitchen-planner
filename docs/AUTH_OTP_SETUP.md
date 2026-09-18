@@ -12,8 +12,8 @@ Before entering anything in Supabase:
 
 1. Confirm there is a Zoho mailbox or send-capable alias on `skpunited.com`. A receiving-only Zoho group such as `info@`, `sales@`, or `support@` must not be assumed to have SMTP credentials.
 2. Prefer `noreply@skpunited.com` as the sender only if it is an alias of the authenticating mailbox or has its own mailbox credentials. Otherwise use the authenticating mailbox address as the sender.
-3. In Zoho Mail, open the account's **Server Configuration Details** and copy the SMTP host shown for that exact account and data center. Do not guess the regional host.
-4. Use authenticated TLS on port `587` (or the exact supported configuration shown by Zoho). If Zoho two-factor authentication is enabled, create an application-specific password.
+3. The current Canadian Zoho account shows SMTP host `smtp.zohocloud.ca`, port `465`, and SSL. Recheck **Server Configuration Details** before reusing these values after an account or data-center change.
+4. Authenticate as `szabolcsbecze@skpunited.com`. If Zoho two-factor authentication is enabled, create an application-specific password instead of using the normal account password.
 5. In Supabase, open **Project Settings > Authentication > SMTP Settings**, enable custom SMTP, and enter the host, port, mailbox username, password, sender address, and sender name `Plan & Pan`.
 6. Store the SMTP password only in the Supabase dashboard. Never commit it, paste it into GitHub, or send it in chat.
 
