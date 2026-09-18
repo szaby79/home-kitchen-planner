@@ -2,9 +2,26 @@
 
 Plan & Pan uses Supabase email OTP verification inside the same browser or installed PWA window. The frontend uses only the public Supabase publishable key. No service-role key is required or allowed in the browser.
 
-## Required Supabase dashboard change
+## Required email delivery setup
 
-Complete this once before manually testing PR #40:
+Custom SMTP is required before PR #40 can be verified with real beta users. Supabase's default sender is limited to project-team addresses, is rate-limited, and is not intended for production authentication email.
+
+For the current beta, use the existing `skpunited.com` domain through Zoho Mail. This is only the sending domain; the Plan & Pan product name and application domain can still be changed later without migrating user data.
+
+Before entering anything in Supabase:
+
+1. Confirm there is a Zoho mailbox or send-capable alias on `skpunited.com`. A receiving-only Zoho group such as `info@`, `sales@`, or `support@` must not be assumed to have SMTP credentials.
+2. Prefer `noreply@skpunited.com` as the sender only if it is an alias of the authenticating mailbox or has its own mailbox credentials. Otherwise use the authenticating mailbox address as the sender.
+3. In Zoho Mail, open the account's **Server Configuration Details** and copy the SMTP host shown for that exact account and data center. Do not guess the regional host.
+4. Use authenticated TLS on port `587` (or the exact supported configuration shown by Zoho). If Zoho two-factor authentication is enabled, create an application-specific password.
+5. In Supabase, open **Project Settings > Authentication > SMTP Settings**, enable custom SMTP, and enter the host, port, mailbox username, password, sender address, and sender name `Plan & Pan`.
+6. Store the SMTP password only in the Supabase dashboard. Never commit it, paste it into GitHub, or send it in chat.
+
+After saving SMTP, send a real OTP only to a disposable test account and confirm delivery before inviting beta users.
+
+## Required Supabase email template change
+
+Complete this once after custom SMTP is enabled and before manually testing PR #40:
 
 1. Open the Plan & Pan project in the Supabase dashboard.
 2. Select **Authentication**.
@@ -23,9 +40,9 @@ Plan & Pan belépési kód / sign-in code: {{ .Token }}
 
 If Supabase presents a separate confirmation template for newly created users, ensure that its passwordless confirmation content also displays `{{ .Token }}` rather than requiring the recipient to leave the app through a link.
 
-## Current email delivery
+## Current email delivery decision
 
-Custom SMTP is not required for PR #40. Supabase's development email sender can be used for the small beta test group, subject to its rate limits. A custom SMTP provider can be connected later without changing the frontend OTP flow.
+PR #40 uses Zoho Mail SMTP with the existing `skpunited.com` domain. No new domain is required for the beta. This does not change the frontend OTP flow and does not weaken Supabase authentication or Row Level Security.
 
 ## Verification
 
