@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import App from '@/App';
 
@@ -25,5 +25,20 @@ describe('weekly plan replacement confirmation', () => {
     fireEvent.click(screen.getByRole('button', { name: cancelLabel }));
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
     expect(localStorage.getItem('plan-pan-weekplan')).toBe(saved);
+  });
+
+  it('keeps the saved weekly menu reachable after the planner is reopened', () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: 'Heti menü generálása' }));
+    expect(screen.getByText('Elkészült a hetetek')).toBeInTheDocument();
+
+    cleanup();
+    window.history.pushState({}, '', '/planner');
+    render(<App />);
+
+    const openSavedMenu = screen.getByRole('link', { name: 'Mentett heti menü megnyitása' });
+    expect(openSavedMenu).toHaveAttribute('href', '/planner/week');
+    fireEvent.click(openSavedMenu);
+    expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
   });
 });
