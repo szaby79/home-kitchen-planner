@@ -10,7 +10,7 @@ test('loads the application without critical browser errors', async ({ page }) =
 
   await page.goto('/');
 
-  await expect(page.getByRole('link', { name: 'Plan & Pan' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Plan & Pan', exact: true })).toBeVisible();
   await expect(page.getByText('Less planning. Less rushing. More time together.')).toBeVisible();
   expectNoCriticalErrors();
 });

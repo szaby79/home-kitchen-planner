@@ -31,10 +31,11 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
 
   const mainDish = page.locator('label:visible').filter({ hasText: /^Main dish/ }).first().locator('..');
   await expect(mainDish.getByText('Rántott csirke', { exact: true })).toBeVisible();
-  await mainDish.getByRole('button', { name: '+' }).click();
+  const servings = mainDish.getByText('Servings:', { exact: true }).locator('..');
+  await servings.getByRole('button', { name: '+' }).click();
 
   await expect(page).toHaveURL(/\/planner\/week$/);
-  await expect(mainDish.getByText('5', { exact: true })).toBeVisible();
+  await expect(servings.getByText('5', { exact: true })).toBeVisible();
   await page.reload();
 
   if (await page.getByTestId('mobile-planner').isVisible()) {
@@ -44,14 +45,14 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
   await expect(reloadedMainDish.getByText('5', { exact: true })).toBeVisible();
 
   await page.goto('/shopping');
-  await expect(page.getByText('csirkemell').locator('..')).toContainText('750 g');
+  await expect(page.getByText('chicken breast').locator('..')).toContainText('750 g');
 });
 
 test('recipe navigation returns to the active guest plan without losing it', async ({ page }) => {
   await seedGuestPlan(page, 5);
   await page.goto('/planner/week');
 
-  await page.getByText('Rántott csirke', { exact: true }).first().click();
+  await page.locator('a:visible', { hasText: 'Rántott csirke' }).first().click();
   await expect(page).toHaveURL(/\/recipes\/main-1$/);
   await page.goBack();
   await expect(page).toHaveURL(/\/planner\/week$/);
@@ -67,7 +68,7 @@ test('recipe navigation returns to the active guest plan without losing it', asy
 test('shopping-list manual state and notes survive reload', async ({ page }) => {
   await seedGuestPlan(page);
   await page.goto('/shopping');
-  await expect(page.getByText('csirkemell').locator('..')).toContainText('600 g');
+  await expect(page.getByText('chicken breast').locator('..')).toContainText('600 g');
 
   const addItem = page.getByRole('heading', { name: 'Add another item' }).locator('..');
   await addItem.getByPlaceholder('Item name').fill('Banana');

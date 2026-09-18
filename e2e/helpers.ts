@@ -25,6 +25,8 @@ function emptyDay() {
 
 export async function seedEnglishGuest(page: Page) {
   await page.addInitScript(() => {
+    if (sessionStorage.getItem('plan-pan-e2e-seeded')) return;
+    sessionStorage.setItem('plan-pan-e2e-seeded', 'true');
     localStorage.clear();
     localStorage.setItem('plan-pan-language', 'en');
   });
@@ -36,6 +38,8 @@ export async function seedGuestPlan(page: Page, servings = 4) {
   weekPlan.Hétfő.lunchServings = servings;
 
   await page.addInitScript((plan) => {
+    if (sessionStorage.getItem('plan-pan-e2e-seeded')) return;
+    sessionStorage.setItem('plan-pan-e2e-seeded', 'true');
     localStorage.clear();
     localStorage.setItem('plan-pan-language', 'en');
     localStorage.setItem('plan-pan-weekplan', JSON.stringify(plan));
