@@ -59,6 +59,16 @@ describe('account dialog', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it('keeps guest mode available when Supabase is not configured', () => {
+    authState.configured = false;
+    const onOpenChange = renderDialog();
+
+    expect(screen.getByLabelText('E-mail-cím')).toBeDisabled();
+    expect(screen.getByText(/A fiókos bejelentkezés beállítása még folyamatban van/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Folytatás vendégként' }));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
   it('shows a restoring state before deciding whether the user is signed in', () => {
     authState.loading = true;
     renderDialog();
@@ -94,6 +104,17 @@ describe('account dialog', () => {
 
     await waitFor(() => expect(authState.verifyEmailOtp).toHaveBeenCalledWith('tester@example.com', '123456'));
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it('keeps only numeric OTP characters and reports a rejected code safely', async () => {
+    authState.verifyEmailOtp.mockRejectedValueOnce(new Error('invalid token'));
+    renderDialog();
+    await requestOtp();
+    fireEvent.change(screen.getByLabelText('Belépési kód'), { target: { value: '12a34-56' } });
+
+    expect(screen.getByLabelText('Belépési kód')).toHaveValue('123456');
+    fireEvent.click(screen.getByRole('button', { name: 'Belépés' }));
+    expect(await screen.findByText(/A belépési kód hibás vagy lejárt/)).toBeInTheDocument();
   });
 
   it('shows a safe Hungarian rate-limit message', async () => {

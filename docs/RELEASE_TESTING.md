@@ -5,6 +5,7 @@ This checklist records checks that require a configured preview, real browsers, 
 ## Automated release gate
 
 - [ ] GitHub Actions completes `npm ci`, type-check, lint, the full test suite, and the production build.
+- [ ] Playwright passes on desktop Chromium, mobile Chromium, and mobile WebKit; inspect the retained screenshot/trace report if it fails.
 - [ ] The Vercel preview deploys successfully and opens without unexpected console errors.
 - [ ] Hungarian and English navigation and core planner flows work at desktop and mobile widths.
 
