@@ -155,8 +155,11 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
       if (sequence !== loadSequence.current || currentUserId.current !== userId) return;
       cloudLoadFailed.current = false;
       setSavedWeeks(records);
-      const rememberedWeek = localStorage.getItem(`${SELECTED_WEEK_PREFIX}${userId}`);
-      const selectedWeek = records.some(record => record.weekStart === rememberedWeek) ? rememberedWeek! : currentWeekStart;
+      const selectedWeekKey = `${SELECTED_WEEK_PREFIX}${userId}`;
+      const rememberedWeek = localStorage.getItem(selectedWeekKey);
+      const rememberedWeekExists = rememberedWeek !== null && records.some(record => record.weekStart === rememberedWeek);
+      const selectedWeek = rememberedWeekExists ? rememberedWeek : currentWeekStart;
+      if (rememberedWeek && !rememberedWeekExists) localStorage.removeItem(selectedWeekKey);
       setDisplayedWeekStart(selectedWeek);
       const currentRecord = records.find(record => record.weekStart === selectedWeek);
       const pending = loadPending(userId, selectedWeek);

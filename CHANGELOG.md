@@ -1,13 +1,13 @@
 # Changelog
 
-## 1.39.1
+## 1.40.0
 
-- Restore each signed-in user's selected saved week after reload when the cloud record still exists.
-- Open saved menus from Autopilot without regenerating; return from shopping directly to the menu.
-- Carry planned servings into recipe viewing and return to the weekly menu.
-- Clarify mobile meal/serving editing and recipe-only quantity adjustments.
-- Keep cloud-save status visible while scrolling.
-- Record manual findings and outstanding PWA/auth and Autopilot draft issues.
+- Replace magic-link-first authentication with an in-app email OTP verification flow.
+- Keep browser and installed-PWA sessions persistent while session restoration is resolved.
+- Add bilingual OTP, resend cooldown, invalid-code, and email-rate-limit states.
+- Preserve existing Supabase users, profiles, family settings, weekly plans, and shopping lists.
+- Add automated authentication regression coverage and manual Supabase template instructions.
+
 
 ## 1.39.0
 

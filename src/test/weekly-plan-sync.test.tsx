@@ -59,22 +59,25 @@ describe('weekly plan local and cloud synchronization', () => {
     await waitFor(() => expect(first.result.current.plannerReady).toBe(true));
     act(() => { first.result.current.openSavedWeek(oldWeek); });
     first.unmount();
+
     const second = renderHook(() => usePlannerStore(recipes, { userId: 'user-a' }));
     await waitFor(() => expect(second.result.current.plannerReady).toBe(true));
     expect(second.result.current.displayedWeekStart).toBe(oldWeek);
     expect(second.result.current.weekPlan.Hétfő.lunchServings).toBe(5);
     second.unmount();
+
     const other = renderHook(() => usePlannerStore(recipes, { userId: 'user-b' }));
     await waitFor(() => expect(other.result.current.plannerReady).toBe(true));
     expect(other.result.current.displayedWeekStart).toBe(getWeekStart());
   });
 
-  it('falls back to the current week if the remembered plan was deleted', async () => {
+  it('falls back to the current week and forgets a remembered plan that was deleted', async () => {
     localStorage.setItem('plan-pan-selected-week-v1:user-a', '2025-01-06');
     cloud.fetch.mockResolvedValue([record(getWeekStart())]);
     const hook = renderHook(() => usePlannerStore(recipes, { userId: 'user-a' }));
     await waitFor(() => expect(hook.result.current.plannerReady).toBe(true));
     expect(hook.result.current.displayedWeekStart).toBe(getWeekStart());
+    expect(localStorage.getItem('plan-pan-selected-week-v1:user-a')).toBeNull();
   });
 
   it('keeps guest plans, manual items, checkmarks and notes device-local after remount', async () => {

@@ -39,6 +39,30 @@ describe('planner meal cards', () => {
     expect(screen.getAllByRole('link', { name: /bevásárlólista/i }).length).toBeGreaterThan(0);
   });
 
+  it('returns from the shopping list to the active weekly menu', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/shopping');
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+
+    expect(window.location.pathname).toBe('/planner/week');
+    expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
+  });
+
+  it('returns from the shopping list to the actual previous app page', async () => {
+    localStorage.clear();
+    window.history.replaceState(null, '', '/');
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: /Bevásárlólista A menü alapján/i }));
+    expect(window.location.pathname).toBe('/shopping');
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+    await waitFor(() => expect(window.location.pathname).toBe('/'));
+    expect(screen.getByRole('heading', { name: 'Plan & Pan', level: 1 })).toBeInTheDocument();
+  });
+
   it('opens meal details only when mobile editing is requested', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/planner/week');
@@ -49,6 +73,25 @@ describe('planner meal cards', () => {
     fireEvent.click(within(mobilePlanner).getByRole('button', { name: /ételek és adagok szerkesztése/i }));
     expect(within(mobilePlanner).getByRole('button', { name: /szerkesztés kész/i })).toBeInTheDocument();
     expect(within(mobilePlanner).getAllByRole('combobox').length).toBe(6);
+  });
+
+  it('returns from a weekly-plan recipe to the same planner route', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/planner/week');
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
+
+    const mobilePlanner = await screen.findByTestId('mobile-planner');
+    fireEvent.click(within(mobilePlanner).getAllByRole('link')[0]);
+    expect(window.location.pathname).toMatch(/^\/recipes\//);
+    expect(window.location.search).toMatch(/^\?from=plan&servings=\d+$/);
+    const requestedServings = Number(new URLSearchParams(window.location.search).get('servings'));
+    expect(screen.getByText(String(requestedServings), { selector: 'span' })).toBeInTheDocument();
+    expect(screen.getByText(/heti terv adagjait/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
+    await waitFor(() => expect(window.location.pathname).toBe('/planner/week'));
+    expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
   });
 
   it('offers a direct replacement button that changes only one meal', async () => {
