@@ -31,7 +31,7 @@ export default function ShoppingPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <Link to="/planner" className="mb-4 inline-flex flex-wrap items-center gap-1 text-sm text-muted-foreground hover:text-foreground leading-relaxed font-medium">
+      <Link to="/planner/week" className="mb-4 inline-flex flex-wrap items-center gap-1 text-sm text-muted-foreground hover:text-foreground leading-relaxed font-medium">
         <ArrowLeft className="h-4 w-4" /> {tr('Vissza a menühöz', 'Back to menu')}
       </Link>
       <div className="flex items-center gap-1">
