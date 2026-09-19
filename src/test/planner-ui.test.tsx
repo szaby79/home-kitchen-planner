@@ -50,6 +50,19 @@ describe('planner meal cards', () => {
     expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
   });
 
+  it('returns from the shopping list to the actual previous app page', async () => {
+    localStorage.clear();
+    window.history.replaceState(null, '', '/');
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: /Bevásárlólista A menü alapján/i }));
+    expect(window.location.pathname).toBe('/shopping');
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+    await waitFor(() => expect(window.location.pathname).toBe('/'));
+    expect(screen.getByRole('heading', { name: 'Plan & Pan', level: 1 })).toBeInTheDocument();
+  });
+
   it('opens meal details only when mobile editing is requested', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/planner/week');
@@ -73,7 +86,7 @@ describe('planner meal cards', () => {
     expect(window.location.pathname).toMatch(/^\/recipes\//);
 
     fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
-    expect(window.location.pathname).toBe('/planner/week');
+    await waitFor(() => expect(window.location.pathname).toBe('/planner/week'));
     expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
   });
 
