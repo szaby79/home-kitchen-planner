@@ -55,7 +55,7 @@ test('recipe navigation returns to the active guest plan without losing it', asy
 
   await page.locator('a:visible', { hasText: 'Rántott csirke' }).first().click();
   await expect(page).toHaveURL(/\/recipes\/main-1$/);
-  await page.goBack();
+  await page.getByRole('link', { name: 'Back', exact: true }).click();
   await expect(page).toHaveURL(/\/planner\/week$/);
 
   if (await page.getByTestId('mobile-planner').isVisible()) {
