@@ -296,7 +296,7 @@ function CompactMeal({ label, recipe, displayName, servings, onReplace }: { labe
   const { tr } = useLanguage();
   if (!recipe) return null;
   return <div className="flex items-center gap-3 rounded-xl border bg-secondary/20 p-2.5">
-    <Link to={`/recipes/${recipe.id}`} className="flex min-w-0 flex-1 items-center gap-3">
+    <Link to={`/recipes/${recipe.id}`} state={{ from: '/planner/week' }} className="flex min-w-0 flex-1 items-center gap-3">
       <img src={recipe.imageUrl} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
       <div className="min-w-0 flex-1"><p className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">{label}</p><p className="line-clamp-2 text-sm font-semibold">{displayName || recipe.name}</p><p className="mt-1 flex flex-wrap items-center gap-1 text-sm text-muted-foreground leading-relaxed font-medium"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} kcal · {servings} {tr('adag', 'servings')}</p></div>
     </Link>
@@ -351,8 +351,8 @@ function MealSlot({ label, value, servings, days = 1, options, recipes, onChange
       {options.map(item => <option key={item.id} value={item.id}>{isQuickRecipe(item) ? '⚡ ' : ''}{item.name} ({isEnglish ? EN_CATEGORY_LABELS[item.category] : CATEGORY_LABELS[item.category]})</option>)}
     </select>
     {recipe && <div className="flex gap-3 rounded-lg border bg-card p-2.5">
-      <Link to={`/recipes/${recipe.id}`} className="shrink-0 overflow-hidden rounded-md"><img src={recipe.imageUrl} alt={recipe.name} className="h-[70px] w-24 object-cover" /></Link>
-      <div className="min-w-0 flex-1"><Link to={`/recipes/${recipe.id}`} className="line-clamp-2 text-sm font-semibold hover:text-primary">{recipe.name}</Link><Link to={`/recipes/${recipe.id}`} className="text-xs text-primary hover:underline">{tr('Recept megnyitása', 'Open recipe')}</Link>
+      <Link to={`/recipes/${recipe.id}`} state={{ from: '/planner/week' }} className="shrink-0 overflow-hidden rounded-md"><img src={recipe.imageUrl} alt={recipe.name} className="h-[70px] w-24 object-cover" /></Link>
+      <div className="min-w-0 flex-1"><Link to={`/recipes/${recipe.id}`} state={{ from: '/planner/week' }} className="line-clamp-2 text-sm font-semibold hover:text-primary">{recipe.name}</Link><Link to={`/recipes/${recipe.id}`} state={{ from: '/planner/week' }} className="text-xs text-primary hover:underline">{tr('Recept megnyitása', 'Open recipe')}</Link>
         <p className="mt-1 flex flex-wrap items-center gap-1 text-sm text-muted-foreground leading-relaxed font-medium"><Flame className="h-3 w-3" /> {tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
         <div className="mt-2 flex flex-wrap gap-3 text-xs"><Counter label={tr('Adag', 'Servings')} value={servings} min={1} onChange={onServingsChange} />{onDaysChange && <Counter label={tr('Napra', 'Days')} value={days} min={1} max={7} onChange={onDaysChange} />}</div>
       </div>

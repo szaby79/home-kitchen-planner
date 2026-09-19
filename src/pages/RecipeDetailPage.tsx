@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
+import { Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { estimateRecipeCalories } from '@/lib/calorieCalculator';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS, EN_MEAL_TYPE_LABELS } from '@/i18n/labels';
 import RecipeNarrator from '@/components/RecipeNarrator';
+import AppBackLink from '@/components/AppBackLink';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -31,9 +32,9 @@ export default function RecipeDetailPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <Link to="/recipes" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
-        <ArrowLeft className="w-4 h-4" /> {tr('Vissza', 'Back')}
-      </Link>
+      <AppBackLink fallback="/recipes" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
+        {tr('Vissza', 'Back')}
+      </AppBackLink>
 
       {/* Header */}
       <div className="bg-card border rounded-lg overflow-hidden mb-6">

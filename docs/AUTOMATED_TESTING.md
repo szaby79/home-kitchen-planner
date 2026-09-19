@@ -28,7 +28,7 @@ PLAYWRIGHT_BASE_URL=https://your-preview.example npm run test:e2e
 
 ## Data-safety boundary
 
-The required CI suite runs in guest mode with isolated browser storage. It does not use production accounts, production credentials, or destructive database calls. Integration tests mock Supabase at the application boundary and verify account-scoped user IDs. Static migration tests prevent accidental removal of the committed RLS owner checks.
+The required CI suite runs with isolated browser storage. Guest regressions stay local, and the browser OTP-request check uses a mocked local Supabase transport with a reserved `.test` address. It does not send email, use production accounts or credentials, or make destructive database calls. Integration tests mock Supabase at the application boundary and verify account-scoped user IDs. Static migration tests prevent accidental removal of the committed RLS owner checks.
 
 Live OTP delivery, restored authenticated sessions, cross-user RLS denial, cloud persistence, and multi-device synchronization need a dedicated non-production Supabase project and disposable users. Do not put OTPs, access tokens, service-role keys, or real-user credentials in GitHub, Playwright files, screenshots, traces, or CI variables. A future live-cloud job should remain opt-in until that test project and its secret-handling process exist.
 

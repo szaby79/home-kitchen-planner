@@ -50,6 +50,11 @@ export default defineConfig({
   webServer: externalBaseUrl ? undefined : {
     command: `npm run dev -- --host 127.0.0.1 --port ${port}`,
     url: localBaseUrl,
+    env: {
+      ...process.env,
+      VITE_SUPABASE_URL: `${localBaseUrl}/__e2e_supabase`,
+      VITE_SUPABASE_PUBLISHABLE_KEY: 'plan-pan-e2e-public-key',
+    },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

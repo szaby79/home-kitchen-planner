@@ -20,6 +20,19 @@ test('favourites and recipe serving quantities persist and calculate correctly',
   await expect(servingControl.getByText('5', { exact: true })).toBeVisible();
   const ingredients = page.getByRole('heading', { name: 'Ingredients' }).locator('..');
   await expect(ingredients.getByText('chicken breast', { exact: true }).locator('..')).toContainText('750 g');
+  await page.getByRole('link', { name: 'Back', exact: true }).click();
+  await expect(page).toHaveURL(/\/recipes$/);
+});
+
+test('shopping back control returns to the actual previous app page', async ({ page }) => {
+  await seedEnglishGuest(page);
+  await page.goto('/');
+
+  await page.locator('a[href="/shopping"]', { hasText: 'Created automatically from your meal plan' }).click();
+  await expect(page).toHaveURL(/\/shopping$/);
+  await page.getByRole('link', { name: 'Back to menu' }).click();
+
+  await expect(page).toHaveURL(/\/$/);
 });
 
 test('portion editing stays on the planner, updates shopping quantities, and survives reload', async ({ page }) => {
@@ -47,6 +60,8 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
 
   await page.goto('/shopping');
   await expect(page.getByText('chicken breast').locator('..')).toContainText('750 g');
+  await page.getByRole('link', { name: 'Back to menu' }).click();
+  await expect(page).toHaveURL(/\/planner\/week$/);
 });
 
 test('recipe navigation returns to the active guest plan without losing it', async ({ page }) => {
@@ -55,7 +70,7 @@ test('recipe navigation returns to the active guest plan without losing it', asy
 
   await page.locator('a:visible', { hasText: 'Rántott csirke' }).first().click();
   await expect(page).toHaveURL(/\/recipes\/main-1$/);
-  await page.goBack();
+  await page.getByRole('link', { name: 'Back', exact: true }).click();
   await expect(page).toHaveURL(/\/planner\/week$/);
 
   if (await page.getByTestId('mobile-planner').isVisible()) {

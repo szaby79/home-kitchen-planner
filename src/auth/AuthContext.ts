@@ -17,7 +17,8 @@ export type AuthContextValue = {
   user: User | null;
   profile: UserProfile | null;
   profileUnavailable: boolean;
-  sendMagicLink: (email: string) => Promise<void>;
+  sendEmailOtp: (email: string) => Promise<void>;
+  verifyEmailOtp: (email: string, token: string) => Promise<void>;
   acceptPrivacyNotice: () => Promise<void>;
   signOut: (scope?: 'local' | 'global') => Promise<void>;
 };

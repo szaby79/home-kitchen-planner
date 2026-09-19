@@ -126,6 +126,11 @@ export default function AutopilotPlannerPage() {
 
       <SavedWeeksBar />
 
+      {hasPlan && !generated && <section className="rounded-xl border border-primary/30 bg-primary/5 p-4">
+        <p className="mb-3 text-sm font-semibold text-foreground">{tr('A mentett heti menüd betöltődött. Innen közvetlenül megnyithatod az ételeket.', 'Your saved weekly menu is loaded. Open the meals directly from here.')}</p>
+        <Button asChild className="w-full sm:w-auto"><Link to="/planner/week">{tr('Mentett heti menü megnyitása', 'Open saved weekly menu')}</Link></Button>
+      </section>}
+
       <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={saveFamilyPreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
 
       <section>
