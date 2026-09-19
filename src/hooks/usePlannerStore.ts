@@ -13,6 +13,7 @@ const CHECKED_ITEMS_KEY = 'plan-pan-checked-items';
 const SHOPPING_NOTES_KEY = 'plan-pan-shopping-notes';
 const WEEK_START_KEY = 'plan-pan-week-start';
 const PENDING_PREFIX = 'plan-pan-weekly-plan-pending-v1:';
+const SELECTED_WEEK_PREFIX = 'plan-pan-selected-week-v1:';
 const SAVE_DEBOUNCE_MS = 700;
 
 export type WeeklyPlanSyncStatus = 'idle' | 'loading' | 'pending' | 'saving' | 'saved' | 'error';
@@ -154,8 +155,14 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
       if (sequence !== loadSequence.current || currentUserId.current !== userId) return;
       cloudLoadFailed.current = false;
       setSavedWeeks(records);
-      const currentRecord = records.find(record => record.weekStart === currentWeekStart);
-      const pending = loadPending(userId, currentWeekStart);
+      const selectedWeekKey = `${SELECTED_WEEK_PREFIX}${userId}`;
+      const rememberedWeek = localStorage.getItem(selectedWeekKey);
+      const rememberedWeekExists = rememberedWeek !== null && records.some(record => record.weekStart === rememberedWeek);
+      const selectedWeek = rememberedWeekExists ? rememberedWeek : currentWeekStart;
+      if (rememberedWeek && !rememberedWeekExists) localStorage.removeItem(selectedWeekKey);
+      setDisplayedWeekStart(selectedWeek);
+      const currentRecord = records.find(record => record.weekStart === selectedWeek);
+      const pending = loadPending(userId, selectedWeek);
       if (currentRecord) {
         const cloudState = toState(currentRecord);
         lastSavedFingerprint.current = weeklyPlanFingerprint(cloudState);
@@ -165,7 +172,7 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
           setDirtyRevision(1);
           setCloudSyncStatus('pending');
         } else {
-          localStorage.removeItem(pendingKey(userId, currentWeekStart));
+          localStorage.removeItem(pendingKey(userId, selectedWeek));
           applyState(cloudState);
           setCloudSyncStatus('saved');
         }
@@ -342,11 +349,12 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
     const state = toState(record);
     applyState(state);
     setDisplayedWeekStart(weekStart);
+    if (userId) localStorage.setItem(`${SELECTED_WEEK_PREFIX}${userId}`, weekStart);
     lastSavedFingerprint.current = weeklyPlanFingerprint(state);
     cloudUpdatedAt.current = record.updatedAt;
     setCloudSyncStatus('saved');
     return true;
-  }, [applyState, dirtyRevision, savedWeeks]);
+  }, [applyState, dirtyRevision, savedWeeks, userId]);
 
   const returnToCurrentWeek = useCallback(() => {
     if (displayedWeekStart === currentWeekStart) return true;
@@ -355,11 +363,12 @@ export function usePlannerStore(recipes: Recipe[], options: PlannerSyncOptions =
     if (dirtyRevision > 0) return false;
     applyState({ weekPlan: createEmptyWeekPlan(), extraItems: [], checkedItemKeys: [], shoppingNotes: '' });
     setDisplayedWeekStart(currentWeekStart);
+    if (userId) localStorage.removeItem(`${SELECTED_WEEK_PREFIX}${userId}`);
     lastSavedFingerprint.current = null;
     cloudUpdatedAt.current = null;
     setCloudSyncStatus('idle');
     return true;
-  }, [applyState, currentWeekStart, dirtyRevision, displayedWeekStart, openSavedWeek, savedWeeks]);
+  }, [applyState, currentWeekStart, dirtyRevision, displayedWeekStart, openSavedWeek, savedWeeks, userId]);
 
   const missingRecipeIds = useMemo(() => {
     const known = new Set(recipes.map(recipe => recipe.id));

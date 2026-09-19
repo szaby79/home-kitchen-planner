@@ -35,7 +35,7 @@ describe('planner meal cards', () => {
 
     const mobilePlanner = await screen.findByTestId('mobile-planner');
     expect(within(mobilePlanner).getByRole('button', { name: /heti áttekintés/i })).toBeInTheDocument();
-    expect(within(mobilePlanner).getByRole('button', { name: /másik ételt kérek/i })).toBeInTheDocument();
+    expect(within(mobilePlanner).getByRole('button', { name: /ételek és adagok szerkesztése/i })).toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /bevásárlólista/i }).length).toBeGreaterThan(0);
   });
 
@@ -70,7 +70,7 @@ describe('planner meal cards', () => {
     fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
 
     const mobilePlanner = await screen.findByTestId('mobile-planner');
-    fireEvent.click(within(mobilePlanner).getByRole('button', { name: /másik ételt kérek/i }));
+    fireEvent.click(within(mobilePlanner).getByRole('button', { name: /ételek és adagok szerkesztése/i }));
     expect(within(mobilePlanner).getByRole('button', { name: /szerkesztés kész/i })).toBeInTheDocument();
     expect(within(mobilePlanner).getAllByRole('combobox').length).toBe(6);
   });
@@ -84,6 +84,10 @@ describe('planner meal cards', () => {
     const mobilePlanner = await screen.findByTestId('mobile-planner');
     fireEvent.click(within(mobilePlanner).getAllByRole('link')[0]);
     expect(window.location.pathname).toMatch(/^\/recipes\//);
+    expect(window.location.search).toMatch(/^\?from=plan&servings=\d+$/);
+    const requestedServings = Number(new URLSearchParams(window.location.search).get('servings'));
+    expect(screen.getByText(String(requestedServings), { selector: 'span' })).toBeInTheDocument();
+    expect(screen.getByText(/heti terv adagjait/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
     await waitFor(() => expect(window.location.pathname).toBe('/planner/week'));

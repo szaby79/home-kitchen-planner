@@ -24,7 +24,7 @@ export default function SavedWeeksBar() {
           </div>
         </div>
         {cloudSyncEnabled && (
-          <div className="flex items-center gap-1">
+          <div className="fixed right-3 top-20 z-40 flex items-center gap-1 rounded-lg border bg-card px-3 py-2 shadow-sm">
             <div className={`flex items-center gap-1.5 text-sm font-semibold ${cloudSyncStatus === 'error' ? 'text-destructive' : 'text-primary'}`} role={cloudSyncStatus === 'error' ? 'alert' : 'status'}>
               {cloudSyncStatus === 'error' ? <CloudOff className="h-4 w-4" aria-hidden="true" /> : <Cloud className="h-4 w-4" aria-hidden="true" />}{status}
             </div>

@@ -40,7 +40,7 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
   await page.goto('/planner/week');
 
   if (await page.getByTestId('mobile-planner').isVisible()) {
-    await page.getByRole('button', { name: 'Replace a dish' }).click();
+    await page.getByRole('button', { name: 'Edit meals and servings' }).click();
   }
 
   const mainDish = page.locator('label:visible').filter({ hasText: /^Main dish/ }).first().locator('..');
@@ -53,7 +53,7 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
   await page.reload();
 
   if (await page.getByTestId('mobile-planner').isVisible()) {
-    await page.getByRole('button', { name: 'Replace a dish' }).click();
+    await page.getByRole('button', { name: 'Edit meals and servings' }).click();
   }
   const reloadedMainDish = page.locator('label:visible').filter({ hasText: /^Main dish/ }).first().locator('..');
   await expect(reloadedMainDish.getByText('5', { exact: true })).toBeVisible();
@@ -69,7 +69,9 @@ test('recipe navigation returns to the active guest plan without losing it', asy
   await page.goto('/planner/week');
 
   await page.locator('a:visible', { hasText: 'Rántott csirke' }).first().click();
-  await expect(page).toHaveURL(/\/recipes\/main-1$/);
+  await expect(page).toHaveURL(/\/recipes\/main-1\?from=plan&servings=5$/);
+  await expect(page.getByText('5', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(/change saved servings, edit the weekly menu/i)).toBeVisible();
   await page.getByRole('link', { name: 'Back', exact: true }).click();
   await expect(page).toHaveURL(/\/planner\/week$/);
 
