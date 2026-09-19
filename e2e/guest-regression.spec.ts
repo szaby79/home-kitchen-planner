@@ -47,6 +47,8 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
 
   await page.goto('/shopping');
   await expect(page.getByText('chicken breast').locator('..')).toContainText('750 g');
+  await page.getByRole('link', { name: 'Back to menu' }).click();
+  await expect(page).toHaveURL(/\/planner\/week$/);
 });
 
 test('recipe navigation returns to the active guest plan without losing it', async ({ page }) => {
