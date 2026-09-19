@@ -51,6 +51,21 @@ describe('planner meal cards', () => {
     expect(within(mobilePlanner).getAllByRole('combobox').length).toBe(6);
   });
 
+  it('returns from a weekly-plan recipe to the same planner route', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/planner/week');
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
+
+    const mobilePlanner = await screen.findByTestId('mobile-planner');
+    fireEvent.click(within(mobilePlanner).getAllByRole('link')[0]);
+    expect(window.location.pathname).toMatch(/^\/recipes\//);
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
+    expect(window.location.pathname).toBe('/planner/week');
+    expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
+  });
+
   it('offers a direct replacement button that changes only one meal', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/planner/week');
