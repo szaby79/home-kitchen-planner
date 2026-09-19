@@ -39,6 +39,17 @@ describe('planner meal cards', () => {
     expect(screen.getAllByRole('link', { name: /bevásárlólista/i }).length).toBeGreaterThan(0);
   });
 
+  it('returns from the shopping list to the active weekly menu', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/shopping');
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+
+    expect(window.location.pathname).toBe('/planner/week');
+    expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
+  });
+
   it('opens meal details only when mobile editing is requested', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/planner/week');
