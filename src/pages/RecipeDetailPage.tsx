@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
@@ -12,10 +12,12 @@ import RecipeNarrator from '@/components/RecipeNarrator';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const { getRecipe, isFavorite, toggleFavorite } = useAppContext();
   const { isEnglish, tr } = useLanguage();
   const recipe = getRecipe(id || '');
   const [servings, setServings] = useState(recipe?.defaultServings || 4);
+  const backTarget = location.state?.from === '/planner/week' ? '/planner/week' : '/recipes';
 
   if (!recipe) {
     return (
@@ -31,7 +33,7 @@ export default function RecipeDetailPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <Link to="/recipes" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
+      <Link to={backTarget} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
         <ArrowLeft className="w-4 h-4" /> {tr('Vissza', 'Back')}
       </Link>
 
