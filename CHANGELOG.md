@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.46.0
+
+- Put the actual shopping list before optional manual-entry tools so the core task is immediately visible on mobile.
+- Move personal items and notes into one accessible secondary section without changing their storage or synchronization.
+- Add a compact checked/remaining summary and larger, labelled item controls for easier one-handed shopping.
+- Keep empty-list users able to add a personal item directly while preserving weekly and daily list views.
+- Add unit and browser regression coverage for the list-first layout, progress feedback, and saved personal data.
+
 ## 1.45.0
 
 - Replace the seven permanently expanded Autopilot day cards with compact, accessible day summaries that open one day at a time for editing.
