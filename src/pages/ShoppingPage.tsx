@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Check, Plus, Trash2, ShoppingCart } from 'lucide-react';
+import { Check, Plus, Trash2, ShoppingCart, WalletCards } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_WEEKDAYS } from '@/i18n/labels';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
@@ -48,6 +49,9 @@ export default function ShoppingPage() {
         </Button>
         <Button variant={view === 'daily' ? 'default' : 'outline'} size="sm" onClick={() => setView('daily')}>
           {tr('Napi nézet', 'Daily view')}
+        </Button>
+        <Button asChild variant="ghost" size="sm" className="ml-auto gap-1.5">
+          <Link to="/budget"><WalletCards className="h-4 w-4" />{tr('Heti keret', 'Weekly budget')}</Link>
         </Button>
       </div>
 

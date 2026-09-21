@@ -12,7 +12,7 @@ export default function HomePage() {
     { to: '/planner', icon: CalendarDays, title: tr('Heti menütervező', 'Weekly meal planner'), desc: tr('Készíts ebéd- és vacsoratervet néhány kattintással', 'Plan family lunches and dinners in just a few clicks'), color: 'bg-[#F7D8C8] text-[#B74624]', card: 'bg-[#FFF1E8] border-[#E9BDA7]' },
     { to: '/shopping', icon: ShoppingCart, title: tr('Bevásárlólista', 'Shopping list'), desc: tr('A menü alapján automatikusan összeállítva', 'Created automatically from your meal plan'), color: 'bg-[#DCE8D7] text-[#526A4B]', card: 'bg-[#F2F7EF] border-[#C8D8C1]' },
     { to: '/recipes', icon: BookOpen, title: tr('Receptek', 'Recipes'), desc: tr('Kezdőknek is érthető receptek, lépésről lépésre', 'Clear, step-by-step recipes for beginners'), color: 'bg-[#F3E2C7] text-[#775A35]', card: 'bg-[#FFF8EC] border-[#E7D1AD]' },
-    { to: '/budget', icon: WalletCards, title: 'Budget', desc: tr('Becsült heti költség és keretfigyelés', 'Estimated weekly costs and budget tracking'), color: 'bg-[#E7E2D8] text-[#5F554A]', card: 'bg-[#F8F5EF] border-[#D9D0C2]' },
+    { to: '/budget', icon: WalletCards, title: tr('Heti keret', 'Weekly budget'), desc: tr('Becsült heti költség és keretfigyelés', 'Estimated weekly costs and budget tracking'), color: 'bg-[#E7E2D8] text-[#5F554A]', card: 'bg-[#F8F5EF] border-[#D9D0C2]' },
   ];
 
   const counts: Record<Category, number> = {

@@ -59,10 +59,10 @@ export default function BudgetPage() {
     <div className="page-container max-w-5xl">
       <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="section-title flex items-center gap-2"><WalletCards className="h-7 w-7 text-primary" /> {tr('Heti Budget', 'Weekly budget')}</h1>
+          <h1 className="section-title flex items-center gap-2"><WalletCards className="h-7 w-7 text-primary" /> {tr('Heti keret', 'Weekly budget')}</h1>
           <p className="text-sm text-muted-foreground">{tr('A heti menü hozzávalóinak becsült költsége kanadai átlagárak alapján.', 'Estimated cost of your weekly ingredients based on Canadian average prices.')}</p>
         </div>
-        <Button asChild variant="outline"><Link to="/planner"><CalendarDays className="mr-2 h-4 w-4" /> {tr('Menü módosítása', 'Edit menu')}</Link></Button>
+        <Button asChild variant="outline"><Link to={hasMenu ? '/planner/week' : '/planner'}><CalendarDays className="mr-2 h-4 w-4" /> {tr('Menü módosítása', 'Edit menu')}</Link></Button>
       </div>
 
       <section className="mb-6 rounded-xl border bg-card p-5">

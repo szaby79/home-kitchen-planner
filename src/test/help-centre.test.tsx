@@ -68,12 +68,12 @@ describe('Help Centre', () => {
     expect(screen.getByText(/megtervezett napok szerint külön szakaszokban/i)).toBeInTheDocument();
   });
 
-  it('makes Help prominent on the first screen and available in navigation', () => {
+  it('makes Help prominent without duplicating it in the main navigation', () => {
     window.history.pushState({}, '', '/');
     render(<App />);
 
     expect(screen.getByRole('link', { name: /Először jársz itt/i })).toHaveAttribute('href', '/help');
     expect(screen.getByRole('link', { name: 'Súgó megnyitása' })).toHaveAttribute('href', '/help');
-    expect(screen.getAllByRole('link', { name: 'Súgó' }).length).toBeGreaterThan(0);
+    expect(screen.queryByRole('link', { name: 'Súgó' })).not.toBeInTheDocument();
   });
 });

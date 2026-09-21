@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Settings, Menu, X, WalletCards, UserRound, CircleHelp } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Menu, X, UserRound, CircleHelp } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
@@ -9,7 +9,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
 import { PRIVACY_NOTICE_VERSION, useAuth } from '@/auth/AuthContext';
 import AuthDialog from '@/components/AuthDialog';
-import type { StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
+import { hasPlanMeals, type StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -61,6 +61,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [authOpen, setAuthOpen] = React.useState(() => new URLSearchParams(window.location.hash.slice(1)).has('error'));
+  const hasWeeklyPlan = hasPlanMeals(plannerStore.weekPlan);
+  const weeklyPlanPath = hasWeeklyPlan ? '/planner/week' : '/planner';
 
   React.useEffect(() => {
     const wantsSignIn = new URLSearchParams(location.search).has('signin');
@@ -73,11 +75,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navItems = [
     { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home') },
     { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes') },
-    { to: '/planner', icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
+    { to: weeklyPlanPath, icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
     { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list') },
-    { to: '/budget', icon: WalletCards, label: tr('Budget', 'Budget') },
-    { to: '/help', icon: CircleHelp, label: tr('Súgó', 'Help') },
-    { to: '/admin', icon: Settings, label: tr('Admin', 'Admin') },
   ];
 
   const ctx: AppContextType = {
