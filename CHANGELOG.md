@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.44.0
+
+- Show an existing weekly menu before generation and household setup controls on mobile.
+- Keep plan creation fully visible when no weekly menu exists, while moving regeneration behind an accessible secondary control for saved plans.
+- Collapse plan setup automatically after successful generation without changing saved meals, portions, sync, shopping lists, authentication, or RLS.
+- Reconcile the application version with PR #44 and source the visible footer version directly from package metadata.
+- Require future pull requests to use the matching `1.<PR number>.0` package version before GitHub quality checks can pass.
+
+
 ## 1.40.0
 
 - Replace magic-link-first authentication with an in-app email OTP verification flow.

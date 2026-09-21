@@ -64,6 +64,20 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
   await expect(page).toHaveURL(/\/planner\/week$/);
 });
 
+test('saved weekly plan opens with meals first and keeps generation setup secondary', async ({ page }) => {
+  await seedGuestPlan(page);
+  await page.goto('/planner/week');
+
+  await expect(page.locator('a:visible', { hasText: 'Rántott csirke' }).first()).toBeVisible();
+  const setupButton = page.getByRole('button', { name: /Change plan/ });
+  await expect(setupButton).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByText('Which days should be planned?')).toBeHidden();
+
+  await setupButton.click();
+  await expect(setupButton).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByText('Which days should be planned?')).toBeVisible();
+});
+
 test('recipe navigation returns to the active guest plan without losing it', async ({ page }) => {
   await seedGuestPlan(page, 5);
   await page.goto('/planner/week');

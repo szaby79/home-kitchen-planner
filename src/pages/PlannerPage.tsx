@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppContext } from '@/components/Layout';
 import { WEEKDAYS, WeekDay, CATEGORY_LABELS, Recipe, createGenerationSelection, GenerationSelection, MealSlot as MealSlotType, MenuProfile } from '@/types/recipe';
 import { Button } from '@/components/ui/button';
-import { Shuffle, Trash2, Zap, ShoppingCart, Check, Flame, Utensils, Pencil, List, RotateCcw, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Shuffle, Trash2, Zap, ShoppingCart, Check, Flame, Utensils, Pencil, List, RotateCcw, ChevronDown, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { isQuickRecipe } from '@/lib/recipeScheduling';
 import { estimateRecipeCalories } from '@/lib/calorieCalculator';
 import { formatMealName } from '@/lib/mealDisplay';
@@ -32,6 +32,7 @@ export default function PlannerPage() {
   const [mobileDay, setMobileDay] = useState<WeekDay>(() => WEEKDAYS.find(day => hasDayMeals(weekPlan[day])) ?? 'Hétfő');
   const [mobileEditing, setMobileEditing] = useState(false);
   const [showWeekOverview, setShowWeekOverview] = useState(false);
+  const [showPlanSetup, setShowPlanSetup] = useState(false);
   const [changeMessage, setChangeMessage] = useState('');
   const [undoChange, setUndoChange] = useState<{ day: WeekDay; values: Partial<typeof weekPlan[WeekDay]> } | null>(null);
   const selectedCount = WEEKDAYS.reduce((count, day) => count + Number(selection[day].lunch) + Number(selection[day].dinner), 0);
@@ -69,6 +70,7 @@ export default function PlannerPage() {
     setMobileDay(WEEKDAYS.find(day => selection[day].lunch || selection[day].dinner)!);
     setMobileEditing(false);
     setShowWeekOverview(false);
+    setShowPlanSetup(false);
     setExpandedExtras(new Set());
     setUndoChange(null);
     setChangeMessage(tr('Elkészült az új menü, a bevásárlólista csak ezt a tervet tartalmazza.', 'Your new menu is ready. The shopping list now reflects only this plan.'));
@@ -87,6 +89,49 @@ export default function PlannerPage() {
     setChangeMessage(tr('Az utolsó módosítást visszavontuk.', 'The last change was undone.'));
   };
 
+  const planningSetup = <>
+    <div className="mb-4 grid grid-cols-4 gap-1 rounded-xl border bg-card p-2 text-center text-[10px] md:hidden">
+      {[tr('Napok', 'Days'), tr('Generálás', 'Generate'), tr('Ellenőrzés', 'Review'), tr('Bevásárlás', 'Shop')].map((step, index) => <div key={step} className="rounded-lg px-1 py-2"><span className="mx-auto mb-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">{index + 1}</span>{step}</div>)}
+    </div>
+    <div className="mb-5 flex items-start gap-2 rounded-lg border border-accent/30 bg-accent/10 p-3 text-sm">
+      <Zap className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+      <p><strong>{tr('Életszerű tervezés:', 'Practical planning:')}</strong> {tr('hétköznap egyszerűbb, hétvégén tartalmasabb ebéd készül. Vacsorára csak gyors étel vagy saláta kerül.', 'weekday lunches are simpler, while weekend lunches can be more substantial. Dinner is always a quick meal or salad.')}</p>
+    </div>
+
+    <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
+
+    <div className="mb-6 space-y-4 rounded-lg border bg-card p-4">
+      <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" size="sm" onClick={() => setAll(true)}>{tr('Teljes hét', 'Full week')}</Button>
+        <Button variant="outline" size="sm" onClick={setFromToday}>{tr('Mától vasárnapig', 'Today through Sunday')}</Button>
+        <Button variant="ghost" size="sm" onClick={() => setAll(false)}>{tr('Kijelölés törlése', 'Clear selection')}</Button>
+      </div>
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        {WEEKDAYS.map(day => <div key={day} className="rounded-lg border bg-secondary/20 p-3">
+          <p className="mb-2 text-sm font-semibold">{isEnglish ? EN_WEEKDAYS[day] : day}</p><div className="flex gap-2">
+            {(['lunch', 'dinner'] as MealSlotType[]).map(slot => <button key={slot} type="button" aria-pressed={selection[day][slot]} onClick={() => toggleSelection(day, slot)} className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium transition ${selection[day][slot] ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>
+              {selection[day][slot] && <Check className="h-3 w-3" />}{slot === 'lunch' ? tr('Ebéd', 'Lunch') : tr('Vacsora', 'Dinner')}
+            </button>)}
+          </div>
+        </div>)}
+      </div>
+      <div className="flex flex-wrap items-end gap-3">
+        <label className="min-w-[260px] text-sm font-medium">{tr('Milyen legyen a hét?', 'What kind of week would you like?')}
+          <select value={menuProfile} onChange={event => setMenuProfile(event.target.value as MenuProfile)} className="mt-1 h-10 w-full rounded-md border bg-background px-3 text-sm">
+            <option value="balanced">{tr('Életszerű hét – ajánlott', 'Practical week – recommended')}</option>
+            <option value="soup">{tr('Leveses hét', 'Soup-focused week')}</option>
+            <option value="simple">{tr('Egyszerű hét', 'Simple week')}</option>
+          </select>
+        </label>
+        <p className="max-w-md text-sm font-medium leading-relaxed text-muted-foreground">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
+        <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!plannerReady || !selectedCount} className="gap-2"><Shuffle className="h-4 w-4" /> {plannerReady ? tr('Generálás', 'Generate') : tr('Betöltés…', 'Loading…')} ({selectedCount})</Button>
+        <Button variant="outline" disabled={!plannerReady} onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="h-4 w-4" /> {tr('Törlés', 'Clear')}</Button>
+      </div>
+      {generationError && <p role="alert" className="text-sm text-destructive">{tr('Nem sikerült minden kijelölt étkezéshez megfelelő ételt találni. A korábbi terv és bevásárlólista megmaradt. Módosítsd a kijelölést vagy az étkezési beállításokat.', 'We could not find a suitable dish for every selected meal. Your previous plan and shopping list are unchanged. Adjust the selection or meal preferences.')}</p>}
+    </div>
+  </>;
+
   return (
     <div className="page-container max-w-6xl">
       <div className="flex items-center gap-1">
@@ -94,46 +139,7 @@ export default function PlannerPage() {
         <HelpLink section="weekly-plan" label={tr('Heti és napi terv', 'Weekly and daily plan')} />
       </div>
       <SavedWeeksBar />
-      <div className="mb-4 grid grid-cols-4 gap-1 rounded-xl border bg-card p-2 text-center text-[10px] md:hidden">
-        {[tr('Napok', 'Days'), tr('Generálás', 'Generate'), tr('Ellenőrzés', 'Review'), tr('Bevásárlás', 'Shop')].map((step, index) => <div key={step} className="rounded-lg px-1 py-2"><span className="mx-auto mb-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground">{index + 1}</span>{step}</div>)}
-      </div>
-      <div className="mb-5 flex items-start gap-2 rounded-lg border border-accent/30 bg-accent/10 p-3 text-sm">
-        <Zap className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-        <p><strong>{tr('Életszerű tervezés:', 'Practical planning:')}</strong> {tr('hétköznap egyszerűbb, hétvégén tartalmasabb ebéd készül. Vacsorára csak gyors étel vagy saláta kerül.', 'weekday lunches are simpler, while weekend lunches can be more substantial. Dinner is always a quick meal or salad.')}</p>
-      </div>
-
-      <MenuPreferencesPanel preferences={preferences} hasSavedPreferences={hasSavedPreferences} recipes={recipes} onSave={savePreferences} cloudSyncEnabled={cloudSyncEnabled} syncStatus={syncStatus} />
-
-      <div className="bg-card border rounded-lg p-4 mb-6 space-y-4">
-        <div><h2 className="font-semibold">{tr('Melyik napokra készüljön menü?', 'Which days should be planned?')}</h2><p className="text-sm text-muted-foreground leading-relaxed font-medium">{tr('A generálás új tervre cseréli a korábbit, csak a kijelölt étkezésekkel. A bevásárlólista is ehhez igazodik. Az „Ebéd” a teljes ebédet jelenti, nem egyetlen fogást.', 'Generating replaces the previous plan with only the selected meals and updates the shopping list. Lunch means the complete lunch menu, not a single dish.')}</p></div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={() => setAll(true)}>{tr('Teljes hét', 'Full week')}</Button>
-          <Button variant="outline" size="sm" onClick={setFromToday}>{tr('Mától vasárnapig', 'Today through Sunday')}</Button>
-          <Button variant="ghost" size="sm" onClick={() => setAll(false)}>{tr('Kijelölés törlése', 'Clear selection')}</Button>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2">
-          {WEEKDAYS.map(day => <div key={day} className="rounded-lg border bg-secondary/20 p-3">
-            <p className="font-semibold text-sm mb-2">{isEnglish ? EN_WEEKDAYS[day] : day}</p><div className="flex gap-2">
-              {(['lunch', 'dinner'] as MealSlotType[]).map(slot => <button key={slot} type="button" aria-pressed={selection[day][slot]} onClick={() => toggleSelection(day, slot)} className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium transition ${selection[day][slot] ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>
-                {selection[day][slot] && <Check className="h-3 w-3" />}{slot === 'lunch' ? tr('Ebéd', 'Lunch') : tr('Vacsora', 'Dinner')}
-              </button>)}
-            </div>
-          </div>)}
-        </div>
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="min-w-[260px] text-sm font-medium">{tr('Milyen legyen a hét?', 'What kind of week would you like?')}
-            <select value={menuProfile} onChange={event => setMenuProfile(event.target.value as MenuProfile)} className="mt-1 h-10 w-full rounded-md border bg-background px-3 text-sm">
-              <option value="balanced">{tr('Életszerű hét – ajánlott', 'Practical week – recommended')}</option>
-              <option value="soup">{tr('Leveses hét', 'Soup-focused week')}</option>
-              <option value="simple">{tr('Egyszerű hét', 'Simple week')}</option>
-            </select>
-          </label>
-          <p className="max-w-md text-sm text-muted-foreground leading-relaxed font-medium">{menuProfile === 'balanced' ? tr('Hétköznap egyszerűbb, a leves több napra is készülhet, hétvégén tartalmasabb ebéd.', 'Simpler weekdays, soup may cover several days, and more substantial weekend lunches.') : menuProfile === 'soup' ? tr('Minden ebédhez kerül leves, azonos leves két egymást követő napra is.', 'Every lunch includes soup, and the same soup may be used on two consecutive days.') : tr('Főétel és csak akkor köret, ha valóban szükséges.', 'A main dish, with a side only when it is actually needed.')}</p>
-          <Button onClick={() => hasPlan ? setConfirmGenerate(true) : handleGenerate()} disabled={!plannerReady || !selectedCount} className="gap-2"><Shuffle className="w-4 h-4" /> {plannerReady ? tr('Generálás', 'Generate') : tr('Betöltés…', 'Loading…')} ({selectedCount})</Button>
-          <Button variant="outline" disabled={!plannerReady} onClick={() => { clearPlan(); setHasGenerated(false); setUndoChange(null); setChangeMessage(''); setGenerationError(false); }} className="gap-2"><Trash2 className="w-4 h-4" /> {tr('Törlés', 'Clear')}</Button>
-        </div>
-        {generationError && <p role="alert" className="text-sm text-destructive">{tr('Nem sikerült minden kijelölt étkezéshez megfelelő ételt találni. A korábbi terv és bevásárlólista megmaradt. Módosítsd a kijelölést vagy az étkezési beállításokat.', 'We could not find a suitable dish for every selected meal. Your previous plan and shopping list are unchanged. Adjust the selection or meal preferences.')}</p>}
-      </div>
+      {!hasPlan && planningSetup}
 
       <AlertDialog open={confirmGenerate} onOpenChange={setConfirmGenerate}>
         <AlertDialogContent>
@@ -200,6 +206,26 @@ export default function PlannerPage() {
         canUndo={Boolean(undoChange)}
         onUndo={undoLastChange}
       />}
+
+      {hasPlan && <section className="mt-5 rounded-xl border bg-card p-3 md:p-4" aria-labelledby="plan-setup-heading">
+        <button
+          type="button"
+          className="flex min-h-12 w-full items-center justify-between gap-3 rounded-lg px-2 py-2 text-left"
+          aria-expanded={showPlanSetup}
+          aria-controls="plan-setup-content"
+          onClick={() => setShowPlanSetup(open => !open)}
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary"><Pencil className="h-5 w-5" /></span>
+            <span>
+              <span id="plan-setup-heading" className="block font-semibold">{tr('Terv módosítása', 'Change plan')}</span>
+              <span className="block text-sm font-medium leading-relaxed text-muted-foreground">{tr('Napok, családi beállítások vagy új menü', 'Days, family preferences, or a new menu')}</span>
+            </span>
+          </span>
+          <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${showPlanSetup ? 'rotate-180' : ''}`} />
+        </button>
+        {showPlanSetup && <div id="plan-setup-content" className="pt-4">{planningSetup}</div>}
+      </section>}
 
       {hasPlan && <div className="mt-6 rounded-xl border border-accent/40 bg-accent/10 p-5 text-center">
         <p className="text-lg font-semibold">✓ {tr('Kész a menü', 'Menu complete')}</p>
