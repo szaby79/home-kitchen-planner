@@ -3,13 +3,15 @@ import { seedEnglishGuest, seedGuestPlan } from './helpers';
 
 test('mobile navigation keeps core destinations within one tap', async ({ page }) => {
   test.skip((page.viewportSize()?.width ?? 1280) >= 1024, 'Mobile navigation is intentionally hidden on desktop.');
-  await seedEnglishGuest(page);
+  await seedGuestPlan(page);
   await page.goto('/');
 
   const mobileNavigation = page.getByRole('navigation', { name: 'Mobile main menu' });
   await expect(mobileNavigation).toBeVisible();
-  await expect(mobileNavigation.getByRole('link')).toHaveCount(4);
+  await expect(mobileNavigation.getByRole('link')).toHaveCount(5);
   await expect(mobileNavigation.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
+  await expect(mobileNavigation.getByRole('link', { name: 'Weekly menu' })).toHaveAttribute('href', '/planner/week');
+  await expect(mobileNavigation.getByRole('link', { name: 'Weekly plan' })).toHaveAttribute('href', '/planner');
 
   await mobileNavigation.getByRole('link', { name: 'Recipes' }).click();
   await expect(page).toHaveURL(/\/recipes$/);

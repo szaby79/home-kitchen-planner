@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.50.0
+
+- Add a dedicated Weekly menu action to the center of the persistent mobile navigation.
+- Keep Weekly plan available as a separate direct route to Autopilot planning without changing the homepage.
+
 ## 1.49.0
 
 - Add a persistent four-item bottom navigation on mobile for Home, Recipes, Weekly plan, and Shopping list.

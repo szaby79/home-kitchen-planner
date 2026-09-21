@@ -34,15 +34,27 @@ describe('simplified primary navigation', () => {
     expect(screen.getByText('1 nap • 1 étkezés elmentve')).toBeInTheDocument();
   });
 
-  it('keeps the four core destinations in the persistent mobile navigation', () => {
+  it('keeps the weekly menu action centered in the persistent mobile navigation', () => {
     window.history.replaceState({}, '', '/');
     render(<App />);
 
     const mobileNavigation = screen.getByRole('navigation', { name: 'Mobil főmenü' });
     expect(within(mobileNavigation).getAllByRole('link').map(link => link.textContent)).toEqual([
-      'Főoldal', 'Receptek', 'Heti terv', 'Bevásárlólista',
+      'Főoldal', 'Receptek', 'Heti menü', 'Heti terv', 'Bevásárlólista',
     ]);
+    expect(within(mobileNavigation).getByRole('link', { name: 'Heti menü' })).toHaveAttribute('href', '/planner');
+    expect(within(mobileNavigation).getByRole('link', { name: 'Heti terv' })).toHaveAttribute('href', '/planner');
     expect(within(mobileNavigation).getByRole('link', { name: 'Főoldal' })).toHaveAttribute('aria-current', 'page');
+  });
+
+  it('opens the saved weekly menu from the centered mobile action', () => {
+    localStorage.setItem('plan-pan-weekplan', JSON.stringify({ Hétfő: { lunch: 'main-1' } }));
+    window.history.replaceState({}, '', '/');
+    render(<App />);
+
+    const mobileNavigation = screen.getByRole('navigation', { name: 'Mobil főmenü' });
+    expect(within(mobileNavigation).getByRole('link', { name: 'Heti menü' })).toHaveAttribute('href', '/planner/week');
+    expect(within(mobileNavigation).getByRole('link', { name: 'Heti terv' })).toHaveAttribute('href', '/planner');
   });
 
   it('keeps secondary destinations in the mobile menu', () => {
