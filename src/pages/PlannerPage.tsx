@@ -233,8 +233,6 @@ export default function PlannerPage() {
         <Button asChild size="lg" className="gap-2"><Link to="/shopping"><ShoppingCart className="h-5 w-5" /> {tr('Bevásárlólista megtekintése', 'View shopping list')}</Link></Button>
       </div>}
       <p className="mt-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">{tr('A kalóriaérték tervezési becslés, nem orvosi vagy dietetikusi adat.', 'Calories are planning estimates, not medical or dietetic advice.')}</p>
-      {hasPlan && <div className="h-20 md:hidden" />}
-      {hasPlan && <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 p-3 backdrop-blur md:hidden"><Button asChild className="w-full gap-2"><Link to="/shopping"><ShoppingCart className="h-4 w-4" /> {tr('Bevásárlólista', 'Shopping list')}</Link></Button></div>}
     </div>
   );
 }

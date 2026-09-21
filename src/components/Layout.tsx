@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Menu, X, UserRound, CircleHelp } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Menu, X, UserRound, CircleHelp, UsersRound, WalletCards, Settings } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
@@ -79,6 +79,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: weeklyPlanPath, icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
     { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list') },
   ];
+  const secondaryNavItems = [
+    { to: '/family-settings', icon: UsersRound, label: tr('Családi beállítások', 'Family preferences') },
+    { to: '/budget', icon: WalletCards, label: tr('Budget', 'Budget') },
+    { to: '/help', icon: CircleHelp, label: tr('Súgó', 'Help') },
+    { to: '/admin', icon: Settings, label: tr('Receptek kezelése', 'Manage recipes') },
+  ];
+  const isPrimaryActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    if (path === '/recipes') return location.pathname.startsWith('/recipes');
+    if (path === weeklyPlanPath) return location.pathname.startsWith('/planner');
+    return location.pathname === path;
+  };
 
   const ctx: AppContextType = {
     ...recipeStore,
@@ -91,14 +103,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <AppContext.Provider value={ctx}>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
         <header className="bg-[#FFF8EE]/95 backdrop-blur border-b border-[#E4C7AA] sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
             <Link to="/" className="flex min-w-0 items-center gap-1 font-display text-lg font-bold text-primary sm:gap-2 sm:text-xl">
               <UtensilsCrossed className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" />
               Plan & Pan
             </Link>
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav aria-label={tr('Elsődleges navigáció', 'Primary navigation')} className="hidden lg:flex items-center gap-1">
               {navItems.map(item => (
                 <Link key={item.to} to={item.to} className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium transition-colors ${location.pathname === item.to ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}>
                   <item.icon className="w-4 h-4" />{item.label}
@@ -113,18 +125,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               to="/help"
               aria-label={tr('Súgó megnyitása', 'Open Help Centre')}
               title={tr('Súgó', 'Help')}
-              className={`mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${location.pathname === '/help' ? 'bg-primary text-primary-foreground' : 'bg-card text-primary hover:bg-secondary'}`}
+              className={`mr-1 hidden h-10 w-10 shrink-0 items-center justify-center rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 lg:inline-flex ${location.pathname === '/help' ? 'bg-primary text-primary-foreground' : 'bg-card text-primary hover:bg-secondary'}`}
             >
               <CircleHelp className="h-5 w-5" aria-hidden="true" />
             </Link>
             <button
               type="button"
               onClick={() => user ? navigate('/account') : setAuthOpen(true)}
-              className="mr-1 inline-flex max-w-[9rem] items-center gap-1.5 rounded-md border bg-card px-2.5 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
+              className="mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center gap-1.5 rounded-md border bg-card text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 lg:h-auto lg:w-auto lg:max-w-[9rem] lg:px-2.5 lg:py-1.5"
               aria-label={user ? tr('Fiók megnyitása', 'Open account') : tr('Bejelentkezés e-mail-címmel', 'Sign in with Email')}
             >
-              <UserRound className="h-4 w-4 shrink-0" />
-              <span className="hidden max-w-[6rem] truncate sm:inline">
+              <UserRound className="h-5 w-5 shrink-0 lg:h-4 lg:w-4" />
+              <span className="hidden max-w-[6rem] truncate lg:inline">
                 {authLoading ? tr('Betöltés…', 'Loading…') : user?.email ?? tr('Belépés', 'Sign in')}
               </span>
             </button>
@@ -133,8 +145,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </button>
           </div>
           {mobileOpen && (
-            <nav className="lg:hidden border-t px-4 pb-3 pt-2 flex flex-col gap-1 animate-fade-in">
-              {navItems.map(item => (
+            <nav aria-label={tr('További lehetőségek', 'More options')} className="lg:hidden border-t px-4 pb-3 pt-2 flex flex-col gap-1 animate-fade-in">
+              {secondaryNavItems.map(item => (
                 <Link key={item.to} to={item.to} onClick={() => setMobileOpen(false)} className={`flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${location.pathname === item.to ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary'}`}>
                   <item.icon className="w-4 h-4" />{item.label}
                 </Link>
@@ -147,6 +159,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
           Plan & Pan v{packageMetadata.version} © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
+        <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
+          {navItems.map(item => {
+            const active = isPrimaryActive(item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                aria-current={active ? 'page' : undefined}
+                className={`flex min-h-14 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] font-semibold leading-tight transition-colors ${active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}
+              >
+                <item.icon className="h-5 w-5" aria-hidden="true" />
+                <span className="max-w-full truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
       </div>
     </AppContext.Provider>
   );

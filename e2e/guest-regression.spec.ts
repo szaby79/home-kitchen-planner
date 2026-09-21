@@ -1,6 +1,21 @@
 import { expect, test } from '@playwright/test';
 import { seedEnglishGuest, seedGuestPlan } from './helpers';
 
+test('mobile navigation keeps core destinations within one tap', async ({ page }) => {
+  test.skip((page.viewportSize()?.width ?? 1280) >= 1024, 'Mobile navigation is intentionally hidden on desktop.');
+  await seedEnglishGuest(page);
+  await page.goto('/');
+
+  const mobileNavigation = page.getByRole('navigation', { name: 'Mobile main menu' });
+  await expect(mobileNavigation).toBeVisible();
+  await expect(mobileNavigation.getByRole('link')).toHaveCount(4);
+  await expect(mobileNavigation.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
+
+  await mobileNavigation.getByRole('link', { name: 'Recipes' }).click();
+  await expect(page).toHaveURL(/\/recipes$/);
+  await expect(page.getByRole('navigation', { name: 'Mobile main menu' }).getByRole('link', { name: 'Recipes' })).toHaveAttribute('aria-current', 'page');
+});
+
 test('home keeps one clear weekly-menu action and secondary content collapsed', async ({ page }) => {
   await seedEnglishGuest(page);
   await page.goto('/');

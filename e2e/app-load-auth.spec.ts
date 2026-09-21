@@ -17,7 +17,9 @@ test('loads the application without critical browser errors', async ({ page }) =
 
 test('keeps the account entry point and guest fallback usable', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Sign in with Email' }).click();
+  const accountEntry = page.getByRole('button', { name: 'Sign in with Email' });
+  await expect(accountEntry).toBeVisible();
+  await accountEntry.click();
 
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
   await page.getByRole('button', { name: 'Continue as Guest' }).click();
