@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.45.0
+
+- Replace the seven permanently expanded Autopilot day cards with compact, accessible day summaries that open one day at a time for editing.
+- Fit all six weekly priorities into a shorter two-column mobile layout while preserving every existing goal and setting.
+- Remove the floating generation panel that covered mobile content and keep one clear, full-width generation action in the normal page flow.
+- Simplify the bilingual Autopilot guidance around saved defaults without changing menu generation, family preferences, saved plans, shopping lists, authentication, or sync.
+- Add unit and browser regression coverage for compact day editing and the non-floating primary action.
+
 ## 1.44.0
 
 - Show an existing weekly menu before generation and household setup controls on mobile.

@@ -41,4 +41,31 @@ describe('weekly plan replacement confirmation', () => {
     fireEvent.click(openSavedMenu);
     expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
   });
+
+  it('keeps day settings compact until the user chooses a day to edit', () => {
+    render(<App />);
+
+    expect(screen.queryByLabelText('Hányan esznek?')).not.toBeInTheDocument();
+    const dayButtons = screen.getAllByRole('button', { name: /Módosítás/ });
+    expect(dayButtons).toHaveLength(7);
+    expect(dayButtons.every(button => button.getAttribute('aria-expanded') === 'false')).toBe(true);
+
+    fireEvent.click(screen.getByRole('button', { name: /Kedd.*Módosítás/ }));
+    expect(screen.getByLabelText('Hányan esznek?')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Kedd.*Módosítás/ })).toHaveAttribute('aria-expanded', 'true');
+
+    fireEvent.change(screen.getByLabelText('Hányan esznek?'), { target: { value: '5' } });
+    expect(screen.getByRole('button', { name: /Kedd.*5 fő.*Módosítás/ })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: /Szerda.*Módosítás/ }));
+    expect(screen.getByRole('button', { name: /Kedd.*Módosítás/ })).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.getAllByLabelText('Hányan esznek?')).toHaveLength(1);
+  });
+
+  it('uses one non-floating primary action for generation', () => {
+    render(<App />);
+
+    expect(screen.getAllByRole('button', { name: 'Heti menü generálása' })).toHaveLength(1);
+    expect(screen.getByTestId('generate-week-panel')).not.toHaveClass('sticky');
+  });
 });
