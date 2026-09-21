@@ -49,7 +49,9 @@ describe('simplified primary navigation', () => {
     window.history.replaceState({}, '', '/recipes');
     render(<App />);
 
-    expect(screen.getByText('További lehetőségek')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Recept hozzáadása vagy szerkesztése/ })).toHaveAttribute('href', '/admin');
+    const filters = screen.getByText('Szűrés és rendezés').closest('details');
+    expect(filters).not.toHaveAttribute('open');
+    fireEvent.click(screen.getByText('Szűrés és rendezés'));
+    expect(screen.getByRole('link', { name: 'Receptek kezelése' })).toHaveAttribute('href', '/admin');
   });
 });

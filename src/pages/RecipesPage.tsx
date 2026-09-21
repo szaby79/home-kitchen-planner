@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, ChefHat, Heart, Zap, Settings } from 'lucide-react';
+import { Search, ChefHat, Heart, Zap, Settings, SlidersHorizontal, ChevronDown, RotateCcw } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { Category, CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Input } from '@/components/ui/input';
@@ -21,6 +21,7 @@ export default function RecipesPage() {
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [sortMode, setSortMode] = useState<'category' | 'abc' | 'random'>('category');
   const [randomSeed, setRandomSeed] = useState(1);
+  const activeAdvancedFilters = Number(quickOnly) + Number(favoritesOnly) + Number(sortMode !== 'category');
 
   const filtered = useMemo(() => {
     let list = recipes;
@@ -54,6 +55,14 @@ export default function RecipesPage() {
     setParams(next);
   };
 
+  const resetAdvancedFilters = () => {
+    const next = new URLSearchParams(params);
+    next.delete('quick');
+    setParams(next);
+    setFavoritesOnly(false);
+    setSortMode('category');
+  };
+
   const categories: { value: string; label: string }[] = [
     { value: 'all', label: tr('Összes', 'All') },
     ...Object.entries(isEnglish ? EN_CATEGORY_LABELS : CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v })),
@@ -61,41 +70,10 @@ export default function RecipesPage() {
 
   return (
     <div className="page-container">
-      <h1 className="section-title">{tr('Receptek', 'Recipes')}</h1>
+      <h1 className="section-title mb-4">{tr('Receptek', 'Recipes')}</h1>
 
-      <details className="mb-4 w-fit rounded-lg border bg-card px-3 py-2 text-sm">
-        <summary className="cursor-pointer font-semibold text-muted-foreground">{tr('További lehetőségek', 'More options')}</summary>
-        <Link to="/admin" className="mt-3 flex min-h-10 items-center gap-2 rounded-md px-2 font-semibold text-primary hover:bg-secondary">
-          <Settings className="h-4 w-4" />{tr('Recept hozzáadása vagy szerkesztése', 'Add or edit recipes')}
-        </Link>
-      </details>
-
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="flex gap-2 flex-wrap">
-          {categories.map(c => (
-            <button
-              key={c.value}
-              onClick={() => setCategory(c.value)}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                activeCategory === c.value || (c.value === 'all' && activeCategory === 'all')
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-              }`}
-            >
-              {c.label}
-            </button>
-          ))}
-        </div>
-        <button
-          onClick={toggleQuick}
-          className={`inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium border transition-colors ${
-            quickOnly ? 'bg-accent text-accent-foreground border-accent' : 'bg-card hover:bg-secondary'
-          }`}
-        >
-          <Zap className={`w-4 h-4 ${quickOnly ? 'fill-current' : ''}`} /> {tr('Gyors ételek', 'Quick meals')}
-        </button>
-        <div className="relative flex-1 max-w-sm">
+      <div className="mb-4 space-y-3">
+        <div className="relative w-full sm:max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder={tr('Recept keresése...', 'Search recipes...')}
@@ -104,22 +82,81 @@ export default function RecipesPage() {
             className="pl-9"
           />
         </div>
-        <button
-          onClick={() => setFavoritesOnly(current => !current)}
-          className={`inline-flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium border transition-colors ${
-            favoritesOnly ? 'bg-primary text-primary-foreground border-primary' : 'bg-card hover:bg-secondary'
-          }`}
-        >
-          <Heart className={`w-4 h-4 ${favoritesOnly ? 'fill-current' : ''}`} /> {tr('Kedvencek', 'Favourites')}
-        </button>
+
+        <div className="-mx-4 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0" role="group" aria-label={tr('Receptkategóriák', 'Recipe categories')}>
+          <div className="flex w-max gap-2">
+            {categories.map(c => (
+              <button
+                key={c.value}
+                type="button"
+                onClick={() => setCategory(c.value)}
+                className={`shrink-0 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                  activeCategory === c.value
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                }`}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="mb-5 flex flex-wrap items-center gap-2 text-sm">
-        <span className="font-medium">{tr('Sorrend:', 'Sort:')}</span>
-        {([['category', tr('Kategóriák', 'Categories')], ['abc', 'ABC'], ['random', tr('Véletlenszerű', 'Random')]] as const).map(([mode, label]) => (
-          <button key={mode} onClick={() => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); }} className={`rounded-md border px-3 py-1.5 font-medium ${sortMode === mode ? 'border-primary bg-primary text-primary-foreground' : 'bg-card'}`}>{label}</button>
-        ))}
-      </div>
+      <details className="group mb-5 rounded-xl border bg-card">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-semibold marker:hidden">
+          <span className="flex items-center gap-2">
+            <SlidersHorizontal className="h-4 w-4" />
+            {tr('Szűrés és rendezés', 'Filter and sort')}
+            {activeAdvancedFilters > 0 && (
+              <Badge className="text-xs">{tr(`${activeAdvancedFilters} aktív`, `${activeAdvancedFilters} active`)}</Badge>
+            )}
+          </span>
+          <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div className="space-y-5 border-t p-4">
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={toggleQuick}
+              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
+                quickOnly ? 'border-accent bg-accent text-accent-foreground' : 'bg-card hover:bg-secondary'
+              }`}
+            >
+              <Zap className={`h-4 w-4 ${quickOnly ? 'fill-current' : ''}`} /> {tr('Gyors ételek', 'Quick meals')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFavoritesOnly(current => !current)}
+              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
+                favoritesOnly ? 'border-primary bg-primary text-primary-foreground' : 'bg-card hover:bg-secondary'
+              }`}
+            >
+              <Heart className={`h-4 w-4 ${favoritesOnly ? 'fill-current' : ''}`} /> {tr('Kedvencek', 'Favourites')}
+            </button>
+          </div>
+
+          <div>
+            <p className="mb-2 text-sm font-semibold">{tr('Sorrend', 'Sort')}</p>
+            <div className="flex flex-wrap gap-2">
+              {([['category', tr('Kategóriák', 'Categories')], ['abc', 'ABC'], ['random', tr('Véletlenszerű', 'Random')]] as const).map(([mode, label]) => (
+                <button type="button" key={mode} onClick={() => { setSortMode(mode); if (mode === 'random') setRandomSeed(seed => seed + 1); }} className={`min-h-10 rounded-md border px-3 py-1.5 text-sm font-medium ${sortMode === mode ? 'border-primary bg-primary text-primary-foreground' : 'bg-card'}`}>{label}</button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 border-t pt-3 sm:flex-row sm:items-center sm:justify-between">
+            <Link to="/admin" className="flex min-h-10 items-center gap-2 rounded-md px-2 text-sm font-semibold text-primary hover:bg-secondary">
+              <Settings className="h-4 w-4" />{tr('Receptek kezelése', 'Manage recipes')}
+            </Link>
+            {activeAdvancedFilters > 0 && (
+              <button type="button" onClick={resetAdvancedFilters} className="inline-flex min-h-10 items-center gap-2 rounded-md px-2 text-sm font-semibold text-muted-foreground hover:bg-secondary">
+                <RotateCcw className="h-4 w-4" />{tr('Szűrők törlése', 'Clear filters')}
+              </button>
+            )}
+          </div>
+        </div>
+      </details>
 
       {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

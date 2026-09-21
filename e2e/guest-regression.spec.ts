@@ -12,6 +12,22 @@ test('home keeps one clear weekly-menu action and secondary content collapsed', 
   await expect(moreOptions).not.toHaveAttribute('open');
 });
 
+test('recipes keep search and categories visible while secondary filters stay collapsed', async ({ page }) => {
+  await seedEnglishGuest(page);
+  await page.goto('/recipes');
+
+  await expect(page.getByPlaceholder('Search recipes...')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'All', exact: true })).toBeVisible();
+  const filters = page.locator('details', { hasText: 'Filter and sort' });
+  await expect(filters).not.toHaveAttribute('open');
+  await expect(page.getByRole('button', { name: 'Quick meals' })).toBeHidden();
+
+  await page.getByText('Filter and sort', { exact: true }).click();
+  await page.getByRole('button', { name: 'Quick meals' }).click();
+  await expect(page).toHaveURL(/\/recipes\?quick=1$/);
+  await expect(page.getByText('1 active')).toBeVisible();
+});
+
 test('favourites and recipe serving quantities persist and calculate correctly', async ({ page }) => {
   await seedEnglishGuest(page);
   await page.goto('/recipes');

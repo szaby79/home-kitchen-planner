@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.48.0
+
+- Put recipe search and the category row first on mobile so users can start browsing immediately.
+- Keep categories in one horizontally scrollable row instead of wrapping them into a tall control block.
+- Combine quick meals, favourites, sorting, and recipe management in one collapsed “Filter and sort” section.
+- Show a small active-filter count and provide one clear action for resetting secondary filters.
+- Preserve all recipe data, favourites, links, categories, sorting modes, and planner navigation.
+
 ## 1.47.0
 
 - Replace the tall, multi-choice mobile homepage with a compact introduction and one clear weekly-menu action.
