@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.47.0
+
+- Replace the tall, multi-choice mobile homepage with a compact introduction and one clear weekly-menu action.
+- Show “Create weekly menu” to new users and “Open weekly menu” with a saved-plan summary to returning users.
+- Remove repeated branding and explanatory copy from the homepage hero while keeping family preferences and Help directly available.
+- Keep recipe categories, budget, favourites guidance, and feature shortcuts available behind one collapsed “More options” section.
+- Add unit and browser regression coverage for the simplified new-user and returning-user homepage states.
+
 ## 1.46.0
 
 - Put the actual shopping list before optional manual-entry tools so the core task is immediately visible on mobile.

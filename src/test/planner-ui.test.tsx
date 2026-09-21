@@ -78,7 +78,7 @@ describe('planner meal cards', () => {
 
     fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
     await waitFor(() => expect(window.location.pathname).toBe('/'));
-    expect(screen.getByRole('heading', { name: 'Plan & Pan', level: 1 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Kevesebb tervezés. Több idő együtt.', level: 1 })).toBeInTheDocument();
   });
 
   it('opens meal details only when mobile editing is requested', async () => {

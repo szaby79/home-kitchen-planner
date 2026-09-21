@@ -1,6 +1,17 @@
 import { expect, test } from '@playwright/test';
 import { seedEnglishGuest, seedGuestPlan } from './helpers';
 
+test('home keeps one clear weekly-menu action and secondary content collapsed', async ({ page }) => {
+  await seedEnglishGuest(page);
+  await page.goto('/');
+
+  await expect(page.getByRole('link', { name: 'Create weekly menu' })).toHaveAttribute('href', '/planner');
+  await expect(page.getByRole('link', { name: 'Family preferences' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'How does it work?' })).toBeVisible();
+  const moreOptions = page.locator('details', { hasText: 'More options' });
+  await expect(moreOptions).not.toHaveAttribute('open');
+});
+
 test('favourites and recipe serving quantities persist and calculate correctly', async ({ page }) => {
   await seedEnglishGuest(page);
   await page.goto('/recipes');

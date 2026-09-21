@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom';
-import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ChefHat, ArrowRight, Heart, Sparkles, Users, CircleHelp } from 'lucide-react';
+import { BookOpen, CalendarDays, ShoppingCart, WalletCards, ArrowRight, Heart, Sparkles, Users, ChevronDown } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
-import { CATEGORY_LABELS, Category } from '@/types/recipe';
+import { CATEGORY_LABELS, Category, WEEKDAYS } from '@/types/recipe';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS } from '@/i18n/labels';
+import { hasPlanMeals } from '@/lib/weeklyPlanValidation';
 
 export default function HomePage() {
-  const { recipes } = useAppContext();
+  const { recipes, weekPlan } = useAppContext();
   const { isEnglish, tr } = useLanguage();
+  const hasSavedPlan = hasPlanMeals(weekPlan);
+  const plannedDays = WEEKDAYS.filter(day => weekPlan[day].lunch || weekPlan[day].dinner).length;
+  const plannedMeals = WEEKDAYS.reduce((count, day) => count + Number(Boolean(weekPlan[day].lunch)) + Number(Boolean(weekPlan[day].dinner)), 0);
   const features = [
     { to: '/planner', icon: CalendarDays, title: tr('Heti menütervező', 'Weekly meal planner'), desc: tr('Készíts ebéd- és vacsoratervet néhány kattintással', 'Plan family lunches and dinners in just a few clicks'), color: 'bg-[#F7D8C8] text-[#B74624]', card: 'bg-[#FFF1E8] border-[#E9BDA7]' },
     { to: '/shopping', icon: ShoppingCart, title: tr('Bevásárlólista', 'Shopping list'), desc: tr('A menü alapján automatikusan összeállítva', 'Created automatically from your meal plan'), color: 'bg-[#DCE8D7] text-[#526A4B]', card: 'bg-[#F2F7EF] border-[#C8D8C1]' },
@@ -27,69 +31,76 @@ export default function HomePage() {
 
   return (
     <div className="page-container">
-      <section className="relative overflow-hidden text-center py-12 sm:py-16 rounded-3xl bg-gradient-to-br from-[#FFE8D7] via-[#FFF8EE] to-[#E3EDDE] border border-[#E6C4A8] px-5 mb-10 shadow-sm">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#F6D0BD] mb-4 shadow-sm">
-          <ChefHat className="w-8 h-8 text-primary" />
-        </div>
-        <h1 className="section-title text-3xl sm:text-4xl mb-5">Plan & Pan</h1>
-        <h2 className="mx-auto mb-5 max-w-3xl font-display text-[32px] font-semibold leading-[1.1] text-[#3A2E2A] sm:text-[46px]">
+      <section className="relative overflow-hidden rounded-3xl border border-[#E6C4A8] bg-gradient-to-br from-[#FFE8D7] via-[#FFF8EE] to-[#E3EDDE] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-12">
+        <h1 className="mx-auto mb-4 max-w-3xl font-display text-[34px] font-semibold leading-[1.08] text-[#3A2E2A] sm:text-[46px]">
           {isEnglish ? (
             <>
               <span className="block">Less planning.</span>
-              <span className="block">Less rushing.</span>
               <span className="block">More time together.</span>
             </>
           ) : (
             <>
               <span className="block">Kevesebb tervezés.</span>
-              <span className="block">Kevesebb kapkodás.</span>
               <span className="block">Több idő együtt.</span>
             </>
           )}
-        </h2>
-        <p className="mx-auto mb-7 max-w-2xl text-[20px] font-medium leading-[1.5] text-[#5A4A44]">
+        </h1>
+        <p className="mx-auto mb-6 max-w-xl text-lg font-medium leading-relaxed text-[#5A4A44]">
           {tr(
-            'A Plan & Pan megtervezi a heti étkezést, segít a főzésben, és automatikusan összeállítja a bevásárlólistát — a családodhoz igazítva.',
-            'Plan & Pan plans your weekly meals, helps with cooking, and automatically creates the shopping list — tailored to your family.',
+            'Megtervezi a heti étkezést, és automatikusan összeállítja a bevásárlólistát a családodhoz igazítva.',
+            'Plans your weekly meals and automatically creates your shopping list for your family.',
           )}
         </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-3 max-w-xl mx-auto">
-          <Link to="/planner" className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90">
-            <Sparkles className="w-4 h-4" /> {tr('Autopilot', 'Autopilot')} <ArrowRight className="w-4 h-4" />
+        {hasSavedPlan && (
+          <p className="mb-3 text-sm font-bold text-[#526A4B]">
+            {tr(`${plannedDays} nap • ${plannedMeals} étkezés elmentve`, `${plannedDays} days • ${plannedMeals} meals saved`)}
+          </p>
+        )}
+        <div className="mx-auto flex max-w-md flex-col gap-3">
+          <Link to={hasSavedPlan ? '/planner/week' : '/planner'} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90">
+            <Sparkles className="h-5 w-5" />
+            {hasSavedPlan ? tr('Heti menü megnyitása', 'Open weekly menu') : tr('Heti menü készítése', 'Create weekly menu')}
+            <ArrowRight className="h-5 w-5" />
           </Link>
-          <Link to="/family-settings" className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-accent bg-[#F2F7EF] px-5 py-3 font-semibold text-accent transition hover:bg-[#E3EDDE]">
-            <Users className="w-4 h-4" /> {tr('Családi beállítások', 'Family preferences')}
+          <Link to="/family-settings" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent bg-[#F2F7EF]/80 px-4 py-2.5 font-semibold text-accent transition hover:bg-[#E3EDDE]">
+            <Users className="h-4 w-4" /> {tr('Családi beállítások', 'Family preferences')}
           </Link>
         </div>
-        <p className="mt-3 text-sm font-medium text-muted-foreground">{tr('Az Autopilot megnyitása után először átnézheted a családi beállításokat, majd összeállíthatod a hetet.', 'After opening Autopilot, you can review family preferences first, then build your week.')}</p>
-        <Link to="/help" className="mx-auto mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-primary/30 bg-card/80 px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-          <CircleHelp className="h-5 w-5" aria-hidden="true" />
-          {tr('Először jársz itt? Ismerd meg a Plan & Pant', 'New here? Learn how Plan & Pan works')}
+        <Link to="/help" className="mx-auto mt-4 inline-flex min-h-11 items-center justify-center px-3 text-sm font-bold text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          {tr('Hogyan működik?', 'How does it work?')}
         </Link>
       </section>
 
-      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4 max-w-5xl mx-auto mb-10">
-        {(Object.keys(CATEGORY_LABELS) as Category[]).map(cat => (
-          <Link key={cat} to={`/recipes?category=${cat}`} className="bg-[#FFF1E2] rounded-lg p-4 text-center card-hover border border-[#E8C9AA]">
-            <p className="text-2xl font-bold text-primary">{counts[cat]}</p>
-            <p className="text-sm text-muted-foreground leading-relaxed font-medium">{isEnglish ? EN_CATEGORY_LABELS[cat] : CATEGORY_LABELS[cat]}</p>
-          </Link>
-        ))}
-      </section>
+      <details className="group mx-auto mt-5 max-w-5xl rounded-xl border bg-card">
+        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-semibold marker:hidden">
+          <span>{tr('További lehetőségek', 'More options')}</span>
+          <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div className="space-y-8 border-t p-4 sm:p-6">
+          <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {features.map(f => (
+              <Link key={f.to} to={f.to} className={`group/card rounded-xl border p-5 card-hover ${f.card}`}>
+                <div className={`mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg ${f.color}`}><f.icon className="h-5 w-5" /></div>
+                <h2 className="mb-1 font-semibold">{f.title}</h2>
+                <p className="text-sm font-medium leading-relaxed text-muted-foreground">{f.desc}</p>
+              </Link>
+            ))}
+          </section>
 
-      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-8 leading-relaxed font-medium">
-        <Heart className="w-4 h-4 text-primary" /> {tr('Jelöld meg a kedvenc ételeidet, hogy később könnyen megtaláld őket.', 'Mark favourite dishes so you can find them easily later.')}
-      </div>
+          <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+            {(Object.keys(CATEGORY_LABELS) as Category[]).map(cat => (
+              <Link key={cat} to={`/recipes?category=${cat}`} className="rounded-lg border border-[#E8C9AA] bg-[#FFF1E2] p-4 text-center card-hover">
+                <p className="text-2xl font-bold text-primary">{counts[cat]}</p>
+                <p className="text-sm font-medium leading-relaxed text-muted-foreground">{isEnglish ? EN_CATEGORY_LABELS[cat] : CATEGORY_LABELS[cat]}</p>
+              </Link>
+            ))}
+          </section>
 
-      <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-        {features.map(f => (
-          <Link key={f.to} to={f.to} className={`border rounded-xl p-5 card-hover group ${f.card}`}>
-            <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg mb-3 ${f.color}`}><f.icon className="w-5 h-5" /></div>
-            <h3 className="font-semibold mb-1">{f.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed font-medium">{f.desc}</p>
-          </Link>
-        ))}
-      </section>
+          <div className="flex items-center justify-center gap-2 text-sm font-medium leading-relaxed text-muted-foreground">
+            <Heart className="h-4 w-4 text-primary" /> {tr('Jelöld meg a kedvenc ételeidet, hogy később könnyen megtaláld őket.', 'Mark favourite dishes so you can find them easily later.')}
+          </div>
+        </div>
+      </details>
     </div>
   );
 }
