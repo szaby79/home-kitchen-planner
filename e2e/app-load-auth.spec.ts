@@ -1,5 +1,16 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { monitorCriticalBrowserErrors, seedEnglishGuest } from './helpers';
+
+async function openSignIn(page: Page) {
+  const desktopEntry = page.getByRole('button', { name: 'Sign in with Email' });
+  if (await desktopEntry.isVisible()) {
+    await desktopEntry.click();
+    return;
+  }
+
+  await page.getByRole('button', { name: 'Open menu' }).click();
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+}
 
 test.beforeEach(async ({ page }) => {
   await seedEnglishGuest(page);
@@ -17,7 +28,7 @@ test('loads the application without critical browser errors', async ({ page }) =
 
 test('keeps the account entry point and guest fallback usable', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Sign in with Email' }).click();
+  await openSignIn(page);
 
   await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
   await page.getByRole('button', { name: 'Continue as Guest' }).click();
@@ -50,7 +61,7 @@ test('requests an email OTP inside the app without contacting a real account', a
   });
 
   await page.goto('/');
-  await page.getByRole('button', { name: 'Sign in with Email' }).click();
+  await openSignIn(page);
   await page.getByLabel('Email address').fill('playwright@example.test');
   await page.getByLabel('I have read and accept the beta privacy notice.').click();
   await page.getByRole('button', { name: 'Send sign-in code' }).click();
