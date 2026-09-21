@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, ChefHat, Heart, Zap } from 'lucide-react';
+import { Search, ChefHat, Heart, Zap, Settings } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { Category, CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Input } from '@/components/ui/input';
@@ -62,6 +62,13 @@ export default function RecipesPage() {
   return (
     <div className="page-container">
       <h1 className="section-title">{tr('Receptek', 'Recipes')}</h1>
+
+      <details className="mb-4 w-fit rounded-lg border bg-card px-3 py-2 text-sm">
+        <summary className="cursor-pointer font-semibold text-muted-foreground">{tr('További lehetőségek', 'More options')}</summary>
+        <Link to="/admin" className="mt-3 flex min-h-10 items-center gap-2 rounded-md px-2 font-semibold text-primary hover:bg-secondary">
+          <Settings className="h-4 w-4" />{tr('Recept hozzáadása vagy szerkesztése', 'Add or edit recipes')}
+        </Link>
+      </details>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
