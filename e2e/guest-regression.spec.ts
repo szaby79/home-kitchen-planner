@@ -68,7 +68,7 @@ test('saved weekly plan opens with meals first and keeps generation setup second
   await seedGuestPlan(page);
   await page.goto('/planner/week');
 
-  await expect(page.getByText('Rántott csirke', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('a:visible', { hasText: 'Rántott csirke' }).first()).toBeVisible();
   const setupButton = page.getByRole('button', { name: /Change plan/ });
   await expect(setupButton).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByText('Which days should be planned?')).toBeHidden();
