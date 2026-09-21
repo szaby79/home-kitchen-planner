@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Clock3, Heart, Leaf, PackageOpen, ShoppingCart, Shuffle, Sparkles, Users } from 'lucide-react';
+import { Check, ChevronDown, Clock3, Heart, Leaf, PackageOpen, ShoppingCart, Shuffle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
@@ -41,6 +41,7 @@ export default function AutopilotPlannerPage() {
   const [generated, setGenerated] = useState(false);
   const [generationError, setGenerationError] = useState(false);
   const [confirmGenerate, setConfirmGenerate] = useState(false);
+  const [expandedDay, setExpandedDay] = useState<WeekDay | null>(null);
   const hasPlan = WEEKDAYS.some(day => Boolean(weekPlan[day].soup || weekPlan[day].lunch || weekPlan[day].side || weekPlan[day].pickle || weekPlan[day].dinner || weekPlan[day].dessert));
 
   const goals: Array<{ id: WeeklyGoal; icon: typeof ShoppingCart; hu: string; en: string }> = [
@@ -114,14 +115,14 @@ export default function AutopilotPlannerPage() {
   };
 
   return (
-    <div className="page-container max-w-6xl space-y-6 pb-28 md:pb-10">
+    <div className="page-container max-w-6xl space-y-6 pb-10">
       <div className="max-w-3xl">
         <div className="mb-2 flex items-center gap-2 text-primary"><Sparkles className="h-5 w-5" /><span className="text-sm font-bold uppercase tracking-wide">{tr('Családi étel-autopilóta', 'Family food autopilot')}</span></div>
         <div className="flex items-center gap-1">
           <h1 className="section-title mb-2">{tr('Állítsuk össze a heteteket', 'Build your week')}</h1>
           <HelpLink section="autopilot" label="Autopilot" />
         </div>
-        <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Először ellenőrizd a családi beállításokat. Utána add meg, milyen lesz ez a hét, és csak ezután generáljuk a menüt.', 'First review your family preferences. Then tell us what this week looks like, and only then generate the menu.')}</p>
+        <p className="text-sm font-medium leading-relaxed text-muted-foreground">{tr('Az alapbeállítások készen állnak. Csak azt módosítsd, ami ezen a héten eltér, majd generáld a menüt.', 'Your defaults are ready. Only change what is different this week, then generate the menu.')}</p>
       </div>
 
       <SavedWeeksBar />
@@ -135,13 +136,13 @@ export default function AutopilotPlannerPage() {
 
       <section>
         <h2 className="mb-3 text-lg font-bold">{tr('Mi a legfontosabb ezen a héten?', 'What matters this week?')}</h2>
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 lg:grid-cols-3">
           {goals.map(goal => {
             const Icon = goal.icon;
             const selected = settings.goal === goal.id;
-            return <button key={goal.id} type="button" aria-pressed={selected} onClick={() => { setSettings(current => ({ ...current, goal: goal.id })); setGenerated(false); }} className={`flex min-h-20 items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? 'border-primary bg-primary/10 ring-1 ring-primary' : 'bg-card hover:bg-secondary/40'}`}>
-              <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${selected ? 'bg-primary text-primary-foreground' : 'bg-secondary'}`}><Icon className="h-5 w-5" /></span>
-              <span className="font-semibold">{isEnglish ? goal.en : goal.hu}</span>{selected && <Check className="ml-auto h-5 w-5 text-primary" />}
+            return <button key={goal.id} type="button" aria-pressed={selected} onClick={() => { setSettings(current => ({ ...current, goal: goal.id })); setGenerated(false); }} className={`flex min-h-16 items-center gap-2 rounded-xl border p-3 text-left transition sm:min-h-20 sm:gap-3 sm:p-4 ${selected ? 'border-primary bg-primary/10 ring-1 ring-primary' : 'bg-card hover:bg-secondary/40'}`}>
+              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full sm:h-10 sm:w-10 ${selected ? 'bg-primary text-primary-foreground' : 'bg-secondary'}`}><Icon className="h-5 w-5" /></span>
+              <span className="text-sm font-semibold leading-tight sm:text-base">{isEnglish ? goal.en : goal.hu}</span>{selected && <Check className="ml-auto hidden h-5 w-5 text-primary sm:block" />}
             </button>;
           })}
         </div>
@@ -161,28 +162,25 @@ export default function AutopilotPlannerPage() {
 
       <section className="rounded-xl border bg-card p-4 md:p-5">
         <div className="mb-4"><h2 className="text-lg font-bold">{tr('Hogy néz ki a hetetek?', 'What does your week look like?')}</h2><p className="text-sm font-medium text-muted-foreground">{tr('Az alapértékek már ki vannak töltve. Csak a szokatlan napokat módosítsd.', 'Defaults are already filled in. Only adjust unusual days.')}</p></div>
-        <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
+        <div className="space-y-2">
           {WEEKDAYS.map(day => {
             const schedule = settings.days[day];
-            return <div key={day} className="rounded-xl border bg-secondary/15 p-3">
-              <div className="mb-3 flex items-center justify-between gap-3"><h3 className="font-bold">{isEnglish ? EN_WEEKDAYS[day] : day}</h3><span className="flex items-center gap-1 text-xs font-semibold text-muted-foreground"><Users className="h-4 w-4" />{schedule.people}</span></div>
-              <div className="mb-3 grid grid-cols-2 gap-2">
-                <label className="text-xs font-semibold text-muted-foreground">{tr('Hányan esznek?', 'People eating')}
-                  <input type="number" min={1} max={20} value={schedule.people} onChange={event => updateDay(day, { people: Math.max(1, Number(event.target.value) || 1) })} className="mt-1 h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground" />
-                </label>
-                <label className="text-xs font-semibold text-muted-foreground">{tr('Max. főzési idő', 'Max cook time')}
-                  <select value={schedule.maxCookingTime ?? ''} onChange={event => updateDay(day, { maxCookingTime: event.target.value ? Number(event.target.value) : null })} className="mt-1 h-10 w-full rounded-md border bg-background px-2 text-sm text-foreground">
-                    <option value="">{tr('Nincs limit', 'No limit')}</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option>
-                  </select>
-                </label>
-              </div>
-              <div className="grid grid-cols-2 gap-1.5">{modes.map(mode => <button key={mode.id} type="button" onClick={() => updateDay(day, { mode: mode.id })} className={`min-h-10 rounded-md border px-2 py-2 text-xs font-semibold ${schedule.mode === mode.id ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>{isEnglish ? mode.en : mode.hu}</button>)}</div>
-            </div>;
+            return <DayScheduleCard
+              key={day}
+              day={day}
+              schedule={schedule}
+              modes={modes}
+              isEnglish={isEnglish}
+              expanded={expandedDay === day}
+              onToggle={() => setExpandedDay(current => current === day ? null : day)}
+              onUpdate={updates => updateDay(day, updates)}
+              tr={tr}
+            />;
           })}
         </div>
       </section>
 
-      <div className="sticky bottom-3 z-30 rounded-xl border bg-card/95 p-3 shadow-lg backdrop-blur md:static md:flex md:items-center md:justify-between md:shadow-none">
+      <div className="rounded-xl border bg-card p-4 shadow-sm md:flex md:items-center md:justify-between" data-testid="generate-week-panel">
         <div className="mb-2 text-sm font-medium md:mb-0"><strong>{activeDays.length}</strong> {tr('tervezett nap', 'planned days')} · <strong>{averagePeople}</strong> {tr('fő átlagosan', 'people on average')}</div>
         <Button size="lg" disabled={!plannerReady} onClick={() => hasPlan ? setConfirmGenerate(true) : createWeek()} className="w-full gap-2 md:w-auto"><Sparkles className="h-4 w-4" />{plannerReady ? tr('Heti menü generálása', 'Generate weekly menu') : tr('Mentett terv betöltése…', 'Loading saved plan…')}</Button>
       </div>
@@ -215,6 +213,56 @@ export default function AutopilotPlannerPage() {
       </section>}
     </div>
   );
+}
+
+type DayScheduleCardProps = {
+  day: WeekDay;
+  schedule: WeeklyAutopilotSettings['days'][WeekDay];
+  modes: Array<{ id: DayMode; hu: string; en: string }>;
+  isEnglish: boolean;
+  expanded: boolean;
+  onToggle: () => void;
+  onUpdate: (updates: Partial<WeeklyAutopilotSettings['days'][WeekDay]>) => void;
+  tr: (hu: string, en: string) => string;
+};
+
+function DayScheduleCard({ day, schedule, modes, isEnglish, expanded, onToggle, onUpdate, tr }: DayScheduleCardProps) {
+  const mode = modes.find(item => item.id === schedule.mode);
+  const detailsId = `autopilot-day-${day}`;
+  const cookingTime = schedule.maxCookingTime ? `${schedule.maxCookingTime} min` : tr('nincs időlimit', 'no time limit');
+
+  return <div className="overflow-hidden rounded-xl border bg-secondary/15">
+    <button
+      type="button"
+      className="flex min-h-16 w-full items-center gap-3 px-3 py-2 text-left sm:px-4"
+      aria-expanded={expanded}
+      aria-controls={detailsId}
+      onClick={onToggle}
+    >
+      <span className="min-w-0 flex-1">
+        <span className="block font-bold">{isEnglish ? EN_WEEKDAYS[day] : day}</span>
+        <span className="block text-sm font-medium leading-snug text-muted-foreground">
+          {schedule.people} {tr('fő', 'people')} · {isEnglish ? mode?.en : mode?.hu} · {cookingTime}
+        </span>
+      </span>
+      <span className="sr-only">{tr('Módosítás', 'Edit')}</span>
+      <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+    </button>
+
+    {expanded && <div id={detailsId} className="border-t bg-card p-3 sm:p-4">
+      <div className="mb-3 grid grid-cols-2 gap-2">
+        <label className="text-xs font-semibold text-muted-foreground">{tr('Hányan esznek?', 'People eating')}
+          <input type="number" min={1} max={20} value={schedule.people} onChange={event => onUpdate({ people: Math.max(1, Number(event.target.value) || 1) })} className="mt-1 h-10 w-full rounded-md border bg-background px-3 text-sm text-foreground" />
+        </label>
+        <label className="text-xs font-semibold text-muted-foreground">{tr('Max. főzési idő', 'Max cook time')}
+          <select value={schedule.maxCookingTime ?? ''} onChange={event => onUpdate({ maxCookingTime: event.target.value ? Number(event.target.value) : null })} className="mt-1 h-10 w-full rounded-md border bg-background px-2 text-sm text-foreground">
+            <option value="">{tr('Nincs limit', 'No limit')}</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option>
+          </select>
+        </label>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5">{modes.map(item => <button key={item.id} type="button" onClick={() => onUpdate({ mode: item.id })} className={`min-h-10 rounded-md border px-2 py-2 text-xs font-semibold ${schedule.mode === item.id ? 'border-primary bg-primary text-primary-foreground' : 'bg-background text-muted-foreground'}`}>{isEnglish ? item.en : item.hu}</button>)}</div>
+    </div>}
+  </div>;
 }
 
 function SummaryCard({ value, label }: { value: string | number; label: string }) {
