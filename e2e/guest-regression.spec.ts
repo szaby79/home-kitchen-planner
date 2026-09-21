@@ -39,6 +39,7 @@ test('shopping back control returns to the actual previous app page', async ({ p
   await seedEnglishGuest(page);
   await page.goto('/');
 
+  await page.getByText('More options', { exact: true }).click();
   await page.locator('a[href="/shopping"]', { hasText: 'Created automatically from your meal plan' }).click();
   await expect(page).toHaveURL(/\/shopping$/);
   await page.getByRole('link', { name: 'Back to menu' }).click();
