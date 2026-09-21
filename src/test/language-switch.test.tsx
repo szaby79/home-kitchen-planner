@@ -26,7 +26,7 @@ describe('language switch', () => {
     window.history.pushState({}, '', '/');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'English language' }));
-    expect(screen.getByText(/automatically creates the shopping list/i)).toBeInTheDocument();
+    expect(screen.getByText(/automatically creates your shopping list/i)).toBeInTheDocument();
     fireEvent.click(screen.getAllByRole('link', { name: /Recipes/i })[0]);
     expect(await screen.findByText('Húsleves')).toBeInTheDocument();
     expect(screen.getAllByText('Quick meals').length).toBeGreaterThan(0);
