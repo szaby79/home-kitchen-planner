@@ -14,7 +14,7 @@ describe('simplified primary navigation', () => {
     window.history.replaceState({}, '', '/');
     render(<App />);
 
-    const navigation = screen.getByRole('navigation');
+    const navigation = screen.getByRole('navigation', { name: 'Elsődleges navigáció' });
     expect(within(navigation).getByRole('link', { name: 'Heti terv' })).toHaveAttribute('href', '/planner');
     expect(within(navigation).queryByRole('link', { name: 'Admin' })).not.toBeInTheDocument();
     expect(within(navigation).queryByRole('link', { name: 'Budget' })).not.toBeInTheDocument();
@@ -28,21 +28,34 @@ describe('simplified primary navigation', () => {
     window.history.replaceState({}, '', '/');
     render(<App />);
 
-    const navigation = screen.getByRole('navigation');
+    const navigation = screen.getByRole('navigation', { name: 'Elsődleges navigáció' });
     expect(within(navigation).getByRole('link', { name: 'Heti terv' })).toHaveAttribute('href', '/planner/week');
     expect(screen.getByRole('link', { name: 'Heti menü megnyitása' })).toHaveAttribute('href', '/planner/week');
     expect(screen.getByText('1 nap • 1 étkezés elmentve')).toBeInTheDocument();
   });
 
-  it('shows only the four core destinations in the mobile menu', () => {
+  it('keeps the four core destinations in the persistent mobile navigation', () => {
+    window.history.replaceState({}, '', '/');
+    render(<App />);
+
+    const mobileNavigation = screen.getByRole('navigation', { name: 'Mobil főmenü' });
+    expect(within(mobileNavigation).getAllByRole('link').map(link => link.textContent)).toEqual([
+      'Főoldal', 'Receptek', 'Heti terv', 'Bevásárlólista',
+    ]);
+    expect(within(mobileNavigation).getByRole('link', { name: 'Főoldal' })).toHaveAttribute('aria-current', 'page');
+  });
+
+  it('keeps secondary destinations in the mobile menu', () => {
     window.history.replaceState({}, '', '/');
     render(<App />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Menü megnyitása' }));
-    const mobileNavigation = screen.getAllByRole('navigation').at(-1)!;
-    expect(within(mobileNavigation).getAllByRole('link').map(link => link.textContent)).toEqual([
-      'Főoldal', 'Receptek', 'Heti terv', 'Bevásárlólista',
-    ]);
+    const secondaryNavigation = screen.getByRole('navigation', { name: 'További lehetőségek' });
+    expect(within(secondaryNavigation).getByRole('link', { name: 'Családi beállítások' })).toHaveAttribute('href', '/family-settings');
+    expect(within(secondaryNavigation).getByRole('link', { name: 'Budget' })).toHaveAttribute('href', '/budget');
+    expect(within(secondaryNavigation).getByRole('link', { name: 'Súgó' })).toHaveAttribute('href', '/help');
+    expect(within(secondaryNavigation).getByRole('link', { name: 'Receptek kezelése' })).toHaveAttribute('href', '/admin');
+    expect(within(secondaryNavigation).getByRole('button', { name: 'Belépés' })).toBeInTheDocument();
   });
 
   it('keeps advanced recipe management available behind a secondary control', () => {

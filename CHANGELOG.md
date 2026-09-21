@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.49.0
+
+- Add a persistent four-item bottom navigation on mobile for Home, Recipes, Weekly plan, and Shopping list.
+- Move family preferences, budget, Help, recipe management, and account access into the secondary mobile menu.
+- Simplify the mobile header while keeping desktop navigation unchanged.
+- Remove the planner-only floating shopping button now that Shopping list is always one tap away.
+- Respect the iPhone safe area and keep page content clear of the fixed navigation.
+
 ## 1.48.0
 
 - Put recipe search and the category row first on mobile so users can start browsing immediately.
