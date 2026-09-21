@@ -55,7 +55,8 @@ describe('simplified primary navigation', () => {
     expect(within(secondaryNavigation).getByRole('link', { name: 'Budget' })).toHaveAttribute('href', '/budget');
     expect(within(secondaryNavigation).getByRole('link', { name: 'Súgó' })).toHaveAttribute('href', '/help');
     expect(within(secondaryNavigation).getByRole('link', { name: 'Receptek kezelése' })).toHaveAttribute('href', '/admin');
-    expect(within(secondaryNavigation).getByRole('button', { name: 'Belépés' })).toBeInTheDocument();
+    expect(within(secondaryNavigation).queryByRole('button', { name: 'Belépés' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Bejelentkezés e-mail-címmel' })).toBeInTheDocument();
   });
 
   it('keeps advanced recipe management available behind a secondary control', () => {

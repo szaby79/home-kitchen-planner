@@ -132,11 +132,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <button
               type="button"
               onClick={() => user ? navigate('/account') : setAuthOpen(true)}
-              className="mr-1 hidden max-w-[9rem] items-center gap-1.5 rounded-md border bg-card px-2.5 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary lg:inline-flex"
+              className="mr-1 inline-flex h-10 w-10 shrink-0 items-center justify-center gap-1.5 rounded-md border bg-card text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 lg:h-auto lg:w-auto lg:max-w-[9rem] lg:px-2.5 lg:py-1.5"
               aria-label={user ? tr('Fiók megnyitása', 'Open account') : tr('Bejelentkezés e-mail-címmel', 'Sign in with Email')}
             >
-              <UserRound className="h-4 w-4 shrink-0" />
-              <span className="hidden max-w-[6rem] truncate sm:inline">
+              <UserRound className="h-5 w-5 shrink-0 lg:h-4 lg:w-4" />
+              <span className="hidden max-w-[6rem] truncate lg:inline">
                 {authLoading ? tr('Betöltés…', 'Loading…') : user?.email ?? tr('Belépés', 'Sign in')}
               </span>
             </button>
@@ -151,15 +151,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <item.icon className="w-4 h-4" />{item.label}
                 </Link>
               ))}
-              {user ? (
-                <Link to="/account" onClick={() => setMobileOpen(false)} className={`flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${location.pathname === '/account' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-secondary'}`}>
-                  <UserRound className="h-4 w-4" />{tr('Fiók és adatvédelem', 'Account and privacy')}
-                </Link>
-              ) : (
-                <button type="button" onClick={() => { setMobileOpen(false); setAuthOpen(true); }} className="flex min-h-11 items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
-                  <UserRound className="h-4 w-4" />{tr('Belépés', 'Sign in')}
-                </button>
-              )}
             </nav>
           )}
         </header>
