@@ -102,6 +102,11 @@ test('shopping-list manual state and notes survive reload', async ({ page }) => 
   await page.goto('/shopping');
   await expect(page.getByText('chicken breast').locator('..')).toContainText('600 g');
 
+  const personalTools = page.getByRole('button', { name: /Personal items and notes/ });
+  await expect(personalTools).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByRole('heading', { name: 'Add another item' })).toBeHidden();
+  await personalTools.click();
+
   const addItem = page.getByRole('heading', { name: 'Add another item' }).locator('..');
   await addItem.getByPlaceholder('Item name').fill('Banana');
   await addItem.getByPlaceholder('Quantity').fill('6');
@@ -116,6 +121,7 @@ test('shopping-list manual state and notes survive reload', async ({ page }) => 
 
   await page.reload();
   await expect(page.getByText('Banana', { exact: true })).toHaveClass(/line-through/);
+  await page.getByRole('button', { name: /Personal items and notes/ }).click();
   await expect(page.getByLabel('Personal notes')).toHaveValue('Use the reusable bag');
 });
 
