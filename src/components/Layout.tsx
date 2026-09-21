@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Menu, X, UserRound, CircleHelp, UsersRound, WalletCards, Settings } from 'lucide-react';
+import { UtensilsCrossed, BookOpen, CalendarDays, ShoppingCart, Menu, X, UserRound, CircleHelp, UsersRound, WalletCards, Settings, Sparkles } from 'lucide-react';
 import { useRecipeStore } from '@/hooks/useRecipeStore';
 import { usePlannerStore, WeeklyPlanSyncStatus } from '@/hooks/usePlannerStore';
 import { DayPlan, Recipe, WeekPlan, WeekDay, ShoppingItem, GenerationSelection, MenuPreferences, MenuProfile, WeeklyAutopilotSettings } from '@/types/recipe';
@@ -79,6 +79,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { to: weeklyPlanPath, icon: CalendarDays, label: tr('Heti terv', 'Weekly plan') },
     { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list') },
   ];
+  const mobileNavItems = [
+    { to: '/', icon: UtensilsCrossed, label: tr('Főoldal', 'Home'), featured: false },
+    { to: '/recipes', icon: BookOpen, label: tr('Receptek', 'Recipes'), featured: false },
+    { to: weeklyPlanPath, icon: CalendarDays, label: tr('Heti menü', 'Weekly menu'), featured: true },
+    { to: '/planner', icon: Sparkles, label: tr('Heti terv', 'Weekly plan'), featured: false },
+    { to: '/shopping', icon: ShoppingCart, label: tr('Bevásárlólista', 'Shopping list'), featured: false },
+  ];
   const secondaryNavItems = [
     { to: '/family-settings', icon: UsersRound, label: tr('Családi beállítások', 'Family preferences') },
     { to: '/budget', icon: WalletCards, label: tr('Budget', 'Budget') },
@@ -90,6 +97,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (path === '/recipes') return location.pathname.startsWith('/recipes');
     if (path === weeklyPlanPath) return location.pathname.startsWith('/planner');
     return location.pathname === path;
+  };
+  const isMobileActive = (item: (typeof mobileNavItems)[number]) => {
+    if (item.featured) return location.pathname === '/planner/week';
+    if (item.to === '/planner') return location.pathname === '/planner';
+    return isPrimaryActive(item.to);
   };
 
   const ctx: AppContextType = {
@@ -159,18 +171,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
           Plan & Pan v{packageMetadata.version} © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
         </footer>
-        <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
-          {navItems.map(item => {
-            const active = isPrimaryActive(item.to);
+        <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
+          {mobileNavItems.map(item => {
+            const active = isMobileActive(item);
             return (
               <Link
-                key={item.to}
+                key={item.label}
                 to={item.to}
                 aria-current={active ? 'page' : undefined}
-                className={`flex min-h-14 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-[10px] font-semibold leading-tight transition-colors ${active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}
+                className={`flex min-h-14 min-w-0 flex-col items-center justify-center gap-0.5 rounded-lg px-0.5 text-center text-[9px] font-semibold leading-[1.15] transition-colors ${item.featured ? 'bg-primary text-primary-foreground shadow-sm' : active ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary hover:text-foreground'}`}
               >
                 <item.icon className="h-5 w-5" aria-hidden="true" />
-                <span className="max-w-full truncate">{item.label}</span>
+                <span className="max-w-full">{item.label}</span>
               </Link>
             );
           })}
