@@ -36,7 +36,25 @@ describe('planner meal cards', () => {
     const mobilePlanner = await screen.findByTestId('mobile-planner');
     expect(within(mobilePlanner).getByRole('button', { name: /heti áttekintés/i })).toBeInTheDocument();
     expect(within(mobilePlanner).getByRole('button', { name: /ételek és adagok szerkesztése/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /terv módosítása/i })).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByText('Melyik napokra készüljön menü?')).not.toBeInTheDocument();
     expect(screen.getAllByRole('link', { name: /bevásárlólista/i }).length).toBeGreaterThan(0);
+  });
+
+  it('shows saved meals before generation settings and reveals setup only on request', async () => {
+    localStorage.clear();
+    window.history.pushState({}, '', '/planner/week');
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: /generálás/i }));
+
+    const mobilePlanner = await screen.findByTestId('mobile-planner');
+    const setupButton = screen.getByRole('button', { name: /terv módosítása/i });
+    expect(mobilePlanner.compareDocumentPosition(setupButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText('Melyik napokra készüljön menü?')).not.toBeInTheDocument();
+
+    fireEvent.click(setupButton);
+    expect(setupButton).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText('Melyik napokra készüljön menü?')).toBeInTheDocument();
   });
 
   it('returns from the shopping list to the active weekly menu', async () => {
@@ -123,6 +141,7 @@ describe('planner meal cards', () => {
     fireEvent.click(screen.getByRole('button', { name: en ? 'Generate (14)' : 'Generálás (14)' }));
     const previous = localStorage.getItem('plan-pan-weekplan');
 
+    fireEvent.click(screen.getByRole('button', { name: en ? /change plan/i : /terv módosítása/i }));
     fireEvent.click(screen.getByRole('button', { name: en ? 'Today through Sunday' : 'Mától vasárnapig' }));
     expect(localStorage.getItem('plan-pan-weekplan')).toBe(previous);
     expect(screen.getByText(en ? 'Active plan: 7 days, 14 meals.' : 'Aktív terv: 7 nap, 14 étkezés.')).toBeInTheDocument();
@@ -161,6 +180,7 @@ describe('planner meal cards', () => {
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'Generálás (14)' }));
     const previous = localStorage.getItem('plan-pan-weekplan');
+    fireEvent.click(screen.getByRole('button', { name: /terv módosítása/i }));
     fireEvent.click(screen.getByRole('button', { name: 'Kijelölés törlése' }));
     expect(screen.getByRole('button', { name: 'Generálás (0)' })).toBeDisabled();
     expect(localStorage.getItem('plan-pan-weekplan')).toBe(previous);
