@@ -34,7 +34,7 @@ test('recipes keep search and categories visible while secondary filters stay co
   await page.goto('/recipes');
 
   await expect(page.getByPlaceholder('Search recipes...')).toBeVisible();
-  await expect(page.getByRole('button', { name: /^All: \\d+ recipes$/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^All: \d+ recipes$/ })).toBeVisible();
   const filters = page.locator('details', { hasText: 'Filter and sort' });
   await expect(filters).not.toHaveAttribute('open');
   await expect(page.getByRole('button', { name: 'Quick meals' })).toBeHidden();
