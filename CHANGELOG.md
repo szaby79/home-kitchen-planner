@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.61.0
+
+- Add a fifth 12-recipe dietary expansion with five vegan, seven vegetarian, and ten keto-compatible choices.
+- Preserve useful keto variety under every supported allergen exclusion, including five choices without the tracked major allergens.
+- Provide complete five-step Hungarian and English directions and a unique bundled image for every new recipe.
+- Raise the validated built-in catalogue from 216 to 228 recipes without duplicate names or IDs.
+
 ## 1.60.0
 
 - Add a fourth 12-recipe dietary expansion with five vegan, seven vegetarian, and ten keto-compatible choices.

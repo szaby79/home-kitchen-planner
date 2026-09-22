@@ -71,6 +71,8 @@ const INGREDIENTS: Record<string, string> = {
   'cukrozatlan kókusztej': 'unsweetened coconut milk', 'darált bárányhús': 'ground lamb', 'hideg víz': 'cold water',
   'chilipehely': 'chilli flakes', 'kígyóuborka': 'English cucumber', 'marhahús csíkokra vágva': 'beef strips', 'menta': 'mint',
   'póréhagyma': 'leek', 'zöld spárga': 'green asparagus',
+  'bárányborda': 'lamb chops', 'cheddar sajt': 'cheddar cheese', 'édesköménygumó': 'fennel bulb',
+  'kecskesajt': 'goat cheese', 'pulykamell': 'turkey breast',
 };
 
 const UNITS: Record<string, string> = {
@@ -161,6 +163,18 @@ const NOTES: Record<string, string> = {
   'Keto, friss pulykahúsos salátacsónak': 'Fresh keto turkey lettuce boats',
   'Keto töltött sertésszűz sült zöldségekkel': 'Keto stuffed pork tenderloin with roasted vegetables',
   'Keto tonhalfasírt könnyű citromos salátával': 'Keto tuna patties with a light lemon salad',
+  'Vegán és keto mediterrán paradicsomleves': 'Vegan keto Mediterranean tomato soup',
+  'Vegán és keto selymes spenótkrémleves': 'Silky vegan keto spinach soup',
+  'Vegán és keto, gombás tofuval töltött keltekercs': 'Vegan keto savoy rolls with mushroom tofu filling',
+  'Vegán és keto sült padlizsán mediterrán raguval': 'Vegan keto roasted aubergine with Mediterranean ragout',
+  'Vegán, tartalmas sült zöldségtál': 'Hearty vegan roasted vegetable bowl',
+  'Vegetáriánus és keto brokkolilepény friss salátával': 'Vegetarian keto broccoli patties with fresh salad',
+  'Vegetáriánus, laktató lencsés sütőtökrakottas': 'Hearty vegetarian squash and lentil bake',
+  'Keto tepsis csirke fűszeres karalábéval': 'Keto tray-baked chicken with spiced kohlrabi',
+  'Keto pulykasült krémes karfiolgratinnal': 'Keto turkey with creamy cauliflower gratin',
+  'Keto bárányborda mediterrán sült zöldségekkel': 'Keto lamb chops with Mediterranean roasted vegetables',
+  'Keto halfilé selymes spenótos kókuszmártásban': 'Keto fish fillet in silky spinach coconut sauce',
+  'Keto sertésmedalion könnyű brokkolipürével': 'Keto pork medallions with light broccoli puree',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
