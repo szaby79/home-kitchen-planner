@@ -22,6 +22,7 @@ describe('simplified primary navigation', () => {
     expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
     expect(screen.getByRole('img', { name: 'Többgenerációs család közös étkezése' })).toBeInTheDocument();
     expect(screen.queryByText('További lehetőségek')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Plan & Pan v1\.54\.0/)).not.toBeInTheDocument();
   });
 
   it('shows saved-menu status without duplicating the homepage action', () => {

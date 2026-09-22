@@ -13,8 +13,8 @@ export default function HomePage() {
   const plannedMeals = WEEKDAYS.reduce((count, day) => count + Number(Boolean(weekPlan[day].lunch)) + Number(Boolean(weekPlan[day].dinner)), 0);
 
   return (
-    <div className="page-container">
-      <section className="relative overflow-hidden rounded-3xl border border-[#E6C4A8] bg-gradient-to-br from-[#FFE8D7] via-[#FFF8EE] to-[#E3EDDE] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-12">
+    <div className="page-container flex w-full flex-1">
+      <section className="relative flex w-full flex-1 flex-col justify-center overflow-hidden rounded-3xl border border-[#E6C4A8] bg-gradient-to-br from-[#FFE8D7] via-[#FFF8EE] to-[#E3EDDE] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-12">
         <h1 className="mx-auto mb-4 max-w-3xl font-display text-[34px] font-semibold leading-[1.08] text-[#3A2E2A] sm:text-[46px]">
           {isEnglish ? (
             <>

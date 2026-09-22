@@ -3,6 +3,7 @@ import { BookOpenCheck, CircleHelp, Cloud, ListChecks, ShoppingCart } from 'luci
 import { Link, useLocation } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { useLanguage } from '@/i18n/LanguageContext';
+import packageMetadata from '../../package.json';
 
 type HelpSection = {
   id: string;
@@ -61,6 +62,9 @@ export default function HelpPage() {
           </AccordionItem>
         ))}
       </Accordion>
+      <p className="mt-6 text-center text-xs font-medium text-muted-foreground/70">
+        {tr('Alkalmazásverzió', 'App version')}: {packageMetadata.version}
+      </p>
     </div>
   );
 }
