@@ -9,7 +9,6 @@ export interface Ingredient {
 
 export type CostCategory = '$' | '$$' | '$$$';
 export type RecipeDifficulty = 'easy' | 'medium' | 'advanced';
-
 export interface Recipe {
   id: string;
   name: string;
@@ -32,7 +31,8 @@ export interface Recipe {
   cuisine?: string;
   vegetarian?: boolean;
   vegan?: boolean;
-  commonAllergens?: string[];
+  keto?: boolean;
+  commonAllergens?: FoodRestriction[];
   quickMeal?: boolean;
   weekendMeal?: boolean;
   suitableSideDishes?: string[];
@@ -59,7 +59,7 @@ export interface DayPlan {
 
 export type MenuProfile = 'balanced' | 'soup' | 'simple';
 
-export type DietPreference = 'none' | 'vegetarian' | 'vegan';
+export type DietPreference = 'none' | 'vegetarian' | 'vegan' | 'keto';
 export type CookingTimePreference = 'any' | '30' | '45' | '60';
 export type FoodStylePreference = 'traditional' | 'light' | 'quick' | 'meatless';
 export type FoodRestriction = 'gluten' | 'milk' | 'lactose' | 'egg' | 'nuts' | 'fish' | 'soy';

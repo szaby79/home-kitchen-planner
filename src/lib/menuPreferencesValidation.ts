@@ -4,7 +4,7 @@ import type { MenuPreferences } from '@/types/recipe';
 export function normalizePreferences(value: unknown): MenuPreferences | null {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
   const candidate = { ...DEFAULT_MENU_PREFERENCES, ...(value as Partial<MenuPreferences>) };
-  const diets = ['none', 'vegetarian', 'vegan'];
+  const diets = ['none', 'vegetarian', 'vegan', 'keto'];
   const restrictions = ['gluten', 'milk', 'lactose', 'egg', 'nuts', 'fish', 'soy'];
   const styles = ['traditional', 'light', 'quick', 'meatless'];
   const cookingTimes = ['any', '30', '45', '60'];
