@@ -7,6 +7,7 @@ import { additionalDesserts } from '@/data/additionalDesserts';
 import { additionalSalads } from '@/data/additionalSalads';
 import { additionalSides } from '@/data/additionalSides';
 import { additionalPickles } from '@/data/additionalPickles';
+import { dietaryRecipePackOne } from '@/data/dietaryRecipePackOne';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -745,6 +746,7 @@ const allRecipeData = [
   ...additionalPickles,
   ...additionalSalads,
   ...additionalDesserts,
+  ...dietaryRecipePackOne,
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => ({
