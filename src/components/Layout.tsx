@@ -166,7 +166,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           )}
         </header>
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex-1">{children}</main>
         <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
           {mobileNavItems.map(item => {
             const active = isMobileActive(item);
