@@ -3,6 +3,7 @@ import { dietaryRecipePackOneEnglishInstructions } from '@/data/dietaryRecipePac
 import { dietaryRecipePackTwoEnglishInstructions } from '@/data/dietaryRecipePackTwo';
 import { dietaryRecipePackThreeEnglishInstructions } from '@/data/dietaryRecipePackThree';
 import { dietaryRecipePackFourEnglishInstructions } from '@/data/dietaryRecipePackFour';
+import { dietaryRecipePackFiveEnglishInstructions } from '@/data/dietaryRecipePackFive';
 
 export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...additionalStewEnglishInstructions,
@@ -10,6 +11,7 @@ export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...dietaryRecipePackTwoEnglishInstructions,
   ...dietaryRecipePackThreeEnglishInstructions,
   ...dietaryRecipePackFourEnglishInstructions,
+  ...dietaryRecipePackFiveEnglishInstructions,
   'soup-1': `1. Put the chicken thighs in a large pot, add 3 litres of cold water, and heat over medium. Skim off the grey foam as it rises.
 
 2. Peel the carrots, parsley root, and celeriac. Add them with the whole onion, salt, and pepper.
