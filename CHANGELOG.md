@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.63.0
+
+- Show the live total recipe count and automatic per-category counts directly in the recipe category controls.
+- Derive every number from the active recipe collection so future built-in and user-added recipes are counted without manual updates.
+- Keep the compact horizontal mobile layout and existing category filtering behaviour.
+
+
 ## 1.62.0
 
 - Make Keto available in the existing family diet selector without adding another screen or navigation path.
