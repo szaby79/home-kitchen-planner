@@ -23,7 +23,7 @@ test('home keeps one clear Autopilot action without duplicate navigation', async
   await page.goto('/');
 
   await expect(page.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
-  await expect(page.getByRole('img', { name: 'A freshly prepared, hearty family meal' })).toBeVisible();
+  await expect(page.getByRole('img', { name: 'A multigenerational family sharing a meal' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Family preferences' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'How does it work?' })).toBeVisible();
   await expect(page.getByText('More options', { exact: true })).toHaveCount(0);
