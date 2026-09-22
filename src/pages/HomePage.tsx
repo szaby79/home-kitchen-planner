@@ -48,11 +48,11 @@ export default function HomePage() {
 
           <figure className="overflow-hidden rounded-2xl border border-[#E6C4A8] bg-[#FFF8EE] shadow-sm">
             <img
-              src="/images/home-family-meal.webp"
-              alt={tr('Frissen elkészült, tartalmas családi étel', 'A freshly prepared, hearty family meal')}
-              className="h-44 w-full object-cover sm:h-64"
-              width="1200"
-              height="800"
+              src="/images/home-family-table.webp"
+              alt={tr('Többgenerációs család közös étkezése', 'A multigenerational family sharing a meal')}
+              className="aspect-video w-full object-cover"
+              width="1600"
+              height="900"
               loading="eager"
               decoding="async"
             />

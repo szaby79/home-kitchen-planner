@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.53.0
+
+- Replace the homepage meal close-up with a warm multigenerational family-table photo.
+- Preserve the full scene across mobile and desktop with a responsive 16:9 image ratio.
+
 ## 1.52.0
 
 - Remove the redundant homepage “More options” section while keeping every destination available through the persistent or secondary navigation.

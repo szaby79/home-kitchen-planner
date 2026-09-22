@@ -20,7 +20,7 @@ describe('simplified primary navigation', () => {
     expect(within(navigation).queryByRole('link', { name: 'Budget' })).not.toBeInTheDocument();
     expect(within(navigation).queryByRole('link', { name: 'Súgó' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
-    expect(screen.getByRole('img', { name: 'Frissen elkészült, tartalmas családi étel' })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: 'Többgenerációs család közös étkezése' })).toBeInTheDocument();
     expect(screen.queryByText('További lehetőségek')).not.toBeInTheDocument();
   });
 
