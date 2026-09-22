@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.60.0
+
+- Add a fourth 12-recipe dietary expansion with five vegan, seven vegetarian, and ten keto-compatible choices.
+- Extend explicit filtering coverage to gluten, milk, egg, nuts, fish, and soy while retaining an allergen-free keto option.
+- Provide complete five-step Hungarian and English directions and a unique bundled image for every new recipe.
+- Raise the validated built-in catalogue from 204 to 216 recipes without duplicate names or IDs.
+
 ## 1.59.0
 
 - Add a third 12-recipe dietary expansion with five vegan, seven vegetarian, and ten keto-compatible choices.

@@ -67,10 +67,14 @@ const INGREDIENTS: Record<string, string> = {
   'fehérbab konzerv': 'canned white beans', 'hajdina': 'buckwheat',
   'hámozott mandula': 'blanched almonds', 'pisztrángfilé': 'trout fillet',
   'rozmaring': 'rosemary', 'szeletelt mandula': 'sliced almonds', 'tempeh': 'tempeh',
+  'árpagyöngy': 'pearl barley', 'bébispenót': 'baby spinach', 'cukrozatlan kókuszjoghurt': 'unsweetened coconut yogurt',
+  'cukrozatlan kókusztej': 'unsweetened coconut milk', 'darált bárányhús': 'ground lamb', 'hideg víz': 'cold water',
+  'chilipehely': 'chilli flakes', 'kígyóuborka': 'English cucumber', 'marhahús csíkokra vágva': 'beef strips', 'menta': 'mint',
+  'póréhagyma': 'leek', 'zöld spárga': 'green asparagus',
 };
 
 const UNITS: Record<string, string> = {
-  db: 'pc', ek: 'tbsp', tk: 'tsp', csokor: 'bunch', gerezd: 'clove', szelet: 'slice', csomag: 'pkg',
+  db: 'pc', ek: 'tbsp', tk: 'tsp', csokor: 'bunch', gerezd: 'clove', szelet: 'slice', csomag: 'pkg', fej: 'head',
 };
 
 const NOTES: Record<string, string> = {
@@ -145,6 +149,18 @@ const NOTES: Record<string, string> = {
   'Keto sertéssült krémes káposztával': 'Keto pork with creamy cabbage',
   'Keto sütőben sült pulykafasírt': 'Keto oven-baked turkey patties',
   'Keto halétel ropogós mandulakéreggel': 'Keto fish with a crisp almond crust',
+  'Vegán és keto, főzés nélküli hideg leves': 'Vegan keto chilled no-cook soup',
+  'Vegán és keto tavaszi zöldségkrémleves': 'Vegan keto spring vegetable cream soup',
+  'Vegán és keto gombaragu friss cukkinitésztával': 'Vegan keto mushroom ragout with fresh zucchini noodles',
+  'Vegán és keto, fűszeres zöldségwok': 'Spiced vegan keto vegetable stir-fry',
+  'Vegán, rostban és növényi fehérjében gazdag főétel': 'Vegan main rich in fibre and plant protein',
+  'Vegetáriánus és keto, krémes zöldséggratin': 'Creamy vegetarian keto vegetable gratin',
+  'Vegetáriánus, friss mentás árpagyöngyrizottó': 'Vegetarian pearl-barley risotto with fresh mint',
+  'Keto bárányhúsgolyó fűszeres zöldségraguval': 'Keto lamb meatballs with spiced vegetable ragout',
+  'Keto marhahúsos wok roppanós brokkolival': 'Keto beef stir-fry with crisp broccoli',
+  'Keto, friss pulykahúsos salátacsónak': 'Fresh keto turkey lettuce boats',
+  'Keto töltött sertésszűz sült zöldségekkel': 'Keto stuffed pork tenderloin with roasted vegetables',
+  'Keto tonhalfasírt könnyű citromos salátával': 'Keto tuna patties with a light lemon salad',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

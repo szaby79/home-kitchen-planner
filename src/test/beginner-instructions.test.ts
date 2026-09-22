@@ -10,25 +10,25 @@ describe('beginner recipe instructions', () => {
   it('groups every category in the intended order', () => {
     const sorted = sortRecipesByCategory(defaultRecipes);
 
-    expect(sorted.slice(0, 35).every(recipe => recipe.category === 'soup')).toBe(true);
-    expect(sorted.slice(35, 126).every(recipe => recipe.category === 'main')).toBe(true);
-    expect(sorted.slice(126, 156).every(recipe => recipe.category === 'stew')).toBe(true);
-    expect(sorted.slice(156, 166).every(recipe => recipe.category === 'side')).toBe(true);
-    expect(sorted.slice(166, 174).every(recipe => recipe.category === 'pickle')).toBe(true);
-    expect(sorted.slice(174, 184).every(recipe => recipe.category === 'salad')).toBe(true);
-    expect(sorted.slice(184).every(recipe => recipe.category === 'dessert')).toBe(true);
-    expect([sorted[0].id, sorted[34].id]).toEqual(['soup-1', 'soup-35']);
-    expect([sorted[35].id, sorted[125].id]).toEqual(['main-1', 'main-121']);
-    expect([sorted[126].id, sorted[155].id]).toEqual(['main-24', 'main-90']);
-    expect([sorted[156].id, sorted[165].id]).toEqual(['side-1', 'side-10']);
-    expect([sorted[166].id, sorted[173].id]).toEqual(['pickle-1', 'pickle-8']);
-    expect([sorted[174].id, sorted[183].id]).toEqual(['salad-1', 'salad-10']);
-    expect([sorted[184].id, sorted[203].id]).toEqual(['dessert-1', 'dessert-20']);
+    expect(sorted.slice(0, 37).every(recipe => recipe.category === 'soup')).toBe(true);
+    expect(sorted.slice(37, 138).every(recipe => recipe.category === 'main')).toBe(true);
+    expect(sorted.slice(138, 168).every(recipe => recipe.category === 'stew')).toBe(true);
+    expect(sorted.slice(168, 178).every(recipe => recipe.category === 'side')).toBe(true);
+    expect(sorted.slice(178, 186).every(recipe => recipe.category === 'pickle')).toBe(true);
+    expect(sorted.slice(186, 196).every(recipe => recipe.category === 'salad')).toBe(true);
+    expect(sorted.slice(196).every(recipe => recipe.category === 'dessert')).toBe(true);
+    expect([sorted[0].id, sorted[36].id]).toEqual(['soup-1', 'soup-37']);
+    expect([sorted[37].id, sorted[137].id]).toEqual(['main-1', 'main-131']);
+    expect([sorted[138].id, sorted[167].id]).toEqual(['main-24', 'main-90']);
+    expect([sorted[168].id, sorted[177].id]).toEqual(['side-1', 'side-10']);
+    expect([sorted[178].id, sorted[185].id]).toEqual(['pickle-1', 'pickle-8']);
+    expect([sorted[186].id, sorted[195].id]).toEqual(['salad-1', 'salad-10']);
+    expect([sorted[196].id, sorted[215].id]).toEqual(['dessert-1', 'dessert-20']);
   });
 
   it('provides short, numbered instructions for every built-in recipe', () => {
     expect(Object.keys(beginnerInstructions)).toHaveLength(70);
-    expect(defaultRecipes).toHaveLength(204);
+    expect(defaultRecipes).toHaveLength(216);
 
     for (const recipe of defaultRecipes) {
       expect(recipe.description.match(/^\d+\./gm)?.length, recipe.name).toBeGreaterThanOrEqual(5);
@@ -36,15 +36,15 @@ describe('beginner recipe instructions', () => {
   });
 
   it('contains the complete Hungarian catalog without duplicates', () => {
-    expect(defaultRecipes.filter(recipe => recipe.category === 'soup')).toHaveLength(35);
-    expect(defaultRecipes.filter(recipe => recipe.category === 'main')).toHaveLength(91);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'soup')).toHaveLength(37);
+    expect(defaultRecipes.filter(recipe => recipe.category === 'main')).toHaveLength(101);
     expect(defaultRecipes.filter(recipe => recipe.category === 'stew')).toHaveLength(30);
     expect(defaultRecipes.filter(recipe => recipe.category === 'side')).toHaveLength(10);
     expect(defaultRecipes.filter(recipe => recipe.category === 'pickle')).toHaveLength(8);
     expect(defaultRecipes.filter(recipe => recipe.category === 'salad')).toHaveLength(10);
     expect(defaultRecipes.filter(recipe => recipe.category === 'dessert')).toHaveLength(20);
-    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(204);
-    expect(new Set(defaultRecipes.map(recipe => recipe.name.toLocaleLowerCase('hu'))).size).toBe(204);
+    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(216);
+    expect(new Set(defaultRecipes.map(recipe => recipe.name.toLocaleLowerCase('hu'))).size).toBe(216);
   });
 
   it('contains exactly 30 főzelék meals and every one names its topping', () => {
@@ -88,7 +88,7 @@ describe('beginner recipe instructions', () => {
     expect(result.current.recipes[0].ingredients).toEqual(stew.ingredients);
     expect(result.current.recipes[0].category).toBe('stew');
     expect(result.current.recipes[1]).toEqual(userRecipe);
-    expect(result.current.recipes).toHaveLength(205);
-    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('12');
+    expect(result.current.recipes).toHaveLength(217);
+    expect(localStorage.getItem('plan-pan-recipes-content-version')).toBe('13');
   });
 });
