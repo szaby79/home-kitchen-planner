@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.52.0
+
+- Remove the redundant homepage “More options” section while keeping every destination available through the persistent or secondary navigation.
+- Keep the homepage focused on Autopilot, the meal preview, family preferences, and Help.
+
 ## 1.51.0
 
 - Replaced the duplicated homepage weekly-menu action with a clear Autopilot entry point.
