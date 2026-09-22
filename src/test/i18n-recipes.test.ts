@@ -4,9 +4,9 @@ import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
 import { hasIngredientTranslation, localizeRecipe } from '@/i18n/recipeLocalization';
 
 describe('English recipe catalogue', () => {
-  it('covers all 204 built-in recipes with five numbered steps', () => {
-    expect(defaultRecipes).toHaveLength(204);
-    expect(Object.keys(ENGLISH_INSTRUCTIONS)).toHaveLength(204);
+  it('covers all 216 built-in recipes with five numbered steps', () => {
+    expect(defaultRecipes).toHaveLength(216);
+    expect(Object.keys(ENGLISH_INSTRUCTIONS)).toHaveLength(216);
     for (const recipe of defaultRecipes) {
       const directions = ENGLISH_INSTRUCTIONS[recipe.id];
       expect(directions, recipe.id).toBeTruthy();
