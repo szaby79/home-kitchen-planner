@@ -11,6 +11,7 @@ export default function HomePage() {
   const hasSavedPlan = hasPlanMeals(weekPlan);
   const plannedDays = WEEKDAYS.filter(day => weekPlan[day].lunch || weekPlan[day].dinner).length;
   const plannedMeals = WEEKDAYS.reduce((count, day) => count + Number(Boolean(weekPlan[day].lunch)) + Number(Boolean(weekPlan[day].dinner)), 0);
+
   return (
     <div className="page-container">
       <section className="relative overflow-hidden rounded-3xl border border-[#E6C4A8] bg-gradient-to-br from-[#FFE8D7] via-[#FFF8EE] to-[#E3EDDE] px-5 py-8 text-center shadow-sm sm:px-8 sm:py-12">
@@ -65,7 +66,6 @@ export default function HomePage() {
           {tr('Hogyan működik?', 'How does it work?')}
         </Link>
       </section>
-
     </div>
   );
 }
