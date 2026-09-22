@@ -56,13 +56,26 @@ export default function HomePage() {
             {tr(`${plannedDays} nap • ${plannedMeals} étkezés elmentve`, `${plannedDays} days • ${plannedMeals} meals saved`)}
           </p>
         )}
-        <div className="mx-auto flex max-w-md flex-col gap-3">
-          <Link to={hasSavedPlan ? '/planner/week' : '/planner'} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90">
+        <div className="mx-auto flex max-w-xl flex-col gap-3">
+          <Link to="/planner" className="mx-auto inline-flex min-h-11 w-full max-w-md items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 font-semibold text-primary-foreground shadow-sm transition hover:bg-primary/90">
             <Sparkles className="h-5 w-5" />
-            {hasSavedPlan ? tr('Heti menü megnyitása', 'Open weekly menu') : tr('Heti menü készítése', 'Create weekly menu')}
+            {tr('Autopilot', 'Autopilot')}
             <ArrowRight className="h-5 w-5" />
           </Link>
-          <Link to="/family-settings" className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-accent bg-[#F2F7EF]/80 px-4 py-2.5 font-semibold text-accent transition hover:bg-[#E3EDDE]">
+
+          <figure className="overflow-hidden rounded-2xl border border-[#E6C4A8] bg-[#FFF8EE] shadow-sm">
+            <img
+              src="/images/home-family-meal.webp"
+              alt={tr('Frissen elkészült, tartalmas családi étel', 'A freshly prepared, hearty family meal')}
+              className="h-44 w-full object-cover sm:h-64"
+              width="1200"
+              height="800"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
+
+          <Link to="/family-settings" className="mx-auto inline-flex min-h-11 w-full max-w-md items-center justify-center gap-2 rounded-lg border border-accent bg-[#F2F7EF]/80 px-4 py-2.5 font-semibold text-accent transition hover:bg-[#E3EDDE]">
             <Users className="h-4 w-4" /> {tr('Családi beállítások', 'Family preferences')}
           </Link>
         </div>
@@ -71,10 +84,10 @@ export default function HomePage() {
         </Link>
       </section>
 
-      <details className="group mx-auto mt-5 max-w-5xl rounded-xl border bg-card">
-        <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-semibold marker:hidden">
+      <details className="group mx-auto mt-4 max-w-5xl rounded-lg border bg-card/80">
+        <summary className="flex min-h-10 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2 text-sm font-semibold marker:hidden">
           <span>{tr('További lehetőségek', 'More options')}</span>
-          <ChevronDown className="h-5 w-5 transition-transform group-open:rotate-180" aria-hidden="true" />
+          <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" aria-hidden="true" />
         </summary>
         <div className="space-y-8 border-t p-4 sm:p-6">
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
