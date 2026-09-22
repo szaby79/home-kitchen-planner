@@ -1,5 +1,5 @@
-export type Category = 'soup' | 'main' | 'stew' | 'side' | 'pickle' | 'salad' | 'dessert';
-export type MealType = 'lunch' | 'dinner' | 'both';
+export type Category = 'breakfast' | 'soup' | 'main' | 'stew' | 'side' | 'pickle' | 'salad' | 'dessert';
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'both';
 
 export interface Ingredient {
   name: string;
@@ -132,6 +132,7 @@ export interface ShoppingItem {
 export const WEEKDAYS: WeekDay[] = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
 
 export const CATEGORY_LABELS: Record<Category, string> = {
+  breakfast: 'Reggelik',
   soup: 'Levesek',
   main: 'Főételek',
   stew: 'Főzelékek',
@@ -142,6 +143,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
 };
 
 export const MEAL_TYPE_LABELS: Record<MealType, string> = {
+  breakfast: 'Reggeli',
   lunch: 'Ebéd',
   dinner: 'Vacsora',
   both: 'Mindkettő',

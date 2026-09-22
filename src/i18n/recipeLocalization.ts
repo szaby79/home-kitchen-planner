@@ -73,6 +73,9 @@ const INGREDIENTS: Record<string, string> = {
   'póréhagyma': 'leek', 'zöld spárga': 'green asparagus',
   'bárányborda': 'lamb chops', 'cheddar sajt': 'cheddar cheese', 'édesköménygumó': 'fennel bulb',
   'kecskesajt': 'goat cheese', 'pulykamell': 'turkey breast',
+  'banán': 'banana', 'chia mag': 'chia seeds', 'fagyasztott bogyós gyümölcs': 'frozen mixed berries',
+  'görög joghurt': 'Greek yogurt', 'granola': 'granola', 'kurkuma': 'turmeric',
+  'teljes kiőrlésű kenyér': 'whole-grain bread', 'zabpehely': 'rolled oats',
 };
 
 const UNITS: Record<string, string> = {
@@ -175,6 +178,18 @@ const NOTES: Record<string, string> = {
   'Keto bárányborda mediterrán sült zöldségekkel': 'Keto lamb chops with Mediterranean roasted vegetables',
   'Keto halfilé selymes spenótos kókuszmártásban': 'Keto fish fillet in silky spinach coconut sauce',
   'Keto sertésmedalion könnyű brokkolipürével': 'Keto pork medallions with light broccoli puree',
+  '15 perces, Keto-kompatibilis meleg reggeli': '15-minute keto-friendly hot breakfast',
+  'Meleg, rostos családi reggeli': 'Warm, fibre-rich family breakfast',
+  'Előző este összeállítható, főzés nélküli reggeli': 'No-cook breakfast prepared the night before',
+  'Vegán, előre elkészíthető reggeli': 'Vegan make-ahead breakfast',
+  '5 perces, friss joghurtos reggeli': 'Fresh yogurt breakfast in 5 minutes',
+  '20 perces, tartalmas pirítós': 'Filling toast ready in 20 minutes',
+  'Gyors, ropogós családi reggeli': 'Quick, crisp family breakfast',
+  'Keto, előre elkészíthető tojásos reggeli': 'Keto make-ahead egg breakfast',
+  'Keto, főzés nélküli magyaros reggeli': 'Keto Hungarian-style no-cook breakfast',
+  'Gyerekbarát, hozzáadott cukor nélküli reggeli': 'Child-friendly breakfast with no added sugar',
+  '20 perces, Keto-kompatibilis omlett': '20-minute keto-friendly omelette',
+  'Vegán és Keto-kompatibilis meleg reggeli': 'Vegan keto-friendly hot breakfast',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

@@ -5,8 +5,8 @@ import { defaultRecipes } from '@/data/recipes';
 
 describe('default recipe images', () => {
   it('assigns one bundled image to every recipe', () => {
-    expect(defaultRecipes).toHaveLength(228);
-    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(228);
+    expect(defaultRecipes).toHaveLength(240);
+    expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(240);
 
     for (const recipe of defaultRecipes) {
       expect(recipe.imageUrl).toBe(`/recipes/${recipe.id}.webp`);

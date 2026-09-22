@@ -1,6 +1,7 @@
 import { Category, MealType, WeekDay } from '@/types/recipe';
 
 export const EN_CATEGORY_LABELS: Record<Category, string> = {
+  breakfast: 'Breakfasts',
   soup: 'Soups',
   main: 'Main dishes',
   stew: 'Vegetable stews',
@@ -11,6 +12,7 @@ export const EN_CATEGORY_LABELS: Record<Category, string> = {
 };
 
 export const EN_MEAL_TYPE_LABELS: Record<MealType, string> = {
+  breakfast: 'Breakfast',
   lunch: 'Lunch',
   dinner: 'Dinner',
   both: 'Lunch or dinner',

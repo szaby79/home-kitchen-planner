@@ -1,13 +1,14 @@
 import { Category, Recipe } from '@/types/recipe';
 
 const CATEGORY_ORDER: Record<Category, number> = {
-  soup: 0,
-  main: 1,
-  stew: 2,
-  side: 3,
-  pickle: 4,
-  salad: 5,
-  dessert: 6,
+  breakfast: 0,
+  soup: 1,
+  main: 2,
+  stew: 3,
+  side: 4,
+  pickle: 5,
+  salad: 6,
+  dessert: 7,
 };
 
 function recipeNumber(recipe: Recipe): number {
