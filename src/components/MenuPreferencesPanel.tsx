@@ -62,7 +62,7 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       </PreferenceStep>
 
       <PreferenceStep number="2" title={tr('Van különleges étrend?', 'Do you follow a special diet?')}>
-        <ChoiceRow options={(['none', 'vegetarian', 'vegan'] as DietPreference[])} selected={[draft.diet]} labels={{ none: tr('Nincs', 'No restriction'), vegetarian: tr('Vegetáriánus', 'Vegetarian'), vegan: tr('Vegán', 'Vegan') }} onToggle={value => setDraft(current => ({ ...current, diet: value }))} single />
+        <ChoiceRow options={(['none', 'vegetarian', 'vegan'] as DietPreference[])} selected={[draft.diet]} labels={{ none: tr('Nincs', 'No restriction'), vegetarian: tr('Vegetáriánus', 'Vegetarian'), vegan: tr('Vegán', 'Vegan'), keto: 'Keto' }} onToggle={value => setDraft(current => ({ ...current, diet: value }))} single />
       </PreferenceStep>
 
       <PreferenceStep

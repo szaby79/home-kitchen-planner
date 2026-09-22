@@ -14,17 +14,35 @@ const RESTRICTION_WORDS: Record<FoodRestriction, RegExp> = {
 const MEAT_WORDS = /hús(?!mentes)|csirke|pulyka|sertés|marha|borjú|bárány|kacsa|liba|kolbász|szalonna|sonka|máj|virsli|hal|ponty|harcsa|tonhal|meat(?!less)|chicken|turkey|pork|beef|veal|lamb|duck|goose|sausage|bacon|ham|liver|fish|carp|catfish|tuna/i;
 const ANIMAL_WORDS = /tojás|tej|tejföl|tejszín|sajt|vaj|túró|joghurt|méz|egg|milk|cream|cheese|butter|cottage cheese|yogurt|honey/i;
 
+const RESTRICTIONS = Object.keys(RESTRICTION_WORDS) as FoodRestriction[];
+
 function recipeText(recipe: Recipe) {
   return `${recipe.name} ${recipe.note} ${recipe.ingredients.map(item => item.name).join(' ')}`;
 }
 
 export function isVegetarianRecipe(recipe: Recipe) {
+  if (recipe.vegan === true) return true;
+  if (recipe.vegetarian !== undefined) return recipe.vegetarian;
   return !MEAT_WORDS.test(recipeText(recipe));
 }
 
 export function isVeganRecipe(recipe: Recipe) {
+  if (recipe.vegan !== undefined) return recipe.vegan;
   const text = recipeText(recipe);
   return !MEAT_WORDS.test(text) && !ANIMAL_WORDS.test(text);
+}
+
+export function isKetoRecipe(recipe: Recipe) {
+  return recipe.keto === true;
+}
+
+export function recipeAllergens(recipe: Recipe) {
+  const text = recipeText(recipe);
+  const allergens = new Set(recipe.commonAllergens ?? []);
+  RESTRICTIONS.forEach(restriction => {
+    if (RESTRICTION_WORDS[restriction].test(text)) allergens.add(restriction);
+  });
+  return allergens;
 }
 
 export function estimatedCookingMinutes(recipe: Recipe) {
@@ -38,9 +56,11 @@ export function estimatedCookingMinutes(recipe: Recipe) {
 export function recipeMatchesSafetyPreferences(recipe: Recipe, preferences: MenuPreferences) {
   const text = recipeText(recipe);
   const restrictions = new Set([...preferences.allergies, ...preferences.intolerances]);
-  if ([...restrictions].some(restriction => RESTRICTION_WORDS[restriction].test(text))) return false;
+  const allergens = recipeAllergens(recipe);
+  if ([...restrictions].some(restriction => allergens.has(restriction))) return false;
   if (preferences.diet === 'vegetarian' && !isVegetarianRecipe(recipe)) return false;
   if (preferences.diet === 'vegan' && !isVeganRecipe(recipe)) return false;
+  if (preferences.diet === 'keto' && !isKetoRecipe(recipe)) return false;
   const normalized = text.toLocaleLowerCase();
   if (preferences.dislikedIngredients.some(item => item.trim() && normalized.includes(item.trim().toLocaleLowerCase()))) return false;
   if (preferences.maxCookingTime !== 'any' && estimatedCookingMinutes(recipe) > Number(preferences.maxCookingTime)) return false;

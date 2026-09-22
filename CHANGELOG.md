@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.56.0
+
+- Add the internal keto classification needed before keto choices are exposed to users.
+- Make explicit recipe allergen metadata participate in safety filtering while retaining legacy ingredient detection.
+- Preserve dietary and allergen metadata when built-in recipe content is refreshed from local storage.
+- Add regression coverage for keto classification, explicit dietary tags, and allergen filtering.
+
 ## 1.55.0
 
 - Visually and verbally distinguish potentially dangerous food allergies from digestive intolerances.

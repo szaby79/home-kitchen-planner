@@ -21,6 +21,10 @@ function refreshDefaultRecipeContent(recipes: Recipe[]): Recipe[] {
       ...recipe,
       category: defaultRecipe.category,
       imageUrl: defaultRecipe.imageUrl,
+      vegetarian: defaultRecipe.vegetarian,
+      vegan: defaultRecipe.vegan,
+      keto: defaultRecipe.keto,
+      commonAllergens: defaultRecipe.commonAllergens,
       ...(needsContentMigration
         ? {
             ingredients: defaultRecipe.ingredients,
