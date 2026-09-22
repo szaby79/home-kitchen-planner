@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.55.0
+
+- Visually and verbally distinguish potentially dangerous food allergies from digestive intolerances.
+- Reconcile saved Autopilot day portions with the current family size while preserving intentional per-day overrides.
+- Add one consistent history-aware Back action to every internal screen, with safe route-specific fallbacks.
+
 ## 1.54.0
 
 - Remove the globally visible version footer and keep the app version as quiet technical information at the bottom of Help.

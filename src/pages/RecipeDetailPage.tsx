@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_CATEGORY_LABELS, EN_MEAL_TYPE_LABELS } from '@/i18n/labels';
 import RecipeNarrator from '@/components/RecipeNarrator';
-import AppBackLink from '@/components/AppBackLink';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -37,9 +36,6 @@ export default function RecipeDetailPage() {
   return (
     <div className="page-container max-w-3xl">
       {fromPlan && <p className="mb-3 text-sm text-muted-foreground">{tr('Itt a recept mennyiségeit számolhatod át. A heti terv adagjait a menü szerkesztésében módosíthatod.', 'Adjust recipe quantities here. To change saved servings, edit the weekly menu.')}</p>}
-      <AppBackLink fallback={fromPlan ? '/planner/week' : '/recipes'} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
-        {tr('Vissza', 'Back')}
-      </AppBackLink>
 
       {/* Header */}
       <div className="bg-card border rounded-lg overflow-hidden mb-6">

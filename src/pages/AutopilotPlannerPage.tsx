@@ -1,48 +1,33 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ChevronDown, Clock3, Heart, Leaf, PackageOpen, ShoppingCart, Shuffle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/components/Layout';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { EN_WEEKDAYS } from '@/i18n/labels';
-import { createDefaultAutopilotSettings, createGenerationSelection, DayMode, MenuPreferences, WEEKDAYS, WeekDay, WeeklyAutopilotSettings, WeeklyGoal } from '@/types/recipe';
+import { createGenerationSelection, DayMode, MenuPreferences, WEEKDAYS, WeekDay, WeeklyAutopilotSettings, WeeklyGoal } from '@/types/recipe';
 import { useMenuPreferences } from '@/hooks/useMenuPreferences';
 import MenuPreferencesPanel from '@/components/MenuPreferencesPanel';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
 import HelpLink from '@/components/HelpLink';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-
-const STORAGE_KEY = 'plan-pan-weekly-autopilot';
-
-function loadSettings(familySize: number): WeeklyAutopilotSettings {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as WeeklyAutopilotSettings;
-      const defaults = createDefaultAutopilotSettings(familySize);
-      return {
-        ...defaults,
-        ...parsed,
-        days: Object.fromEntries(WEEKDAYS.map(day => [day, { ...defaults.days[day], ...(parsed.days?.[day] ?? {}) }])) as WeeklyAutopilotSettings['days'],
-      };
-    }
-  } catch {
-    // Fall through to defaults.
-  }
-  return createDefaultAutopilotSettings(familySize);
-}
+import { AUTOPILOT_STORAGE_KEY, loadAutopilotSettings, reconcileAutopilotFamilySize } from '@/lib/autopilotSettings';
 
 export default function AutopilotPlannerPage() {
   const { generateRandomPlan, weekPlan, recipes, favoriteIds, plannerReady } = useAppContext();
   const { tr, isEnglish } = useLanguage();
   const { preferences, savePreferences, hasSavedPreferences, cloudSyncEnabled, syncStatus } = useMenuPreferences();
-  const [settings, setSettings] = useState<WeeklyAutopilotSettings>(() => loadSettings(preferences.familySize));
+  const [settings, setSettings] = useState<WeeklyAutopilotSettings>(() => loadAutopilotSettings(preferences.familySize));
   const [pantryText, setPantryText] = useState(() => settings.pantryIngredients.join(', '));
   const [generated, setGenerated] = useState(false);
   const [generationError, setGenerationError] = useState(false);
   const [confirmGenerate, setConfirmGenerate] = useState(false);
   const [expandedDay, setExpandedDay] = useState<WeekDay | null>(null);
   const hasPlan = WEEKDAYS.some(day => Boolean(weekPlan[day].soup || weekPlan[day].lunch || weekPlan[day].side || weekPlan[day].pickle || weekPlan[day].dinner || weekPlan[day].dessert));
+
+  useEffect(() => {
+    setSettings(current => reconcileAutopilotFamilySize(current, preferences.familySize));
+  }, [preferences.familySize]);
 
   const goals: Array<{ id: WeeklyGoal; icon: typeof ShoppingCart; hu: string; en: string }> = [
     { id: 'save-money', icon: ShoppingCart, hu: 'Okos bevásárlás', en: 'Smart shopping' },
@@ -61,20 +46,23 @@ export default function AutopilotPlannerPage() {
   ];
 
   const updateDay = (day: WeekDay, updates: Partial<WeeklyAutopilotSettings['days'][WeekDay]>) => {
-    setSettings(current => ({ ...current, days: { ...current.days, [day]: { ...current.days[day], ...updates } } }));
+    setSettings(current => ({
+      ...current,
+      days: {
+        ...current.days,
+        [day]: {
+          ...current.days[day],
+          ...updates,
+          ...(updates.people === undefined ? {} : { peopleCustomized: updates.people !== preferences.familySize }),
+        },
+      },
+    }));
     setGenerated(false);
   };
 
   const saveFamilyPreferences = (next: MenuPreferences) => {
-    const previousFamilySize = preferences.familySize;
     savePreferences(next);
-    setSettings(current => ({
-      ...current,
-      days: Object.fromEntries(WEEKDAYS.map(day => [day, {
-        ...current.days[day],
-        people: current.days[day].people === previousFamilySize ? next.familySize : current.days[day].people,
-      }])) as WeeklyAutopilotSettings['days'],
-    }));
+    setSettings(current => reconcileAutopilotFamilySize(current, next.familySize));
     setGenerated(false);
   };
 
@@ -103,7 +91,7 @@ export default function AutopilotPlannerPage() {
     if (!plannerReady) return;
     const pantryIngredients = pantryText.split(',').map(value => value.trim()).filter(Boolean);
     const nextSettings = { ...settings, pantryIngredients };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSettings));
+    localStorage.setItem(AUTOPILOT_STORAGE_KEY, JSON.stringify(nextSettings));
     setSettings(nextSettings);
     const selection = createGenerationSelection(true);
     WEEKDAYS.forEach(day => {

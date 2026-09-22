@@ -97,12 +97,14 @@ export type DayMode = 'normal' | 'busy' | 'leftovers' | 'no-meal';
 
 export interface DaySchedule {
   people: number;
+  peopleCustomized?: boolean;
   maxCookingTime: number | null;
   mode: DayMode;
 }
 
 export interface WeeklyAutopilotSettings {
   goal: WeeklyGoal;
+  defaultFamilySize?: number;
   groceryTarget?: number | null;
   pantryIngredients: string[];
   days: Record<WeekDay, DaySchedule>;
@@ -111,9 +113,10 @@ export interface WeeklyAutopilotSettings {
 export function createDefaultAutopilotSettings(familySize = 4): WeeklyAutopilotSettings {
   return {
     goal: 'cook-fast',
+    defaultFamilySize: familySize,
     groceryTarget: null,
     pantryIngredients: [],
-    days: Object.fromEntries(WEEKDAYS.map(day => [day, { people: familySize, maxCookingTime: null, mode: 'normal' }])) as Record<WeekDay, DaySchedule>,
+    days: Object.fromEntries(WEEKDAYS.map(day => [day, { people: familySize, peopleCustomized: false, maxCookingTime: null, mode: 'normal' }])) as Record<WeekDay, DaySchedule>,
   };
 }
 

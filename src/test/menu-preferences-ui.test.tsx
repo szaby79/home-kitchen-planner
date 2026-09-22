@@ -39,4 +39,19 @@ describe('family preferences panel', () => {
     render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences recipes={defaultRecipes} onSave={() => undefined} cloudSyncEnabled syncStatus="saved" /></LanguageProvider>);
     expect(screen.getByText('Saved')).toBeInTheDocument();
   });
+
+  it('visually and verbally separates dangerous allergies from intolerances', () => {
+    render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences={false} recipes={defaultRecipes} onSave={() => undefined} /></LanguageProvider>);
+
+    expect(screen.getByText('Teljes kizárás. Már kis mennyiség is súlyos reakciót okozhat.')).toHaveClass('text-destructive');
+    expect(screen.getByText('Emésztési érzékenység. A kijelölt összetevőket az Autopilot kerüli.')).toHaveClass('text-muted-foreground');
+
+    const milkAllergy = screen.getByRole('checkbox', { name: 'Tej' });
+    fireEvent.click(milkAllergy);
+    expect(milkAllergy).toHaveClass('bg-destructive');
+
+    const lactoseIntolerance = screen.getByRole('checkbox', { name: 'Laktóz' });
+    fireEvent.click(lactoseIntolerance);
+    expect(lactoseIntolerance).toHaveClass('bg-primary');
+  });
 });

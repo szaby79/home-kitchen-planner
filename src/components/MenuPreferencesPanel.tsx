@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronUp, ShieldCheck, Users } from 'lucide-react';
+import { AlertTriangle, ChevronDown, ChevronUp, ShieldCheck, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CookingTimePreference, DietPreference, FoodRestriction, FoodStylePreference, MenuPreferences, Recipe } from '@/types/recipe';
 import { countMatchingMainRecipes } from '@/lib/menuPreferences';
@@ -65,11 +65,16 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
         <ChoiceRow options={(['none', 'vegetarian', 'vegan'] as DietPreference[])} selected={[draft.diet]} labels={{ none: tr('Nincs', 'No restriction'), vegetarian: tr('Vegetáriánus', 'Vegetarian'), vegan: tr('Vegán', 'Vegan') }} onToggle={value => setDraft(current => ({ ...current, diet: value }))} single />
       </PreferenceStep>
 
-      <PreferenceStep number="3" title={tr('Van ételallergia?', 'Are there any food allergies?')} hint={tr('Többet is kijelölhetsz. Ha nincs, hagyd üresen.', 'Choose all that apply. Leave blank if there are none.')}>
-        <ChoiceRow options={allergyOptions} selected={draft.allergies} labels={restrictionLabels(tr)} onToggle={value => setDraft(current => ({ ...current, allergies: toggle(current.allergies, value) }))} />
+      <PreferenceStep
+        number="3"
+        title={tr('Van ételallergia?', 'Are there any food allergies?')}
+        hint={tr('Teljes kizárás. Már kis mennyiség is súlyos reakciót okozhat.', 'Complete exclusion. Even a small amount may cause a serious reaction.')}
+        tone="danger"
+      >
+        <ChoiceRow options={allergyOptions} selected={draft.allergies} labels={restrictionLabels(tr)} onToggle={value => setDraft(current => ({ ...current, allergies: toggle(current.allergies, value) }))} tone="danger" />
       </PreferenceStep>
 
-      <PreferenceStep number="4" title={tr('Van ételintolerancia?', 'Are there any food intolerances?')}>
+      <PreferenceStep number="4" title={tr('Van ételintolerancia?', 'Are there any food intolerances?')} hint={tr('Emésztési érzékenység. A kijelölt összetevőket az Autopilot kerüli.', 'Digestive sensitivity. Autopilot avoids the selected ingredients.')}>
         <ChoiceRow options={intoleranceOptions} selected={draft.intolerances} labels={restrictionLabels(tr)} onToggle={value => setDraft(current => ({ ...current, intolerances: toggle(current.intolerances, value) }))} />
       </PreferenceStep>
 
@@ -117,17 +122,24 @@ function CloudSyncStatus({ status, tr }: { status: FamilySettingsSyncStatus; tr:
   return <span className="mt-1 block text-sm font-semibold text-primary" aria-live="polite">{label}</span>;
 }
 
-function PreferenceStep({ number, title, hint, helpSection, children }: { number: string; title: string; hint?: string; helpSection?: string; children: React.ReactNode }) {
-  return <div className="grid gap-3 sm:grid-cols-[2rem_1fr]">
-    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">{number}</span>
-    <div><div className="flex items-center gap-1"><h3 className="mb-1 font-semibold">{title}</h3>{helpSection && <HelpLink section={helpSection} label={title} />}</div>{hint && <p className="mb-3 text-sm text-muted-foreground leading-relaxed font-medium">{hint}</p>}<div className="mt-2">{children}</div></div>
+function PreferenceStep({ number, title, hint, helpSection, tone = 'default', children }: { number: string; title: string; hint?: string; helpSection?: string; tone?: 'default' | 'danger'; children: React.ReactNode }) {
+  const danger = tone === 'danger';
+  return <div className={`grid gap-3 rounded-xl ${danger ? 'border border-destructive/35 bg-destructive/5 p-3' : ''} sm:grid-cols-[2rem_1fr]`}>
+    <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${danger ? 'bg-destructive text-destructive-foreground' : 'bg-primary text-primary-foreground'}`}>{number}</span>
+    <div><div className="flex items-center gap-1">{danger && <AlertTriangle className="h-4 w-4 text-destructive" aria-hidden="true" />}<h3 className={`mb-1 font-semibold ${danger ? 'text-destructive' : ''}`}>{title}</h3>{helpSection && <HelpLink section={helpSection} label={title} />}</div>{hint && <p className={`mb-3 text-sm leading-relaxed font-medium ${danger ? 'text-destructive' : 'text-muted-foreground'}`}>{hint}</p>}<div className="mt-2">{children}</div></div>
   </div>;
 }
 
-function ChoiceRow<T extends string | number>({ options, selected, labels, onToggle, single = false }: { options: readonly T[]; selected: T[]; labels: Record<T, string>; onToggle: (value: T) => void; single?: boolean }) {
+function ChoiceRow<T extends string | number>({ options, selected, labels, onToggle, single = false, tone = 'default' }: { options: readonly T[]; selected: T[]; labels: Record<T, string>; onToggle: (value: T) => void; single?: boolean; tone?: 'default' | 'danger' }) {
   return <div className="flex flex-wrap gap-2">{options.map(option => {
     const active = selected.includes(option);
-    return <button key={option} type="button" role={single ? 'radio' : 'checkbox'} aria-checked={active} onClick={() => onToggle(option)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm font-medium transition ${active ? 'border-primary bg-primary text-primary-foreground' : 'bg-background hover:border-primary/60'}`}>{active ? '✓ ' : ''}{labels[option]}</button>;
+    const activeClasses = tone === 'danger'
+      ? 'border-destructive bg-destructive text-destructive-foreground'
+      : 'border-primary bg-primary text-primary-foreground';
+    const inactiveClasses = tone === 'danger'
+      ? 'border-destructive/30 bg-background hover:border-destructive/70'
+      : 'bg-background hover:border-primary/60';
+    return <button key={option} type="button" role={single ? 'radio' : 'checkbox'} aria-checked={active} onClick={() => onToggle(option)} className={`min-h-11 rounded-lg border px-4 py-2 text-sm font-medium transition ${active ? activeClasses : inactiveClasses}`}>{active ? '✓ ' : ''}{labels[option]}</button>;
   })}</div>;
 }
 

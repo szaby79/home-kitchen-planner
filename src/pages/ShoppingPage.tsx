@@ -11,7 +11,6 @@ import { EN_WEEKDAYS } from '@/i18n/labels';
 import SavedWeeksBar from '@/components/SavedWeeksBar';
 import { localizeIngredient } from '@/i18n/recipeLocalization';
 import HelpLink from '@/components/HelpLink';
-import AppBackLink from '@/components/AppBackLink';
 
 export default function ShoppingPage() {
   const { shoppingList, dailyShoppingList, extraItems, addExtraItem, removeExtraItem, removedItems, toggleRemoved, shoppingNotes, setShoppingNotes } = useAppContext();
@@ -34,9 +33,6 @@ export default function ShoppingPage() {
 
   return (
     <div className="page-container max-w-3xl">
-      <AppBackLink fallback="/planner/week" className="mb-4 inline-flex flex-wrap items-center gap-1 text-sm text-muted-foreground hover:text-foreground leading-relaxed font-medium">
-        {tr('Vissza a menühöz', 'Back to menu')}
-      </AppBackLink>
       <div className="flex items-center gap-1">
         <h1 className="section-title">{tr('Bevásárlólista', 'Shopping list')}</h1>
         <HelpLink section={view === 'weekly' ? 'weekly-shopping' : 'daily-shopping'} label={tr(`${view === 'weekly' ? 'Heti' : 'Napi'} bevásárlólista`, `${view === 'weekly' ? 'Weekly' : 'Daily'} shopping list`)} />

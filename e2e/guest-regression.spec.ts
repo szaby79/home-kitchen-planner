@@ -74,7 +74,7 @@ test('shopping back control returns to the actual previous app page', async ({ p
 
   await page.locator('a[href="/shopping"]:visible').first().click();
   await expect(page).toHaveURL(/\/shopping$/);
-  await page.getByRole('link', { name: 'Back to menu' }).click();
+  await page.getByRole('link', { name: 'Back', exact: true }).click();
 
   await expect(page).toHaveURL(/\/$/);
 });
@@ -104,7 +104,7 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
 
   await page.goto('/shopping');
   await expect(page.getByText('chicken breast').locator('..')).toContainText('750 g');
-  await page.getByRole('link', { name: 'Back to menu' }).click();
+  await page.getByRole('link', { name: 'Back', exact: true }).click();
   await expect(page).toHaveURL(/\/planner\/week$/);
 });
 
