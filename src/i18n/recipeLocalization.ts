@@ -63,6 +63,10 @@ const INGREDIENTS: Record<string, string> = {
   'füstölt pirospaprika': 'smoked paprika', 'őrölt lenmag': 'ground flaxseed',
   'portobello gomba': 'portobello mushrooms', 'ricotta': 'ricotta',
   'quinoa': 'quinoa', 'sertésszűz': 'pork tenderloin', 'tőkehalfilé': 'cod fillet',
+  'aszalt paradicsom': 'sun-dried tomatoes', 'csirke felsőcomb': 'chicken thighs',
+  'fehérbab konzerv': 'canned white beans', 'hajdina': 'buckwheat',
+  'hámozott mandula': 'blanched almonds', 'pisztrángfilé': 'trout fillet',
+  'rozmaring': 'rosemary', 'szeletelt mandula': 'sliced almonds', 'tempeh': 'tempeh',
 };
 
 const UNITS: Record<string, string> = {
@@ -129,6 +133,18 @@ const NOTES: Record<string, string> = {
   'Keto sertéssült krémes gombamártással': 'Keto pork with creamy mushroom sauce',
   'Keto halfilé paradicsommal és olívával': 'Keto fish fillet with tomatoes and olives',
   'Keto rakott marhahús karfiolpürével': 'Keto beef bake with cauliflower mash',
+  'Vegán és keto sültpaprika-krémleves': 'Vegan keto roasted pepper cream soup',
+  'Vegán és keto illatos gombaleves': 'Fragrant vegan keto mushroom soup',
+  'Vegán, fehérjedús egyedényes főétel': 'Protein-rich vegan one-pot main dish',
+  'Vegán és keto ropogós tempehes főétel': 'Crisp vegan keto tempeh main dish',
+  'Vegán és keto mediterrán sült főétel': 'Vegan keto Mediterranean baked main dish',
+  'Vegetáriánus, gluténmentes hajdinás főétel': 'Vegetarian gluten-free buckwheat main dish',
+  'Vegetáriánus és keto friss karfiolos főétel': 'Fresh vegetarian keto cauliflower main dish',
+  'Keto tepsis csirke zöldbabbal': 'Keto tray-baked chicken with green beans',
+  'Keto lasagne tészta nélkül': 'Keto pasta-free lasagne',
+  'Keto sertéssült krémes káposztával': 'Keto pork with creamy cabbage',
+  'Keto sütőben sült pulykafasírt': 'Keto oven-baked turkey patties',
+  'Keto halétel ropogós mandulakéreggel': 'Keto fish with a crisp almond crust',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
