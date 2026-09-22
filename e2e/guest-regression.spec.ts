@@ -18,7 +18,7 @@ test('mobile navigation keeps core destinations within one tap', async ({ page }
   await expect(page.getByRole('navigation', { name: 'Mobile main menu' }).getByRole('link', { name: 'Recipes' })).toHaveAttribute('aria-current', 'page');
 });
 
-test('home keeps one clear Autopilot action and secondary content collapsed', async ({ page }) => {
+test('home keeps one clear Autopilot action without duplicate navigation', async ({ page }) => {
   await seedEnglishGuest(page);
   await page.goto('/');
 
@@ -26,8 +26,7 @@ test('home keeps one clear Autopilot action and secondary content collapsed', as
   await expect(page.getByRole('img', { name: 'A freshly prepared, hearty family meal' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Family preferences' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'How does it work?' })).toBeVisible();
-  const moreOptions = page.locator('details', { hasText: 'More options' });
-  await expect(moreOptions).not.toHaveAttribute('open');
+  await expect(page.getByText('More options', { exact: true })).toHaveCount(0);
 });
 
 test('recipes keep search and categories visible while secondary filters stay collapsed', async ({ page }) => {
@@ -73,8 +72,7 @@ test('shopping back control returns to the actual previous app page', async ({ p
   await seedEnglishGuest(page);
   await page.goto('/');
 
-  await page.getByText('More options', { exact: true }).click();
-  await page.locator('a[href="/shopping"]', { hasText: 'Created automatically from your meal plan' }).click();
+  await page.locator('a[href="/shopping"]:visible').first().click();
   await expect(page).toHaveURL(/\/shopping$/);
   await page.getByRole('link', { name: 'Back to menu' }).click();
 

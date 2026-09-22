@@ -73,7 +73,8 @@ describe('planner meal cards', () => {
     window.history.replaceState(null, '', '/');
     render(<App />);
 
-    fireEvent.click(screen.getByRole('link', { name: /Bevásárlólista A menü alapján/i }));
+    const primaryNavigation = screen.getByRole('navigation', { name: 'Elsődleges navigáció' });
+    fireEvent.click(within(primaryNavigation).getByRole('link', { name: 'Bevásárlólista' }));
     expect(window.location.pathname).toBe('/shopping');
 
     fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));

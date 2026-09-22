@@ -21,7 +21,7 @@ describe('simplified primary navigation', () => {
     expect(within(navigation).queryByRole('link', { name: 'Súgó' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
     expect(screen.getByRole('img', { name: 'Frissen elkészült, tartalmas családi étel' })).toBeInTheDocument();
-    expect(screen.getByText('További lehetőségek').closest('details')).not.toHaveAttribute('open');
+    expect(screen.queryByText('További lehetőségek')).not.toBeInTheDocument();
   });
 
   it('shows saved-menu status without duplicating the homepage action', () => {
