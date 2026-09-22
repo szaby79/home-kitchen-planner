@@ -19,7 +19,7 @@ describe('recipe filters', () => {
     });
   });
 
-  it('keeps advanced filters collapsed until requested and shows active filter state', async () => {
+  it('keeps advanced filters collapsed and shows automatic recipe totals', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/recipes');
     render(<App />);
@@ -29,22 +29,14 @@ describe('recipe filters', () => {
     expect(screen.getByPlaceholderText('Recept keresése...')).toBeVisible();
     expect(screen.getByRole('button', { name: `Összes: ${defaultRecipes.length} recept` })).toBeVisible();
 
-    fireEvent.click(screen.getByText('Szűrés és rendezés'));
-    fireEvent.click(screen.getByRole('button', { name: 'Kedvencek' }));
-    expect(await screen.findByText('1 aktív')).toBeInTheDocument();
-  });
-
-  it('shows automatic totals for the full catalogue and every category', () => {
-    localStorage.clear();
-    window.history.pushState({}, '', '/recipes');
-    render(<App />);
-
-    expect(screen.getByRole('button', { name: `Összes: ${defaultRecipes.length} recept` })).toBeVisible();
-
     Object.entries(CATEGORY_LABELS).forEach(([category, label]) => {
       const count = defaultRecipes.filter(recipe => recipe.category === category).length;
       expect(screen.getByRole('button', { name: `${label}: ${count} recept` })).toBeVisible();
     });
+
+    fireEvent.click(screen.getByText('Szűrés és rendezés'));
+    fireEvent.click(screen.getByRole('button', { name: 'Kedvencek' }));
+    expect(await screen.findByText('1 aktív')).toBeInTheDocument();
   });
 
   it('clears quick meals when a normal category is selected', async () => {
