@@ -32,7 +32,7 @@ const INGREDIENTS: Record<string, string> = {
   'marhacsont': 'beef bones', 'marhahús': 'beef', 'marhalábszár': 'beef shank', 'mazsola': 'raisins',
   'meggy': 'sour cherries', 'méz': 'honey', 'mozzarella': 'mozzarella', 'mustár': 'mustard',
   'natúr joghurt': 'plain yogurt', 'olaj': 'oil', 'olívabogyó': 'olives', 'olívaolaj': 'olive oil',
-  'oregánó': 'oregano', 'paradicsom': 'tomato', 'paradicsom szósz': 'tomato sauce',
+  'oregánó': 'oregano', 'padlizsán': 'eggplant', 'paradicsom': 'tomato', 'paradicsom szósz': 'tomato sauce',
   'paradicsompüré': 'tomato paste', 'parmezán': 'Parmesan', 'petrezselyemgyökér': 'parsley root',
   'petrezselyemzöld': 'fresh parsley', 'pirospaprika': 'Hungarian paprika', 'piskóta lap': 'sponge cake layer',
   'ponty': 'carp', 'pontyfilé': 'carp fillet', 'porcukor': 'icing sugar', 'reszelt sajt': 'grated cheese',
@@ -54,6 +54,11 @@ const INGREDIENTS: Record<string, string> = {
   'vörösbab konzerv': 'canned kidney beans', 'vöröshagyma': 'yellow onion', 'vöröslencse': 'red lentils',
   'zeller': 'celeriac', 'zellerszár': 'celery stalks', 'zöldbab': 'green beans', 'zöldborsó': 'green peas',
   'zöldpaprika': 'Hungarian wax pepper', 'zsemle': 'bread rolls', 'zsemlemorzsa': 'breadcrumbs',
+  'currypor': 'curry powder', 'gluténmentes tamari': 'gluten-free tamari',
+  'darabolt paradicsom': 'chopped tomatoes', 'darált pulykahús': 'ground turkey',
+  'édesburgonya': 'sweet potato', 'főtt lencse': 'cooked lentils', 'friss spenót': 'fresh spinach',
+  'halloumi sajt': 'halloumi cheese', 'kakukkfű': 'thyme', 'kemény tofu': 'firm tofu',
+  'kókusztej': 'coconut milk', 'lazacfilé': 'salmon fillet', 'zöldségalaplé': 'vegetable stock',
 };
 
 const UNITS: Record<string, string> = {
@@ -102,6 +107,12 @@ const NOTES: Record<string, string> = {
   'Zöldbabos, tejfölös sertésragu': 'Pork and green-bean stew with sour cream',
   'Édeskés-savanykás, húsmentes étel': 'Sweet-tart vegetarian dish', 'Édeskés-sós magyar tésztaétel': 'Sweet and savoury Hungarian noodle dish',
   'Ünnepi magyar főétel': 'Hungarian celebration main dish', 'Ünnepi, ropogósra sült fogás': 'Crisp-roasted celebration dish',
+  'Gyors keto halétel': 'Quick keto fish dish', 'Keto családi főétel': 'Family-friendly keto main dish',
+  'Könnyű keto egytálétel': 'Light keto one-pot meal', 'Vegán egytálétel sok zöldséggel': 'Vegan one-pot meal with plenty of vegetables',
+  'Vegán és keto fűszeres főétel': 'Spiced vegan keto main dish', 'Vegán és keto krémleves': 'Vegan keto cream soup',
+  'Vegán és keto serpenyős étel': 'Vegan keto skillet meal', 'Vegán, krémes és laktató leves': 'Creamy and filling vegan soup',
+  'Vegán, tartalmas családi főétel': 'Hearty vegan family main dish', 'Vegetáriánus és keto gyors vacsora': 'Quick vegetarian keto dinner',
+  'Vegetáriánus és keto tepsis vacsora': 'Vegetarian keto tray-bake dinner', 'Vegetáriánus tepsis főétel': 'Vegetarian tray-bake main dish',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

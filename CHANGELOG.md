@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.57.0
+
+- Add the first 12-recipe dietary expansion with six vegan, nine vegetarian, and eight keto-compatible choices.
+- Provide complete five-step Hungarian and English directions and a bundled image for every new recipe.
+- Add explicit milk, egg, fish, and soy allergen metadata and retain safe gluten filtering for the tofu meal.
+- Add catalogue checks for duplicate recipes, dietary coverage, bilingual content, images, and allergen exclusion.
+- Keep the Keto control hidden until later recipe packs provide enough variety for a full weekly menu.
+
 ## 1.56.0
 
 - Add the internal keto classification needed before keto choices are exposed to users.
