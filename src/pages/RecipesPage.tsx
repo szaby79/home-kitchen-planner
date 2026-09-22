@@ -23,6 +23,11 @@ export default function RecipesPage() {
   const [randomSeed, setRandomSeed] = useState(1);
   const activeAdvancedFilters = Number(quickOnly) + Number(favoritesOnly) + Number(sortMode !== 'category');
 
+  const categoryCounts = useMemo(() => recipes.reduce<Partial<Record<Category, number>>>((counts, recipe) => {
+    counts[recipe.category] = (counts[recipe.category] ?? 0) + 1;
+    return counts;
+  }, {}), [recipes]);
+
   const filtered = useMemo(() => {
     let list = recipes;
     if (activeCategory !== 'all') list = list.filter(r => r.category === activeCategory);
@@ -63,9 +68,13 @@ export default function RecipesPage() {
     setSortMode('category');
   };
 
-  const categories: { value: string; label: string }[] = [
-    { value: 'all', label: tr('Összes', 'All') },
-    ...Object.entries(isEnglish ? EN_CATEGORY_LABELS : CATEGORY_LABELS).map(([k, v]) => ({ value: k, label: v })),
+  const categories: { value: string; label: string; count: number }[] = [
+    { value: 'all', label: tr('Összes', 'All'), count: recipes.length },
+    ...Object.entries(isEnglish ? EN_CATEGORY_LABELS : CATEGORY_LABELS).map(([k, v]) => ({
+      value: k,
+      label: v,
+      count: categoryCounts[k as Category] ?? 0,
+    })),
   ];
 
   return (
@@ -90,13 +99,22 @@ export default function RecipesPage() {
                 key={c.value}
                 type="button"
                 onClick={() => setCategory(c.value)}
-                className={`shrink-0 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                aria-label={tr(`${c.label}: ${c.count} recept`, `${c.label}: ${c.count} recipes`)}
+                className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   activeCategory === c.value
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                 }`}
               >
-                {c.label}
+                <span>{c.label}</span>
+                <span
+                  aria-hidden="true"
+                  className={`rounded-full px-1.5 py-0.5 text-xs tabular-nums ${
+                    activeCategory === c.value ? 'bg-primary-foreground/20' : 'bg-background/80'
+                  }`}
+                >
+                  {c.count}
+                </span>
               </button>
             ))}
           </div>
