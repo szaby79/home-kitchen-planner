@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.51.0
+
+- Replaced the duplicated homepage weekly-menu action with a clear Autopilot entry point.
+- Added an optimized, appetizing family-meal photo to the homepage hero.
+- Reduced the visual weight of the collapsed additional-options control.
+
 ## 1.50.0
 
 - Add a dedicated Weekly menu action to the center of the persistent mobile navigation.

@@ -19,18 +19,20 @@ describe('simplified primary navigation', () => {
     expect(within(navigation).queryByRole('link', { name: 'Admin' })).not.toBeInTheDocument();
     expect(within(navigation).queryByRole('link', { name: 'Budget' })).not.toBeInTheDocument();
     expect(within(navigation).queryByRole('link', { name: 'Súgó' })).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Heti menü készítése' })).toHaveAttribute('href', '/planner');
+    expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
+    expect(screen.getByRole('img', { name: 'Frissen elkészült, tartalmas családi étel' })).toBeInTheDocument();
     expect(screen.getByText('További lehetőségek').closest('details')).not.toHaveAttribute('open');
   });
 
-  it('opens the saved weekly menu when meals already exist', () => {
+  it('shows saved-menu status without duplicating the homepage action', () => {
     localStorage.setItem('plan-pan-weekplan', JSON.stringify({ Hétfő: { lunch: 'main-1' } }));
     window.history.replaceState({}, '', '/');
     render(<App />);
 
     const navigation = screen.getByRole('navigation', { name: 'Elsődleges navigáció' });
     expect(within(navigation).getByRole('link', { name: 'Heti terv' })).toHaveAttribute('href', '/planner/week');
-    expect(screen.getByRole('link', { name: 'Heti menü megnyitása' })).toHaveAttribute('href', '/planner/week');
+    expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
+    expect(screen.queryByRole('link', { name: 'Heti menü megnyitása' })).not.toBeInTheDocument();
     expect(screen.getByText('1 nap • 1 étkezés elmentve')).toBeInTheDocument();
   });
 
