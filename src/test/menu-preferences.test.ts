@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 import { generateSelectedPlan, generateWeekPlan } from '@/lib/planGenerator';
-import { estimatedCookingMinutes, isVegetarianRecipe, recipeMatchesSafetyPreferences } from '@/lib/menuPreferences';
+import { estimatedCookingMinutes, isKetoRecipe, isVegetarianRecipe, recipeMatchesSafetyPreferences } from '@/lib/menuPreferences';
 import { createDefaultAutopilotSettings, createEmptyWeekPlan, createGenerationSelection, DEFAULT_MENU_PREFERENCES, MenuPreferences, WEEKDAYS } from '@/types/recipe';
 
 function preferences(overrides: Partial<MenuPreferences>): MenuPreferences {
@@ -24,6 +24,27 @@ describe('personalized weekly menu generation', () => {
     const selectedIds = WEEKDAYS.flatMap(day => [plan[day].soup, plan[day].lunch, plan[day].dinner]).filter(Boolean) as string[];
     expect(selectedIds.length).toBeGreaterThan(0);
     selectedIds.forEach(id => expect(isVegetarianRecipe(defaultRecipes.find(recipe => recipe.id === id)!)).toBe(true));
+  });
+
+  it('builds a complete keto week using only explicitly keto recipes', () => {
+    const profile = preferences({ diet: 'keto' });
+    const plan = generateWeekPlan(defaultRecipes, 7, 7, 'balanced', profile);
+    const lunches = WEEKDAYS.map(day => plan[day].lunch);
+    const dinners = WEEKDAYS.map(day => plan[day].dinner);
+    const selectedIds = WEEKDAYS.flatMap(day => [plan[day].soup, plan[day].lunch, plan[day].dinner]).filter(Boolean) as string[];
+
+    expect(lunches.every(Boolean)).toBe(true);
+    expect(dinners.every(Boolean)).toBe(true);
+    selectedIds.forEach(id => expect(isKetoRecipe(defaultRecipes.find(recipe => recipe.id === id)!)).toBe(true));
+  });
+
+  it('keeps allergen exclusions active inside a keto plan', () => {
+    const profile = preferences({ diet: 'keto', allergies: ['milk', 'egg', 'nuts', 'fish', 'soy'] });
+    const plan = generateWeekPlan(defaultRecipes, 7, 7, 'balanced', profile);
+    const selectedIds = WEEKDAYS.flatMap(day => [plan[day].soup, plan[day].lunch, plan[day].dinner]).filter(Boolean) as string[];
+
+    expect(WEEKDAYS.every(day => Boolean(plan[day].lunch) && Boolean(plan[day].dinner))).toBe(true);
+    selectedIds.forEach(id => expect(recipeMatchesSafetyPreferences(defaultRecipes.find(recipe => recipe.id === id)!, profile)).toBe(true));
   });
 
   it('excludes allergens and disliked ingredients', () => {

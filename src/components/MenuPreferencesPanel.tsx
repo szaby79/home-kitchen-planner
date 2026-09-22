@@ -62,7 +62,8 @@ export default function MenuPreferencesPanel({ preferences, hasSavedPreferences,
       </PreferenceStep>
 
       <PreferenceStep number="2" title={tr('Van különleges étrend?', 'Do you follow a special diet?')}>
-        <ChoiceRow options={(['none', 'vegetarian', 'vegan'] as DietPreference[])} selected={[draft.diet]} labels={{ none: tr('Nincs', 'No restriction'), vegetarian: tr('Vegetáriánus', 'Vegetarian'), vegan: tr('Vegán', 'Vegan'), keto: 'Keto' }} onToggle={value => setDraft(current => ({ ...current, diet: value }))} single />
+        <ChoiceRow options={(['none', 'vegetarian', 'vegan', 'keto'] as DietPreference[])} selected={[draft.diet]} labels={{ none: tr('Nincs', 'No restriction'), vegetarian: tr('Vegetáriánus', 'Vegetarian'), vegan: tr('Vegán', 'Vegan'), keto: 'Keto' }} onToggle={value => setDraft(current => ({ ...current, diet: value }))} single />
+        {draft.diet === 'keto' && <p className="mt-3 text-sm font-medium leading-relaxed text-muted-foreground">{tr('Az Autopilot csak kifejezetten keto jelölt recepteket választ. Az allergiákat és intoleranciákat ezen belül is mindig kizárjuk.', 'Autopilot will only choose recipes explicitly marked as keto. Allergies and intolerances are still always excluded.')}</p>}
       </PreferenceStep>
 
       <PreferenceStep
@@ -154,6 +155,7 @@ function preferenceSummary(preferences: MenuPreferences, tr: (hu: string, en: st
   const parts = [tr(`${preferences.familySize} fő`, `${preferences.familySize} people`)];
   if (preferences.diet === 'vegetarian') parts.push(tr('vegetáriánus', 'vegetarian'));
   if (preferences.diet === 'vegan') parts.push(tr('vegán', 'vegan'));
+  if (preferences.diet === 'keto') parts.push('keto');
   if (preferences.allergies.length || preferences.intolerances.length) parts.push(tr('korlátozások beállítva', 'dietary restrictions set'));
   if (preferences.maxCookingTime !== 'any') parts.push(tr(`max. ${preferences.maxCookingTime} perc`, `up to ${preferences.maxCookingTime} minutes`));
   if (preferences.batchDays > 1) parts.push(tr(`${preferences.batchDays} napra főzés`, `${preferences.batchDays}-day batches`));
