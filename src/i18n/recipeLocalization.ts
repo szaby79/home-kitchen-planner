@@ -59,6 +59,10 @@ const INGREDIENTS: Record<string, string> = {
   'édesburgonya': 'sweet potato', 'főtt lencse': 'cooked lentils', 'friss spenót': 'fresh spinach',
   'halloumi sajt': 'halloumi cheese', 'kakukkfű': 'thyme', 'kemény tofu': 'firm tofu',
   'kókusztej': 'coconut milk', 'lazacfilé': 'salmon fillet', 'zöldségalaplé': 'vegetable stock',
+  'fekete bab konzerv': 'canned black beans', 'fenyőmag': 'pine nuts',
+  'füstölt pirospaprika': 'smoked paprika', 'őrölt lenmag': 'ground flaxseed',
+  'portobello gomba': 'portobello mushrooms', 'ricotta': 'ricotta',
+  'quinoa': 'quinoa', 'sertésszűz': 'pork tenderloin', 'tőkehalfilé': 'cod fillet',
 };
 
 const UNITS: Record<string, string> = {
@@ -113,6 +117,18 @@ const NOTES: Record<string, string> = {
   'Vegán és keto serpenyős étel': 'Vegan keto skillet meal', 'Vegán, krémes és laktató leves': 'Creamy and filling vegan soup',
   'Vegán, tartalmas családi főétel': 'Hearty vegan family main dish', 'Vegetáriánus és keto gyors vacsora': 'Quick vegetarian keto dinner',
   'Vegetáriánus és keto tepsis vacsora': 'Vegetarian keto tray-bake dinner', 'Vegetáriánus tepsis főétel': 'Vegetarian tray-bake main dish',
+  'Vegán és keto zöldségkrémleves': 'Vegan keto vegetable cream soup',
+  'Vegán, tartalmas egyedényes főétel': 'Hearty vegan one-pot main dish',
+  'Vegán tepsis főétel ropogós dióval': 'Vegan tray-bake main dish with crunchy walnuts',
+  'Vegán és keto sült zöldséges főétel': 'Vegan keto roasted vegetable main dish',
+  'Vegetáriánus és keto paradicsomos tojásétel': 'Vegetarian keto tomato and egg dish',
+  'Vegetáriánus és keto könnyű felfújt': 'Light vegetarian keto bake',
+  'Vegetáriánus és keto töltött gomba': 'Vegetarian keto stuffed mushrooms',
+  'Keto egyserpenyős családi főétel': 'Keto one-pan family main dish',
+  'Keto csirkés vacsora cukkinimetélttel': 'Keto chicken dinner with zucchini noodles',
+  'Keto sertéssült krémes gombamártással': 'Keto pork with creamy mushroom sauce',
+  'Keto halfilé paradicsommal és olívával': 'Keto fish fillet with tomatoes and olives',
+  'Keto rakott marhahús karfiolpürével': 'Keto beef bake with cauliflower mash',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
