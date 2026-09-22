@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.54.0
+
+- Remove the globally visible version footer and keep the app version as quiet technical information at the bottom of Help.
+- Let the homepage hero use the available screen height so removing the footer does not leave an empty gap above mobile navigation.
+
 ## 1.53.0
 
 - Replace the homepage meal close-up with a warm multigenerational family-table photo.

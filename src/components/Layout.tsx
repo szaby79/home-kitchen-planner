@@ -10,7 +10,6 @@ import { localizeRecipe } from '@/i18n/recipeLocalization';
 import { PRIVACY_NOTICE_VERSION, useAuth } from '@/auth/AuthContext';
 import AuthDialog from '@/components/AuthDialog';
 import { hasPlanMeals, type StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
-import packageMetadata from '../../package.json';
 
 interface AppContextType {
   recipes: Recipe[];
@@ -168,9 +167,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </header>
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-[#E4C7AA] bg-[#FFF3E3] py-4 text-center text-sm text-muted-foreground leading-relaxed font-medium">
-          Plan & Pan v{packageMetadata.version} © {new Date().getFullYear()} — {tr('Családi étel-autopilóta', 'Family food autopilot')}
-        </footer>
         <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
           {mobileNavItems.map(item => {
             const active = isMobileActive(item);
