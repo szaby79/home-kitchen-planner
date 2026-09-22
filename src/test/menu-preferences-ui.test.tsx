@@ -30,6 +30,23 @@ describe('family preferences panel', () => {
     expect(screen.getByRole('button', { name: 'Save preferences' })).toBeInTheDocument();
   });
 
+  it('makes keto available with a clear safety explanation and saves it', () => {
+    const onSave = vi.fn();
+    render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences={false} recipes={defaultRecipes} onSave={onSave} /></LanguageProvider>);
+
+    fireEvent.click(screen.getByRole('radio', { name: 'Keto' }));
+    expect(screen.getByText('Az Autopilot csak kifejezetten keto jelölt recepteket választ. Az allergiákat és intoleranciákat ezen belül is mindig kizárjuk.')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Beállítások mentése' }));
+
+    expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ diet: 'keto' }));
+  });
+
+  it('shows keto in the collapsed saved summary', () => {
+    render(<LanguageProvider><MenuPreferencesPanel preferences={{ ...DEFAULT_MENU_PREFERENCES, diet: 'keto' }} hasSavedPreferences recipes={defaultRecipes} onSave={() => undefined} /></LanguageProvider>);
+
+    expect(screen.getByText(/4 fő • keto/)).toBeInTheDocument();
+  });
+
   it('shows bilingual cloud saving states without changing the settings form', () => {
     const view = render(<LanguageProvider><MenuPreferencesPanel preferences={DEFAULT_MENU_PREFERENCES} hasSavedPreferences recipes={defaultRecipes} onSave={() => undefined} cloudSyncEnabled syncStatus="saving" /></LanguageProvider>);
     expect(screen.getByText('Mentés…')).toBeInTheDocument();

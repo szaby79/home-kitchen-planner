@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.62.0
+
+- Make Keto available in the existing family diet selector without adding another screen or navigation path.
+- Restrict Keto plans to recipes with an explicit Keto classification while continuing to enforce allergy and intolerance exclusions.
+- Add complete-week generation and combined dietary-safety coverage for the newly visible option.
+
 ## 1.61.0
 
 - Add a fifth 12-recipe dietary expansion with five vegan, seven vegetarian, and ten keto-compatible choices.
