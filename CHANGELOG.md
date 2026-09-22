@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.58.0
+
+- Add a second 12-recipe dietary expansion with four vegan, seven vegetarian, and ten keto-compatible choices.
+- Replace a semantically overlapping stuffed-pepper idea with a distinct black-bean quinoa meal before release.
+- Provide complete five-step Hungarian and English directions and a unique bundled image for every new recipe.
+- Cover milk, egg, nut, and fish exclusions and validate the full 192-recipe catalogue for duplicate names and IDs.
+
 ## 1.57.0
 
 - Add the first 12-recipe dietary expansion with six vegan, nine vegetarian, and eight keto-compatible choices.

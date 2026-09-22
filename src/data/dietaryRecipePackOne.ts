@@ -2,7 +2,7 @@ import { Ingredient, Recipe } from '@/types/recipe';
 
 type IngredientRow = [string, number, string];
 
-type DietaryRecipeOptions = {
+export type DietaryRecipeOptions = {
   id: string;
   name: string;
   category: 'soup' | 'main';
@@ -19,7 +19,7 @@ type DietaryRecipeOptions = {
   estimatedCostCategory?: Recipe['estimatedCostCategory'];
 };
 
-const makeDietaryRecipe = ({
+export const makeDietaryRecipe = ({
   id,
   name,
   category,
