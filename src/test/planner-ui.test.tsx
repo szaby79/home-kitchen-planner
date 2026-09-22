@@ -62,7 +62,7 @@ describe('planner meal cards', () => {
     window.history.pushState({}, '', '/shopping');
     render(<App />);
 
-    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
 
     expect(window.location.pathname).toBe('/planner/week');
     expect(screen.getByRole('heading', { name: 'Heti menüterv' })).toBeInTheDocument();
@@ -77,7 +77,7 @@ describe('planner meal cards', () => {
     fireEvent.click(within(primaryNavigation).getByRole('link', { name: 'Bevásárlólista' }));
     expect(window.location.pathname).toBe('/shopping');
 
-    fireEvent.click(screen.getByRole('link', { name: 'Vissza a menühöz' }));
+    fireEvent.click(screen.getByRole('link', { name: 'Vissza' }));
     await waitFor(() => expect(window.location.pathname).toBe('/'));
     expect(screen.getByRole('heading', { name: 'Kevesebb tervezés. Több idő együtt.', level: 1 })).toBeInTheDocument();
   });

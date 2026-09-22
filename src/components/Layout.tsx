@@ -9,6 +9,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { localizeRecipe } from '@/i18n/recipeLocalization';
 import { PRIVACY_NOTICE_VERSION, useAuth } from '@/auth/AuthContext';
 import AuthDialog from '@/components/AuthDialog';
+import AppBackLink from '@/components/AppBackLink';
 import { hasPlanMeals, type StoredWeeklyPlan } from '@/lib/weeklyPlanValidation';
 
 interface AppContextType {
@@ -166,7 +167,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           )}
         </header>
         <AuthDialog open={authOpen} onOpenChange={setAuthOpen} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          {location.pathname !== '/' && (
+            <div className="mx-auto w-full max-w-7xl px-4 pt-3">
+              <AppBackLink fallback={backFallback(location.pathname, location.search)} className="inline-flex min-h-11 items-center gap-1 rounded-md px-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                {tr('Vissza', 'Back')}
+              </AppBackLink>
+            </div>
+          )}
+          {children}
+        </main>
         <nav aria-label={tr('Mobil főmenü', 'Mobile main menu')} className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[#E4C7AA] bg-[#FFF8EE]/95 px-1 pt-1.5 pb-[max(env(safe-area-inset-bottom),0.35rem)] shadow-[0_-4px_18px_rgba(66,48,38,0.08)] backdrop-blur lg:hidden">
           {mobileNavItems.map(item => {
             const active = isMobileActive(item);
@@ -186,4 +196,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
     </AppContext.Provider>
   );
+}
+
+function backFallback(pathname: string, search: string) {
+  if (pathname.startsWith('/recipes/')) return new URLSearchParams(search).get('from') === 'plan' ? '/planner/week' : '/recipes';
+  if (pathname === '/recipes') return '/';
+  if (pathname === '/planner/week') return '/planner';
+  if (pathname === '/shopping') return '/planner/week';
+  if (pathname === '/budget') return '/shopping';
+  if (pathname === '/admin') return '/recipes';
+  return '/';
 }

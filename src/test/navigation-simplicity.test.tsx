@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import App from '@/App';
+import { createDefaultAutopilotSettings, DEFAULT_MENU_PREFERENCES } from '@/types/recipe';
 
 afterEach(() => {
   cleanup();
@@ -22,7 +23,7 @@ describe('simplified primary navigation', () => {
     expect(screen.getByRole('link', { name: 'Autopilot' })).toHaveAttribute('href', '/planner');
     expect(screen.getByRole('img', { name: 'Többgenerációs család közös étkezése' })).toBeInTheDocument();
     expect(screen.queryByText('További lehetőségek')).not.toBeInTheDocument();
-    expect(screen.queryByText(/Plan & Pan v1\.54\.0/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Plan & Pan v\d/)).not.toBeInTheDocument();
   });
 
   it('shows saved-menu status without duplicating the homepage action', () => {
@@ -82,5 +83,29 @@ describe('simplified primary navigation', () => {
     expect(filters).not.toHaveAttribute('open');
     fireEvent.click(screen.getByText('Szűrés és rendezés'));
     expect(screen.getByRole('link', { name: 'Receptek kezelése' })).toHaveAttribute('href', '/admin');
+  });
+
+  it('shows one consistent back action on every internal screen but not on Home', () => {
+    window.history.replaceState({}, '', '/family-settings');
+    const view = render(<App />);
+    expect(screen.getByRole('link', { name: 'Vissza' })).toHaveAttribute('href', '/');
+
+    view.unmount();
+    window.history.replaceState({}, '', '/planner/week');
+    render(<App />);
+    expect(screen.getByRole('link', { name: 'Vissza' })).toHaveAttribute('href', '/planner');
+  });
+
+  it('uses the saved family size instead of stale Autopilot day values', () => {
+    localStorage.setItem('plan-pan-menu-preferences-v1', JSON.stringify({ ...DEFAULT_MENU_PREFERENCES, familySize: 3 }));
+    const oldSettings = createDefaultAutopilotSettings(6);
+    delete oldSettings.defaultFamilySize;
+    localStorage.setItem('plan-pan-weekly-autopilot', JSON.stringify(oldSettings));
+    window.history.replaceState({}, '', '/planner');
+
+    render(<App />);
+
+    expect(screen.getAllByText(/3 fő/).length).toBeGreaterThan(1);
+    expect(screen.queryByText(/6 fő/)).not.toBeInTheDocument();
   });
 });
