@@ -115,4 +115,3 @@ If most answers are **no**, do not build it.
 ## Market direction
 
 Hungary is the first market. Initial planning, recipes, pricing assumptions and shopping behavior should reflect Hungarian households and food culture. Keep data models and architecture capable of later Central and Eastern European localization without weakening the Hungarian launch experience.
-
