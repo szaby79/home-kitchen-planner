@@ -52,4 +52,3 @@ These checks establish a good engineering baseline. They do **not** prove that t
 - Convert every failure into a reproducible issue or a failing automated test where practical.
 - Do not mark a launch gate complete from code inspection alone.
 - Do not include credentials, OTPs, access tokens, service-role keys or personal household data in evidence.
-
