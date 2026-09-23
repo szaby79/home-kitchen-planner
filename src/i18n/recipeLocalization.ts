@@ -75,7 +75,7 @@ const INGREDIENTS: Record<string, string> = {
   'kecskesajt': 'goat cheese', 'pulykamell': 'turkey breast',
   'banán': 'banana', 'chia mag': 'chia seeds', 'fagyasztott bogyós gyümölcs': 'frozen mixed berries',
   'görög joghurt': 'Greek yogurt', 'granola': 'granola', 'kurkuma': 'turmeric',
-  'teljes kiőrlésű kenyér': 'whole-grain bread', 'zabpehely': 'rolled oats',
+  'teljes kiőrlésű kenyér': 'whole-grain bread', 'tepertő': 'pork cracklings', 'zabpehely': 'rolled oats',
 };
 
 const UNITS: Record<string, string> = {
@@ -190,6 +190,17 @@ const NOTES: Record<string, string> = {
   'Gyerekbarát, hozzáadott cukor nélküli reggeli': 'Child-friendly breakfast with no added sugar',
   '20 perces, Keto-kompatibilis omlett': '20-minute keto-friendly omelette',
   'Vegán és Keto-kompatibilis meleg reggeli': 'Vegan keto-friendly hot breakfast',
+  'Klasszikus magyaros, Keto-kompatibilis reggeli': 'Classic Hungarian keto-friendly breakfast',
+  'Ropogós magyar reggeli fokhagymás tejföllel': 'Crisp Hungarian breakfast with garlic sour cream',
+  'Tartalmas, magyaros serpenyős reggeli': 'Hearty Hungarian skillet breakfast',
+  'Keto, előre elkészíthető tojáskrém': 'Keto make-ahead egg spread',
+  'Hagyományos magyar hideg reggeli': 'Traditional Hungarian cold breakfast',
+  'Gyors, laktató meleg reggeli': 'Quick and filling hot breakfast',
+  'Klasszikus, meleg magyar családi reggeli': 'Classic warm Hungarian family breakfast',
+  'Krémes, gyümölcsös meleg reggeli': 'Creamy warm breakfast with fruit',
+  'Citromos-vaníliás túróval töltött magyar péksütemény': 'Hungarian pastry filled with lemon-vanilla cottage cheese',
+  'Házi magyar péksütemény reggelire': 'Homemade Hungarian breakfast pastry',
+  'Bőséges magyaros hidegtál családi reggelihez': 'Generous Hungarian cold platter for a family breakfast',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

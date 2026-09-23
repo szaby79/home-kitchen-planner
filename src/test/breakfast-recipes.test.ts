@@ -12,8 +12,8 @@ const normalizeName = (name: string) => name
   .replace(/[^a-z0-9]/g, '');
 
 describe('breakfast recipe foundation', () => {
-  it('adds 12 complete breakfasts without duplicate names or IDs', () => {
-    expect(breakfastRecipes).toHaveLength(12);
+  it('adds 23 complete breakfasts without duplicate names or IDs', () => {
+    expect(breakfastRecipes).toHaveLength(23);
     expect(new Set(defaultRecipes.map(recipe => recipe.id)).size).toBe(defaultRecipes.length);
     expect(new Set(defaultRecipes.map(recipe => normalizeName(recipe.name))).size).toBe(defaultRecipes.length);
 
@@ -31,8 +31,8 @@ describe('breakfast recipe foundation', () => {
 
   it('includes vegan and keto choices without hiding the everyday breakfasts', () => {
     expect(breakfastRecipes.filter(recipe => recipe.vegan)).toHaveLength(2);
-    expect(breakfastRecipes.filter(recipe => recipe.keto)).toHaveLength(5);
-    expect(breakfastRecipes.filter(recipe => recipe.childFriendly)).toHaveLength(12);
+    expect(breakfastRecipes.filter(recipe => recipe.keto)).toHaveLength(9);
+    expect(breakfastRecipes.filter(recipe => recipe.childFriendly)).toHaveLength(23);
   });
 
   it.each<FoodRestriction>(['gluten', 'milk', 'egg', 'nuts', 'soy'])(
