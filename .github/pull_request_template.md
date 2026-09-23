@@ -33,4 +33,3 @@ If most of these statements are false, stop and do not build the change.
 ## Not included
 
 List deferred work so the PR boundary is unambiguous.
-
