@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.64.0
+
+- Add a dedicated breakfast category with 23 practical recipes and live catalogue counting.
+- Include quick, make-ahead, child-friendly, vegan, Keto-compatible, and traditional Hungarian breakfast choices.
+- Provide complete five-step Hungarian and English directions, dietary metadata, allergen safety, and bundled artwork for every breakfast.
+- Keep breakfast out of the existing lunch and dinner planner until the optional breakfast-planning flow is introduced separately.
+
 ## 1.63.0
 
 - Show the live total recipe count and automatic per-category counts directly in the recipe category controls.

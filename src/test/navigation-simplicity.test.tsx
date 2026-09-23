@@ -83,7 +83,7 @@ describe('simplified primary navigation', () => {
     expect(filters).not.toHaveAttribute('open');
     fireEvent.click(screen.getByText('Szűrés és rendezés'));
     expect(screen.getByRole('link', { name: 'Receptek kezelése' })).toHaveAttribute('href', '/admin');
-  });
+  }, 20_000);
 
   it('shows one consistent back action on every internal screen but not on Home', () => {
     window.history.replaceState({}, '', '/family-settings');

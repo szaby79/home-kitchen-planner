@@ -4,8 +4,10 @@ import { dietaryRecipePackTwoEnglishInstructions } from '@/data/dietaryRecipePac
 import { dietaryRecipePackThreeEnglishInstructions } from '@/data/dietaryRecipePackThree';
 import { dietaryRecipePackFourEnglishInstructions } from '@/data/dietaryRecipePackFour';
 import { dietaryRecipePackFiveEnglishInstructions } from '@/data/dietaryRecipePackFive';
+import { breakfastRecipeEnglishInstructions } from '@/data/breakfastRecipes';
 
 export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
+  ...breakfastRecipeEnglishInstructions,
   ...additionalStewEnglishInstructions,
   ...dietaryRecipePackOneEnglishInstructions,
   ...dietaryRecipePackTwoEnglishInstructions,

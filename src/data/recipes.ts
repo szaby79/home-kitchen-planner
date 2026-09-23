@@ -12,6 +12,7 @@ import { dietaryRecipePackTwo } from '@/data/dietaryRecipePackTwo';
 import { dietaryRecipePackThree } from '@/data/dietaryRecipePackThree';
 import { dietaryRecipePackFour } from '@/data/dietaryRecipePackFour';
 import { dietaryRecipePackFive } from '@/data/dietaryRecipePackFive';
+import { breakfastRecipes } from '@/data/breakfastRecipes';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -742,6 +743,7 @@ const defaultRecipeData: Recipe[] = [
 // Recipe images are bundled with the application so every default recipe has
 // a stable, matching image instead of relying on external or cached URLs.
 const allRecipeData = [
+  ...breakfastRecipes,
   ...defaultRecipeData,
   ...additionalSoups,
   ...additionalMains,
