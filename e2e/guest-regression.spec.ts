@@ -49,15 +49,15 @@ test('favourites and recipe serving quantities persist and calculate correctly',
   await seedEnglishGuest(page);
   await page.goto('/recipes');
 
-  const addFavourite = page.getByRole('button', { name: 'Add Rántott csirke to favourites' });
+  const addFavourite = page.getByRole('button', { name: 'Add Breaded Chicken Cutlets to favourites' });
   await addFavourite.click();
-  await expect(page.getByRole('button', { name: 'Remove Rántott csirke from favourites' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Remove Breaded Chicken Cutlets from favourites' })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('button', { name: 'Remove Rántott csirke from favourites' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Remove Breaded Chicken Cutlets from favourites' })).toBeVisible();
 
-  await page.getByRole('heading', { name: 'Rántott csirke' }).click();
+  await page.getByRole('heading', { name: 'Breaded Chicken Cutlets' }).click();
   await expect(page).toHaveURL(/\/recipes\/main-1$/);
-  await expect(page.getByRole('heading', { name: 'Rántott csirke' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Breaded Chicken Cutlets' })).toBeVisible();
 
   const servingControl = page.getByText('Servings:', { exact: true }).locator('..');
   await servingControl.getByRole('button').last().click();
@@ -88,7 +88,7 @@ test('portion editing stays on the planner, updates shopping quantities, and sur
   }
 
   const mainDish = page.locator('label:visible').filter({ hasText: /^Main dish/ }).first().locator('..');
-  await expect(mainDish.getByText('Rántott csirke', { exact: true })).toBeVisible();
+  await expect(mainDish.getByText('Breaded Chicken Cutlets', { exact: true })).toBeVisible();
   const servings = mainDish.getByText('Servings:', { exact: true }).locator('..');
   await servings.getByRole('button', { name: '+' }).click();
 
@@ -112,7 +112,7 @@ test('saved weekly plan opens with meals first and keeps generation setup second
   await seedGuestPlan(page);
   await page.goto('/planner/week');
 
-  await expect(page.locator('a:visible', { hasText: 'Rántott csirke' }).first()).toBeVisible();
+  await expect(page.locator('a:visible', { hasText: 'Breaded Chicken Cutlets' }).first()).toBeVisible();
   const setupButton = page.getByRole('button', { name: /Change plan/ });
   await expect(setupButton).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByText('Which days should be planned?')).toBeHidden();
@@ -126,7 +126,7 @@ test('recipe navigation returns to the active guest plan without losing it', asy
   await seedGuestPlan(page, 5);
   await page.goto('/planner/week');
 
-  await page.locator('a:visible', { hasText: 'Rántott csirke' }).first().click();
+  await page.locator('a:visible', { hasText: 'Breaded Chicken Cutlets' }).first().click();
   await expect(page).toHaveURL(/\/recipes\/main-1\?from=plan&servings=5$/);
   await expect(page.getByText('5', { exact: true }).first()).toBeVisible();
   await expect(page.getByText(/change saved servings, edit the weekly menu/i)).toBeVisible();
