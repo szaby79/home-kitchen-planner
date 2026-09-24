@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
 import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
+import { ENGLISH_RECIPE_NAMES, hasEnglishRecipeName } from '@/i18n/englishRecipeNames';
 import { hasIngredientTranslation, localizeRecipe } from '@/i18n/recipeLocalization';
 
 describe('English recipe catalogue', () => {
@@ -19,11 +20,15 @@ describe('English recipe catalogue', () => {
     expect([...ingredients].filter(name => !hasIngredientTranslation(name))).toEqual([]);
   });
 
-  it('keeps Hungarian food names, quantities, IDs, and metric units unchanged', () => {
+  it('gives every built-in recipe a unique English name while preserving IDs and quantities', () => {
+    expect(Object.keys(ENGLISH_RECIPE_NAMES)).toHaveLength(defaultRecipes.length);
+    expect(new Set(Object.values(ENGLISH_RECIPE_NAMES)).size).toBe(defaultRecipes.length);
     for (const recipe of defaultRecipes) {
       const english = localizeRecipe(recipe, true);
       expect(english.id).toBe(recipe.id);
-      expect(english.name).toBe(recipe.name);
+      expect(hasEnglishRecipeName(recipe.id), recipe.id).toBe(true);
+      expect(english.name, recipe.id).toBe(ENGLISH_RECIPE_NAMES[recipe.id]);
+      expect(english.name, recipe.id).not.toBe(recipe.name);
       expect(english.ingredients.map(item => item.quantity)).toEqual(recipe.ingredients.map(item => item.quantity));
       recipe.ingredients.forEach((ingredient, index) => {
         if (['g', 'kg', 'ml', 'l', '°C'].includes(ingredient.unit)) {
@@ -31,6 +36,10 @@ describe('English recipe catalogue', () => {
         }
       });
     }
+  });
+
+  it('keeps every Hungarian recipe name unchanged in Hungarian mode', () => {
+    for (const recipe of defaultRecipes) expect(localizeRecipe(recipe, false)).toBe(recipe);
   });
 
   it('translates every built-in recipe note when one exists', () => {
