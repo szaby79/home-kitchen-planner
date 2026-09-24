@@ -1,8 +1,14 @@
 # Plan & Pan
 
-Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.37.0 removes Lovable-specific build tooling and metadata while preserving the existing Vercel, Supabase, guest-mode, Help Centre, design, and application behavior.
+Plan & Pan is a bilingual Hungarian/English household weekly meal-planning system. It is not developed as a recipe app: recipes, budget, household preferences and shopping data support one core job—creating a realistic week that the household can actually follow.
 
-## Tervezett PR-sorozat
+The January 2027 target is a stable, polished, production-ready v1.0 for paying users, not an MVP. The authoritative product rules and current proof gaps are maintained in:
+
+- [`docs/PRODUCT_DIRECTION_2027.md`](docs/PRODUCT_DIRECTION_2027.md)
+- [`docs/LAUNCH_READINESS_2027.md`](docs/LAUNCH_READINESS_2027.md)
+- [`docs/RELEASE_TESTING.md`](docs/RELEASE_TESTING.md)
+
+## Korábbi alapozó PR-sorozat
 
 - PR #31 / v1.31 – felhasználói adatbázis-alap (kész)
 - PR #32 / v1.32 – recept- és ételfotó-audit (kész)
@@ -11,8 +17,11 @@ Plan & Pan is a bilingual Hungarian/English family meal planner. Version 1.37.0 
 - PR #35 / v1.35 – fiók- és adatvédelmi vezérlők (kész; kézi destruktív ellenőrzések később)
 - PR #36 / v1.36 – stabilizáció, automatikus kiadási ellenőrzések és kétnyelvű Súgó (kész)
 - PR #37 / v1.37 – Lovable-függetlenítés és platformtisztítás (kész)
-- PR #38 / v1.38 – iOS/Android kezdőképernyős Plan & Pan arculat (folyamatban)
-- Ezután: keto étrend mód (a következő szabad PR-számmal)
+- PR #38 / v1.38 – iOS/Android kezdőképernyős Plan & Pan arculat (kész)
+- PR #62 / v1.62 – keto étrend mód (kész)
+- PR #64 / v1.64 – reggeli receptalapok (kész; a reggeli tervezési folyamat külön döntés)
+
+Új fejlesztés előtt a product-direction szűrőt és a launch-readiness sorrendet kell alkalmazni. A repository, az alkalmazott Supabase-séma, a telepített környezet és a rögzített teszteredmények az aktuális állapot forrásai; ez a történeti lista nem roadmap.
 
 ## Local development
 
