@@ -1,5 +1,6 @@
 import { Recipe } from '@/types/recipe';
 import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
+import { ENGLISH_RECIPE_NAMES } from '@/i18n/englishRecipeNames';
 
 const INGREDIENTS: Record<string, string> = {
   'alma': 'apple', 'avokádó': 'avocado', 'babérlevél': 'bay leaf', 'balzsamecet': 'balsamic vinegar',
@@ -209,6 +210,7 @@ export function localizeRecipe(recipe: Recipe, english: boolean): Recipe {
   if (!english) return recipe;
   return {
     ...recipe,
+    name: ENGLISH_RECIPE_NAMES[recipe.id] ?? recipe.name,
     description: ENGLISH_INSTRUCTIONS[recipe.id] ?? recipe.description,
     note: NOTES[recipe.note] ?? recipe.note,
     ingredients: recipe.ingredients.map(ingredient => ({
