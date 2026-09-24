@@ -37,10 +37,10 @@ export default function RecipesPage() {
       const q = search.toLowerCase();
       list = list.filter(r => r.name.toLowerCase().includes(q));
     }
-    if (sortMode === 'abc') return [...list].sort((a, b) => a.name.localeCompare(b.name, 'hu'));
+    if (sortMode === 'abc') return [...list].sort((a, b) => a.name.localeCompare(b.name, isEnglish ? 'en' : 'hu'));
     if (sortMode === 'random') return [...list].sort((a, b) => hash(`${a.id}-${randomSeed}`) - hash(`${b.id}-${randomSeed}`));
     return sortRecipesByCategory(list);
-  }, [recipes, activeCategory, search, favoritesOnly, quickOnly, isFavorite, sortMode, randomSeed]);
+  }, [recipes, activeCategory, search, favoritesOnly, quickOnly, isEnglish, isFavorite, sortMode, randomSeed]);
 
   const setCategory = (category: string) => {
     const next = new URLSearchParams(params);
