@@ -21,14 +21,15 @@ describe('language switch', () => {
     expect(document.documentElement.lang).toBe('en');
   });
 
-  it('shows English navigation and guidance while Hungarian food names remain unchanged', async () => {
+  it('shows English navigation, guidance, and recipe names', async () => {
     localStorage.clear();
     window.history.pushState({}, '', '/');
     render(<App />);
     fireEvent.click(screen.getByRole('button', { name: 'English language' }));
     expect(screen.getByText(/automatically creates your shopping list/i)).toBeInTheDocument();
     fireEvent.click(screen.getAllByRole('link', { name: /Recipes/i })[0]);
-    expect(await screen.findByText('Húsleves')).toBeInTheDocument();
+    expect(await screen.findByText('Hungarian Chicken Soup')).toBeInTheDocument();
+    expect(screen.queryByText('Húsleves')).not.toBeInTheDocument();
     expect(screen.getAllByText('Quick meals').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Soups').length).toBeGreaterThan(0);
   });
