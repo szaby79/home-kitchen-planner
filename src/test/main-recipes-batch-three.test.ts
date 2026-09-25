@@ -11,7 +11,7 @@ const batchThreeMains = defaultRecipes.filter(recipe => batchThreeIds.includes(r
 
 describe('main recipe quality audit batch three', () => {
   it('covers main-35 through main-49 with equivalent bilingual step counts', () => {
-    expect(auditedMainIds.slice(30)).toEqual(batchThreeIds);
+    expect(auditedMainIds.slice(30, 45)).toEqual(batchThreeIds);
     expect(batchThreeMains).toHaveLength(15);
 
     batchThreeMains.forEach(recipe => {
