@@ -98,4 +98,17 @@ describe('main recipe quality audit batch seven', () => {
     expect(pork.description).toContain('Oszd el a tölteléket a két húson');
     expect(ENGLISH_INSTRUCTIONS['main-130']).toContain('both pork tenderloins');
   });
+
+  it('does not ask the cook to re-chop sliced almonds and allocates all pork oil', () => {
+    const trout = batchSevenMains.find(recipe => recipe.id === 'main-121')!;
+    expect(trout.description).toContain('szeletelt mandulát');
+    expect(trout.description).not.toContain('mandulát vágd durvára');
+    expect(ENGLISH_INSTRUCTIONS['main-121']).not.toContain('roughly chop the almonds');
+
+    const pork = batchSevenMains.find(recipe => recipe.id === 'main-130')!;
+    expect(pork.ingredients.find(item => item.name === 'olívaolaj')?.quantity).toBe(3);
+    expect(pork.description).toContain('Egy teáskanál olajon');
+    expect(pork.description).toContain('két teáskanál olajon');
+    expect(pork.description).toContain('maradék két evőkanál olajjal');
+  });
 });
