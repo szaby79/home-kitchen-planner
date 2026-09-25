@@ -515,9 +515,11 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
 4. Süsd a halat oldalanként 3–4 percig aranybarnára. A belseje legyen opálos és könnyen lemezekre váljon.
 
-5. A burgonyát hámozd meg, kockázd fel, és sós vízben főzd 15–20 percig. A halat papírtörlőn csepegtesd le, majd a burgonyával tálald. Figyelmeztess, hogy filében is maradhat szálka.`,
+5. Közben a burgonyát hámozd meg, kockázd fel, és sós vízben főzd puhára 15–20 perc alatt. Szűrd le, hagyd fél percig kigőzölögni, majd törd össze a vajjal és fokozatosan hozzáadott meleg tejjel.
 
-  'main-31': `1. Palacsintatésztához keverj simára 200 g lisztet, 2 tojást, 300 ml tejet, egy csipet sót és kb. 150 ml vizet. Pihentesd 15 percig, majd enyhén olajozott serpenyőben süss 8 vékony palacsintát.
+6. A halat papírtörlőn csepegtesd le, és frissen, a krémes pürével tálald. Evés előtt szólj róla, hogy gondos ellenőrzés mellett is maradhat szálka a halfilében.`,
+
+  'main-31': `1. A palacsintatésztához keverj simára 200 g lisztet, 2 tojást, 300 ml tejet, egy csipet sót és kb. 150 ml vizet. Pihentesd 15 percig, majd enyhén olajozott serpenyőben süss 8 vékony palacsintát. Az első után nyugodtan igazíts az állagán kevés vízzel.
 
 2. Az aprított hagymát párold olajon 5 percig. Húzd le a tűzről, keverd bele a pirospaprikát és kevés vizet, majd add hozzá a felkockázott csirkét és sót.
 
@@ -525,7 +527,7 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
 4. Töltsd meg a palacsintákat, hajtsd be a két szélüket és tekerd fel. Tedd őket tepsibe.
 
-5. A maradék szaftot keverd össze a tejföllel, öntsd rá, és 180 °C-on süsd 15–20 percig, amíg átforrósodik.`,
+5. A maradék szaftot keverd simára a tejföllel, öntsd a palacsintákra, és 180 °C-on süsd 15–20 percig, amíg a közepe is alaposan átforrósodik.`,
 
   'main-32': `1. A csirkét vágd egyforma szeletekre, a gombát szeleteld, a hagymát aprítsd. A húst mindkét oldalán sózd és borsozd.
 
@@ -547,15 +549,17 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
 5. Nokedlihez keverj 400 g lisztet 2 tojással, 1 tk sóval és kb. 250 ml vízzel. Szaggasd sós, gyöngyöző vízbe; amikor feljön, főzd még 1 percig és szűrd le. A puha hússal tálald.`,
 
-  'main-34': `1. A sertésszeleteket klopfold kb. 8 mm vastagra és sózd. Forgasd lisztbe, felvert tojásba, majd morzsába.
+  'main-34': `1. A sertésszeleteket klopfold kb. 8 mm vastagra, és sózd mindkét oldalukat. Forgasd lisztbe, felvert tojásba, majd zsemlemorzsába.
 
-2. Közepesen forró, 1–1,5 cm mély olajban süsd oldalanként 4–5 percig aranybarnára. Papírtörlőn csepegtesd le; belül ne maradjon rózsaszín.
+2. Közepesen forró, 1–1,5 cm mély olajban, több adagban süsd oldalanként 4–5 percig aranybarnára. Papírtörlőn csepegtesd le; belül ne maradjon rózsaszín.
 
-3. A spagettit főzd sós vízben a csomagoláson jelzett ideig, majd szűrd le.
+3. A spagettit főzd sós vízben a csomagoláson jelzett ideig, majd szűrd le. Közben a hagymát aprítsd, a gombát szeleteld, a sonkát vágd vékony csíkokra.
 
-4. A paradicsomszószt kis lábasban melegítsd 8–10 percig. Keverd össze a tésztával.
+4. Egy nagy serpenyőben 1 evőkanál olajon párold a hagymát 4 percig. Add hozzá a gombát, és pirítsd 6–8 percig, amíg a leve elpárolog, majd forgasd bele a sonkát.
 
-5. Tedd a rántott húst a tészta mellé vagy tetejére, szórd meg sajttal. Ne áztasd sokáig a szószban, mert a panír megpuhul.`,
+5. Öntsd hozzá a paradicsomszószt, szórd meg oregánóval, és kis lángon főzd 8–10 percig. Kóstold meg, csak ezután sózd, mert a sonka is sós. Forgasd össze a spagettivel.
+
+6. A milánói spagettit a rántott hús mellé tálald, és szórd meg sajttal. Így a panír szép ropogós marad.`,
 
   'main-35': `1. A hagymát, fokhagymát és répát aprítsd fel. Melegítsd az olajat nagy serpenyőben, párold a hagymát és répát 6–8 percig, majd a fokhagymát még 30 másodpercig.
 
