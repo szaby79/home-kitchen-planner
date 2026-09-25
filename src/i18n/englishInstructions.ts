@@ -8,6 +8,7 @@ import { breakfastRecipeEnglishInstructions } from '@/data/breakfastRecipes';
 import { auditedStewEnglishInstructions } from '@/data/stewAudit';
 import { auditedSideEnglishInstructions } from '@/data/sideAudit';
 import { auditedSaladEnglishInstructions } from '@/data/saladAudit';
+import { auditedDessertEnglishInstructions } from '@/data/dessertAudit';
 
 export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...breakfastRecipeEnglishInstructions,
@@ -984,4 +985,5 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
   ...auditedStewEnglishInstructions,
   ...auditedSideEnglishInstructions,
   ...auditedSaladEnglishInstructions,
+  ...auditedDessertEnglishInstructions,
 };

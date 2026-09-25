@@ -45,7 +45,7 @@ describe('Help Centre', () => {
     });
     expect(screen.getByText(/nem kamra- vagy készletnyilvántartás/i)).toBeInTheDocument();
     expect(screen.getByText(/Ez jelenleg nincs megvalósítva/i)).toBeInTheDocument();
-    expect(screen.getByText('Alkalmazásverzió: 1.80.0')).toBeInTheDocument();
+    expect(screen.getByText('Alkalmazásverzió: 1.81.0')).toBeInTheDocument();
   });
 
   it('switches all Help Centre content to English', () => {
