@@ -11,7 +11,7 @@ const batchFourMains = defaultRecipes.filter(recipe => batchFourIds.includes(rec
 
 describe('main recipe quality audit batch four', () => {
   it('covers the next 15 actual main dishes and skips the separate stew category', () => {
-    expect(auditedMainIds.slice(45)).toEqual(batchFourIds);
+    expect(auditedMainIds.slice(45, 60)).toEqual(batchFourIds);
     expect(batchFourMains).toHaveLength(15);
 
     batchFourMains.forEach(recipe => {
