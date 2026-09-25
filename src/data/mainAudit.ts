@@ -115,6 +115,12 @@ const mainAudit: Record<string, MainAudit> = {
   'main-133': { preparationTime: 20, cookingTime: 35, commonAllergens: [], note: 'Puha sült padlizsán sűrű paradicsomos olívaraguval' },
   'main-134': { preparationTime: 20, cookingTime: 35, commonAllergens: [], note: 'Pirult sütőtök és csicseriborsó ropogós kellel' },
   'main-135': { preparationTime: 25, cookingTime: 35, commonAllergens: ['milk', 'lactose', 'egg'], note: 'Sajtos brokkolilepény friss joghurtos uborkasalátával' },
+  'main-136': { preparationTime: 20, cookingTime: 45, restingTime: 10, commonAllergens: ['milk', 'lactose'], note: 'Fűszeres lencseragu sült sütőtökkel és kecskesajttal' },
+  'main-137': { preparationTime: 18, cookingTime: 55, restingTime: 5, commonAllergens: [], note: 'Paprikás sült csirkecomb pirult karalábéval' },
+  'main-138': { preparationTime: 18, cookingTime: 35, restingTime: 3, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Kakukkfüves pulykamell krémes karfiolgratinnal' },
+  'main-139': { preparationTime: 20, cookingTime: 35, restingTime: 3, difficulty: 'medium', commonAllergens: [], note: 'Rozmaringos bárányborda sült mediterrán zöldségekkel' },
+  'main-140': { preparationTime: 15, cookingTime: 22, commonAllergens: ['fish'], note: 'Lágy kókuszmártásos tőkehal spenóttal és lime-mal' },
+  'main-141': { preparationTime: 18, cookingTime: 25, restingTime: 3, commonAllergens: [], note: 'Pirult sertésmedalion citromos brokkolipürével' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {
