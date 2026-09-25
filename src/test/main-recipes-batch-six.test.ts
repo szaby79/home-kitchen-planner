@@ -11,7 +11,7 @@ const batchSixMains = defaultRecipes.filter(recipe => batchSixIds.includes(recip
 
 describe('main recipe quality audit batch six', () => {
   it('covers main-106 through main-120 in source order', () => {
-    expect(auditedMainIds.slice(75)).toEqual(batchSixIds);
+    expect(auditedMainIds.slice(75, 90)).toEqual(batchSixIds);
     expect(batchSixMains).toHaveLength(15);
 
     batchSixMains.forEach(recipe => {
