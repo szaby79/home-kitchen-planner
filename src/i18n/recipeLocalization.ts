@@ -59,7 +59,7 @@ const INGREDIENTS: Record<string, string> = {
   'darabolt paradicsom': 'chopped tomatoes', 'darált pulykahús': 'ground turkey',
   'édesburgonya': 'sweet potato', 'főtt lencse': 'cooked lentils', 'friss spenót': 'fresh spinach',
   'halloumi sajt': 'halloumi cheese', 'kakukkfű': 'thyme', 'kemény tofu': 'firm tofu',
-  'kókusztej': 'coconut milk', 'lazacfilé': 'salmon fillet', 'zöldségalaplé': 'vegetable stock',
+  'kókusztej': 'coconut milk', 'cukrozatlan kókuszital': 'unsweetened coconut drink', 'lazacfilé': 'salmon fillet', 'zöldségalaplé': 'vegetable stock',
   'fekete bab konzerv': 'canned black beans', 'fenyőmag': 'pine nuts',
   'füstölt pirospaprika': 'smoked paprika', 'őrölt lenmag': 'ground flaxseed',
   'portobello gomba': 'portobello mushrooms', 'ricotta': 'ricotta',
@@ -76,7 +76,7 @@ const INGREDIENTS: Record<string, string> = {
   'kecskesajt': 'goat cheese', 'pulykamell': 'turkey breast',
   'banán': 'banana', 'chia mag': 'chia seeds', 'fagyasztott bogyós gyümölcs': 'frozen mixed berries',
   'görög joghurt': 'Greek yogurt', 'granola': 'granola', 'kurkuma': 'turmeric',
-  'teljes kiőrlésű kenyér': 'whole-grain bread', 'tepertő': 'pork cracklings', 'zabpehely': 'rolled oats',
+  'szárazkolbász': 'dry cured sausage', 'teljes kiőrlésű kenyér': 'whole-grain bread', 'tepertő': 'pork cracklings', 'zabpehely': 'rolled oats',
 };
 
 const UNITS: Record<string, string> = {
@@ -202,6 +202,10 @@ const NOTES: Record<string, string> = {
   'Citromos-vaníliás túróval töltött magyar péksütemény': 'Hungarian pastry filled with lemon-vanilla cottage cheese',
   'Házi magyar péksütemény reggelire': 'Homemade Hungarian breakfast pastry',
   'Bőséges magyaros hidegtál családi reggelihez': 'Generous Hungarian cold platter for a family breakfast',
+  'Puha, sajtos rántotta friss zöldségekkel': 'Soft, cheesy scrambled eggs with fresh vegetables',
+  'Friss, ropogós joghurtos reggeli körülbelül 10 perc alatt': 'Fresh, crunchy yogurt breakfast in about 10 minutes',
+  'Krémes, tartalmas pirítós főtt tojással': 'Creamy, filling toast with boiled eggs',
+  'Szaftos gombával töltött, Keto-kompatibilis omlett': 'Keto-friendly omelette filled with juicy mushrooms',
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

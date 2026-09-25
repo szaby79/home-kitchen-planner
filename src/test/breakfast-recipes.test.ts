@@ -21,12 +21,33 @@ describe('breakfast recipe foundation', () => {
       expect(recipe.category).toBe('breakfast');
       expect(recipe.mealType).toBe('breakfast');
       expect(recipe.ingredients.length, recipe.name).toBeGreaterThanOrEqual(8);
-      expect(recipe.description.match(/^\d+\./gm), recipe.name).toHaveLength(5);
-      expect(ENGLISH_INSTRUCTIONS[recipe.id]?.match(/^\d+\./gm), recipe.name).toHaveLength(5);
+      const hungarianSteps = recipe.description.match(/^\d+\./gm)?.length ?? 0;
+      const englishSteps = ENGLISH_INSTRUCTIONS[recipe.id]?.match(/^\d+\./gm)?.length ?? 0;
+      expect(hungarianSteps, recipe.name).toBeGreaterThanOrEqual(5);
+      expect(hungarianSteps, recipe.name).toBeLessThanOrEqual(8);
+      expect(englishSteps, recipe.name).toBe(hungarianSteps);
       expect(recipe.preparationTime, recipe.name).toBeGreaterThan(0);
-      expect(recipe.cookingTime, recipe.name).toBeGreaterThan(0);
-      expect(recipe.totalTime, recipe.name).toBe(recipe.preparationTime! + recipe.cookingTime!);
+      expect(recipe.cookingTime, recipe.name).toBeGreaterThanOrEqual(0);
+      expect(recipe.restingTime, recipe.name).toBeGreaterThanOrEqual(0);
+      expect(recipe.totalTime, recipe.name).toBe(recipe.preparationTime! + recipe.cookingTime! + recipe.restingTime!);
+      expect(recipe.qualityAuditStatus, recipe.name).toBe('code-reviewed');
     });
+  });
+
+  it('does not invent cooking time for no-cook breakfasts and includes required waiting time', () => {
+    const noCookIds = breakfastRecipes.filter(recipe => recipe.cookingTime === 0).map(recipe => recipe.id);
+    expect(noCookIds).toEqual(['breakfast-3', 'breakfast-4', 'breakfast-5', 'breakfast-9', 'breakfast-17']);
+
+    const byId = Object.fromEntries(breakfastRecipes.map(recipe => [recipe.id, recipe]));
+    expect(byId['breakfast-3'].totalTime).toBe(370);
+    expect(byId['breakfast-4'].totalTime).toBe(252);
+    expect(byId['breakfast-21'].totalTime).toBe(142);
+    expect(byId['breakfast-22'].totalTime).toBe(123);
+  });
+
+  it('marks yeast pastries as medium difficulty instead of calling every breakfast easy', () => {
+    expect(breakfastRecipes.filter(recipe => recipe.difficulty === 'medium').map(recipe => recipe.id))
+      .toEqual(['breakfast-21', 'breakfast-22']);
   });
 
   it('includes vegan and keto choices without hiding the everyday breakfasts', () => {

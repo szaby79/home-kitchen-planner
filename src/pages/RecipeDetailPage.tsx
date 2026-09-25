@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { Users, ChefHat, Minus, Plus, Heart, PlayCircle } from 'lucide-react';
+import { Users, ChefHat, Minus, Plus, Heart, PlayCircle, Clock3 } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { estimateRecipeCalories } from '@/lib/calorieCalculator';
@@ -32,6 +32,13 @@ export default function RecipeDetailPage() {
 
   const multiplier = servings / recipe.defaultServings;
   const showsBreadingVideo = ['main-1', 'main-2', 'main-3'].includes(recipe.id);
+  const formatMinutes = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const remainder = minutes % 60;
+    if (!hours) return `${minutes} ${tr('perc', 'min')}`;
+    if (!remainder) return `${hours} ${tr('óra', 'hr')}`;
+    return `${hours} ${tr('óra', 'hr')} ${remainder} ${tr('perc', 'min')}`;
+  };
 
   return (
     <div className="page-container max-w-3xl">
@@ -64,6 +71,16 @@ export default function RecipeDetailPage() {
             <Badge variant="outline">{tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</Badge>
             <Badge variant="outline">{isEnglish ? EN_MEAL_TYPE_LABELS[recipe.mealType] : MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
           </div>
+
+          {recipe.qualityAuditStatus && recipe.totalTime !== undefined && (
+            <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-lg bg-secondary/40 px-3 py-2 text-sm text-muted-foreground">
+              <Clock3 className="h-4 w-4 shrink-0" aria-hidden="true" />
+              {recipe.preparationTime !== undefined && <span><strong className="text-foreground">{tr('Előkészítés:', 'Prep:')}</strong> {formatMinutes(recipe.preparationTime)}</span>}
+              {recipe.cookingTime !== undefined && recipe.cookingTime > 0 && <span><strong className="text-foreground">{tr('Főzés:', 'Cooking:')}</strong> {formatMinutes(recipe.cookingTime)}</span>}
+              {recipe.restingTime !== undefined && recipe.restingTime > 0 && <span><strong className="text-foreground">{tr('Pihentetés:', 'Resting:')}</strong> {formatMinutes(recipe.restingTime)}</span>}
+              <span><strong className="text-foreground">{tr('Teljes idő:', 'Total:')}</strong> {formatMinutes(recipe.totalTime)}</span>
+            </div>
+          )}
 
           {/* Servings adjuster */}
           <div className="flex items-center gap-3 bg-secondary/50 rounded-lg p-3 w-fit">
