@@ -81,8 +81,8 @@ export const additionalSoups: Recipe[] = [
   {
     id: 'soup-25', name: 'Lebbencsleves', category: 'soup', mealType: 'both', defaultServings: 4, note: 'Szalonnás, burgonyás alföldi leves', imageUrl: '',
     ingredients: [
-      { name: 'lebbencstészta', quantity: 250, unit: 'g' }, { name: 'füstölt szalonna', quantity: 150, unit: 'g' },
-      { name: 'burgonya', quantity: 500, unit: 'g' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
+      { name: 'lebbencstészta', quantity: 160, unit: 'g' }, { name: 'füstölt szalonna', quantity: 100, unit: 'g' },
+      { name: 'burgonya', quantity: 400, unit: 'g' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'kömény', quantity: 0.5, unit: 'tk' },
       { name: 'só', quantity: 1, unit: 'tk' },
     ],
@@ -99,7 +99,7 @@ export const additionalSoups: Recipe[] = [
   {
     id: 'soup-26', name: 'Korhelyleves', category: 'soup', mealType: 'both', defaultServings: 4, note: 'Savanyú káposztás, kolbászos leves', imageUrl: '',
     ingredients: [
-      { name: 'savanyú káposzta', quantity: 700, unit: 'g' }, { name: 'füstölt kolbász', quantity: 300, unit: 'g' },
+      { name: 'savanyú káposzta', quantity: 500, unit: 'g' }, { name: 'füstölt kolbász', quantity: 200, unit: 'g' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'fokhagyma', quantity: 2, unit: 'gerezd' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'liszt', quantity: 1, unit: 'ek' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'babérlevél', quantity: 2, unit: 'db' }, { name: 'olaj', quantity: 1, unit: 'ek' },
@@ -168,7 +168,7 @@ export const additionalSoups: Recipe[] = [
 
 4. Forrald még 2–3 percig. Vedd ki a szegfűszeget, facsard bele a citrom levét, és kóstolás után add hozzá a maradék cukrot, ha szükséges.
 
-5. Hűtsd szobahőmérsékletűre, majd tedd hűtőbe legalább 2 órára. Melegen ne tedd közvetlenül a hűtőbe.`,
+5. Öntsd át két-három kisebb, sekély edénybe, hogy gyorsabban hűljön. Legfeljebb 2 órán belül tedd hűtőbe, majd hűtsd legalább 2 órán át. Tálalás előtt keverd át.`,
   },
   {
     id: 'soup-30', name: 'Spenótkrémleves', category: 'soup', mealType: 'both', defaultServings: 4, note: 'Vegetáriánus, 25 perces leves', imageUrl: '',

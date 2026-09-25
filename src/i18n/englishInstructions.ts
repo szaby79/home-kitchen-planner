@@ -14,7 +14,7 @@ export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...dietaryRecipePackThreeEnglishInstructions,
   ...dietaryRecipePackFourEnglishInstructions,
   ...dietaryRecipePackFiveEnglishInstructions,
-  'soup-1': `1. Put the chicken thighs in a large pot, add 3 litres of cold water, and heat over medium. Skim off the grey foam as it rises.
+  'soup-1': `1. Put the chicken thighs in a large pot, add 2.2 litres of cold water, and heat over medium. Skim off the grey foam as it rises.
 
 2. Peel the carrots, parsley root, and celeriac. Add them with the whole onion, salt, and pepper.
 
@@ -33,7 +33,9 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Add the tomato, pepper, garlic, caraway, and half the salt. Simmer partly covered for 60 minutes, then add the carrots and potatoes and cook 30–40 minutes more.
 
-5. For csipetke, knead 1 egg, a pinch of salt, and about 100 g flour into a firm dough. Pinch off pea-sized pieces and simmer them in the soup for the final 8–10 minutes.`,
+5. For csipetke, knead 1 egg, a pinch of salt, and about 100 g flour into a firm, non-sticky dough. Pinch off pea-sized pieces with floured fingers.
+
+6. Add the csipetke for the final 8–10 minutes and stir once so they do not stick together. They are ready when they float and no longer have a floury centre.`,
   'soup-3': `1. The night before, cover the beans with at least three times their volume of cold water. Drain and rinse them before cooking.
 
 2. Put the beans and smoked pork hock in a large pot with about 2.5 litres of cold water. Simmer for 60 minutes; do not add salt yet because the meat is salty.
@@ -45,7 +47,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 5. Boil gently for 3–4 minutes. Mix the paprika with a little warm broth before adding it, then remove the hock, cut up the meat, and return it to the soup.`,
   'soup-4': `1. Soak the beans overnight in plenty of cold water, then drain. Put them in a pot with the pork hock, bay leaf, and 2.5 litres of fresh water.
 
-2. Simmer for 60 minutes. Add the sliced carrots and parsley root and cook for another 30–45 minutes, until the beans are tender.
+2. Simmer for 60 minutes. Add the sliced carrots and parsley root, the whole onion, and the garlic. Cook for another 30–45 minutes, adding the sliced sausage for the final 15 minutes. The beans should be tender; season with salt only at the end.
 
 3. For csipetke, knead 1 egg, a pinch of salt, and 80–100 g flour into a firm dough. Pinch off pea-sized pieces and simmer them for 8–10 minutes.
 
@@ -124,15 +126,17 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Add sugar gradually to taste. Bring back to a boil, add the egg barley, and cook for the package time, usually 10–12 minutes, stirring often.
 
 5. Serve the sour cream separately, or temper it with a little warm soup before stirring it in.`,
-  'soup-13': `1. Bring about 1.5 litres of water to a boil with the butter, salt, and pepper.
+  'soup-13': `1. Heat the oil in a pot over medium-low heat. Add the caraway and stir for 20–30 seconds, until fragrant; do not let it burn.
 
-2. Beat the eggs with the flour until smooth. The mixture should be thick but slowly pourable; add 1–2 tablespoons water if needed.
+2. Stir in the flour and cook the pale roux for 1–2 minutes. Remove the pot from the heat, mix in the paprika, then gradually whisk in 1.5 litres of cold water until smooth.
 
-3. While the soup gently boils, slowly pour in the egg mixture with one hand and stir with the other to create small dumplings and ribbons.
+3. Return to the heat, add the salt and pepper, and bring to a boil. Simmer for 5 minutes so the flour cooks through.
 
-4. Simmer for 4–5 minutes. Cut open a larger dumpling; its centre should be set and no longer floury.
+4. Beat two eggs in a bowl. Stir the gently simmering soup slowly while drizzling in the eggs to form fine ribbons.
 
-5. Taste, adjust the salt, and serve with chopped parsley.`,
+5. Crack each remaining egg into a separate cup, then gently slide it into the soup. Do not stir. Simmer for 4–5 minutes, until the whites are completely set; cook 1–2 minutes longer for firm yolks.
+
+6. Add only half the vinegar at first. Taste, then add more if you enjoy a brighter, pleasantly sour soup.`,
   'soup-14': `1. Cut the chicken into 2 cm cubes. Peel and slice the carrots and slice the mushrooms.
 
 2. Melt half the butter. Cook the chicken for 4–5 minutes, until all sides turn white, then add the carrots and mushrooms for 3 minutes.
@@ -144,7 +148,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 5. Stir the mixture into the pot and boil for 3 minutes. Temper and add the sour cream, then heat gently without boiling hard.`,
   'soup-15': `1. Cut the chicken into bite-sized pieces, or leave bone-in thighs whole. Peel and slice the carrots and parsley root.
 
-2. Put the chicken and vegetables in a pot with about 1.8 litres of water, salt, and half the tarragon. Simmer for 40–50 minutes.
+2. Put the chicken and vegetables in a pot with about 1.8 litres of water, salt, and half the dried tarragon. Simmer for 40–50 minutes.
 
 3. Whisk the sour cream and flour smooth. Gradually add two ladlefuls of hot soup, then slowly stir the mixture into the pot.
 
@@ -153,7 +157,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 5. If using whole thighs, remove them, discard the bones, cut up the meat, and return it to the soup.`,
   'soup-16': `1. Cut the cleaned fish into 2–3 cm slices, salt lightly, and refrigerate. Slice the onion and chop the peppers and tomatoes.
 
-2. Put the fish head, tail, and bony pieces in a pot with the vegetables and 2 litres of water. Simmer for 45 minutes.
+2. Put the fish head, tail, and bony pieces in a pot with the vegetables and 1.5 litres of water. Simmer for 45 minutes.
 
 3. Strain the broth through a fine sieve into a clean pot. Carefully pick any usable meat from the cooked fish, checking for bones.
 
@@ -169,9 +173,9 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Whisk the sour cream, flour, and a ladleful of hot soup until smooth. Slowly stir it into the pot and boil for 3 minutes.
 
 5. Taste before adding salt because both the sauerkraut and sausage may already be salty.`,
-  'soup-18': `1. Peel and cube the potatoes and chop the onion. Put them in a pot with the bay leaf, salt, and about 1.5 litres of water.
+  'soup-18': `1. Peel the potatoes and cut them into even 2 cm cubes, then finely chop the onion.
 
-2. Bring to a boil, then simmer for 20–25 minutes, until the potatoes are tender but still hold their shape.
+2. Heat the oil in a pot and cook the onion for 5 minutes. Add the potatoes, bay leaf, salt, and about 1.5 litres of water. Bring to a boil, then simmer for 18–22 minutes, until the potatoes are tender but still hold their shape.
 
 3. Whisk the sour cream and flour smooth. Gradually add two ladlefuls of hot soup to temper it.
 
@@ -196,9 +200,9 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Blend smooth, stir in the cream, salt, and pepper, and warm gently without a hard boil.
 
 5. Fry the bread cubes in the remaining butter until golden and crisp. Add them only when serving so they stay crunchy.`,
-  'soup-21': `1. Cut the pork into 2 cm cubes, chop the onion and garlic, and cut the potatoes into bite-sized pieces.
+  'soup-21': `1. Cut the pork into 2 cm cubes, chop the onion and garlic, cut the potatoes into bite-sized pieces, and cut the green beans into 3–4 cm lengths.
 
-2. Cook the onion in oil until soft, add the pork, and brown it. Remove the pot from the heat before stirring in the paprika.
+2. Cook the onion in oil for 5 minutes. Remove the pot from the heat, stir in the paprika, and immediately add 100 ml water so the paprika does not burn.
 
 3. Immediately add water, then add the garlic and salt. Simmer partly covered for about 45 minutes.
 
@@ -214,24 +218,24 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Add the wieners and cook for another 5 minutes. They only need to heat through.
 
 5. Whisk the sour cream and flour with hot soup, stir it in, and boil gently for 3 minutes. Taste before serving.`,
-  'soup-23': `1. Peel and cube the squash and potato, and chop the onion and garlic.
+  'soup-23': `1. Peel the squash and potato and cut them into 2 cm cubes, then chop the onion and garlic.
 
 2. Melt the butter and cook the onion for 5 minutes. Add the garlic for 30 seconds, then add the squash and potato.
 
-3. Add enough water to cover the vegetables. Simmer for 20–25 minutes, until everything is very soft.
+3. Add about 1.2 litres of water, salt, and pepper. Simmer for about 20 minutes, until everything is easily pierced with a fork.
 
 4. Remove from the heat and blend until completely smooth, keeping the blender head under the liquid.
 
 5. Stir in the cream, salt, pepper, and nutmeg. Warm gently for 2 minutes without boiling hard.`,
-  'soup-24': `1. Chop the onion, peel and cube the potato, and measure the peas.
+  'soup-24': `1. Chop the onion and peel and cube the potato. Frozen peas do not need to be thawed.
 
-2. Melt the butter and cook the onion for 5 minutes. Add the potato, peas, and about 1.2 litres of water.
+2. Melt the butter and cook the onion over medium heat for 5 minutes.
 
-3. Simmer for 15–20 minutes, until the potato and peas are tender.
+3. Add the potato and about 1 litre of water. Simmer for 10 minutes, then add the peas and cook for another 6–8 minutes.
 
 4. Remove from the heat and blend smooth. For a thinner soup, add a little hot water.
 
-5. Stir in the cream, salt, and pepper, warm gently, and serve with chopped parsley.`,
+5. Stir in the cream, salt, and pepper and warm gently. Do not keep cooking or the peas will lose their bright colour.`,
   'soup-25': `1. Dice the bacon and potatoes, chop the onion, and break the lebbencs noodles into large pieces.
 
 2. Render the bacon in a pot and remove the crisp pieces. Brown the noodles lightly in the bacon fat.
@@ -259,15 +263,15 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Remove the bones and vegetables and carefully strain the broth into a clean pot. Taste and adjust the salt.
 
 5. Cook the noodles separately according to the package and add them to each bowl when serving.`,
-  'soup-28': `1. Finely chop the onion and cook it in a little oil until soft. Let it cool, then finely chop or process the chicken liver.
+  'soup-28': `1. Peel and slice the carrot and parsley root. Simmer them in 1.5 litres of lightly salted water for 20 minutes.
 
-2. Mix the liver with the onion, egg, breadcrumbs, parsley, marjoram, salt, and pepper. Rest for 10 minutes.
+2. Finely chop the onion and cook it in the oil for 5 minutes. Clean the chicken liver and chop it very finely or mince it.
 
-3. Shape one small test dumpling with wet hands and simmer it in the broth. If it falls apart, add a little more breadcrumbs.
+3. Mix the liver, onion, egg, marjoram, pepper, parsley, and 70 g breadcrumbs. Rest for 10 minutes; if the mixture is too soft, add more breadcrumbs.
 
-4. Shape the remaining dumplings and simmer gently for 10–12 minutes. Cut one open; the centre must no longer be pink.
+4. With wet hands, shape small walnut-sized dumplings. Simmer one test dumpling in the broth; if it falls apart, add more breadcrumbs to the mixture.
 
-5. Add the cooked carrots and parsley root to the broth and serve the hot soup with the liver dumplings.`,
+5. Simmer the dumplings gently for 12–15 minutes. Cut one open; the centre must be fully cooked and no longer raw or bloody.`,
   'soup-29': `1. Put the pitted sour cherries in a pot with water, sugar, cinnamon, cloves, lemon peel, and vanilla sugar.
 
 2. Bring to a boil, then simmer for 8–10 minutes; the cherries should soften but not fall apart.
@@ -276,7 +280,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Slowly stir the mixture into the pot and simmer for 2–3 minutes. Taste and adjust the sugar or lemon.
 
-5. Cool to room temperature, then refrigerate for at least 2 hours. Remove the whole spices and lemon peel before serving.`,
+5. Divide the soup among two or three shallow containers so it cools quickly. Refrigerate within 2 hours, then chill for at least 2 hours. Stir before serving.`,
   'soup-30': `1. Wash the spinach, chop the onion and garlic, and peel and cube the potato.
 
 2. Melt the butter and cook the onion for 5 minutes. Add the garlic for 30 seconds, then add the potato and water.
