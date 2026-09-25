@@ -290,42 +290,48 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Remove from the heat and blend smooth, keeping the blender head under the liquid to prevent splashing.
 
 5. Stir in the cream, salt, pepper, and nutmeg. Warm gently without boiling hard.`,
-  'main-1': `1. Slice the chicken breast evenly and gently pound each piece to about 1 cm. Salt both sides.
+  'main-1': `1. Cut the chicken breast into 1–1.5 cm slices. Place them between two sheets of plastic wrap and gently pound them to an even thickness of about 8 mm. Salt both sides.
 
-2. Set up three shallow dishes: flour, beaten egg, and breadcrumbs. Coat each piece in that order, pressing the crumbs on lightly.
+2. Set up three shallow dishes: flour, beaten eggs, and breadcrumbs. Coat each piece in that order, shaking off the excess at every stage.
 
-3. Heat 2–3 cm oil over medium heat. Test with a crumb; it should sizzle steadily without burning.
+3. Heat 1–1.5 cm oil in a frying pan over medium heat. Test it with a breadcrumb; it should sizzle immediately without burning.
 
-4. Fry for 3–4 minutes per side until golden and fully cooked. The centre must be white, not pink.
+4. Fry in batches for 3–4 minutes per side, until golden. Do not crowd the pan. The chicken must be white throughout, with no pink centre.
 
-5. Drain on a rack or paper towel and serve with the prepared potatoes. Never reuse coating that touched raw chicken.`,
-  'main-2': `1. Pound the pork slices evenly to about 1 cm and salt both sides.
+5. Peel and cube the potatoes. Cook them in salted water for 15–20 minutes, until easily pierced with a fork, then drain and serve with the chicken.
 
-2. Place flour, beaten egg, and breadcrumbs in three separate dishes. Coat each slice in that order.
+6. Drain the chicken briefly on paper towel. Wash your hands and all utensils after handling raw chicken, and discard any coating ingredients that touched it.`,
+  'main-2': `1. Place the pork slices between two sheets of plastic wrap and pound them to an even thickness of about 8 mm. Make two or three small cuts around the fatty edge so the meat does not curl, then salt both sides.
 
-3. Heat 2–3 cm oil over medium heat. A breadcrumb should sizzle when dropped in.
+2. Set up three shallow dishes with flour, beaten eggs, and breadcrumbs. Coat each piece in that order; do not press the crumbs on firmly.
 
-4. Fry the pork for 4–5 minutes per side until golden and cooked through; work in batches so the oil stays hot.
+3. Heat 1–1.5 cm oil over medium heat. A breadcrumb should sizzle gently; smoking oil is too hot.
 
-5. Drain well and serve with potatoes. Discard any flour, egg, or crumbs that touched raw meat.`,
-  'main-3': `1. Cut the cheese into thick, even slices and pat them dry. Chill for 15 minutes so they stay firm.
+4. Fry in batches for 4–5 minutes per side, until golden. Turn each piece only once and avoid crowding the pan.
 
-2. Coat each slice in flour, beaten egg, breadcrumbs, then egg and breadcrumbs a second time. Seal every edge.
+5. Peel and cube the potatoes. Cook them in salted water for 15–20 minutes, until tender, then drain and serve with the pork.
 
-3. Heat the oil over medium heat. Test it with a breadcrumb; it should sizzle but not darken immediately.
+6. Drain the cutlets briefly on paper towel. Cut into the thickest one to check that the centre is fully cooked and no longer raw or pink.`,
+  'main-3': `1. Cut the cheese into slices about 1.5 cm thick and pat them completely dry. Set out flour, beaten eggs, and breadcrumbs in separate dishes.
 
-4. Fry for about 1–2 minutes per side, just until golden. Remove before the cheese begins to leak.
+2. Coat each slice in flour, egg, and breadcrumbs, then repeat the egg and breadcrumb layers. Seal every edge; the double coating holds in the melting cheese.
 
-5. Drain briefly and serve right away with rice and tartar sauce.`,
+3. Refrigerate the coated cheese for 15 minutes. Meanwhile, heat 1–1.5 cm oil over medium heat.
+
+4. Fry in batches for about 1–1.5 minutes per side, only until golden. Use a spatula rather than a fork so the cheese does not leak.
+
+5. Rinse the rice, add 600 ml water and a little salt, cover, and cook over low heat for 12–15 minutes. Turn off the heat, rest for 5 minutes, then fluff with a fork.
+
+6. Lift the cheese out with a spatula, drain briefly on paper towel, and serve immediately with the rice and tartar sauce.`,
   'main-4': `1. Chop the onion and cut the pepper and tomato. Pat the chicken thighs dry and season with salt.
 
-2. Cook the onion in oil for 6–8 minutes. REMOVE FROM THE HEAT, stir in paprika, and immediately add a little water.
+2. Cook the onion in oil for 6–8 minutes. Remove the pot from the heat, stir in the paprika, and immediately add 100 ml water so the paprika does not burn.
 
-3. Add the chicken, pepper, and tomato. Cover and simmer gently for 40–50 minutes, until the chicken is cooked through.
+3. Add the chicken, pepper, tomato, and salt. Cover and simmer gently for 45–55 minutes, adding a little water if needed. The meat must not be pink beside the bone.
 
 4. Whisk the sour cream with a little hot sauce, then stir it into the pot over low heat. Do not boil hard.
 
-5. Make the nokedli from flour, egg, water, and salt; drop into boiling salted water and cook until they rise, plus 1 minute.`,
+5. For the nokedli, mix 400 g flour, 2 eggs, 1 teaspoon salt, and about 250 ml water without overworking. Drop into gently boiling salted water; once the dumplings rise, cook for 1 minute, then drain.`,
   'main-5': `1. Cut the pork into 2 cm cubes and finely chop the onion, pepper, and tomato.
 
 2. Cook the onion in oil until soft. Remove from the heat, stir in paprika, and immediately add a splash of water.
@@ -353,78 +359,78 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Add the mushrooms for the final 15 minutes. Stir in tempered sour cream over low heat.
 
 5. Prepare nokedli separately and serve with the tokány. Salt only after tasting because the bacon is salty.`,
-  'main-8': `1. Boil the potatoes in their skins until just tender, cool, peel, and slice. Hard-boil the eggs and slice them; slice the sausage.
+  'main-8': `1. Put the unpeeled potatoes in cold salted water and cook for 20–25 minutes from the boil. Cook the eggs separately for 10 minutes, then cool them. Peel and slice both, and slice the sausage.
 
-2. Butter a baking dish. Layer half the potatoes, eggs, sausage, a little salt, and sour cream.
+2. Heat the oven to 180°C and butter a baking dish about 25 × 35 cm.
 
-3. Repeat the layers and finish with potatoes and sour cream.
+3. Add one-third of the potatoes, season lightly, then layer in eggs, sausage, and a few spoonfuls of sour cream. Repeat, finishing with potatoes.
 
-4. Bake at 190 °C for 35–40 minutes, until bubbling and golden on top.
+4. Spread over the remaining sour cream and bake for 30–35 minutes, until bubbling at the edges and lightly browned.
 
-5. Rest for 10 minutes before serving so the layers hold together.`,
-  'main-9': `1. Rinse and squeeze the sauerkraut if it is very sour. Cook the rice until half done and chop the onion.
+5. Rest for 10 minutes before serving so the layers hold together and are not dangerously hot.`,
+  'main-9': `1. Rinse the rice, then cook it covered in twice its volume of lightly salted water for 12–15 minutes. Rinse the sauerkraut once if it is very salty.
 
-2. Cook the onion in oil, remove from the heat, stir in paprika, then add the ground pork and cook until no longer pink.
+2. Cook the chopped onion in oil for 5 minutes. Add the ground pork and break it up while cooking for 8–10 minutes. Remove from the heat, then stir in the paprika and salt.
 
-3. Mix the meat with the half-cooked rice. Layer sauerkraut, meat mixture, and sour cream in a baking dish.
+3. Heat the oven to 180°C. Layer half the sauerkraut, the rice, the meat, and then the remaining sauerkraut in a baking dish.
 
-4. Repeat the layers, cover, and bake at 180 °C for 45 minutes. Uncover for the final 10 minutes.
+4. Spread the sour cream over the top, cover with foil, and bake for 40 minutes. Remove the foil and bake for another 15–20 minutes.
 
-5. Rest for 10 minutes before cutting and serving.`,
-  'main-10': `1. Rinse the sauerkraut once if needed. Mix the ground pork, rinsed rice, egg, chopped onion, paprika, and salt.
+5. It is ready when the centre is piping hot and the top is lightly browned. Rest for 10 minutes before serving.`,
+  'main-10': `1. Rinse the rice, then mix it with the ground pork, egg, chopped onion, salt, and paprika. The rice does not need to be precooked.
 
-2. Form compact oval meatballs. Line a large pot with sauerkraut and smoked ribs, then arrange the meatballs on top.
+2. Lay out one sauerkraut leaf, place 1–2 tablespoons of filling near the lower edge, fold in the sides, and roll loosely because the rice expands.
 
-3. Cover with the remaining sauerkraut and add enough water to almost cover. Bring to a gentle simmer.
+3. Line a large pot with shredded sauerkraut and some smoked ribs. Arrange the rolls on top, add the remaining ribs between them, and cover with the rest of the sauerkraut.
 
-4. Cook covered over low heat for 90–120 minutes. Check occasionally and add hot water if needed.
+4. Add enough water to almost cover. Bring to a boil, then cover and cook over low heat for 90 minutes. Do not stir; gently shake the pot instead.
 
-5. Cut one meatball open to confirm the meat is cooked and the rice tender. Serve with sour cream; it tastes even better the next day.`,
-  'main-11': `1. Cut the tops from the peppers and remove the seeds. Mix the ground pork, rinsed rice, egg, chopped onion, and salt.
+5. Cut one roll open: the meat must not be pink and the rice must be tender. Serve with sour cream.`,
+  'main-11': `1. Rinse the rice, precook it for 8 minutes, then drain. Cut the tops from the peppers and remove the seeds.
 
-2. Fill each pepper only three-quarters full because the rice expands. Form any leftover mixture into meatballs.
+2. Mix the ground pork, precooked rice, egg, chopped onion, and salt. Fill the peppers only three-quarters full because the rice continues to expand.
 
-3. Place the peppers and meatballs in a wide pot, add tomato sauce and enough water to cover halfway.
+3. Put the tomato sauce in a large pot, add about 300 ml water and half the sugar, then stand the peppers in the sauce.
 
-4. Simmer covered for 45–55 minutes, turning the peppers carefully once. The filling must be fully cooked.
+4. Bring to a boil, then cover and cook over low heat for 40–45 minutes, carefully turning the peppers halfway through.
 
-5. Add sugar and salt to the sauce to taste. Rest for 5 minutes before serving.`,
+5. Cut one pepper open to confirm the meat is fully cooked. Taste the sauce, then add only as much of the remaining sugar and salt as it needs.`,
   'main-12': `1. Slice the peppers, tomatoes, onion, and sausage. Heat the oil in a wide pan.
 
 2. Cook the onion for 5 minutes, add the peppers, and cook covered for 10 minutes.
 
 3. Add the tomatoes, sausage, salt, and a small pinch of sugar. Simmer uncovered for 10–15 minutes.
 
-4. If using eggs, beat them, pour them in, and stir for 2–3 minutes until just set.
+4. Beat the eggs, pour them in, and stir for 2–3 minutes until just set. Do not cook them dry.
 
 5. Taste and serve hot with fresh bread.`,
-  'main-13': `1. Cut the pork and potatoes into small, even cubes. Chop the onion and garlic.
+  'main-13': `1. Cut the pork and potatoes into even 2 cm cubes. Finely chop the onion and garlic.
 
-2. Roast or fry the potatoes until golden and tender, then keep them warm.
+2. Pat the pork dry. Brown it in two or three batches in a little hot oil so it sears instead of steaming, then set aside.
 
-3. Cook the onion in a little oil, add the pork, and brown well. Season with garlic, marjoram, pepper, and salt.
+3. Cook the onion in the same pan for 4 minutes, then add the garlic for 30 seconds. Return the pork, add salt, pepper, marjoram, and 100 ml water, then cover and cook for 35–45 minutes, until tender.
 
-4. Cover and cook for 20–25 minutes, adding a splash of water if needed, until the pork is tender.
+4. Fry the potatoes separately in hot oil until golden and tender inside, then drain well.
 
-5. Toss in the crisp potatoes just before serving. Serve pickles on the side.`,
-  'main-14': `1. Soak the bread roll in water, squeeze it dry, and finely chop the onion and garlic.
+5. Mix the pork and potatoes only just before serving so the potatoes stay crisp. Offer pickles to taste—about 1–2 per person, depending on their size.`,
+  'main-14': `1. Soak the bread rolls in water for 5 minutes, then squeeze them very dry with both hands. Finely chop the onion and garlic.
 
-2. Mix the ground pork, bread, egg, onion, garlic, salt, and pepper until evenly combined.
+2. Mix the pork, bread, egg, onion, garlic, salt, and pepper until even, then rest the mixture for 10 minutes.
 
-3. With wet hands, shape equal, slightly flattened patties.
+3. With wet hands, shape eight equal, slightly flattened patties so their centres cook through reliably.
 
-4. Fry in medium-hot oil for 5–6 minutes per side. The centre must be fully cooked with no pink meat.
+4. Heat about 1 cm oil over medium heat. Fry the patties for 4–5 minutes per side, until browned.
 
-5. Drain well and serve with any side dish you prefer.`,
-  'main-15': `1. Hard-boil some of the eggs, cool, and peel them. Soak the bread roll, squeeze it dry, and chop the onion.
+5. Cut one patty open to check that no pink meat remains. Drain on paper towel and serve with the separately selected side dish.`,
+  'main-15': `1. Put three eggs in cold water, boil for 10 minutes from the boil, then cool and peel them. Soak the bread rolls and squeeze them very dry.
 
-2. Mix the ground pork with the soaked bread, raw egg, onion, salt, and pepper.
+2. Mix the ground pork with the bread, two raw eggs, chopped onion, salt, and pepper.
 
-3. Spread the mixture into a rectangle, place the boiled eggs in a row, and wrap the meat around them, sealing all gaps.
+3. Heat the oven to 180°C. Flatten the meat mixture into a rectangle on baking paper, line up the boiled eggs in the centre, and close the meat around them.
 
-4. Bake at 180 °C for 50–60 minutes, until browned and fully cooked through.
+4. Form a compact loaf with the seam underneath. Bake for 50–60 minutes, until browned and the centre reaches 72°C.
 
-5. Rest for 10 minutes, then slice carefully and serve with potatoes.`,
+5. Meanwhile, peel and cube the potatoes and cook them in salted water for 15–20 minutes. Rest the meatloaf for 10 minutes before slicing, then serve with the potatoes.`,
   'main-16': `1. Heat the oven to 200 °C. Pat the chicken thighs dry and season with salt, pepper, paprika, and crushed garlic.
 
 2. Cut the potatoes into even wedges and toss with oil and a little salt.

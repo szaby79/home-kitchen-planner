@@ -14,6 +14,7 @@ import { dietaryRecipePackFour } from '@/data/dietaryRecipePackFour';
 import { dietaryRecipePackFive } from '@/data/dietaryRecipePackFive';
 import { breakfastRecipes } from '@/data/breakfastRecipes';
 import { applySoupAudit } from '@/data/soupAudit';
+import { applyMainAudit } from '@/data/mainAudit';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -236,7 +237,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'csirkemell', quantity: 600, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'liszt', quantity: 100, unit: 'g' }, { name: 'zsemlemorzsa', quantity: 150, unit: 'g' },
-      { name: 'olaj', quantity: 300, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'olaj', quantity: 500, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'burgonya', quantity: 800, unit: 'g' },
     ],
     description: 'A csirkemellt szeleteljük, klopfoljuk, sózzuk. Lisztbe, felvert tojásba, zsemlemorzsába forgatjuk. Bő olajban kisütjük. Burgonyapürével vagy rizzsel tálaljuk.'
@@ -246,7 +247,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'sertés karaj', quantity: 600, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'liszt', quantity: 100, unit: 'g' }, { name: 'zsemlemorzsa', quantity: 150, unit: 'g' },
-      { name: 'olaj', quantity: 300, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'olaj', quantity: 500, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'burgonya', quantity: 800, unit: 'g' },
     ],
     description: 'A karajt szeleteljük, klopfoljuk, sózzuk. Lisztbe, tojásba, zsemlemorzsába forgatjuk. Bő olajban kisütjük. Burgonyapürével tálaljuk.'
@@ -256,7 +257,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'trappista sajt', quantity: 400, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'liszt', quantity: 80, unit: 'g' }, { name: 'zsemlemorzsa', quantity: 120, unit: 'g' },
-      { name: 'olaj', quantity: 300, unit: 'ml' }, { name: 'rizs', quantity: 300, unit: 'g' },
+      { name: 'olaj', quantity: 500, unit: 'ml' }, { name: 'rizs', quantity: 300, unit: 'g' },
       { name: 'tartármártás', quantity: 100, unit: 'ml' },
     ],
     description: 'A sajtot szeleteljük. Lisztbe, tojásba, zsemlemorzsába forgatjuk (duplán panírozzuk). Forró olajban gyorsan kisütjük. Rizzsel és tartárral tálaljuk.'
@@ -267,7 +268,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'csirkecomb', quantity: 800, unit: 'g' }, { name: 'vöröshagyma', quantity: 2, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'tejföl', quantity: 200, unit: 'ml' },
       { name: 'zöldpaprika', quantity: 1, unit: 'db' }, { name: 'paradicsom', quantity: 1, unit: 'db' },
-      { name: 'só', quantity: 1, unit: 'tk' }, { name: 'olaj', quantity: 2, unit: 'ek' },
+      { name: 'só', quantity: 2, unit: 'tk' }, { name: 'olaj', quantity: 2, unit: 'ek' },
       { name: 'finomliszt', quantity: 400, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
     ],
     description: 'Hagymát dinsztelünk, pirospaprikával fűszerezzük. A csirkét hozzáadjuk, paprikával és paradicsommal, kevés vízzel pároljuk puháig. Tejföllel gazdagítjuk. Nokedlivel tálaljuk.'
@@ -277,7 +278,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'sertéshús', quantity: 600, unit: 'g' }, { name: 'vöröshagyma', quantity: 3, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'zöldpaprika', quantity: 1, unit: 'db' },
-      { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 2, unit: 'tk' },
       { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
       { name: 'tojás', quantity: 2, unit: 'db' },
     ],
@@ -288,7 +289,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'marhahús', quantity: 600, unit: 'g' }, { name: 'vöröshagyma', quantity: 3, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'zöldpaprika', quantity: 1, unit: 'db' },
-      { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'paradicsom', quantity: 1, unit: 'db' }, { name: 'só', quantity: 2, unit: 'tk' },
       { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
       { name: 'tojás', quantity: 2, unit: 'db' },
     ],
@@ -299,7 +300,7 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'marhahús', quantity: 500, unit: 'g' }, { name: 'vöröshagyma', quantity: 2, unit: 'db' },
       { name: 'füstölt szalonna', quantity: 100, unit: 'g' }, { name: 'gomba', quantity: 200, unit: 'g' },
-      { name: 'tejföl', quantity: 100, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'tejföl', quantity: 100, unit: 'ml' }, { name: 'só', quantity: 2, unit: 'tk' },
       { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'finomliszt', quantity: 400, unit: 'g' },
       { name: 'tojás', quantity: 2, unit: 'db' },
     ],
@@ -308,8 +309,8 @@ const defaultRecipeData: Recipe[] = [
   {
     id: 'main-8', name: 'Rakott krumpli', category: 'main', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'burgonya', quantity: 1000, unit: 'g' }, { name: 'tojás', quantity: 6, unit: 'db' },
-      { name: 'kolbász', quantity: 300, unit: 'g' }, { name: 'tejföl', quantity: 400, unit: 'ml' },
+      { name: 'burgonya', quantity: 800, unit: 'g' }, { name: 'tojás', quantity: 4, unit: 'db' },
+      { name: 'kolbász', quantity: 200, unit: 'g' }, { name: 'tejföl', quantity: 300, unit: 'ml' },
       { name: 'vaj', quantity: 20, unit: 'g' }, { name: 'só', quantity: 1, unit: 'tk' },
     ],
     description: 'Burgonyát és tojást megfőzzük. Rétegesen egy tepsibe rakjuk: krumpli, tojás, kolbász, tejföl. Sütőben sütjük kb. 30 perc, 180°C-on.'
@@ -317,8 +318,8 @@ const defaultRecipeData: Recipe[] = [
   {
     id: 'main-9', name: 'Rakott káposzta', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'savanyú káposzta', quantity: 800, unit: 'g' }, { name: 'darált sertéshús', quantity: 500, unit: 'g' },
-      { name: 'rizs', quantity: 200, unit: 'g' }, { name: 'tejföl', quantity: 300, unit: 'ml' },
+      { name: 'savanyú káposzta', quantity: 700, unit: 'g' }, { name: 'darált sertéshús', quantity: 450, unit: 'g' },
+      { name: 'rizs', quantity: 150, unit: 'g' }, { name: 'tejföl', quantity: 250, unit: 'ml' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'pirospaprika', quantity: 1, unit: 'tk' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'olaj', quantity: 2, unit: 'ek' },
     ],
@@ -327,8 +328,9 @@ const defaultRecipeData: Recipe[] = [
   {
     id: 'main-10', name: 'Töltött káposzta', category: 'main', mealType: 'lunch', defaultServings: 4, note: 'Több napra is készíthető', imageUrl: '',
     ingredients: [
-      { name: 'savanyú káposzta', quantity: 1000, unit: 'g' }, { name: 'darált sertéshús', quantity: 500, unit: 'g' },
-      { name: 'rizs', quantity: 200, unit: 'g' }, { name: 'füstölt oldalas', quantity: 300, unit: 'g' },
+      { name: 'savanyú káposztalevél', quantity: 8, unit: 'db' }, { name: 'savanyú káposzta', quantity: 600, unit: 'g' },
+      { name: 'darált sertéshús', quantity: 500, unit: 'g' },
+      { name: 'rizs', quantity: 100, unit: 'g' }, { name: 'füstölt oldalas', quantity: 300, unit: 'g' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
       { name: 'pirospaprika', quantity: 1, unit: 'ek' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'tojás', quantity: 1, unit: 'db' },
@@ -339,7 +341,7 @@ const defaultRecipeData: Recipe[] = [
     id: 'main-11', name: 'Töltött paprika', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'tölteni való paprika', quantity: 8, unit: 'db' }, { name: 'darált sertéshús', quantity: 500, unit: 'g' },
-      { name: 'rizs', quantity: 150, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
+      { name: 'rizs', quantity: 100, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
       { name: 'paradicsom szósz', quantity: 500, unit: 'ml' }, { name: 'cukor', quantity: 1, unit: 'ek' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
     ],
@@ -362,7 +364,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'sertéshús', quantity: 600, unit: 'g' }, { name: 'burgonya', quantity: 600, unit: 'g' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'fokhagyma', quantity: 3, unit: 'gerezd' },
       { name: 'majoránna', quantity: 1, unit: 'tk' }, { name: 'bors', quantity: 0.5, unit: 'tk' },
-      { name: 'olaj', quantity: 3, unit: 'ek' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'olaj', quantity: 500, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'savanyú uborka', quantity: 4, unit: 'db' },
     ],
     description: 'A húst kockázzuk, erős tűzön kisütjük. A burgonyát hasábra vágjuk, külön kisütjük. Fokhagymával, majoránnával fűszerezzük, összekeverjük. Savanyú uborkával tálaljuk.'
@@ -373,7 +375,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'darált sertéshús', quantity: 500, unit: 'g' }, { name: 'zsemle', quantity: 2, unit: 'db' },
       { name: 'tojás', quantity: 1, unit: 'db' }, { name: 'vöröshagyma', quantity: 1, unit: 'db' },
       { name: 'fokhagyma', quantity: 2, unit: 'gerezd' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'olaj', quantity: 100, unit: 'ml' },
+      { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'olaj', quantity: 300, unit: 'ml' },
     ],
     description: 'A zsemlyét beáztatjuk, a húshoz keverjük tojással, hagymával, fokhagymával. Fasírtokat formálunk, olajban kisütjük. A külön kiválasztott körettel tálaljuk.'
   },
@@ -763,7 +765,7 @@ const allRecipeData = [
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => ({
-  ...applySoupAudit(recipe),
+  ...applyMainAudit(applySoupAudit(recipe)),
   description: beginnerInstructions[recipe.id] ?? recipe.description,
   imageUrl: `/recipes/${recipe.id}.webp`,
 }));

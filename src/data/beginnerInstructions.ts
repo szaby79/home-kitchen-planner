@@ -345,7 +345,7 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
 4. A burgonyát külön, forró olajban süsd aranybarnára és belül puhára, majd csepegtesd le.
 
-5. Közvetlenül tálalás előtt keverd össze a húst a burgonyával, hogy ropogós maradjon.`,
+5. Közvetlenül tálalás előtt keverd össze a húst a burgonyával, hogy ropogós maradjon. Savanyú uborkát ízlés szerint kínálj mellé; személyenként körülbelül 1–2 darabbal számolj, de a mennyiség az uborkák méretétől függ.`,
 
   'main-14': `1. A zsemlét áztasd vízbe 5 percre, majd két kézzel nagyon alaposan nyomkodd ki. A hagymát és fokhagymát aprítsd fel.
 
