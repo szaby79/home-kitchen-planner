@@ -13,6 +13,7 @@ import { dietaryRecipePackThree } from '@/data/dietaryRecipePackThree';
 import { dietaryRecipePackFour } from '@/data/dietaryRecipePackFour';
 import { dietaryRecipePackFive } from '@/data/dietaryRecipePackFive';
 import { breakfastRecipes } from '@/data/breakfastRecipes';
+import { applySoupAudit } from '@/data/soupAudit';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -23,7 +24,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'petrezselyemgyökér', quantity: 2, unit: 'db' }, { name: 'zeller', quantity: 1, unit: 'db' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'só', quantity: 1, unit: 'ek' },
       { name: 'bors', quantity: 0.5, unit: 'tk' }, { name: 'cérnametélt', quantity: 100, unit: 'g' },
-      { name: 'petrezselyemzöld', quantity: 1, unit: 'csokor' }, { name: 'víz', quantity: 3, unit: 'l' },
+      { name: 'petrezselyemzöld', quantity: 1, unit: 'csokor' }, { name: 'víz', quantity: 2.2, unit: 'l' },
     ],
     description: 'A csirkecombot hideg vízzel feltesszük főni. A zöldségeket megtisztítjuk, egészben hozzáadjuk. Sózzuk, borsozzuk. Lassú tűzön 1,5 órát főzzük. A húst kiszedve a levest leszűrjük, a cérnametéltet benne megfőzzük. Petrezselyemzölddel tálaljuk.'
   },
@@ -60,7 +61,8 @@ const defaultRecipeData: Recipe[] = [
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'liszt', quantity: 1, unit: 'ek' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'finomliszt', quantity: 100, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
-      { name: 'babérlevél', quantity: 2, unit: 'db' },
+      { name: 'babérlevél', quantity: 2, unit: 'db' }, { name: 'füstölt kolbász', quantity: 150, unit: 'g' },
+      { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'fokhagyma', quantity: 2, unit: 'gerezd' },
     ],
     description: 'A babot beáztatjuk, a csülökkel együtt puhára főzzük. Zöldségeket kockázva hozzáadjuk. Tejföllel-liszttel beteszítjük. Csipetkét főzünk bele. Pirospaprikával fűszerezzük.'
   },
@@ -150,8 +152,9 @@ const defaultRecipeData: Recipe[] = [
   {
     id: 'soup-13', name: 'Tojásleves', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'tojás', quantity: 3, unit: 'db' }, { name: 'liszt', quantity: 3, unit: 'ek' },
-      { name: 'vaj', quantity: 20, unit: 'g' }, { name: 'petrezselyemzöld', quantity: 1, unit: 'csokor' },
+      { name: 'tojás', quantity: 4, unit: 'db' }, { name: 'liszt', quantity: 2, unit: 'ek' },
+      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'pirospaprika', quantity: 1, unit: 'tk' },
+      { name: 'kömény', quantity: 1, unit: 'tk' }, { name: 'ecet', quantity: 1, unit: 'ek' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'bors', quantity: 0.5, unit: 'tk' },
     ],
     description: 'A tojást liszttel elkeverjük, kanállal a forró levesbe csepegtetjük. Pár percig főzzük. Petrezselyemmel tálaljuk.'
@@ -170,7 +173,7 @@ const defaultRecipeData: Recipe[] = [
     id: 'soup-15', name: 'Tárkonyos csirkeleves', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'csirkecomb', quantity: 500, unit: 'g' }, { name: 'sárgarépa', quantity: 1, unit: 'db' },
-      { name: 'petrezselyemgyökér', quantity: 1, unit: 'db' }, { name: 'tárkony', quantity: 2, unit: 'ek' },
+      { name: 'petrezselyemgyökér', quantity: 1, unit: 'db' }, { name: 'szárított tárkony', quantity: 2, unit: 'tk' },
       { name: 'tejföl', quantity: 150, unit: 'ml' }, { name: 'liszt', quantity: 1, unit: 'ek' },
       { name: 'ecet', quantity: 1, unit: 'tk' }, { name: 'só', quantity: 1, unit: 'tk' },
     ],
@@ -182,7 +185,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'ponty', quantity: 800, unit: 'g' }, { name: 'vöröshagyma', quantity: 3, unit: 'db' },
       { name: 'pirospaprika', quantity: 2, unit: 'ek' }, { name: 'zöldpaprika', quantity: 2, unit: 'db' },
       { name: 'paradicsom', quantity: 2, unit: 'db' }, { name: 'só', quantity: 1, unit: 'ek' },
-      { name: 'víz', quantity: 2, unit: 'l' },
+      { name: 'víz', quantity: 1.5, unit: 'l' },
     ],
     description: 'A hagymát karikázzuk, a hal fejét és szálkás részeit megfőzzük benne. Leszűrjük, pirospaprikával fűszerezzük. A halszeleteket beletesszük, óvatosan főzzük 15 percig.'
   },
@@ -760,7 +763,7 @@ const allRecipeData = [
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => ({
-  ...recipe,
+  ...applySoupAudit(recipe),
   description: beginnerInstructions[recipe.id] ?? recipe.description,
   imageUrl: `/recipes/${recipe.id}.webp`,
 }));

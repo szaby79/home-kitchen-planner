@@ -1,7 +1,7 @@
 // Beginner-friendly instructions for the built-in recipes. Keep each action
 // explicit: a first-time cook should not need to know kitchen shorthand.
 export const beginnerInstructions: Record<string, string> = {
-  'soup-1': `1. Tedd a csirkecombokat egy legalább 5 literes fazékba, öntsd rá a 3 liter HIDEG vizet, és kezdd közepes lángon melegíteni. Amikor szürkés hab jelenik meg a tetején, kanállal szedd le.
+  'soup-1': `1. Tedd a csirkecombokat egy legalább 4 literes fazékba, öntsd rá a 2,2 liter hideg vizet, és kezdd közepes lángon melegíteni. Amikor szürkés hab jelenik meg a tetején, kanállal szedd le.
 
 2. Hámozd meg a répát, petrezselyemgyökeret és zellert. A hagymáról csak a külső, piszkos héjat vedd le; egészben tedd a fazékba a többi zöldséggel, sóval és borssal.
 
@@ -17,7 +17,7 @@ Figyelem: nyers csirke után moss kezet, a kést és a vágódeszkát pedig mosd
 
 2. Melegítsd fel az olajat egy nagy fazékban közepes lángon. Add hozzá a hagymát, és 6–8 percig kevergetve párold, amíg puha és üveges lesz, de nem barnul meg. Tedd hozzá a húst, és 5–7 perc alatt pirítsd körbe.
 
-3. HÚZD LE A FAZEKAT A TŰZRŐL, csak ezután keverd bele a pirospaprikát. 10–15 másodperc után azonnal önts hozzá kb. 1,5 liter vizet. A paprika forró, száraz edényben megég és keserű lesz. Add hozzá a paradicsomot, paprikát, fokhagymát, köményt és a só felét.
+3. Húzd le a fazekat a tűzről, és csak ezután keverd bele a pirospaprikát. 10–15 másodperc után azonnal önts hozzá kb. 1,5 liter vizet. A paprika forró, száraz edényben megég és keserű lesz. Add hozzá a paradicsomot, paprikát, fokhagymát, köményt és a só felét.
 
 4. Forrald fel, majd kis lángon, félig lefedve főzd kb. 60 percig. Add hozzá a répát és a burgonyát, majd főzd további 30–40 percig. Akkor jó, ha a hús és a burgonya is könnyen átszúrható villával. Kóstold meg, és csak ezután add hozzá a maradék sót, ha szükséges.
 
@@ -39,7 +39,7 @@ Figyelem: ha a bab 2 óra után is kemény, főzd tovább; a régi bab lassabban
 
   'soup-4': `1. Előző este mosd meg a tarkababot, és áztasd be bő hideg vízbe. Másnap öntsd le róla a vizet. Tedd fazékba a csülökkel és babérlevéllel, majd önts rá kb. 2,5 liter friss vizet.
 
-2. Forrald fel, majd kis lángon főzd 60 percig. Add hozzá a megtisztított, felkarikázott répát és petrezselyemgyökeret, és főzd még 30–45 percig, amíg a bab puha. A füstölt csülök miatt csak a végén sózz.
+2. Forrald fel, majd kis lángon főzd 60 percig. Add hozzá a megtisztított, felkarikázott répát és petrezselyemgyökeret, az egész hagymát és a fokhagymát, majd főzd még 30–45 percig. Az utolsó 15 percben add hozzá a felkarikázott kolbászt. Akkor jó, ha a bab puha; a füstölt húsok miatt csak a végén sózz.
 
 3. Csipetkéhez keverj össze 1 tojást, egy csipet sót és kb. 80–100 g lisztet. Gyúrj kemény tésztát, majd lisztezett ujjal csípj belőle borsónyi darabokat. Szórd a levesbe, és főzd 8–10 percig.
 
@@ -99,7 +99,7 @@ Figyelem: ha a bab 2 óra után is kemény, főzd tovább; a régi bab lassabban
 
   'soup-10': `1. A hagymát aprítsd fel, a meghámozott burgonyát vágd 2 cm-es kockákra, a répát karikázd fel.
 
-2. Melegítsd az olajat fazékban, és közepes lángon párold a hagymát 5–6 percig. HÚZD LE A TŰZRŐL, keverd bele a pirospaprikát, majd azonnal önts hozzá kb. 1,5 liter vizet, hogy a paprika ne égjen és ne legyen keserű.
+2. Melegítsd az olajat fazékban, és közepes lángon párold a hagymát 5–6 percig. Húzd le a fazekat a tűzről, keverd bele a pirospaprikát, majd azonnal önts hozzá kb. 1,5 liter vizet, hogy a paprika ne égjen és ne legyen keserű.
 
 3. Add hozzá a burgonyát, répát, babérlevelet és a sót. Forrald fel, majd kis lángon főzd 20–25 percig, amíg a burgonya villával könnyen átszúrható.
 
@@ -127,15 +127,17 @@ Figyelem: ha a bab 2 óra után is kemény, főzd tovább; a régi bab lassabban
 
 5. A tejfölt külön kínáld, vagy keverd simára kevés meleg levessel, és csak ezután add hozzá.`,
 
-  'soup-13': `1. Egy fazékban forralj fel kb. 1,5 liter vizet a vajjal, sóval és borssal.
+  'soup-13': `1. Melegítsd fel az olajat egy fazékban közepes-kis lángon. Szórd bele a köményt, és kevergesd 20–30 másodpercig, amíg illatozni kezd; ne hagyd megégni.
 
-2. Egy tálban üsd fel a tojásokat. Kézi habverővel keverd simára a liszttel; sűrű, de kanálról lassan lefolyó masszát kell kapnod. Ha túl sűrű, adj hozzá 1–2 evőkanál vizet.
+2. Keverd hozzá a lisztet, és készíts világosbarna rántást 1–2 perc alatt. Húzd le a fazekat a tűzről, keverd bele a pirospaprikát, majd fokozatosan önts hozzá 1,5 liter hideg vizet, közben habverővel keverd simára.
 
-3. Amikor a leves gyöngyözve forr, egyik kezeddel lassan csorgasd bele a tojásos masszát, a másikkal közben keverd a levest. Így vékony tojásfoszlányok és kisebb galuskák lesznek benne.
+3. Tedd vissza a tűzre, add hozzá a sót és a borsot, majd forrald fel. Kis lángon főzd 5 percig, hogy a liszt teljesen megfőjön.
 
-4. Kis lángon főzd 4–5 percig. Vágj ketté egy nagyobb galuskát: akkor kész, ha a közepe már nem folyós és nem lisztes.
+4. Két tojást üss egy tálba, és villával verd fel. A gyöngyöző levest lassan keverve csorgasd bele a tojást, hogy finom tojásfoszlányok képződjenek.
 
-5. Kóstold meg, szükség esetén sózd, és aprított petrezselyemmel tálald.`,
+5. A másik két tojást egyenként üsd előbb külön csészébe, majd óvatosan csúsztasd a levesbe. Ne keverd; kis lángon főzd 4–5 percig, amíg a fehérje teljesen megszilárdul. Ha keményebb sárgáját szeretnél, főzd 1–2 perccel tovább.
+
+6. Az ecetet csak a végén, először fél evőkanállal add hozzá. Kóstold meg, és csak ezután adj még belőle, ha kellemesebben savanykásan szereted.`,
 
   'soup-14': `1. A csirkemellet vágd 2 cm-es kockákra. A répát hámozd meg és karikázd fel, a gombát szeleteld.
 
@@ -149,7 +151,7 @@ Figyelem: ha a bab 2 óra után is kemény, főzd tovább; a régi bab lassabban
 
   'soup-15': `1. A csirkecomb húsát vágd falatnyi darabokra, vagy egész comb esetén hagyd egyben. A répát és petrezselyemgyökeret hámozd meg és karikázd fel.
 
-2. Tedd a csirkét és a zöldségeket fazékba, önts rá kb. 1,8 liter vizet, add hozzá a sót és a tárkony felét. Forrald fel, szedd le a habot, majd kis lángon főzd 40–50 percig. A hús legyen teljesen átfőtt és könnyen leváljon a csontról.
+2. Tedd a csirkét és a zöldségeket fazékba, önts rá kb. 1,8 liter vizet, add hozzá a sót és a szárított tárkony felét. Forrald fel, szedd le a habot, majd kis lángon főzd 40–50 percig. A hús legyen teljesen átfőtt és könnyen leváljon a csontról.
 
 3. A tejfölt keverd teljesen simára a liszttel. Fokozatosan adj hozzá 2 merőkanál forró levest, majd lassan öntsd vissza a fazékba keverés közben.
 
@@ -159,7 +161,7 @@ Figyelem: ha a bab 2 óra után is kemény, főzd tovább; a régi bab lassabban
 
   'soup-16': `1. A megtisztított halat vágd 2–3 cm vastag szeletekre. Sózd be enyhén, és tedd hűtőbe, amíg az alap készül. A hagymát szeleteld, a paprikát és paradicsomot darabold fel.
 
-2. A hal fejét, farkát és szálkásabb részeit tedd fazékba a hagymával, paprikával, paradicsommal és 2 liter vízzel. Forrald fel, majd közepes lángon főzd 45 percig.
+2. A hal fejét, farkát és szálkásabb részeit tedd fazékba a hagymával, paprikával, paradicsommal és 1,5 liter vízzel. Forrald fel, majd közepes lángon főzd 45 percig.
 
 3. Szűrd át az alaplevet finom szűrőn egy tiszta fazékba. A főtt részekből a használható halhúst óvatosan szedd ki, ügyelve a szálkákra.
 
