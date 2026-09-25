@@ -55,6 +55,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-47': { preparationTime: 10, cookingTime: 25, commonAllergens: ['gluten', 'egg'], note: 'Olcsó, gyors hétköznapi étel' },
   'main-48': { preparationTime: 20, cookingTime: 35, restingTime: 15, commonAllergens: ['gluten', 'egg'], note: 'Édeskés-sós magyar tésztaétel' },
   'main-49': { preparationTime: 25, cookingTime: 25, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Szalonnás felvidéki kedvenc' },
+  'main-50': { preparationTime: 20, cookingTime: 40, difficulty: 'medium', commonAllergens: ['gluten', 'milk', 'lactose'], note: 'Zalai burgonyás étel pirított hagymával' },
+  'main-57': { preparationTime: 25, cookingTime: 30, restingTime: 15, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Húsmentes, ropogós fogás' },
+  'main-58': { preparationTime: 30, cookingTime: 105, restingTime: 15, difficulty: 'advanced', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Petrezselymes-zsemlés töltelékkel' },
+  'main-59': { preparationTime: 20, cookingTime: 110, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Ünnepi magyar főétel' },
+  'main-60': { preparationTime: 20, cookingTime: 30, difficulty: 'medium', commonAllergens: ['fish', 'milk', 'lactose', 'gluten', 'egg'], note: 'Paprikás hal klasszikus körettel' },
+  'main-61': { preparationTime: 25, cookingTime: 55, difficulty: 'medium', commonAllergens: ['fish', 'milk', 'lactose'], note: 'Paprikás-tejfölös hal burgonyával' },
+  'main-62': { preparationTime: 20, cookingTime: 45, difficulty: 'medium', commonAllergens: [], note: 'Szaftos hús paprikával és paradicsommal' },
+  'main-63': { preparationTime: 20, cookingTime: 65, difficulty: 'medium', commonAllergens: [], note: 'Savanyú uborkás sertésragu' },
+  'main-64': { preparationTime: 20, cookingTime: 30, difficulty: 'medium', commonAllergens: [], note: 'Hagymás máj főtt burgonyával' },
+  'main-65': { preparationTime: 20, cookingTime: 160, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Hosszú főzésű magyar klasszikus' },
+  'main-66': { preparationTime: 20, cookingTime: 220, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Sűrű szaftú, hagyományos étel' },
+  'main-67': { preparationTime: 25, cookingTime: 190, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Lassan főtt ünnepi pörkölt' },
+  'main-68': { preparationTime: 25, cookingTime: 35, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten'], note: 'Karfiolos, sajtos sült csirke' },
+  'main-69': { preparationTime: 20, cookingTime: 40, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten'], note: 'Zöldbabos, tejfölös sertésragu' },
+  'main-70': { preparationTime: 20, cookingTime: 140, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Ünnepi, ropogósra sült fogás' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {

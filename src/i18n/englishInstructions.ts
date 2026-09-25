@@ -749,7 +749,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Slice the onions and fry in oil until golden. Use an oiled spoon to drop portions of dough into the pan.
 
-5. Brown the pieces for 8–10 minutes and serve with the onions and sour cream.`,
+5. Brown the pieces for 8–10 minutes. Serve with the soft golden onions and sour cream to taste.`,
   'main-51': `1. Slice the potatoes and simmer with bay leaves and salt in just enough water to cover for about 15 minutes.
 
 2. Soak and squeeze the bread roll. Mix it with ground pork, egg, half the chopped onion, and salt.
@@ -808,47 +808,47 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 2. Coat each dry floret in flour, beaten egg, and breadcrumbs.
 
-3. Fry in medium-hot oil until golden on all sides, then drain well.
+3. Fry in batches in medium-hot oil for 4–5 minutes, until golden on all sides. Do not crowd the pan; drain well.
 
 4. Boil the potatoes in salted water until tender, drain, and toss with chopped parsley.
 
 5. Serve the cauliflower immediately with the parsley potatoes.`,
   'main-58': `1. Heat the oven to 180 °C. Pat the chicken dry inside and out and season with salt and pepper.
 
-2. Soak and squeeze the bread rolls. Cook the chopped onion and liver, then mix with bread, egg, parsley, and seasoning.
+2. Soak and squeeze the bread rolls. Cook the chopped onion and liver in half the butter for 5 minutes and cool until lukewarm, then mix with bread, egg, and parsley.
 
-3. Loosely fill the chicken cavity; do not pack it tightly. Secure the opening and rub the skin with butter.
+3. Loosely fill the chicken cavity; do not pack it tightly. Secure the opening and rub the skin with the remaining butter.
 
-4. Roast for about 75–90 minutes, basting occasionally. The thickest part must be fully cooked and the juices clear.
+4. Roast for 90–105 minutes, basting once. The thickest part of the thigh and the centre of the stuffing must both reach 74 °C.
 
-5. Rest for 15 minutes before carving. Serve the stuffing only after confirming it is piping hot throughout.`,
-  'main-59': `1. Score the duck skin without cutting into the meat and season with salt. Heat the oven to 180 °C.
+5. Rest for 15 minutes before carving, then serve the chicken with its hot stuffing.`,
+  'main-59': `1. Prick the duck skin in a few places without piercing the meat and season both sides with salt. Heat the oven to 170 °C.
 
-2. Place the legs skin-side up in a roasting dish and roast for 75–90 minutes, until tender.
+2. Place the legs skin-side up in a roasting dish, add 100 ml water, cover, and roast for 90 minutes, until the meat yields easily to a fork.
 
 3. Shred the red cabbage and slice the onion and apple. Cook the onion, then add cabbage, apple, caraway, sugar, and salt.
 
 4. Cover and braise for 35–40 minutes, adding vinegar near the end. Taste for sweet-sour balance.
 
-5. Raise the oven to 220 °C for the final 10 minutes to crisp the duck skin, then rest for 5 minutes.`,
-  'main-60': `1. Cut the catfish into even pieces, check for bones, and season lightly. Chop the onion and dice the bacon.
+5. Uncover, raise the oven to 210 °C, and roast for another 15–20 minutes until the skin is crisp. Rest for 10 minutes, then serve with the cabbage.`,
+  'main-60': `1. Check the catfish fillet for bones, cut it into 3 cm pieces, and season lightly. Chop the onion and dice the bacon.
 
 2. Cook the onion in oil, remove from the heat, stir in paprika, and immediately add a little water.
 
 3. Add the fish and simmer gently for 8–10 minutes. Do not stir hard or the pieces will break.
 
-4. Temper the sour cream with hot sauce and stir it in gently without a hard boil.
+4. Temper 150 ml sour cream with hot sauce and stir it in gently. Heat for 2 minutes without a hard boil.
 
-5. Cook the csusza noodles, toss with dry cottage cheese, sour cream, and crisp bacon, and serve with the fish.`,
-  'main-61': `1. Slice the potatoes, peppers, tomatoes, and onion. Check the carp fillets carefully for bones.
+5. Fry the bacon until crisp. Cook and drain the csusza noodles, then toss with the dry cottage cheese, the remaining 150 ml sour cream, and the bacon. Serve with the catfish paprikash.`,
+  'main-61': `1. Slice the potatoes and parboil them in salted water for 8 minutes, then drain. Check the carp fillets carefully for bones and season them.
 
-2. Arrange the potatoes in a baking dish, then add onion, peppers, and tomatoes. Season lightly.
+2. Slice the onion, peppers, and tomatoes. Heat the oven to 190 °C and arrange the potatoes in the bottom of a baking dish.
 
-3. Place the carp on top. Mix sour cream with paprika and spread it over the fish.
+3. Spread the vegetables over the potatoes and place the carp on top. Mix the sour cream with paprika and 2 tablespoons water, then spread it over the fish.
 
-4. Cover and bake at 190 °C for 30 minutes, then uncover and bake for another 15 minutes.
+4. Cover and bake for 25 minutes, then uncover and bake for another 15–20 minutes, until lightly browned.
 
-5. The fish should be opaque and flake easily. Warn diners that small bones may remain.`,
+5. It is ready when the fish is opaque and flakes easily and the potatoes are tender. Warn diners that small bones may remain even after careful checking.`,
   'main-62': `1. Pound the pork slices lightly and season. Slice the peppers, tomatoes, onion, and bacon.
 
 2. Render the bacon and brown the pork on both sides, then set it aside.
@@ -857,52 +857,52 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Return the pork, cover, and simmer for 25–30 minutes, until tender and fully cooked.
 
-5. Taste the sauce before adding salt and serve hot.`,
+5. It is ready when the pork is fully cooked and easily pierced. Taste the sauce and serve with a side of your choice.`,
   'main-63': `1. Cut the pork and ham into thin strips, slice the pickles, and chop the onion.
 
 2. Cook the onion in oil, add the pork, and brown well. Season with pepper.
 
-3. Add tomato paste and a little water. Cover and simmer for 35–45 minutes, until tender.
+3. Add tomato paste and 200 ml water. Cover and simmer for 45–55 minutes, until tender, adding a little hot water if needed.
 
 4. Add the ham, pickles, and mustard and cook uncovered for another 5–8 minutes.
 
-5. Taste before salting because the ham and pickles are salty.`,
-  'main-64': `1. Trim the chicken livers and pat them dry. Slice the onions and cube the potatoes.
+5. Taste before salting because the ham and pickles are salty, then serve hot.`,
+  'main-64': `1. Trim the chicken livers, halve them, and pat them dry. Slice the onions and cube the potatoes.
 
 2. Boil the potatoes in salted water until tender and keep warm.
 
-3. Cook the onions in oil until golden. Add the livers and cook over medium-high heat for 6–8 minutes.
+3. Cook the onions in oil for 10 minutes, until soft and light golden. Remove the pan from the heat and stir in the paprika.
 
-4. Remove from the heat before adding paprika, pepper, and marjoram. Cut one liver open; it must not be raw inside.
+4. Add the livers, pepper, and marjoram. Cook in a wide pan, in two batches if needed, for 8–10 minutes, turning the pieces.
 
-5. Salt only at the end and serve immediately with the boiled potatoes.`,
+5. The centre of the largest liver piece must reach 74 °C; colour alone is not a reliable check. Salt and taste at the end, then serve with the potatoes.`,
   'main-65': `1. Rinse the pre-cooked tripe and cut it into strips. Finely chop the onion, garlic, pepper, and tomato.
 
 2. Cook the onion in lard until soft. Remove from the heat, stir in paprika, then immediately add water.
 
 3. Add the tripe, garlic, caraway, pepper, tomato, and salt. Bring to a gentle simmer.
 
-4. Cook partly covered for 1.5–2 hours, stirring occasionally and adding hot water as needed.
+4. Cook partly covered for 2–2.5 hours, stirring occasionally and adding hot water as needed.
 
-5. It is ready when the tripe is tender and the sauce thick. Taste and rest for 10 minutes before serving.`,
+5. It is ready when the tripe is tender and the sauce thick. Taste, rest for 10 minutes, and serve with a side of your choice.`,
   'main-66': `1. Ask the butcher to split the pork feet. Rinse them thoroughly and chop the onion, garlic, pepper, and tomato.
 
 2. Cook the onion in lard, remove from heat, stir in paprika, then immediately add a little water.
 
 3. Add the pork feet, garlic, vegetables, caraway, and salt. Add enough water to come halfway up the meat.
 
-4. Cover and simmer gently for 2.5–3 hours, turning occasionally, until the meat slips from the bones.
+4. Cover and simmer gently for 3–3.5 hours, turning occasionally and adding only a little water as needed, until the meat slips from the bones.
 
-5. Taste the thick sauce and serve carefully, warning diners about small bones.`,
+5. Taste the sticky, thick sauce and rest for 10 minutes. Serve carefully, warning diners that small bone pieces may remain.`,
   'main-67': `1. Pat the rooster pieces dry and chop the onion, pepper, and tomato.
 
 2. Cook the onion in lard until soft. Remove from the heat, stir in paprika, and immediately add a little water.
 
-3. Add the rooster and vegetables. Cover and simmer very gently for 2–3 hours, adding hot water as needed.
+3. Add the rooster and vegetables, season with some of the measured salt, cover, and simmer very gently for 2.5–3 hours, adding a little hot water as needed.
 
 4. The meat is ready when fork-tender and pulling from the bone. Taste and adjust the salt.
 
-5. Make nokedli from flour, egg, water, and salt; cook until they rise plus 1 minute, then serve with the stew.`,
+5. Make nokedli from flour, egg, about 250 ml water, and some of the measured salt. Cook in salted simmering water until they rise plus 1 minute, then serve with the stew.`,
   'main-68': `1. Slice the chicken breast evenly, season, and brown it briefly in oil. Place in a baking dish.
 
 2. Break the cauliflower into florets and boil in salted water until just tender, then drain well.
@@ -920,16 +920,16 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Whisk the sour cream and flour with hot sauce, then stir it into the pan.
 
-5. Simmer for 3 minutes, check that the pork is tender, and taste for salt.`,
-  'main-70': `1. Score the goose-leg skin without cutting into the meat, season with salt, and heat the oven to 180 °C.
+5. Simmer for 3 minutes, check that the pork is tender, taste for salt, and serve with a side of your choice.`,
+  'main-70': `1. Pat the goose legs dry, prick the skin in a few places without piercing the meat, season both sides with salt, and heat the oven to 160 °C.
 
-2. Roast skin-side up for 90–120 minutes, basting occasionally, until very tender.
+2. Place skin-side up in a roasting dish, add 100 ml water, cover, and roast for 2 hours, until the meat pulls easily from the bone with a fork.
 
 3. Shred the red cabbage and slice the onion and apple. Cook the onion, then add cabbage, apple, caraway, sugar, and salt.
 
 4. Cover and braise for 35–40 minutes. Add vinegar near the end and adjust the sweet-sour balance.
 
-5. Raise the oven to 220 °C for the final 10 minutes to crisp the skin, then rest before serving.`,
+5. Uncover, raise the oven to 210 °C, and roast for another 15–20 minutes until the skin is crisp. Rest for 10 minutes, then serve with the cabbage.`,
   'side-1': `1. Peel the potatoes and cut them into even pieces.\n\n2. Cover with cold salted water and bring to a boil.\n\n3. Simmer for 15–20 minutes, until easily pierced with a fork.\n\n4. Drain well and let the steam escape for 1 minute.\n\n5. Toss gently with butter and chopped parsley, then taste for salt.`,
   'side-2': `1. Peel and cube the potatoes evenly.\n\n2. Cover with cold salted water and simmer for 15–20 minutes, until very soft.\n\n3. Drain thoroughly and return to the warm pot for 1 minute.\n\n4. Mash until smooth, then gradually beat in warm milk and butter.\n\n5. Taste for salt and serve immediately; do not use a blender or the potatoes may turn gluey.`,
   'side-3': `1. Rinse the rice until the water is mostly clear and drain well.\n\n2. Warm the oil in a pot and stir the rice for 1 minute.\n\n3. Add the measured water and salt and bring to a boil.\n\n4. Cover tightly and cook on the lowest heat for 12 minutes without lifting the lid.\n\n5. Turn off the heat, rest covered for 10 minutes, then fluff with a fork.`,
