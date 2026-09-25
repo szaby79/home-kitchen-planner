@@ -1,6 +1,7 @@
 import { Recipe } from '@/types/recipe';
 import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
 import { auditedStewEnglishNotes } from '@/data/stewAudit';
+import { auditedSideEnglishNotes } from '@/data/sideAudit';
 import { ENGLISH_RECIPE_NAMES } from '@/i18n/englishRecipeNames';
 
 const INGREDIENTS: Record<string, string> = {
@@ -296,6 +297,7 @@ const NOTES: Record<string, string> = {
   'Krémes, tartalmas pirítós főtt tojással': 'Creamy, filling toast with boiled eggs',
   'Szaftos gombával töltött, Keto-kompatibilis omlett': 'Keto-friendly omelette filled with juicy mushrooms',
   ...auditedStewEnglishNotes,
+  ...auditedSideEnglishNotes,
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

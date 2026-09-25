@@ -6,6 +6,7 @@ import { dietaryRecipePackFourEnglishInstructions } from '@/data/dietaryRecipePa
 import { dietaryRecipePackFiveEnglishInstructions } from '@/data/dietaryRecipePackFive';
 import { breakfastRecipeEnglishInstructions } from '@/data/breakfastRecipes';
 import { auditedStewEnglishInstructions } from '@/data/stewAudit';
+import { auditedSideEnglishInstructions } from '@/data/sideAudit';
 
 export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...breakfastRecipeEnglishInstructions,
@@ -980,4 +981,5 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
   'dessert-19': `1. Boil the potatoes in their skins until tender, peel, mash completely, and cool.\n\n2. Mix with flour and egg just until a soft dough forms; do not overwork it.\n\n3. Roll out, cut into squares, and wrap each pitted plum with cinnamon sugar inside. Seal well.\n\n4. Simmer until the dumplings rise, then cook for 3–5 minutes more.\n\n5. Toast breadcrumbs in butter, roll the drained dumplings in them, and serve with cinnamon sugar.`,
   'dessert-20': `1. Slice the crescent rolls and gradually soak them with warm milk so they soften without becoming mushy.\n\n2. Peel and slice the apples and cook briefly with cinnamon and a little sugar.\n\n3. Layer the rolls and apples in a buttered dish, adding small spoonfuls of apricot jam.\n\n4. Bake at 180 °C for 20 minutes. Beat the egg whites with sugar to stiff peaks and spread over the top.\n\n5. Bake at 150 °C for 10–15 minutes, until the meringue is set. Rest before serving.`,
   ...auditedStewEnglishInstructions,
+  ...auditedSideEnglishInstructions,
 };

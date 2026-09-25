@@ -16,6 +16,7 @@ import { breakfastRecipes } from '@/data/breakfastRecipes';
 import { applySoupAudit } from '@/data/soupAudit';
 import { applyMainAudit } from '@/data/mainAudit';
 import { applyStewAudit } from '@/data/stewAudit';
+import { applySideAudit } from '@/data/sideAudit';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -771,7 +772,7 @@ const allRecipeData = [
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => {
-  const auditedRecipe = applyStewAudit(applyMainAudit(applySoupAudit(recipe)));
+  const auditedRecipe = applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe))));
   return {
     ...auditedRecipe,
     description: recipe.category === 'stew'
