@@ -20,74 +20,74 @@ export const additionalMains: Recipe[] = [
   makeMain(36, 'Cigánypecsenye', 'Sertéstarjából, fokhagymásan', [
     ['sertéstarja', 600, 'g'], ['füstölt szalonna', 150, 'g'], ['fokhagyma', 4, 'gerezd'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'], ['bors', 0.5, 'tk'], ['burgonya', 800, 'g'],
   ], [
-    'A tarját vágd négy egyforma szeletre, enyhén klopfold ki, majd mindkét oldalát sózd és borsozd.',
-    'A fokhagymát zúzd össze, keverd az olajhoz, és kend a húsra. Hagyd állni 15 percig.',
+    'Melegítsd elő a sütőt 210 °C-ra. A burgonyát vágd cikkekre, forgasd össze 1 evőkanál olajjal és kevés sóval, majd süsd 35–40 percig; félidőben fordítsd át.',
+    'A tarját vágd négy egyforma szeletre, enyhén klopfold ki, majd mindkét oldalát sózd és borsozd. A fokhagymát keverd a maradék olajhoz, kend a húsra, és hagyd állni 15 percig.',
     'A szalonnaszeleteket vagdosd be, majd serpenyőben süsd ropogósra. Tedd félre a kisült zsírral együtt.',
     'A húst közepesen erős lángon süsd oldalanként 4–5 percig. Akkor jó, ha belül már nem rózsaszín.',
-    'Szórd meg kevés pirospaprikával csak a tűzről levéve, tedd rá a szalonnát, és sült burgonyával tálald.',
+    'Vedd le a serpenyőt a tűzről, csak ezután szórd meg a húst pirospaprikával, hogy ne keseredjen meg. Tedd rá a szalonnát, és a ropogós burgonyával tálald.',
   ]),
   makeMain(37, 'Mátrai borzaska', 'Bundás hús tejföllel és sajttal', [
-    ['sertéskaraj', 600, 'g'], ['burgonya', 600, 'g'], ['tojás', 2, 'db'], ['liszt', 4, 'ek'], ['tejföl', 200, 'ml'], ['reszelt sajt', 150, 'g'], ['fokhagyma', 2, 'gerezd'], ['olaj', 300, 'ml'], ['só', 1, 'tk'],
+    ['sertéskaraj', 600, 'g'], ['burgonya', 600, 'g'], ['tojás', 2, 'db'], ['liszt', 4, 'ek'], ['tejföl', 200, 'ml'], ['reszelt sajt', 150, 'g'], ['fokhagyma', 2, 'gerezd'], ['olaj', 500, 'ml'], ['só', 1, 'tk'],
   ], [
     'A karajszeleteket klopfold körülbelül fél centi vastagra, majd mindkét oldalukat sózd meg.',
     'A burgonyát hámozd meg, reszeld le, nyomkodd ki a levét, majd keverd össze a tojással és 2 evőkanál liszttel.',
     'A húst forgasd a maradék lisztbe, aztán nyomj mindkét oldalára egyenletes burgonyás masszát.',
-    'Közepesen forró olajban süsd oldalanként 5–6 percig. Ne legyen túl forró az olaj, mert a bunda megég, mielőtt a hús átsül.',
-    'Papírtörlőn csepegtesd le, kend meg fokhagymás tejföllel, és szórd meg sajttal.',
+    'Közepesen forró, 1–1,5 cm mély olajban, több adagban süsd oldalanként 5–6 percig. Ne legyen túl forró az olaj, mert a bunda megég, mielőtt a hús átsül.',
+    'Vágj bele a legvastagabb szeletbe: a hús ne legyen rózsaszín. Papírtörlőn csepegtesd le, kend meg fokhagymás tejföllel, és szórd meg sajttal.',
   ]),
   makeMain(38, 'Vadas marha zsemlegombóccal', 'Klasszikus ünnepi fogás', [
-    ['marhalábszár', 700, 'g'], ['sárgarépa', 3, 'db'], ['petrezselyemgyökér', 2, 'db'], ['vöröshagyma', 1, 'db'], ['tejföl', 200, 'ml'], ['mustár', 1, 'ek'], ['babérlevél', 2, 'db'], ['zsemle', 4, 'db'], ['tojás', 2, 'db'], ['liszt', 150, 'g'], ['só', 1, 'tk'],
+    ['marhalábszár', 700, 'g'], ['sárgarépa', 3, 'db'], ['petrezselyemgyökér', 2, 'db'], ['vöröshagyma', 1, 'db'], ['tejföl', 200, 'ml'], ['mustár', 1, 'ek'], ['cukor', 1, 'ek'], ['citrom', 1, 'db'], ['babérlevél', 2, 'db'], ['zsemle', 4, 'db'], ['tojás', 2, 'db'], ['liszt', 150, 'g'], ['só', 1.5, 'tk'],
   ], [
     'A húst vágd nagyobb szeletekre, a zöldségeket karikázd fel, a hagymát vágd négybe.',
     'Tedd fazékba a húst, zöldségeket, babérlevelet és sót. Öntsd fel annyi vízzel, hogy ellepje, majd kis lángon főzd 2–2,5 órát.',
-    'Vedd ki a puha húst és a babérlevelet. A zöldséges levet turmixold simára, keverd hozzá a tejfölt és mustárt, majd melegítsd össze.',
-    'A gombóchoz a felkockázott zsemlét keverd össze tojással, liszttel és kevés vízzel. Nedves kézzel formázz gombócokat.',
+    'Vedd ki a puha húst és a babérlevelet. A zöldséges levet turmixold simára, keverd hozzá a tejfölt és mustárt, majd kevés cukorral és citromlével, fokozatosan kóstolva állítsd be a kellemesen édes-savanyú ízt.',
+    'A gombóchoz a felkockázott zsemlét keverd össze tojással, liszttel, fél teáskanál sóval és kevés vízzel. Nedves kézzel formázz egyforma gombócokat.',
     'A gombócokat gyöngyöző sós vízben főzd 10–12 percig, majd a hússal és a mártással tálald.',
   ]),
   makeMain(39, 'Csülök pékné módra', 'Sütőben készülő hétvégi étel', [
     ['sertéscsülök', 1200, 'g'], ['burgonya', 1000, 'g'], ['vöröshagyma', 3, 'db'], ['fokhagyma', 5, 'gerezd'], ['olaj', 2, 'ek'], ['kömény', 1, 'tk'], ['só', 1.5, 'tk'], ['bors', 0.5, 'tk'],
   ], [
-    'A csülköt tedd fazékba, öntsd fel vízzel, adj hozzá sót, és kis lángon főzd 75 percig.',
+    'A csülköt tedd fazékba, öntsd fel vízzel, adj hozzá 1 teáskanál sót, és kis lángon főzd 90–105 percig, amíg már majdnem puha.',
     'A burgonyát vágd nagyobb cikkekre, a hagymát negyedekre, a fokhagymát hagyd egészben.',
     'Tedd a zöldségeket tepsibe, locsold meg olajjal, szórd meg sóval, borssal és köménnyel.',
     'Fektesd rá az előfőzött csülköt, önts alá 2 dl főzőlevet, és 190 °C-on süsd 60 percig.',
-    'Sütés közben kétszer locsold meg a levével. Akkor kész, ha a bőr pirult, a burgonya pedig könnyen átszúrható.',
+    'Sütés közben kétszer locsold meg a levével. Akkor kész, ha a bőr pirult, a hús könnyen enged a villának, a burgonya pedig puha. Tálalás előtt pihentesd 10 percig.',
   ]),
   makeMain(40, 'Rakott kelkáposzta', 'Tejfölös, darált húsos egytálétel', [
-    ['kelkáposzta', 800, 'g'], ['darált sertéshús', 500, 'g'], ['rizs', 200, 'g'], ['vöröshagyma', 1, 'db'], ['tejföl', 300, 'ml'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
+    ['kelkáposzta', 800, 'g'], ['darált sertéshús', 500, 'g'], ['rizs', 150, 'g'], ['vöröshagyma', 1, 'db'], ['tejföl', 300, 'ml'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A rizst főzd félpuhára 12 perc alatt. A kelkáposzta leveleit sós vízben főzd 5 percig, majd csepegtesd le.',
     'Az aprított hagymát párold olajon 5 percig, húzd le a tűzről, keverd bele a pirospaprikát, majd rögtön add hozzá a húst.',
     'Tedd vissza a tűzre, sózd, és kevergetve pirítsd 8–10 percig, amíg a hús már sehol sem rózsaszín.',
     'Egy kiolajozott tálba rétegezz káposztát, rizst, húst és tejfölt; ismételd meg, a tetejére káposzta és tejföl kerüljön.',
-    '180 °C-ra előmelegített sütőben süsd 35 percig, majd szeletelés előtt pihentesd 10 percig.',
+    'Fedd le, és 180 °C-ra előmelegített sütőben süsd 25 percig. Vedd le a fedést, pirítsd még 10 percig, majd szeletelés előtt pihentesd 10 percig.',
   ]),
   makeMain(41, 'Rakott karfiol', 'Könnyű, darált húsos rakottas', [
-    ['karfiol', 900, 'g'], ['darált sertéshús', 500, 'g'], ['rizs', 180, 'g'], ['vöröshagyma', 1, 'db'], ['tejföl', 300, 'ml'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
+    ['karfiol', 900, 'g'], ['darált sertéshús', 500, 'g'], ['rizs', 150, 'g'], ['vöröshagyma', 1, 'db'], ['tejföl', 300, 'ml'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A karfiolt szedd rózsákra, és sós, gyöngyöző vízben főzd 7 percig; maradjon kissé roppanós.',
     'A rizst főzd félpuhára. Az aprított hagymát párold olajon 5 percig.',
     'Húzd le a hagymát a tűzről, keverd bele a pirospaprikát, add hozzá a húst és sót, majd pirítsd 8–10 percig.',
     'Rétegezd egy tálba a karfiol felét, a rizst, a húst, kevés tejfölt, végül a maradék karfiolt és tejfölt.',
-    '180 °C-on süsd 30–35 percig, amíg a teteje világosbarnára pirul.',
+    '180 °C-on süsd 30–35 percig, amíg a teteje világosbarnára pirul. Tálalás előtt pihentesd 10 percig, így szebben adagolható.',
   ]),
   makeMain(42, 'Tarhonyás hús', 'Egyszerű, egyedényes családi ebéd', [
     ['sertéscomb', 600, 'g'], ['tarhonya', 300, 'g'], ['vöröshagyma', 1, 'db'], ['zöldpaprika', 1, 'db'], ['paradicsom', 1, 'db'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A húst vágd 2 cm-es kockákra, a hagymát apróra, a paprikát és paradicsomot kisebb darabokra.',
     'Párold a hagymát olajon 5 percig. Húzd le a tűzről, keverd bele a pirospaprikát, és rögtön önts hozzá fél deci vizet.',
-    'Add hozzá a húst, paprikát, paradicsomot és sót. Lefedve, kis lángon párold 40 percig; kevés vizet pótolj, ha szükséges.',
+    'Add hozzá a húst, paprikát, paradicsomot és sót. Lefedve, kis lángon párold 45–55 percig, amíg majdnem puha; kevés vizet pótolj, ha szükséges.',
     'Külön lábasban szárazon pirítsd aranybarnára a tarhonyát, majd keverd a húshoz.',
-    'Önts rá kb. 6 dl forró vizet, és lefedve főzd 15–18 percig. Kapcsold le, majd pihentesd 10 percig.',
+    'Önts rá 6 dl forró vizet, és lefedve főzd 15–18 percig. Akkor jó, ha a hús és a tarhonya is puha. Kapcsold le, majd pihentesd 10 percig.',
   ]),
   makeMain(43, 'Bácskai rizses hús', 'Paprikás sertéshús rizzsel', [
     ['sertéscomb', 600, 'g'], ['rizs', 300, 'g'], ['vöröshagyma', 1, 'db'], ['zöldpaprika', 1, 'db'], ['paradicsom', 1, 'db'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A húst kockázd fel, a hagymát aprítsd, a paprikát és paradicsomot vágd kis darabokra. A rizst mosd át.',
     'Párold a hagymát olajon, húzd le a tűzről, keverd bele a pirospaprikát, és azonnal adj hozzá kevés vizet.',
-    'Tedd bele a húst, zöldpaprikát, paradicsomot és sót. Lefedve főzd kis lángon 40 percig.',
-    'Keverd hozzá a rizst, és önts rá annyi forró vizet, hogy körülbelül 1 cm-rel ellepje.',
-    'Lefedve főzd 15 percig, majd a tűzről levéve pihentesd 10 percet. Ne kevergesd, mert a rizs összetörik.',
+    'Tedd bele a húst, zöldpaprikát, paradicsomot és sót. Lefedve főzd kis lángon 45–55 percig, amíg a hús majdnem puha.',
+    'Keverd hozzá a rizst, és önts rá 5 dl forró vizet. Ha sok lé maradt a hús alatt, először csak 4 dl-t adj hozzá.',
+    'Lefedve főzd kis lángon 15–18 percig, majd a tűzről levéve pihentesd 10 percet. Ne kevergesd, mert a rizs összetörik.',
   ]),
   makeMain(44, 'Pásztortarhonya', 'Kolbászos-burgonyás egytálétel', [
     ['tarhonya', 300, 'g'], ['burgonya', 600, 'g'], ['füstölt kolbász', 250, 'g'], ['vöröshagyma', 1, 'db'], ['zöldpaprika', 1, 'db'], ['pirospaprika', 1, 'tk'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
@@ -105,10 +105,10 @@ export const additionalMains: Recipe[] = [
     'Süsd ki a szalonna zsírját, majd a pörcöt tedd félre. A zsíron pirítsd világosbarnára a tört lebbencstésztát.',
     'Add hozzá a hagymát. Amikor puha, húzd le a tűzről, keverd bele a pirospaprikát, majd önts hozzá kevés vizet.',
     'Tedd bele a burgonyát és sót, önts rá annyi vizet, hogy éppen ellepje, és főzd kis lángon 20 percig.',
-    'Fedő nélkül süsd-főzd tovább, közben óvatosan fordítsd át néhányszor. A szalonnapörccel tálald.',
+    'Fedő nélkül süsd-főzd még 10–15 percig, amíg a folyadék elfő és az alja helyenként megpirul. Keverés helyett óvatosan fordítsd át néhányszor, majd a szalonnapörccel tálald.',
   ]),
   makeMain(46, 'Tojásos nokedli fejes salátával', 'Klasszikus tavaszi fogás', [
-    ['finomliszt', 400, 'g'], ['tojás', 8, 'db'], ['víz', 220, 'ml'], ['só', 1, 'tk'], ['olaj', 1, 'ek'], ['fejes saláta', 1, 'db'], ['ecet', 2, 'ek'], ['cukor', 1, 'ek'],
+    ['finomliszt', 400, 'g'], ['tojás', 8, 'db'], ['víz', 220, 'ml'], ['só', 2, 'tk'], ['olaj', 1, 'ek'], ['fejes saláta', 1, 'db'], ['ecet', 2, 'ek'], ['cukor', 1, 'ek'],
   ], [
     'A salátaléhez keverj össze 4 dl vizet, ecetet, cukrot és egy csipet sót. A megmosott salátaleveleket csak tálalás előtt tedd bele.',
     'Forralj nagy fazék sós vizet. A lisztet keverd össze 4 tojással, sóval és fokozatosan annyi vízzel, hogy lágy, ragacsos tésztát kapj.',

@@ -563,13 +563,13 @@ Figyelem: tálaláskor jelezd, hogy a halban szálka maradhat.`,
 
   'main-35': `1. A hagymát, fokhagymát és répát aprítsd fel. Melegítsd az olajat nagy serpenyőben, párold a hagymát és répát 6–8 percig, majd a fokhagymát még 30 másodpercig.
 
-2. Add hozzá a darált húst. Közepesen erős lángon, fakanállal szétnyomva süsd 8–10 percig, amíg mindenhol barna és nincs nyers, rózsaszín rész.
+2. Add hozzá a darált húst. Közepesen erős lángon, fakanállal szétnyomva süsd 8–10 percig, amíg mindenhol barna, nincs nyers, rózsaszín rész, és a felesleges folyadék elpárolog.
 
-3. Öntsd hozzá a paradicsomszószt, sózd és borsozd. Kis lángon, félig lefedve főzd 25–30 percig; néha keverd meg.
+3. Öntsd hozzá a paradicsomszószt, sózd és borsozd. Kis lángon, félig lefedve főzd 30 percig; néha keverd meg. Ha nagyon besűrűsödik, adj hozzá kevés vizet.
 
 4. Nagy fazék sós vízben főzd a spagettit a csomagoláson jelzett ideig. Szűrés előtt tegyél félre fél bögre főzővizet.
 
-5. Keverd a tésztát a szószhoz; ha túl sűrű, adj hozzá kevés főzővizet. Parmezánnal tálald.`,
+5. Forgasd a tésztát a szószba; ha szükséges, lazítsd kevés főzővízzel. Kóstold meg, majd frissen, parmezánnal tálald.`,
 
   'dessert-1': `1. Tedd a lisztet tálba. Add hozzá a tojásokat és a tej felét, majd kézi habverővel keverd teljesen csomómentesre.
 

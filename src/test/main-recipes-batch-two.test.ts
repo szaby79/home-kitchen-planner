@@ -15,7 +15,7 @@ const batchTwoMains = defaultRecipes.filter(recipe => batchTwoIds.includes(recip
 
 describe('main recipe quality audit batch two', () => {
   it('covers the next 15 actual main-category recipes with bilingual methods', () => {
-    expect(auditedMainIds.slice(15)).toEqual(batchTwoIds);
+    expect(auditedMainIds.slice(15, 30)).toEqual(batchTwoIds);
     expect(batchTwoMains).toHaveLength(15);
 
     batchTwoMains.forEach(recipe => {

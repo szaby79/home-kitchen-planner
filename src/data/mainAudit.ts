@@ -40,6 +40,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-32': { preparationTime: 15, cookingTime: 30, commonAllergens: ['milk', 'lactose'], note: 'Szaftos csirkemell krémes gombamártással és rizzsel' },
   'main-33': { preparationTime: 25, cookingTime: 45, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten', 'egg'], note: 'Tejfölös-gombás sertésszelet friss nokedlivel' },
   'main-34': { preparationTime: 30, cookingTime: 40, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Rántott sertésborda sonkás-gombás milánói spagettivel' },
+  'main-35': { preparationTime: 15, cookingTime: 45, commonAllergens: ['gluten', 'milk', 'lactose'], note: 'Lassan főtt marhahúsos paradicsomragu spagettivel' },
+  'main-36': { preparationTime: 20, cookingTime: 40, restingTime: 15, difficulty: 'medium', commonAllergens: [], note: 'Sertéstarjából, fokhagymásan' },
+  'main-37': { preparationTime: 25, cookingTime: 30, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Bundás hús tejföllel és sajttal' },
+  'main-38': { preparationTime: 30, cookingTime: 165, difficulty: 'advanced', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Klasszikus ünnepi fogás' },
+  'main-39': { preparationTime: 20, cookingTime: 165, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Sütőben készülő hétvégi étel' },
+  'main-40': { preparationTime: 25, cookingTime: 55, restingTime: 10, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Tejfölös, darált húsos egytálétel' },
+  'main-41': { preparationTime: 20, cookingTime: 55, restingTime: 10, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Könnyű, darált húsos rakottas' },
+  'main-42': { preparationTime: 15, cookingTime: 70, restingTime: 10, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Egyszerű, egyedényes családi ebéd' },
+  'main-43': { preparationTime: 15, cookingTime: 70, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Paprikás sertéshús rizzsel' },
+  'main-44': { preparationTime: 15, cookingTime: 35, restingTime: 5, commonAllergens: ['gluten', 'egg'], note: 'Kolbászos-burgonyás egytálétel' },
+  'main-45': { preparationTime: 15, cookingTime: 45, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Alföldi bográcsétel otthoni változatban' },
+  'main-46': { preparationTime: 20, cookingTime: 20, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Klasszikus tavaszi fogás' },
+  'main-47': { preparationTime: 10, cookingTime: 25, commonAllergens: ['gluten', 'egg'], note: 'Olcsó, gyors hétköznapi étel' },
+  'main-48': { preparationTime: 20, cookingTime: 35, restingTime: 15, commonAllergens: ['gluten', 'egg'], note: 'Édeskés-sós magyar tésztaétel' },
+  'main-49': { preparationTime: 25, cookingTime: 25, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Szalonnás felvidéki kedvenc' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {
