@@ -9,6 +9,7 @@ export interface Ingredient {
 
 export type CostCategory = '$' | '$$' | '$$$';
 export type RecipeDifficulty = 'easy' | 'medium' | 'advanced';
+export type RecipeQualityAuditStatus = 'code-reviewed' | 'kitchen-verified';
 export interface Recipe {
   id: string;
   name: string;
@@ -21,6 +22,7 @@ export interface Recipe {
   imageUrl: string;
   preparationTime?: number;
   cookingTime?: number;
+  restingTime?: number;
   totalTime?: number;
   difficulty?: RecipeDifficulty;
   estimatedCostCategory?: CostCategory;
@@ -36,6 +38,7 @@ export interface Recipe {
   quickMeal?: boolean;
   weekendMeal?: boolean;
   suitableSideDishes?: string[];
+  qualityAuditStatus?: RecipeQualityAuditStatus;
 }
 
 export interface DayPlan {
