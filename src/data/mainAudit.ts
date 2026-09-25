@@ -100,6 +100,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-118': { preparationTime: 25, cookingTime: 63, restingTime: 15, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Jól szeletelhető, tészta nélküli cukkinilasagne' },
   'main-119': { preparationTime: 20, cookingTime: 35, restingTime: 3, commonAllergens: ['milk', 'lactose'], note: 'Szaftos sertéskaraj krémes, köményes káposztával' },
   'main-120': { preparationTime: 20, cookingTime: 33, restingTime: 5, commonAllergens: ['egg'], note: 'Sütőben pirult, szaftos pulykafasírt spenóttal' },
+  'main-121': { preparationTime: 15, cookingTime: 25, commonAllergens: ['fish', 'nuts'], note: 'Ropogós mandulakérges pisztráng sült zöldbabbal' },
+  'main-122': { preparationTime: 20, cookingTime: 30, commonAllergens: ['nuts'], note: 'Pirult gombás-diós ragu könnyű cukkinimetélttel' },
+  'main-123': { preparationTime: 20, cookingTime: 24, commonAllergens: ['soy'], note: 'Aranybarnára pirított tofu szaftos padlizsánnal' },
+  'main-124': { preparationTime: 20, cookingTime: 30, commonAllergens: [], note: 'Pirult karfiol langyos vöröslencse-salátával' },
+  'main-125': { preparationTime: 25, cookingTime: 50, restingTime: 10, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Krémes, sajtos karalábégratin aranybarna tetővel' },
+  'main-126': { preparationTime: 15, cookingTime: 45, restingTime: 3, commonAllergens: ['gluten', 'milk', 'lactose'], note: 'Krémes árpagyöngyrizottó zöldborsóval és friss mentával' },
+  'main-127': { preparationTime: 22, cookingTime: 33, commonAllergens: ['egg'], note: 'Fűszeres bárányhúsgolyó szaftos paradicsomos cukkinivel' },
+  'main-128': { preparationTime: 20, cookingTime: 20, commonAllergens: ['soy'], note: 'Gyors marhahúsos wok roppanós brokkolival' },
+  'main-129': { preparationTime: 20, cookingTime: 15, restingTime: 5, commonAllergens: [], note: 'Fűszeres pulykahús friss avokádós salátacsónakban' },
+  'main-130': { preparationTime: 30, cookingTime: 40, restingTime: 10, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Spenóttal és fetával töltött, szaftos sertésszűz' },
+  'main-131': { preparationTime: 25, cookingTime: 35, commonAllergens: ['fish', 'egg'], note: 'Serpenyőben pirult tonhalfasírt friss citromos salátával' },
+  'main-132': { preparationTime: 30, cookingTime: 55, restingTime: 5, difficulty: 'medium', commonAllergens: ['soy'], note: 'Paradicsomban sült keltekercs gombás-tofus töltelékkel' },
+  'main-133': { preparationTime: 20, cookingTime: 35, commonAllergens: [], note: 'Puha sült padlizsán sűrű paradicsomos olívaraguval' },
+  'main-134': { preparationTime: 20, cookingTime: 35, commonAllergens: [], note: 'Pirult sütőtök és csicseriborsó ropogós kellel' },
+  'main-135': { preparationTime: 25, cookingTime: 35, commonAllergens: ['milk', 'lactose', 'egg'], note: 'Sajtos brokkolilepény friss joghurtos uborkasalátával' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {
