@@ -4,6 +4,7 @@ import { auditedStewEnglishNotes } from '@/data/stewAudit';
 import { auditedSideEnglishNotes } from '@/data/sideAudit';
 import { auditedSaladEnglishNotes } from '@/data/saladAudit';
 import { auditedDessertEnglishNotes } from '@/data/dessertAudit';
+import { auditedDessertSecondBatchEnglishNotes } from '@/data/dessertAuditSecondBatch';
 import { ENGLISH_RECIPE_NAMES } from '@/i18n/englishRecipeNames';
 
 const INGREDIENTS: Record<string, string> = {
@@ -302,6 +303,7 @@ const NOTES: Record<string, string> = {
   ...auditedSideEnglishNotes,
   ...auditedSaladEnglishNotes,
   ...auditedDessertEnglishNotes,
+  ...auditedDessertSecondBatchEnglishNotes,
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
