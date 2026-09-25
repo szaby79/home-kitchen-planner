@@ -15,7 +15,7 @@ const makeSalad = (id: number, name: string, note: string, rows: IngredientRow[]
 });
 
 export const additionalSalads: Recipe[] = [
-  makeSalad(1, 'Csirkés Cézár-saláta', '25 perc • tartalmas, munkába is vihető', [
+  makeSalad(1, 'Joghurtos csirkés Cézár-saláta', '25 perc • tartalmas, munkába is vihető', [
     ['csirkemell', 500, 'g'], ['római saláta', 2, 'db'], ['parmezán', 80, 'g'], ['kenyérkocka', 150, 'g'], ['natúr joghurt', 150, 'ml'], ['citrom', 1, 'db'], ['fokhagyma', 1, 'gerezd'], ['olaj', 2, 'ek'], ['só', 0.5, 'tk'],
   ], [
     'A csirkemellet vágd csíkokra, sózd meg, és egy evőkanál olajon süsd 8–10 percig, amíg belül sehol sem rózsaszín.',
@@ -70,7 +70,7 @@ export const additionalSalads: Recipe[] = [
     'Közvetlenül tálalás előtt sózd és borsozd, hogy a paradicsom ne engedjen túl sok levet.',
   ]),
   makeSalad(7, 'Almás-diós csirkesaláta', '25 perc • édeskés, ropogós', [
-    ['csirkemell', 500, 'g'], ['alma', 2, 'db'], ['salátakeverék', 300, 'g'], ['dió', 100, 'g'], ['zellerszár', 3, 'db'], ['natúr joghurt', 150, 'ml'], ['citrom', 1, 'db'], ['só', 0.5, 'tk'],
+    ['csirkemell', 500, 'g'], ['alma', 2, 'db'], ['salátakeverék', 300, 'g'], ['dió', 100, 'g'], ['zellerszár', 3, 'db'], ['natúr joghurt', 150, 'ml'], ['citrom', 1, 'db'], ['olaj', 1, 'ek'], ['só', 0.5, 'tk'],
   ], [
     'A csirkemellet sózd meg, és serpenyőben süsd oldalanként 5–6 percig. Pihentesd 5 percig, majd szeleteld fel.',
     'Az almát vágd vékony cikkekre, és locsold meg kevés citromlével, hogy ne barnuljon meg.',

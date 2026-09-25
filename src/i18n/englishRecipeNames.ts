@@ -225,7 +225,7 @@ export const ENGLISH_RECIPE_NAMES: Record<string, string> = {
   'pickle-7': 'Sauerkraut',
   'pickle-8': 'Pickled Pearl Onions',
 
-  'salad-1': 'Chicken Caesar Salad',
+  'salad-1': 'Yogurt Chicken Caesar Salad',
   'salad-2': 'Greek Salad',
   'salad-3': 'Tuna and Corn Salad',
   'salad-4': 'Avocado Chicken Salad',
