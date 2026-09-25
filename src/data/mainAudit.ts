@@ -85,6 +85,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-103': { preparationTime: 20, cookingTime: 35, difficulty: 'medium', commonAllergens: [], note: 'Vegán és keto sült zöldséges főétel' },
   'main-104': { preparationTime: 15, cookingTime: 35, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'egg'], note: 'Vegetáriánus és keto paradicsomos tojásétel' },
   'main-105': { preparationTime: 25, cookingTime: 35, restingTime: 10, difficulty: 'advanced', commonAllergens: ['milk', 'lactose', 'egg'], note: 'Vegetáriánus és keto könnyű felfújt' },
+  'main-106': { preparationTime: 15, cookingTime: 22, commonAllergens: ['milk', 'lactose'], note: 'Szaftos, caprese ízvilágú töltött portobello' },
+  'main-107': { preparationTime: 15, cookingTime: 33, commonAllergens: [], note: 'Káposztás, marhahúsos egyserpenyős családi főétel' },
+  'main-108': { preparationTime: 20, cookingTime: 12, commonAllergens: ['milk', 'lactose', 'nuts'], note: 'Friss pestós csirke könnyű cukkinimetélttel' },
+  'main-109': { preparationTime: 15, cookingTime: 25, restingTime: 3, commonAllergens: ['milk', 'lactose'], note: 'Pirult sertésszűz krémes gombamártással' },
+  'main-110': { preparationTime: 15, cookingTime: 27, commonAllergens: ['fish'], note: 'Mediterrán sült tőkehal paradicsommal és olívával' },
+  'main-111': { preparationTime: 20, cookingTime: 40, restingTime: 10, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Szaftos marhahús könnyű karfiolpüré alatt' },
+  'main-112': { preparationTime: 12, cookingTime: 24, commonAllergens: [], note: 'Paradicsomos fehérbab frissen fonnyasztott spenóttal' },
+  'main-113': { preparationTime: 15, cookingTime: 20, commonAllergens: ['soy'], note: 'Pirult tempeh roppanós káposztával és lime-mal' },
+  'main-114': { preparationTime: 20, cookingTime: 40, difficulty: 'medium', commonAllergens: [], note: 'Mediterrán zöldségekkel töltött, elősütött cukkini' },
+  'main-115': { preparationTime: 15, cookingTime: 35, commonAllergens: ['milk', 'lactose'], note: 'Krémes hajdina pirult gombával és parmezánnal' },
+  'main-116': { preparationTime: 20, cookingTime: 11, commonAllergens: ['milk', 'lactose'], note: 'Pirult halloumi friss, citromos karfioltabuléval' },
+  'main-117': { preparationTime: 15, cookingTime: 55, restingTime: 5, commonAllergens: [], note: 'Ropogós bőrű rozmaringos csirkecomb zöldbabbal' },
+  'main-118': { preparationTime: 25, cookingTime: 63, restingTime: 15, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Jól szeletelhető, tészta nélküli cukkinilasagne' },
+  'main-119': { preparationTime: 20, cookingTime: 35, restingTime: 3, commonAllergens: ['milk', 'lactose'], note: 'Szaftos sertéskaraj krémes, köményes káposztával' },
+  'main-120': { preparationTime: 20, cookingTime: 33, restingTime: 5, commonAllergens: ['egg'], note: 'Sütőben pirult, szaftos pulykafasírt spenóttal' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {
