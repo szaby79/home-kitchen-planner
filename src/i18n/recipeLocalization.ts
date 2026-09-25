@@ -114,6 +114,7 @@ const NOTES: Record<string, string> = {
   'Szaftos csirkemell krémes gombamártással és rizzsel': 'Juicy chicken breast with creamy mushroom sauce and rice',
   'Tejfölös-gombás sertésszelet friss nokedlivel': 'Pork in sour-cream mushroom sauce with fresh nokedli',
   'Rántott sertésborda sonkás-gombás milánói spagettivel': 'Breaded pork cutlet with ham-and-mushroom Milanese spaghetti',
+  'Lassan főtt marhahúsos paradicsomragu spagettivel': 'Slow-cooked beef and tomato ragù with spaghetti',
   'Lassan gyöngyözve főtt, tiszta családi leves': 'Clear family soup cooked at a gentle simmer',
   'Tartalmas gulyásleves házi csipetkével': 'Hearty goulash soup with homemade csipetke',
   'Füstölt húsos bableves, előző esti áztatással': 'Smoked-pork bean soup with overnight soaking',

@@ -608,41 +608,41 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 6. Serve the Milanese spaghetti beside the breaded pork and finish with grated cheese, keeping the crisp coating out of the sauce.`,
   'main-35': `1. Finely chop the onion, garlic, and carrot. Heat the olive oil in a large pan.
 
-2. Cook the vegetables for 6–8 minutes. Add the ground beef and cook until browned, breaking it apart.
+2. Cook the onion and carrot for 6–8 minutes, then add the garlic for 30 seconds. Add the ground beef and cook for 8–10 minutes, breaking it apart, until browned with no pink meat and the excess liquid has evaporated.
 
-3. Add the tomato sauce, salt, and pepper. Simmer gently for at least 25–30 minutes.
+3. Add the tomato sauce, salt, and pepper. Simmer partly covered over low heat for 30 minutes, stirring occasionally. Add a little water if it becomes too thick.
 
-4. Cook the spaghetti in salted water according to the package, then drain.
+4. Cook the spaghetti in salted water according to the package. Reserve half a mug of cooking water before draining.
 
-5. Spoon the sauce over the pasta and finish with Parmesan.`,
-  'main-36': `1. Cut the pork shoulder into four slices, pound lightly, and season both sides. Mix crushed garlic with oil and rub it over the meat.
+5. Toss the pasta with the sauce, loosening it with a little cooking water if needed. Taste, then serve at once with Parmesan.`,
+  'main-36': `1. Heat the oven to 210°C. Cut the potatoes into wedges, toss with 1 tablespoon oil and a little salt, and roast for 35–40 minutes, turning halfway.
 
-2. Let the pork rest for 15 minutes. Score the bacon slices and fry until crisp; reserve the rendered fat.
+2. Cut the pork shoulder into four equal slices, pound lightly, and season both sides with salt and pepper. Mix the garlic with the remaining oil, rub it over the meat, and rest for 15 minutes.
 
-3. Cook the pork over medium-high heat for 4–5 minutes per side, until no longer pink inside.
+3. Score the bacon slices and fry until crisp. Set them aside with the rendered fat.
 
-4. Remove the pan from the heat before dusting the meat with paprika so it cannot burn.
+4. Cook the pork over medium-high heat for 4–5 minutes per side, until no longer pink inside.
 
-5. Top with the crisp bacon and serve with fried potatoes.`,
+5. Take the pan off the heat before dusting the pork with paprika so it cannot turn bitter. Top with the crisp bacon and serve with the roast potatoes.`,
   'main-37': `1. Pound the pork slices to about 5 mm and salt both sides. Peel and grate the potatoes, then squeeze out their liquid.
 
 2. Mix the potato with eggs and half the flour. Coat the pork in the remaining flour.
 
 3. Press an even layer of potato mixture onto both sides of each pork slice.
 
-4. Fry in moderately hot oil for 5–6 minutes per side. Keep the heat moderate so the pork cooks before the coating burns.
+4. Fry in batches in 1–1.5 cm moderately hot oil for 5–6 minutes per side. Keep the heat moderate so the pork cooks before the coating burns.
 
-5. Drain, spread with garlic sour cream, and sprinkle with grated cheese.`,
+5. Cut into the thickest slice to check that no pink meat remains. Drain on paper towel, spread with garlic sour cream, and sprinkle with grated cheese.`,
   'main-38': `1. Cut the beef into large slices and the root vegetables into rounds. Put them in a pot with onion, bay leaf, salt, and enough water to cover.
 
 2. Simmer gently for 2–2.5 hours, until the beef is fork-tender. Remove the meat and bay leaf.
 
-3. Blend the vegetables and cooking liquid smooth. Stir in tempered sour cream and mustard and warm gently.
+3. Remove the tender beef and bay leaves. Blend the vegetables and cooking liquid smooth, then stir in the sour cream and mustard. Add the sugar and lemon juice gradually, tasting for a pleasantly sweet-sour balance.
 
-4. For the dumplings, combine cubed bread rolls, eggs, flour, and a little water. Shape with wet hands.
+4. For the dumplings, combine the cubed bread rolls, eggs, flour, half a teaspoon salt, and a little water. Shape equal dumplings with wet hands.
 
 5. Simmer the dumplings in salted water for 10–12 minutes and serve with the sliced beef and sauce.`,
-  'main-39': `1. Put the pork hock in a pot, cover with water, add salt, and simmer for 75 minutes.
+  'main-39': `1. Put the pork hock in a pot, cover with water, add 1 teaspoon salt, and simmer for 90–105 minutes, until almost tender.
 
 2. Cut the potatoes into large wedges and the onions into quarters; leave the garlic cloves whole.
 
@@ -650,41 +650,41 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Add 200 ml cooking liquid and roast at 190 °C for 60 minutes, basting twice.
 
-5. It is ready when the skin is crisp and the potatoes are easily pierced. Rest for 10 minutes.`,
-  'main-40': `1. Separate and blanch the savoy cabbage leaves until flexible. Cook the rice until half done and chop the onion.
+5. Baste twice while roasting. It is ready when the skin is browned, the meat yields easily to a fork, and the potatoes are tender. Rest for 10 minutes before serving.`,
+  'main-40': `1. Cook the rice for 12 minutes until half done. Blanch the savoy cabbage leaves in salted water for 5 minutes, then drain.
 
-2. Cook the onion in oil, remove from the heat, add paprika, then brown the ground pork. Mix with the rice.
+2. Cook the chopped onion in oil for 5 minutes. Take it off the heat, stir in the paprika, then immediately add the ground pork.
 
-3. Layer cabbage, meat mixture, and sour cream in a greased baking dish.
+3. Return to the heat, season with salt, and cook for 8–10 minutes until no pink meat remains.
 
-4. Repeat the layers, cover, and bake at 180 °C for 40 minutes. Uncover for the final 10 minutes.
+4. In a greased baking dish, layer the cabbage, rice, pork, and sour cream twice, finishing with cabbage and sour cream.
 
-5. Rest for 10 minutes before cutting so the layers stay together.`,
+5. Cover and bake at 180°C for 25 minutes. Uncover and brown for 10 more minutes, then rest for 10 minutes before cutting.`,
   'main-41': `1. Break the cauliflower into florets and cook in salted water until just tender. Cook the rice until half done.
 
 2. Chop the onion and cook in oil. Remove from the heat, add paprika, then brown the ground pork.
 
 3. Mix the pork with the rice. Layer cauliflower, meat mixture, and sour cream in a baking dish.
 
-4. Repeat the layers and bake at 190 °C for 30–35 minutes, until bubbling and golden.
+4. Repeat the layers and bake at 180°C for 30–35 minutes, until bubbling and lightly golden.
 
 5. Rest for 10 minutes before serving.`,
   'main-42': `1. Cut the pork into 2 cm cubes and chop the onion, pepper, and tomato.
 
 2. Cook the onion in oil until soft. Remove from the heat, stir in paprika, then immediately add a little water.
 
-3. Add the pork, pepper, tomato, and salt. Simmer covered for 30 minutes.
+3. Add the pork, pepper, tomato, and salt. Simmer covered over low heat for 45–55 minutes until almost tender, topping up with a little water if needed.
 
-4. Stir in the egg barley and about 800 ml hot water. Cover and cook on low for about 20 minutes.
+4. Brown the egg barley in a separate dry pan, then stir it into the pork with 600 ml hot water. Cover and cook on low for 15–18 minutes.
 
-5. When the meat and egg barley are tender, turn off the heat and rest covered for 5 minutes.`,
+5. When the meat and egg barley are tender, turn off the heat and rest covered for 10 minutes.`,
   'main-43': `1. Cut the pork into cubes and chop the onion, pepper, and tomato. Rinse the rice.
 
 2. Cook the onion in oil, remove from heat, stir in paprika, then add the pork and brown it.
 
-3. Add the pepper, tomato, salt, and a little water. Simmer for 30 minutes.
+3. Add the pepper, tomato, salt, and a little water. Cover and simmer over low heat for 45–55 minutes, until the pork is almost tender.
 
-4. Stir in the rice and the measured hot water. Cover and cook on low for 15–18 minutes.
+4. Stir in the rice and 500 ml hot water. If plenty of sauce remains under the pork, start with only 400 ml. Cover and cook on low for 15–18 minutes.
 
 5. Turn off the heat and rest covered for 10 minutes before fluffing and serving.`,
   'main-44': `1. Brown the egg barley in oil, stirring often. Dice the potatoes and sausage and chop the onion and pepper.
@@ -704,7 +704,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 4. Add the potatoes, salt, and enough water to just cover. Cook gently for about 20 minutes.
 
-5. Finish uncovered, carefully turning the mixture a few times, and serve with the crisp bacon.`,
+5. Cook uncovered for another 10–15 minutes, until the liquid evaporates and the bottom browns in places. Turn it carefully a few times instead of stirring, then serve with the crisp bacon.`,
   'main-46': `1. Mix 400 ml water with vinegar, sugar, and a pinch of salt. Wash the lettuce but add it to the dressing only just before serving.
 
 2. Bring a large pot of salted water to a boil. Mix flour, four eggs, salt, and enough water for a soft, sticky dough.
