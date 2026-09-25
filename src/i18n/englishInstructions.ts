@@ -7,6 +7,7 @@ import { dietaryRecipePackFiveEnglishInstructions } from '@/data/dietaryRecipePa
 import { breakfastRecipeEnglishInstructions } from '@/data/breakfastRecipes';
 import { auditedStewEnglishInstructions } from '@/data/stewAudit';
 import { auditedSideEnglishInstructions } from '@/data/sideAudit';
+import { auditedSaladEnglishInstructions } from '@/data/saladAudit';
 
 export const ENGLISH_INSTRUCTIONS: Record<string, string> = {
   ...breakfastRecipeEnglishInstructions,
@@ -982,4 +983,5 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
   'dessert-20': `1. Slice the crescent rolls and gradually soak them with warm milk so they soften without becoming mushy.\n\n2. Peel and slice the apples and cook briefly with cinnamon and a little sugar.\n\n3. Layer the rolls and apples in a buttered dish, adding small spoonfuls of apricot jam.\n\n4. Bake at 180 °C for 20 minutes. Beat the egg whites with sugar to stiff peaks and spread over the top.\n\n5. Bake at 150 °C for 10–15 minutes, until the meringue is set. Rest before serving.`,
   ...auditedStewEnglishInstructions,
   ...auditedSideEnglishInstructions,
+  ...auditedSaladEnglishInstructions,
 };
