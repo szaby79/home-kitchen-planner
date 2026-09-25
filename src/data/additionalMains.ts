@@ -153,7 +153,7 @@ export const additionalMains: Recipe[] = [
     'Pirítsd körbe a darabokat 8–10 perc alatt. Tálald a puha, aranybarna hagymával és ízlés szerint tejföllel.',
   ]),
   makeStew(51, 'Krumplifőzelék fasírttal', 'Babérleveles főzelék klasszikus feltéttel', [
-    ['burgonya', 900, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['babérlevél', 2, 'db'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['vöröshagyma', 1, 'db'], ['olaj', 250, 'ml'], ['só', 1, 'tk'],
+    ['burgonya', 900, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['babérlevél', 2, 'db'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['vöröshagyma', 1, 'db'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A burgonyát karikázd fel, tedd fazékba babérlevéllel és sóval, majd önts rá annyi vizet, hogy éppen ellepje. Főzd 15 percig.',
     'A fasírthoz áztasd be a zsemlét vízbe, nyomkodd ki, és keverd a húshoz tojással, fél aprított hagymával és sóval.',
@@ -162,7 +162,7 @@ export const additionalMains: Recipe[] = [
     'Kevergetve forrald 3 percig. Ha túl sűrű, adj hozzá kevés vizet, majd a fasírttal tálald.',
   ]),
   makeStew(52, 'Babfőzelék füstölt kolbásszal', 'Tartalmas, tejfölös főzelék', [
-    ['szárazbab', 500, 'g'], ['füstölt kolbász', 300, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['fokhagyma', 2, 'gerezd'], ['babérlevél', 2, 'db'], ['pirospaprika', 1, 'tk'], ['só', 1, 'tk'],
+    ['szárazbab', 300, 'g'], ['füstölt kolbász', 300, 'g'], ['tejföl', 200, 'ml'], ['liszt', 2, 'ek'], ['fokhagyma', 2, 'gerezd'], ['babérlevél', 2, 'db'], ['pirospaprika', 1, 'tk'], ['só', 1, 'tk'],
   ], [
     'A babot előző este áztasd be bő hideg vízbe. Másnap öntsd le róla az áztatóvizet és öblítsd át.',
     'Tedd fazékba friss vízzel, babérlevéllel és fokhagymával, majd kis lángon főzd 60–80 percig puhára.',
@@ -198,7 +198,7 @@ export const additionalMains: Recipe[] = [
     'Óvatosan keverve forrald 3 percig, végül add hozzá az aprított kaprot.',
   ]),
   makeStew(56, 'Kelkáposzta-főzelék fasírttal', 'Köményes, fokhagymás klasszikus', [
-    ['kelkáposzta', 800, 'g'], ['burgonya', 500, 'g'], ['fokhagyma', 3, 'gerezd'], ['liszt', 2, 'ek'], ['kömény', 1, 'tk'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['olaj', 250, 'ml'], ['só', 1, 'tk'],
+    ['kelkáposzta', 800, 'g'], ['burgonya', 500, 'g'], ['fokhagyma', 3, 'gerezd'], ['liszt', 2, 'ek'], ['kömény', 1, 'tk'], ['darált sertéshús', 500, 'g'], ['zsemle', 1, 'db'], ['tojás', 1, 'db'], ['olaj', 2, 'ek'], ['só', 1, 'tk'],
   ], [
     'A káposztát csíkozd, a burgonyát kockázd fel. Tedd fazékba köménnyel, sóval és annyi vízzel, hogy majdnem ellepje.',
     'Főzd kis lángon 20 percig, amíg a burgonya puha, de nem esik szét.',

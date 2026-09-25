@@ -84,6 +84,114 @@ const stewAudit: Record<string, StewAudit> = {
       'Whisk the sour cream and flour with a ladleful of warm squash liquid until smooth. Stir into the squash and simmer gently for 2–3 minutes. Add the remaining dill, vinegar, and sugar gradually to taste. Serve with the patties.',
     ],
   },
+  'main-51': {
+    preparationTime: 20, cookingTime: 35, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'],
+    note: 'Babérleveles krumplifőzelék sütőben sült fasírttal', englishNote: 'Bay-scented potato stew with oven-baked pork patties',
+    hungarianSteps: [
+      'Melegítsd elő a sütőt 200 °C-ra, és bélelj ki egy tepsit sütőpapírral. A burgonyát hámozd meg, vágd kb. fél centis karikákra, a hagymát aprítsd fel. A zsemlét áztasd kevés vízbe, majd alaposan nyomkodd ki.',
+      'Keverd össze a darált sertéshúst a kinyomkodott zsemlével, tojással, a hagyma felével és a só felével. Nedves kézzel formázz 8 lapos pogácsát, vékonyan kend meg olajjal, majd süsd 20–25 percig, félidőben megfordítva. A közepük érje el a 71 °C-ot.',
+      'Közben tedd a burgonyát lábasba a maradék hagymával, babérlevéllel és sóval. Önts rá kb. 7 dl vizet, forrald fel, majd kis lángon főzd 12–15 percig, amíg megpuhul, de nem esik szét.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró főzőlével. Lassan keverd a burgonyához, majd gyöngyöztesd 2–3 percig. Ha túl sűrű, adj hozzá kevés forró vizet.',
+      'Vedd ki a babérlevelet, kóstold meg a főzeléket, és szükség szerint sózd. A frissen sült fasírttal tálald.',
+    ],
+    englishSteps: [
+      'Heat the oven to 200 °C and line a baking tray with parchment. Peel the potatoes and cut them into roughly 5 mm slices. Chop the onion. Soak the bread roll in a little water, then squeeze it dry.',
+      'Mix the ground pork with the squeezed roll, egg, half the onion, and half the salt. With damp hands, shape 8 flat patties, brush lightly with oil, and bake for 20–25 minutes, turning halfway through. The centres should reach 71 °C.',
+      'Meanwhile, put the potatoes in a saucepan with the remaining onion, bay leaves, and salt. Add about 700 ml water, bring to a boil, and simmer for 12–15 minutes, until tender but not falling apart.',
+      'Whisk the sour cream and flour with a ladleful of hot cooking liquid until smooth. Slowly stir into the potatoes and simmer gently for 2–3 minutes. Add a little hot water if it becomes too thick.',
+      'Remove the bay leaves, taste, and add salt if needed. Serve with the freshly baked patties.',
+    ],
+  },
+  'main-52': {
+    preparationTime: 15, cookingTime: 95, restingTime: 480, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Krémes babfőzelék füstölt kolbásszal', englishNote: 'Creamy white bean stew with smoked sausage',
+    hungarianSteps: [
+      'Előző este áztasd be a 300 g szárazbabot legalább háromszoros mennyiségű hideg vízbe. Másnap öntsd le, és öblítsd át.',
+      'Tedd a babot nagy lábasba a babérlevéllel, fokhagymával és kb. 1,2 liter friss vízzel. Forrald fel, majd kis lángon, félig lefedve főzd 60–90 percig, amíg teljesen megpuhul.',
+      'A kolbászt karikázd fel, és add a babhoz az utolsó 15 percre. Csak ezután kóstold meg és sózd, mert a kolbász is sós lehet.',
+      'Keverd simára a tejfölt a liszttel, a pirospaprikával és egy merőkanál meleg főzőlével. Lassan keverd a babhoz, hogy ne legyen csomós.',
+      'Kis lángon, kevergetve gyöngyöztesd 3–4 percig. Vedd ki a babérlevelet, kóstold meg, és szükség szerint igazíts a sóján.',
+    ],
+    englishSteps: [
+      'The night before, soak the 300 g dried beans in at least three times their volume of cold water. Drain and rinse them the next day.',
+      'Put the beans in a large saucepan with the bay leaves, garlic, and about 1.2 litres fresh water. Bring to a boil, then partly cover and simmer gently for 60–90 minutes, until completely tender.',
+      'Slice the sausage and add it for the final 15 minutes. Only then taste and add salt because the sausage may already be salty.',
+      'Whisk the sour cream, flour, paprika, and a ladleful of warm cooking liquid until smooth. Slowly stir it into the beans so it does not form lumps.',
+      'Simmer gently, stirring, for 3–4 minutes. Remove the bay leaves, taste, and adjust the salt if needed.',
+    ],
+  },
+  'main-53': {
+    preparationTime: 15, cookingTime: 20, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'],
+    note: 'Fokhagymás spenótfőzelék frissen sült tükörtojással', englishNote: 'Garlicky spinach stew with freshly fried eggs',
+    hungarianSteps: [
+      'A zsemléket tépd kisebb darabokra, öntsd rájuk a tej felét, és hagyd állni 10 percig. Ezután villával törd pépesre. A fokhagymát zúzd össze.',
+      'Egy lábasban melegítsd fel az olaj felét, keverd bele a lisztet, és kis lángon főzd 1 percig. Add hozzá a fokhagymát, keverd 20 másodpercig, de ne hagyd megbarnulni.',
+      'Fokozatosan, habverővel keverve öntsd hozzá a maradék hideg tejet. Add hozzá a fagyasztott spenótot és az áztatott zsemlét, majd kis lángon, gyakran keverve főzd 8–12 percig, amíg mindenhol forró és krémes lesz.',
+      'Közben a maradék olajon, tapadásmentes serpenyőben süsd meg a tojásokat. Fedd le rövid időre, hogy a fehérje és a sárgája is megszilárduljon.',
+      'A főzeléket sózd meg, kóstold meg, és ha túl sűrű, kevés tejjel hígítsd. Adagonként egy tükörtojással tálald.',
+    ],
+    englishSteps: [
+      'Tear the bread rolls into small pieces, pour over half the milk, and leave for 10 minutes. Mash with a fork. Crush the garlic.',
+      'Heat half the oil in a saucepan, stir in the flour, and cook over low heat for 1 minute. Add the garlic and stir for 20 seconds without letting it brown.',
+      'Gradually whisk in the remaining cold milk. Add the frozen spinach and soaked bread, then cook gently for 8–12 minutes, stirring often, until piping hot throughout and creamy.',
+      'Meanwhile, fry the eggs in the remaining oil in a non-stick pan. Cover briefly so both the whites and yolks set.',
+      'Season the stew with salt, taste, and thin with a little milk if needed. Serve one fried egg with each portion.',
+    ],
+  },
+  'main-54': {
+    preparationTime: 15, cookingTime: 20, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'],
+    note: 'Kellemesen édes-savanyú sóskafőzelék főtt tojással', englishNote: 'Gently sweet and tart sorrel stew with boiled eggs',
+    hungarianSteps: [
+      'A tojásokat tedd hideg vízbe, forrald fel, majd forrástól számítva főzd 9–10 percig. Hűtsd le hideg vízben és hámozd meg. Közben a sóskát mosd meg, a vastag szárakat távolítsd el.',
+      'Egy lábasban melegítsd fel az olajat. Add hozzá a sóskát, és közepes lángon, kevergetve fonnyaszd 4–5 percig.',
+      'Szórd rá a lisztet, keverd 1 percig, majd habverővel dolgozva fokozatosan öntsd hozzá a hideg tejet. Kis lángon főzd 4–5 percig.',
+      'Botmixerrel turmixold simára úgy, hogy a mixer feje végig a folyadék alatt maradjon. Keverd hozzá a tejfölt, és melegítsd át 2 perc alatt; ne forrald erősen.',
+      'A cukrot és a sót apránként, kóstolva add hozzá, mert a sóska savassága változó. A tojásokat vágd félbe, és a főzelékkel tálald.',
+    ],
+    englishSteps: [
+      'Put the eggs in cold water, bring to a boil, and cook for 9–10 minutes once boiling. Cool in cold water and peel. Meanwhile, wash the sorrel and remove the thick stems.',
+      'Heat the oil in a saucepan. Add the sorrel and wilt over medium heat for 4–5 minutes, stirring.',
+      'Sprinkle over the flour and stir for 1 minute, then gradually whisk in the cold milk. Cook gently for 4–5 minutes.',
+      'Blend until smooth, keeping the blender head below the surface. Stir in the sour cream and heat through for 2 minutes without boiling hard.',
+      'Add the sugar and salt gradually, tasting as you go because sorrel varies in sharpness. Halve the eggs and serve with the stew.',
+    ],
+  },
+  'main-55': {
+    preparationTime: 20, cookingTime: 35, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'],
+    note: 'Kapros karalábéfőzelék puhára főtt sertéshúsgombóccal', englishNote: 'Dill kohlrabi stew with tender pork meatballs',
+    hungarianSteps: [
+      'A karalábét hámozd meg, és vágd kb. 1,5 cm-es kockákra. A rizst öblítsd át, a kaprot aprítsd fel.',
+      'Keverd össze a darált sertéshúst a tojással, a nyers rizzsel és a só felével. Nedves kézzel formázz 16 kisebb, egyforma gombócot.',
+      'Tedd a karalábét egy széles lábasba kb. 8 dl vízzel és a maradék sóval. Forrald fel, majd kis lángon főzd 8 percig.',
+      'Óvatosan tedd a húsgombócokat a gyöngyöző lébe, fedd le, és főzd további 25–30 percig. Ne forrald erősen. Egy gombóc közepének el kell érnie a 71 °C-ot, a rizs pedig legyen teljesen puha.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró főzőlével. Lassan keverd a főzelékhez, gyöngyöztesd 2–3 percig, majd add hozzá a kaprot és kóstold meg.',
+    ],
+    englishSteps: [
+      'Peel the kohlrabi and cut it into roughly 1.5 cm cubes. Rinse the rice and chop the dill.',
+      'Mix the ground pork with the egg, uncooked rice, and half the salt. With damp hands, shape 16 small, even meatballs.',
+      'Put the kohlrabi in a wide saucepan with about 800 ml water and the remaining salt. Bring to a boil and simmer gently for 8 minutes.',
+      'Carefully lower the meatballs into the simmering liquid, cover, and cook for another 25–30 minutes. Do not boil hard. The centre of a meatball should reach 71 °C and the rice should be completely tender.',
+      'Whisk the sour cream and flour with a ladleful of hot cooking liquid until smooth. Slowly stir into the stew, simmer gently for 2–3 minutes, then add the dill and taste.',
+    ],
+  },
+  'main-56': {
+    preparationTime: 20, cookingTime: 40, commonAllergens: ['gluten', 'egg'],
+    note: 'Köményes kelkáposzta-főzelék sütőben sült fasírttal', englishNote: 'Caraway savoy cabbage stew with oven-baked pork patties',
+    hungarianSteps: [
+      'Melegítsd elő a sütőt 200 °C-ra, és bélelj ki egy tepsit sütőpapírral. A kelkáposzta vastag torzsáját vágd ki, a leveleket csíkozd fel. A burgonyát hámozd meg, vágd 2 cm-es kockákra, a fokhagymát zúzd össze. A zsemlét áztasd be, majd nyomkodd ki.',
+      'Keverd össze a darált sertéshúst a kinyomkodott zsemlével, tojással és a só felével. Formázz 8 lapos pogácsát, vékonyan kend meg olajjal, és süsd 20–25 percig, félidőben megfordítva. A közepük érje el a 71 °C-ot.',
+      'Közben tedd a burgonyát lábasba kb. 7 dl vízzel, a köménnyel és a maradék sóval. Forrald fel, főzd 8 percig, majd add hozzá a kelkáposztát. Lefedve főzd további 12–15 percig, amíg mindkettő megpuhul.',
+      'Keverd simára a lisztet kb. 1 dl hideg vízzel és egy merőkanál forró főzőlével. Keverd a főzelékhez a fokhagymával együtt, majd gyöngyöztesd 2–3 percig.',
+      'Kóstold meg, szükség szerint sózd, és ha túl sűrű, adj hozzá kevés forró vizet. A frissen sült fasírttal tálald.',
+    ],
+    englishSteps: [
+      'Heat the oven to 200 °C and line a baking tray with parchment. Remove the thick core from the savoy cabbage and shred the leaves. Peel and cube the potatoes, crush the garlic, and soak and squeeze the bread roll.',
+      'Mix the ground pork with the squeezed roll, egg, and half the salt. Shape 8 flat patties, brush lightly with oil, and bake for 20–25 minutes, turning halfway through. The centres should reach 71 °C.',
+      'Meanwhile, put the potatoes in a saucepan with about 700 ml water, the caraway, and remaining salt. Bring to a boil and cook for 8 minutes, then add the cabbage. Cover and cook for another 12–15 minutes, until both are tender.',
+      'Whisk the flour with about 100 ml cold water and a ladleful of hot cooking liquid. Stir it into the stew with the garlic, then simmer gently for 2–3 minutes.',
+      'Taste, add salt if needed, and thin with a little hot water if too thick. Serve with the freshly baked patties.',
+    ],
+  },
   'main-71': {
     preparationTime: 15, cookingTime: 65, commonAllergens: ['gluten'],
     note: 'Sűrű, laktató sárgaborsófőzelék pirult virslivel', englishNote: 'Hearty yellow split-pea stew with browned frankfurters',
@@ -282,6 +390,168 @@ const stewAudit: Record<string, StewAudit> = {
       'Remove the bay leaf, taste, and serve with the boiled eggs halved.',
     ],
   },
+  'main-82': {
+    preparationTime: 20, cookingTime: 35, commonAllergens: ['gluten', 'egg'],
+    note: 'Köményes káposztafőzelék sütőben sült fasírttal', englishNote: 'Caraway cabbage stew with oven-baked pork patties',
+    hungarianSteps: [
+      'Melegítsd elő a sütőt 200 °C-ra, és bélelj ki egy tepsit sütőpapírral. A káposztát vágd vékony csíkokra, a hagymát aprítsd fel, a zsemlét áztasd kevés vízbe, majd alaposan nyomkodd ki.',
+      'Keverd össze a darált sertéshúst a kinyomkodott zsemlével, tojással, a hagyma felével és a só felével. Nedves kézzel formázz 8 lapos pogácsát, tedd a tepsire, és süsd 20–25 percig, félidőben megfordítva. A közepük érje el a 71 °C-ot.',
+      'Közben tedd a káposztát, a maradék hagymát és a köményt egy nagy lábasba. Önts alá kb. 4 dl vizet, add hozzá a maradék sót, majd lefedve, kis lángon főzd 20–25 percig. Néha keverd meg; akkor jó, ha puha, de nem pépes.',
+      'Keverd simára a lisztet kb. 1 dl hideg vízzel, majd adj hozzá egy merőkanál forró főzőlevet. Lassan keverd a káposztához, és gyöngyöztesd 2–3 percig, amíg enyhén besűrűsödik.',
+      'Kóstold meg a főzeléket, és szükség szerint igazíts a sóján. A frissen sült fasírttal tálald.',
+    ],
+    englishSteps: [
+      'Heat the oven to 200 °C and line a baking tray with parchment. Finely shred the cabbage, chop the onion, and soak the bread roll in a little water, then squeeze it dry.',
+      'Mix the ground pork with the squeezed roll, egg, half the onion, and half the salt. With damp hands, shape 8 flat patties. Place them on the tray and bake for 20–25 minutes, turning halfway through. The centres should reach 71 °C.',
+      'Meanwhile, put the cabbage, remaining onion, and caraway in a large saucepan. Add about 400 ml water and the remaining salt. Cover and simmer gently for 20–25 minutes, stirring occasionally, until tender but not mushy.',
+      'Whisk the flour with about 100 ml cold water, then whisk in a ladleful of hot cooking liquid. Slowly stir it into the cabbage and simmer gently for 2–3 minutes, until lightly thickened.',
+      'Taste the stew and adjust the salt if needed. Serve with the freshly baked patties.',
+    ],
+  },
+  'main-83': {
+    preparationTime: 15, cookingTime: 35, restingTime: 3, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Selymes savanyúkáposzta-főzelék pirult sertéstarjával', englishNote: 'Creamy sauerkraut stew with browned pork shoulder steaks',
+    hungarianSteps: [
+      'A savanyú káposztát kóstold meg: csak akkor öblítsd át röviden, ha túl savanyú vagy túl sós, majd csepegtesd le. A hagymát aprítsd fel, a tarját vágd négy hasonló vastagságú szeletre és töröld szárazra.',
+      'Egy nagy lábasban melegítsd fel az olaj felét, és párold rajta a hagymát 4–5 percig. Húzd le a tűzről, keverd bele a pirospaprikát, majd rögtön adj hozzá 2 evőkanál vizet, hogy a paprika ne égjen meg.',
+      'Add hozzá a káposztát és kb. 3 dl vizet. Fedd le, és kis lángon főzd 25–30 percig, időnként megkeverve. Csak kóstolás után sózd, mert a káposzta és a hús is lehet sós.',
+      'Közben a maradék olajon süsd a tarjaszeleteket közepesen erős lángon oldalanként 5–7 percig, vastagságtól függően. A közepük érje el a 63 °C-ot, majd pihentesd legalább 3 percig.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró káposztalével. Keverd a főzelékhez, és gyöngyöztesd 2–3 percig. Kóstold meg, majd a pihentetett tarjával tálald.',
+    ],
+    englishSteps: [
+      'Taste the sauerkraut and rinse it briefly only if it is too sour or salty, then drain. Chop the onion. Cut the pork shoulder into four evenly thick steaks and pat them dry.',
+      'Heat half the oil in a large saucepan and soften the onion for 4–5 minutes. Remove from the heat, stir in the paprika, then immediately add 2 tablespoons water so the paprika does not burn.',
+      'Add the sauerkraut and about 300 ml water. Cover and simmer gently for 25–30 minutes, stirring occasionally. Add salt only after tasting because both the cabbage and pork may already be salty.',
+      'Meanwhile, cook the pork in the remaining oil over medium-high heat for 5–7 minutes per side, depending on thickness. The centre should reach 63 °C; rest for at least 3 minutes.',
+      'Whisk the sour cream and flour with a ladleful of hot cabbage liquid until smooth. Stir it into the stew and simmer gently for 2–3 minutes. Taste and serve with the rested pork.',
+    ],
+  },
+  'main-84': {
+    preparationTime: 20, cookingTime: 50, restingTime: 10, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'],
+    note: 'Borsós burgonyafőzelék jól szeletelhető házi vagdalttal', englishNote: 'Pea and potato stew with sliceable homemade meatloaf',
+    hungarianSteps: [
+      'Melegítsd elő a sütőt 180 °C-ra, és bélelj ki egy kisebb tepsit sütőpapírral. A burgonyát hámozd meg, vágd kb. 2 cm-es kockákra.',
+      'Keverd össze a darált húst a tojásokkal, a zsemlemorzsával, a tejből 1 dl-rel és a só felével. Formázd kb. 6 cm vastag cipóvá, tedd a tepsire, és süsd 40–50 percig. A közepe érje el a 71 °C-ot, majd szeletelés előtt pihentesd 10 percig.',
+      'Amíg a vagdalt sül, tedd a burgonyát lábasba kb. 6 dl vízzel és a maradék sóval. Forrald fel, majd kis lángon főzd 10 percig. Add hozzá a zöldborsót, és főzd még 7–10 percig, amíg mindkettő megpuhul.',
+      'Keverd csomómentesre a lisztet a maradék hideg tejjel. Adj hozzá egy merőkanál forró főzőlevet, majd lassan keverd a főzelékhez. Gyöngyöztesd 2–3 percig, amíg krémesre sűrűsödik.',
+      'Kóstold meg a főzeléket, szükség szerint sózd, majd a pihentetett vagdaltat szeleteld fel, és tálald mellé.',
+    ],
+    englishSteps: [
+      'Heat the oven to 180 °C and line a small roasting tray with parchment. Peel the potatoes and cut them into roughly 2 cm cubes.',
+      'Mix the ground meat with the eggs, breadcrumbs, 100 ml of the milk, and half the salt. Shape into a loaf about 6 cm thick, place on the tray, and bake for 40–50 minutes. The centre should reach 71 °C. Rest for 10 minutes before slicing.',
+      'While the meatloaf bakes, put the potatoes in a saucepan with about 600 ml water and the remaining salt. Bring to a boil and simmer for 10 minutes. Add the peas and cook for another 7–10 minutes, until both are tender.',
+      'Whisk the flour with the remaining cold milk until smooth. Whisk in a ladleful of hot cooking liquid, then slowly stir it into the stew. Simmer gently for 2–3 minutes until creamy.',
+      'Taste the stew and add salt if needed. Slice the rested meatloaf and serve alongside.',
+    ],
+  },
+  'main-85': {
+    preparationTime: 20, cookingTime: 165, restingTime: 480, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Lassan főtt tarkababfőzelék puha füstölt csülökkel', englishNote: 'Slow-cooked pinto bean stew with tender smoked pork hock',
+    hungarianSteps: [
+      'Előző este áztasd be a 300 g száraz tarkababot legalább háromszoros mennyiségű hideg vízbe. Másnap öntsd le és öblítsd át. A füstölt csülköt is áztasd külön hideg vízben, ha nagyon sós.',
+      'Tedd a csülköt egy nagy lábasba, önts rá annyi friss vizet, hogy 3–4 cm-rel ellepje, és kis lángon főzd 60 percig. Add hozzá a babot, a babérlevelet és a fokhagymát, majd főzd további 60–90 percig, amíg a bab és a hús is teljesen megpuhul.',
+      'Emeld ki a csülköt, és tartsd melegen. Ha túl sok lé maradt a babon, merj le belőle, de tegyél félre egy bögrényit a sűrítéshez.',
+      'Keverd simára a tejfölt a liszttel, a pirospaprikával és egy merőkanál meleg főzőlével. Lassan keverd a babhoz, majd kis lángon gyöngyöztesd 3 percig. Csak kóstolás után adj hozzá sót.',
+      'A csülökről fejtsd le a puha húst, vágd falatnyi darabokra, és tálald a főzelékkel. A csontot és az ehetetlen részeket távolítsd el.',
+    ],
+    englishSteps: [
+      'The night before, soak the 300 g dried pinto beans in at least three times their volume of cold water. Drain and rinse the next day. Soak the smoked pork hock separately in cold water too if it is very salty.',
+      'Put the hock in a large pot and add enough fresh water to cover it by 3–4 cm. Simmer gently for 60 minutes. Add the beans, bay leaves, and garlic, then cook for another 60–90 minutes, until both the beans and meat are completely tender.',
+      'Lift out the hock and keep it warm. If the beans have too much liquid, ladle some off, reserving a cupful for thickening.',
+      'Whisk the sour cream, flour, paprika, and a ladleful of warm cooking liquid until smooth. Slowly stir into the beans and simmer gently for 3 minutes. Add salt only after tasting.',
+      'Pull the tender meat from the hock, cut it into bite-sized pieces, and serve with the stew. Discard the bone and any inedible parts.',
+    ],
+  },
+  'main-86': {
+    preparationTime: 18, cookingTime: 30, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Petrezselymes karalábé-borsófőzelék szaftos csirkemellel', englishNote: 'Parsley kohlrabi and pea stew with juicy chicken breast',
+    hungarianSteps: [
+      'A karalábét hámozd meg, és vágd kb. 1,5 cm-es kockákra. A csirkemellet vágd négy hasonló vastagságú szeletre, töröld szárazra, majd sózd meg.',
+      'Tedd a karalábét lábasba kb. 5 dl vízzel és a só felével. Forrald fel, majd kis lángon főzd 10 percig. Add hozzá a zöldborsót, és főzd még 6–8 percig, amíg mindkettő megpuhul, de nem esik szét.',
+      'Közben hevítsd fel az olajat egy serpenyőben. Süsd a csirkét oldalanként 4–6 percig, a szeletek vastagságától függően. A közepe érje el a 74 °C-ot, majd tedd félre pihenni.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró főzőlével. Lassan keverd a zöldségekhez, majd gyöngyöztesd 2–3 percig.',
+      'Aprítsd fel a petrezselymet, keverd a főzelékhez, és kóstold meg. Szükség szerint sózd, majd a pihentetett csirkemellel tálald.',
+    ],
+    englishSteps: [
+      'Peel the kohlrabi and cut it into roughly 1.5 cm cubes. Cut the chicken breast into four evenly thick pieces, pat dry, and season with salt.',
+      'Put the kohlrabi in a saucepan with about 500 ml water and half the salt. Bring to a boil and simmer for 10 minutes. Add the peas and cook for another 6–8 minutes, until both are tender but not falling apart.',
+      'Meanwhile, heat the oil in a frying pan. Cook the chicken for 4–6 minutes per side, depending on thickness. The centre should reach 74 °C; set aside to rest.',
+      'Whisk the sour cream and flour with a ladleful of hot cooking liquid until smooth. Slowly stir it into the vegetables and simmer gently for 2–3 minutes.',
+      'Chop the parsley and stir it into the stew. Taste, add salt if needed, and serve with the rested chicken breast.',
+    ],
+  },
+  'main-87': {
+    preparationTime: 15, cookingTime: 35, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Kapros burgonyás tökfőzelék pirult kolbásszal', englishNote: 'Dill squash and potato stew with browned smoked sausage',
+    hungarianSteps: [
+      'A burgonyát hámozd meg, és vágd kb. 2 cm-es kockákra. Ha egész tököt használsz, hámozd meg, felezd el, kapard ki a magos közepét, majd gyaluld vagy reszeld le. A kaprot aprítsd fel.',
+      'Tedd a burgonyát lábasba kb. 5 dl vízzel és a só felével. Forrald fel, majd kis lángon főzd 10 percig. Add hozzá a tököt és a kapor felét, majd főzd további 8–10 percig; ne főzd pépesre.',
+      'Közben a kolbászt karikázd fel, és száraz serpenyőben, közepes lángon pirítsd oldalanként 2–3 percig. Tartsd melegen.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál meleg főzőlével. Lassan keverd a főzelékhez, majd gyöngyöztesd 2–3 percig.',
+      'Add hozzá a maradék kaprot és az ecetet apránként, kóstolva. Szükség szerint sózd, és a pirult kolbásszal tálald.',
+    ],
+    englishSteps: [
+      'Peel the potatoes and cut them into roughly 2 cm cubes. If using a whole squash, peel and halve it, remove the seeded centre, then shred or grate it. Chop the dill.',
+      'Put the potatoes in a saucepan with about 500 ml water and half the salt. Bring to a boil and simmer for 10 minutes. Add the squash and half the dill, then cook for another 8–10 minutes; do not let it turn mushy.',
+      'Meanwhile, slice the sausage and brown it in a dry frying pan over medium heat for 2–3 minutes per side. Keep warm.',
+      'Whisk the sour cream and flour with a ladleful of warm cooking liquid until smooth. Slowly stir it into the stew and simmer gently for 2–3 minutes.',
+      'Add the remaining dill and the vinegar gradually, tasting as you go. Add salt if needed and serve with the browned sausage.',
+    ],
+  },
+  'main-88': {
+    preparationTime: 18, cookingTime: 50, restingTime: 3, commonAllergens: ['milk', 'lactose', 'gluten'],
+    note: 'Mustáros lencsés burgonyafőzelék pirult sertéstarjával', englishNote: 'Mustard lentil and potato stew with browned pork shoulder',
+    hungarianSteps: [
+      'A lencsét válogasd át és öblítsd le; nem szükséges előre beáztatni. A burgonyát hámozd meg, és vágd kb. 2 cm-es kockákra. A tarját vágd négy hasonló vastagságú szeletre, töröld szárazra és sózd meg.',
+      'Tedd a lencsét lábasba a babérlevéllel és kb. 9 dl vízzel. Forrald fel, majd kis lángon főzd 15–20 percig. Add hozzá a burgonyát, és főzd további 15–20 percig, amíg mindkettő megpuhul.',
+      'Közben hevítsd fel az olajat egy serpenyőben. Süsd a tarját oldalanként 5–7 percig, vastagságtól függően. A közepe érje el a 63 °C-ot, majd pihentesd legalább 3 percig.',
+      'Keverd simára a tejfölt a liszttel, a mustárral és egy merőkanál forró főzőlével. Lassan keverd a lencséhez, majd gyöngyöztesd 2–3 percig.',
+      'Vedd ki a babérlevelet, kóstold meg, és szükség szerint sózd. A pihentetett tarjával tálald.',
+    ],
+    englishSteps: [
+      'Sort through and rinse the lentils; they do not need soaking. Peel the potatoes and cut them into roughly 2 cm cubes. Cut the pork shoulder into four evenly thick steaks, pat dry, and season with salt.',
+      'Put the lentils in a saucepan with the bay leaves and about 900 ml water. Bring to a boil and simmer for 15–20 minutes. Add the potatoes and cook for another 15–20 minutes, until both are tender.',
+      'Meanwhile, heat the oil in a frying pan. Cook the pork for 5–7 minutes per side, depending on thickness. The centre should reach 63 °C; rest for at least 3 minutes.',
+      'Whisk the sour cream, flour, mustard, and a ladleful of hot cooking liquid until smooth. Slowly stir into the lentils and simmer gently for 2–3 minutes.',
+      'Remove the bay leaves, taste, and add salt if needed. Serve with the rested pork.',
+    ],
+  },
+  'main-89': {
+    preparationTime: 15, cookingTime: 30, commonAllergens: ['egg', 'milk', 'lactose', 'gluten'],
+    note: 'Petrezselymes zöldbab-burgonyafőzelék főtt tojással', englishNote: 'Parsley green bean and potato stew with boiled eggs',
+    hungarianSteps: [
+      'A burgonyát hámozd meg, és vágd kb. 2 cm-es kockákra. A zöldbabot mosd meg, vágd 3–4 cm-es darabokra, a fokhagymát zúzd össze. A tojásokat külön lábasban tedd fel főni.',
+      'A tojásokat forrástól számítva főzd 9–10 percig, majd hűtsd le hideg vízben és hámozd meg.',
+      'Tedd a burgonyát lábasba kb. 7 dl vízzel, a fokhagymával és a sóval. Forrald fel, majd főzd 8–10 percig. Add hozzá a zöldbabot, és főzd további 10–15 percig, amíg mindkettő megpuhul, de nem esik szét.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró főzőlével. Lassan keverd a zöldségekhez, majd gyöngyöztesd 2–3 percig.',
+      'Aprítsd fel a petrezselymet, keverd a főzelékhez, és kóstold meg. A tojásokat vágd félbe, és a főzelékkel tálald.',
+    ],
+    englishSteps: [
+      'Peel the potatoes and cut them into roughly 2 cm cubes. Rinse the green beans and cut them into 3–4 cm pieces. Crush the garlic and put the eggs in a separate saucepan to cook.',
+      'Once the water boils, cook the eggs for 9–10 minutes. Cool them in cold water, then peel.',
+      'Put the potatoes in a saucepan with about 700 ml water, the garlic, and salt. Bring to a boil and cook for 8–10 minutes. Add the green beans and cook for another 10–15 minutes, until both are tender but not falling apart.',
+      'Whisk the sour cream and flour with a ladleful of hot cooking liquid until smooth. Slowly stir it into the vegetables and simmer gently for 2–3 minutes.',
+      'Chop the parsley and stir it into the stew. Taste, halve the eggs, and serve them with the stew.',
+    ],
+  },
+  'main-90': {
+    preparationTime: 25, cookingTime: 40, commonAllergens: ['egg', 'milk', 'lactose', 'gluten'],
+    note: 'Színes zöldségfőzelék puhára főtt sertéshúsgombóccal', englishNote: 'Colourful vegetable stew with tender pork meatballs',
+    hungarianSteps: [
+      'A sárgarépát és a karalábét hámozd meg, majd vágd kb. 1,5 cm-es kockákra. A hagymát reszeld finomra, a rizst öblítsd át.',
+      'Keverd össze a darált sertéshúst a tojással, a nyers rizzsel, a reszelt hagymával és a só felével. Nedves kézzel formázz 16 kisebb, egyforma gombócot.',
+      'Tedd a sárgarépát és a karalábét egy széles lábasba kb. 1 liter vízzel és a maradék sóval. Forrald fel, majd kis lángon főzd 8 percig.',
+      'Óvatosan tedd a húsgombócokat a gyöngyöző lébe, add hozzá a zöldborsót, és lefedve főzd 25–30 percig. Ne forrald erősen, mert a gombócok széteshetnek. Egy gombóc közepének el kell érnie a 71 °C-ot, a rizs pedig legyen teljesen puha.',
+      'Keverd simára a tejfölt a liszttel és egy merőkanál forró főzőlével. Lassan keverd a főzelékhez, és gyöngyöztesd még 2–3 percig. Kóstold meg, majd a húsgombócokkal együtt tálald.',
+    ],
+    englishSteps: [
+      'Peel the carrots and kohlrabi and cut them into roughly 1.5 cm cubes. Finely grate the onion and rinse the rice.',
+      'Mix the ground pork with the egg, uncooked rice, grated onion, and half the salt. With damp hands, shape 16 small, even meatballs.',
+      'Put the carrots and kohlrabi in a wide saucepan with about 1 litre water and the remaining salt. Bring to a boil and simmer gently for 8 minutes.',
+      'Carefully lower the meatballs into the gently simmering liquid and add the peas. Cover and cook for 25–30 minutes. Do not boil hard or the meatballs may break apart. The centre of a meatball should reach 71 °C and the rice should be completely tender.',
+      'Whisk the sour cream and flour with a ladleful of hot cooking liquid until smooth. Slowly stir it into the stew and simmer gently for another 2–3 minutes. Taste and serve with the meatballs.',
+    ],
+  },
 };
 
 export const auditedStewIds = Object.keys(stewAudit);
@@ -296,7 +566,7 @@ export const applyStewAudit = (recipe: Recipe): Recipe => {
   if (recipe.category !== 'stew') return recipe;
 
   const audit = stewAudit[recipe.id];
-  if (!audit) return recipe;
+  if (!audit) throw new Error(`Missing stew audit metadata for ${recipe.id}`);
 
   const restingTime = audit.restingTime ?? 0;
   const totalTime = audit.preparationTime + audit.cookingTime + restingTime;

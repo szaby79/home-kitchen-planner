@@ -12,7 +12,7 @@ const batchOneStews = defaultRecipes.filter(recipe => batchOneIds.includes(recip
 
 describe('stew quality audit batch one', () => {
   it('covers the first 15 stews in source order with matching Hungarian and English steps', () => {
-    expect(auditedStewIds).toEqual(batchOneIds);
+    expect(auditedStewIds.filter(id => batchOneIds.includes(id))).toEqual(batchOneIds);
     expect(batchOneStews.map(recipe => recipe.id)).toEqual(batchOneIds);
 
     batchOneStews.forEach(recipe => {
