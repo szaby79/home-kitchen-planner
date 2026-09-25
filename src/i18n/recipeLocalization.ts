@@ -1,11 +1,12 @@
 import { Recipe } from '@/types/recipe';
 import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
+import { auditedStewEnglishNotes } from '@/data/stewAudit';
 import { ENGLISH_RECIPE_NAMES } from '@/i18n/englishRecipeNames';
 
 const INGREDIENTS: Record<string, string> = {
   'alma': 'apple', 'avokádó': 'avocado', 'babérlevél': 'bay leaf', 'balzsamecet': 'balsamic vinegar',
   'baracklekvár': 'apricot jam', 'bors': 'black pepper', 'brokkoli': 'broccoli', 'burgonya': 'potato',
-  'cérnametélt': 'fine egg noodles', 'citrom': 'lemon', 'citromhéj': 'lemon zest', 'csicseriborsó konzerv': 'canned chickpeas', 'cukor': 'sugar', 'cukkini': 'zucchini',
+  'cérnametélt': 'fine egg noodles', 'citrom': 'lemon', 'citromhéj': 'lemon zest', 'csicseriborsó konzerv': 'canned chickpeas', 'csicseriborsó konzerv (lecsöpögtetve)': 'canned chickpeas, drained', 'cukor': 'sugar', 'cukkini': 'zucchini',
   'csalamádé': 'mixed pickled vegetables', 'csemege uborka': 'sweet pickles', 'csemegekukorica': 'sweet corn',
   'csiperke gomba': 'button mushrooms', 'csirkecomb': 'chicken thighs', 'csirkemáj': 'chicken liver',
   'csirkemell': 'chicken breast', 'csusza tészta': 'csusza noodles', 'csuszatészta': 'csusza noodles',
@@ -294,6 +295,7 @@ const NOTES: Record<string, string> = {
   'Friss, ropogós joghurtos reggeli körülbelül 10 perc alatt': 'Fresh, crunchy yogurt breakfast in about 10 minutes',
   'Krémes, tartalmas pirítós főtt tojással': 'Creamy, filling toast with boiled eggs',
   'Szaftos gombával töltött, Keto-kompatibilis omlett': 'Keto-friendly omelette filled with juicy mushrooms',
+  ...auditedStewEnglishNotes,
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;
