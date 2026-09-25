@@ -431,78 +431,78 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Form a compact loaf with the seam underneath. Bake for 50–60 minutes, until browned and the centre reaches 72°C.
 
 5. Meanwhile, peel and cube the potatoes and cook them in salted water for 15–20 minutes. Rest the meatloaf for 10 minutes before slicing, then serve with the potatoes.`,
-  'main-16': `1. Heat the oven to 200 °C. Pat the chicken thighs dry and season with salt, pepper, paprika, and crushed garlic.
+  'main-16': `1. Heat the oven to 200°C. Pat the chicken thighs dry with paper towel.
 
-2. Cut the potatoes into even wedges and toss with oil and a little salt.
+2. Mix the oil, paprika, crushed garlic, salt, and pepper. Rub it over the chicken. Peel the potatoes, cut them into wedges, spread them in the roasting pan, and place the thighs on top skin-side up.
 
-3. Arrange the chicken skin-side up with the potatoes around it. Add a small splash of water to the pan.
+3. Roast for 40–50 minutes. Baste with the pan juices halfway through, keeping the skin side facing up.
 
-4. Roast for 45–55 minutes, turning the potatoes once. The chicken juices must run clear and the centre must not be pink.
+4. The chicken is ready when the thickest part, away from the bone, reaches 74°C, or the juices run clear and the meat is no longer pink.
 
-5. Rest the chicken for 5 minutes before serving.`,
-  'main-17': `1. Heat the oven to 180 °C. Cut the ribs into portions and rub with salt, garlic, paprika, and caraway.
+5. Check that the potatoes are tender and browned. Rest the chicken for 5 minutes before serving, and wash anything that touched the raw chicken straight away.`,
+  'main-17': `1. Heat the oven to 160°C. Cut the ribs into pieces of two or three bones and pat them dry.
 
-2. Place them in a baking dish with 150 ml water, cover tightly, and bake for 75 minutes.
+2. Mix the crushed garlic, paprika, caraway, mustard, honey, and salt. Rub the mixture all over the meat.
 
-3. Mix the mustard and honey. Remove the cover and brush the ribs with the glaze.
+3. Put the ribs in a roasting pan, add 100 ml water, cover tightly with foil, and roast for 2 hours.
 
-4. Raise the heat to 210 °C and roast for 15–20 minutes, turning once, until browned.
+4. Remove the foil, raise the oven to 210°C, and roast for another 15–20 minutes until browned. Keep an eye on the glaze because the honey can burn quickly.
 
-5. Rest for 5 minutes and serve with bread.`,
-  'main-18': `1. Heat the oven to 200 °C. Arrange the sausages in a baking dish and prick them only once or twice.
+5. The ribs are ready when the meat pulls easily from the bone. Rest them for 10 minutes and serve with the bread.`,
+  'main-18': `1. Heat the oven to 190°C. Put the sausages in a roasting pan, prick each only two or three times, and add half a glass of water.
 
-2. Roast for 25–30 minutes, turning halfway, until browned and piping hot throughout.
+2. Roast for 30–35 minutes, turning halfway. They should be browned and piping hot inside without becoming dry.
 
-3. Peel and cube the potatoes. Boil in salted water for 15–20 minutes, until very tender.
+3. Meanwhile, peel the potatoes, cut them into even cubes, cover with cold salted water, and boil for 15–20 minutes from the boil.
 
-4. Drain well, mash, then beat in warm milk and butter until smooth. Taste for salt.
+4. Drain and let the steam escape for half a minute, then mash. Mix in the butter and gradually add the warm milk. Do not use a stick blender or the mash can turn gluey.
 
-5. Serve the sausages with the mashed potatoes and mustard.`,
-  'main-19': `1. Cube the potatoes, slice the sausage, and chop the onion, pepper, and tomato.
+5. Taste the mash, add salt if needed, and serve with the sausages and mustard.`,
+  'main-19': `1. Finely chop the onion, peel and cut the potatoes into 2–3 cm cubes, slice the sausage, and chop the pepper and tomato.
 
-2. Cook the onion in oil until soft. Remove from the heat, stir in paprika, and immediately add a little water.
+2. Cook the onion in the oil over medium heat for 6 minutes. Take the pan off the heat, stir in the paprika, and immediately add 100 ml water so it cannot burn.
 
-3. Add the potatoes, pepper, tomato, salt, and enough water to almost cover. Simmer for 15 minutes.
+3. Add the potatoes, pepper, tomato, sausage, and salt. Pour in enough water to almost cover everything.
 
-4. Add the sausage and cook for another 10 minutes, until the potatoes are tender.
+4. Bring to the boil, then simmer partly covered for 20–25 minutes, stirring gently from time to time.
 
-5. Let stand for 5 minutes so the sauce thickens, then taste and serve.`,
-  'main-20': `1. Dice the bacon and fry until crisp. Remove the bacon and keep the rendered fat in the pan.
+5. It is ready when the potatoes are easily pierced but not falling apart and the sauce is rich rather than watery.`,
+  'main-20': `1. Bring a large pot of salted water to the boil. Cook the csusza noodles for the time on the package. Reserve half a mug of cooking water before draining.
 
-2. Cook the csusza noodles in salted water according to the package, then drain well.
+2. Cut the bacon into small cubes. Start it in a cold pan over medium heat and fry until golden and crisp. Lift it out, leaving the rendered fat in the pan.
 
-3. Mix the hot noodles with the dry cottage cheese, sour cream, and a little bacon fat.
+3. Toss the drained noodles with one or two tablespoons of bacon fat. Mix in the crumbled cottage cheese and most of the sour cream.
 
-4. Warm gently for 2–3 minutes, without letting the sour cream boil hard.
+4. If it seems dry, loosen it with a little reserved cooking water. Fold in half the bacon and taste before adding salt.
 
-5. Top with the crisp bacon and serve immediately.`,
-  'main-21': `1. Shred the cabbage, mix with salt, and let stand for 15 minutes. Squeeze out as much liquid as possible.
+5. Serve with the remaining sour cream and crisp bacon on top.`,
+  'main-21': `1. Quarter the cabbage, remove the core, then grate or finely shred it. Mix with the salt, rest for 20 minutes, and squeeze out the liquid by hand.
 
-2. Heat the oil in a wide pan, add the sugar, and let it turn light amber.
+2. Heat the oil in a large pan, add the sugar, and let it turn light brown over medium heat. Do not let it burn dark.
 
-3. Carefully add the cabbage and cook for 25–30 minutes, stirring often, until golden brown.
+3. Carefully add the cabbage—it may spit—and cook for 25–35 minutes, stirring often, until tender and golden brown.
 
-4. Cook the noodles in salted water according to the package and drain thoroughly.
+4. Meanwhile, cook the noodles in salted water according to the package, then drain.
 
-5. Toss with the cabbage and season generously with pepper. Taste before adding more salt.`,
-  'main-22': `1. Rinse and squeeze the sauerkraut if it is very sour. Cut the pork into 2 cm cubes and chop the onion.
+5. Toss the noodles with the cabbage. Taste and add pepper as you like; this dish can be served sweet or peppery.`,
+  'main-22': `1. Cut the pork into 2 cm cubes and finely chop the onion. If the sauerkraut is very salty or sour, rinse it once and squeeze it out.
 
-2. Cook the onion in oil until soft. Remove from the heat, stir in paprika, and immediately add a little water.
+2. Cook the onion in the oil for 6 minutes. Take the pan off the heat, stir in the paprika, and immediately add half a glass of water.
 
-3. Add the pork and simmer covered for 35 minutes. Add the sauerkraut and cook for another 35–40 minutes.
+3. Add the pork and salt. Cover and simmer over low heat for 35–45 minutes, topping up with a little water if needed.
 
-4. Whisk the sour cream and flour with some hot cooking liquid, then stir it into the pot.
+4. Add the sauerkraut and about 300 ml water. Cook for another 35–40 minutes, until both the pork and cabbage are tender.
 
-5. Boil gently for 3 minutes, taste, and adjust the salt.`,
-  'main-23': `1. Shred the cabbage, chop the onion, rinse the rice, and season the ground meat.
+5. Mix the sour cream and flour until smooth, temper with a little hot sauce, then stir it back in. Boil for 3 minutes and only then taste for more salt.`,
+  'main-23': `1. Finely shred the cabbage and chop the onion. Rinse the rice and cook it separately in lightly salted water.
 
-2. Cook the onion in oil, remove from the heat, add paprika, then add the meat and cook until browned.
+2. Cook the onion in half the oil for 5 minutes. Add the ground meat and cook for 8–10 minutes, breaking it into crumbs. Take the pan off the heat and stir in the paprika and half the salt.
 
-3. Add the cabbage, rice, tomato sauce, salt, and enough water to keep the mixture moist.
+3. In a second pot, toss the cabbage with the remaining oil for 3 minutes. Add the tomato sauce and about 200 ml water.
 
-4. Cover and simmer for 30–40 minutes, stirring occasionally, until the cabbage and rice are tender.
+4. Cover and simmer over low heat for 25–30 minutes until the cabbage is tender. Stir in the meat and cook together for another 5 minutes.
 
-5. Taste the sauce and let the dish rest for 5 minutes before serving.`,
+5. Taste, add more salt if needed, and serve with the cooked rice.`,
   'main-24': `1. Cook the green beans in lightly salted water until tender. Soak and squeeze the bread roll for the meat patties.
 
 2. Mix the ground meat, bread, egg, half the onion, garlic, and salt; shape patties and fry 5–6 minutes per side.
@@ -539,69 +539,73 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 4. Whisk the sour cream and flour with hot liquid, stir it into the squash, and simmer for 3 minutes.
 
 5. Balance the flavour with vinegar, sugar, and salt, then serve with the meat patties.`,
-  'main-28': `1. Rinse the rice until the water is mostly clear. Cut the chicken breast into even pieces and chop the onion.
+  'main-28': `1. Rinse the rice in a sieve. Finely chop the onion and cut the chicken into 2 cm cubes.
 
-2. Season and cook the chicken in butter until golden and fully white inside, then set aside.
+2. Soften the onion in half the butter for 4 minutes. Add the rice and stir for 1 minute, then pour in 600 ml water and add half the salt.
 
-3. Cook the onion in the same pan, add the rice, and stir for 1 minute.
+3. Bring to the boil, cover, and cook over the lowest heat for 12 minutes. Add the peas, cook for 5 more minutes, then turn off the heat and rest, covered, for 5 minutes.
 
-4. Add the measured water and salt, cover, and cook on low for 12 minutes. Add the peas for the final 5 minutes.
+4. Meanwhile, cook the chicken in the remaining butter over medium-high heat for 7–9 minutes. The centre of each piece should be completely white.
 
-5. Rest covered for 5 minutes, fluff with a fork, and serve with the chicken.`,
-  'main-29': `1. Pat the fish fillets completely dry, check for bones, and season with salt.
+5. Fluff the rice with a fork and gently fold in the chicken.`,
+  'main-29': `1. Thaw the fish completely, pat it dry, check carefully for bones, and salt both sides. Leave it for 10 minutes.
 
-2. Lightly coat both sides with flour and shake off the excess.
+2. Coat the fish lightly with flour and shake off the excess. Heat about 1 cm oil in a pan over medium heat.
 
-3. Heat oil over medium-high heat. Fry for 3–4 minutes per side, depending on thickness.
+3. Add the pieces without crowding the pan. Fry for 3–4 minutes per side until golden.
 
-4. The fish is ready when opaque and it flakes easily with a fork. Drain briefly.
+4. The fish is ready when opaque and it flakes easily with a fork. Avoid overcooking it so it stays moist.
 
-5. Serve immediately with lemon and cooked rice.`,
-  'main-30': `1. Pat the catfish dry, check for bones, cut into portions, and season with salt.
+5. Rinse the rice, add 600 ml water and a little salt, then cover and cook over low heat for 12–15 minutes. Rest for 5 minutes and serve with the fish and lemon. Let diners know that an occasional bone can remain even in fillets.`,
+  'main-30': `1. Pat the fish dry, feel carefully for bones, cut it into portions, and season with salt. Set out separate plates of flour, beaten egg, and breadcrumbs.
 
-2. Coat each piece in flour, beaten egg, and breadcrumbs, pressing the crumbs on lightly.
+2. Coat each piece first in flour, then egg, then breadcrumbs, shaking off the excess at every stage.
 
-3. Heat 2–3 cm oil over medium heat. A breadcrumb should sizzle steadily.
+3. Heat 1–1.5 cm oil over medium heat. A breadcrumb should sizzle immediately without turning black.
 
-4. Fry for 3–4 minutes per side until golden and opaque inside. Work in batches.
+4. Fry the fish for 3–4 minutes per side until golden. The centre should be opaque and flake easily.
 
-5. Drain and serve with potatoes. Warn diners if any bones may remain.`,
-  'main-31': `1. Make a smooth pancake batter from flour, eggs, milk, and a pinch of salt. Cook thin pancakes and keep them covered.
+5. Meanwhile, peel and cube the potatoes and boil in salted water for 15–20 minutes until tender. Drain, let the steam escape for half a minute, then mash with the butter and gradually added warm milk.
 
-2. Chop the chicken and onion. Cook the onion, remove from heat, add paprika, then add chicken and simmer until cooked.
+6. Drain the fish on paper towel and serve at once with the creamy mash. Let diners know that an occasional bone can remain even after careful checking.`,
+  'main-31': `1. For the crêpe batter, whisk 200 g flour, 2 eggs, 300 ml milk, a pinch of salt, and about 150 ml water until smooth. Rest for 15 minutes, then cook 8 thin crêpes in a lightly oiled pan. After the first one, loosen the batter with a little water if needed.
 
-3. Remove the chicken and chop it finely. Mix with enough sauce to make a moist filling.
+2. Cook the chopped onion in oil for 5 minutes. Take the pan off the heat, stir in the paprika and a little water, then add the diced chicken and salt.
 
-4. Fill and fold the pancakes, place them in a baking dish, and spoon the remaining sauce over them.
+3. Cover and cook for 15–20 minutes until the chicken is fully done. Lift out the meat, chop it finely, and mix it with two or three spoonfuls of sauce.
 
-5. Add tempered sour cream and bake at 190 °C for 15–20 minutes, until hot throughout.`,
-  'main-32': `1. Slice the chicken and mushrooms and chop the onion. Season the chicken with salt and pepper.
+4. Fill the crêpes, fold in both sides, and roll them up. Arrange them in a baking dish.
 
-2. Brown the chicken in butter for 3–4 minutes per side, then set it aside.
+5. Mix the remaining sauce smoothly with the sour cream, pour it over the crêpes, and bake at 180°C for 15–20 minutes until piping hot in the centre.`,
+  'main-32': `1. Cut the chicken into even slices, slice the mushrooms, and finely chop the onion. Season both sides of the chicken with salt and pepper.
 
-3. Cook the onion and mushrooms in the same pan for 8–10 minutes, until most liquid evaporates.
+2. Cook the chicken in half the butter over medium-high heat for 3–4 minutes per side. Work in batches and set it aside.
 
-4. Return the chicken, add the cream, and simmer gently for 8–10 minutes. The chicken must be fully cooked.
+3. Soften the onion in the remaining butter for 4 minutes, then add the mushrooms and cook for 8 minutes until most of their liquid evaporates.
 
-5. Taste the sauce and serve with cooked rice.`,
-  'main-33': `1. Pound the pork slices lightly, season, and brown them in oil on both sides. Set aside.
+4. Pour in the cream, return the chicken, and simmer gently for 6–8 minutes.
 
-2. Cook the chopped onion and sliced mushrooms until soft. Remove from the heat before adding paprika.
+5. Cut into the thickest piece—the centre should be completely white. Taste the sauce and serve with rice.`,
+  'main-33': `1. Cut the pork loin into slices, pound them lightly, and season with salt. Finely chop the onion, slice the mushrooms, and dice the pepper.
 
-3. Add the pepper, pork, and a little water. Cover and simmer for 25–30 minutes, until tender.
+2. Brown the pork in hot oil for 2–3 minutes per side, then set aside. Soften the onion in the same pan for 5 minutes.
 
-4. Whisk the sour cream and flour with hot sauce, stir it into the pan, and simmer for 3 minutes.
+3. Take the pan off the heat, stir in the paprika and a little water. Add the mushrooms, pepper, and pork, then cover and simmer over low heat for 25–30 minutes.
 
-5. Prepare nokedli separately and serve with the pork and mushroom sauce.`,
-  'main-34': `1. Pound and salt the pork chops. Coat them in flour, beaten egg, and breadcrumbs.
+4. Mix the sour cream and flour until smooth, temper with a little hot sauce, then stir it back in and boil for 3 minutes.
 
-2. Fry in medium-hot oil for 4–5 minutes per side, until golden and cooked through. Drain well.
+5. For the nokedli, mix 400 g flour, 2 eggs, 1 teaspoon salt, and about 250 ml water. Drop into gently boiling salted water; once they rise, cook for 1 more minute and drain. Serve with the tender pork.`,
+  'main-34': `1. Pound the pork slices to about 8 mm thick and season both sides with salt. Coat in flour, beaten egg, then breadcrumbs.
 
-3. Cook the spaghetti in salted water according to the package and drain.
+2. Fry in batches in 1–1.5 cm medium-hot oil for 4–5 minutes per side until golden. Drain on paper towel; no pink meat should remain inside.
 
-4. Warm the tomato sauce and toss it with the spaghetti.
+3. Cook the spaghetti in salted water according to the package and drain. Meanwhile, finely chop the onion, slice the mushrooms, and cut the ham into thin strips.
 
-5. Serve each pork chop with the pasta and grated cheese.`,
+4. Soften the onion in 1 tablespoon oil in a large pan for 4 minutes. Add the mushrooms and cook for 6–8 minutes until their liquid evaporates, then fold in the ham.
+
+5. Add the tomato sauce and oregano and simmer over low heat for 8–10 minutes. Taste before adding salt because the ham is already salty. Toss with the spaghetti.
+
+6. Serve the Milanese spaghetti beside the breaded pork and finish with grated cheese, keeping the crisp coating out of the sauce.`,
   'main-35': `1. Finely chop the onion, garlic, and carrot. Heat the olive oil in a large pan.
 
 2. Cook the vegetables for 6–8 minutes. Add the ground beef and cook until browned, breaking it apart.

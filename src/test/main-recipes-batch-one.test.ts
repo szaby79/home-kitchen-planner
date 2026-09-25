@@ -5,11 +5,12 @@ import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
 import { recipeMatchesSafetyPreferences } from '@/lib/menuPreferences';
 import { DEFAULT_MENU_PREFERENCES, FoodRestriction } from '@/types/recipe';
 
-const auditedMains = defaultRecipes.filter(recipe => auditedMainIds.includes(recipe.id));
+const batchOneIds = Array.from({ length: 15 }, (_, index) => `main-${index + 1}`);
+const auditedMains = defaultRecipes.filter(recipe => batchOneIds.includes(recipe.id));
 
 describe('main recipe quality audit batch one', () => {
   it('covers main-1 through main-15 once with equivalent bilingual step counts', () => {
-    expect(auditedMainIds).toEqual(Array.from({ length: 15 }, (_, index) => `main-${index + 1}`));
+    expect(auditedMainIds.slice(0, 15)).toEqual(batchOneIds);
     expect(auditedMains).toHaveLength(15);
 
     auditedMains.forEach(recipe => {

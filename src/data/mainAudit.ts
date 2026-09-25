@@ -25,6 +25,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-13': { preparationTime: 20, cookingTime: 55, difficulty: 'medium', commonAllergens: [], note: 'Pirult sertéshús ropogós burgonyával' },
   'main-14': { preparationTime: 20, cookingTime: 25, restingTime: 10, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Kívül pirult, belül szaftos házi fasírt' },
   'main-15': { preparationTime: 25, cookingTime: 80, restingTime: 10, difficulty: 'medium', commonAllergens: ['gluten', 'egg'], note: 'Főtt tojással töltött, szeletelhető vagdalt' },
+  'main-16': { preparationTime: 15, cookingTime: 55, restingTime: 5, commonAllergens: [], note: 'Fűszeres, ropogós bőrű csirkecomb sült burgonyával' },
+  'main-17': { preparationTime: 15, cookingTime: 140, restingTime: 10, difficulty: 'medium', commonAllergens: ['gluten'], note: 'Lassan sült, mézes-mustáros oldalas friss kenyérrel' },
+  'main-18': { preparationTime: 15, cookingTime: 35, commonAllergens: ['milk', 'lactose'], note: 'Pirult kolbász krémes, házi burgonyapürével' },
+  'main-19': { preparationTime: 15, cookingTime: 35, commonAllergens: [], note: 'Szaftos, kolbászos paprikás krumpli egy lábasban' },
+  'main-20': { preparationTime: 10, cookingTime: 20, commonAllergens: ['milk', 'lactose', 'gluten', 'egg'], note: 'Krémes túrós csusza ropogós szalonnával' },
+  'main-21': { preparationTime: 15, cookingTime: 35, restingTime: 20, commonAllergens: ['gluten', 'egg'], note: 'Aranybarnára pirított káposzta fodros nagykockával' },
+  'main-22': { preparationTime: 20, cookingTime: 90, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten'], note: 'Lassan főtt sertéshús savanyú káposztával és tejföllel' },
+  'main-23': { preparationTime: 15, cookingTime: 40, difficulty: 'medium', commonAllergens: [], note: 'Paradicsomos káposzta pirított darált hússal és rizzsel' },
+  'main-28': { preparationTime: 15, cookingTime: 25, restingTime: 5, commonAllergens: ['milk', 'lactose'], note: 'Vajas-borsós rizs szaftos csirkemellkockákkal' },
+  'main-29': { preparationTime: 15, cookingTime: 25, restingTime: 10, difficulty: 'medium', commonAllergens: ['fish', 'gluten'], note: 'Lisztes kérgű sült hekk citrommal és párolt rizzsel' },
+  'main-30': { preparationTime: 20, cookingTime: 30, difficulty: 'medium', commonAllergens: ['fish', 'gluten', 'egg', 'milk', 'lactose'], note: 'Ropogós bundájú harcsafilé krémes burgonyapürével' },
+  'main-31': { preparationTime: 30, cookingTime: 50, restingTime: 15, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Szaftos csirkepaprikással töltött, tejfölös palacsinta' },
+  'main-32': { preparationTime: 15, cookingTime: 30, commonAllergens: ['milk', 'lactose'], note: 'Szaftos csirkemell krémes gombamártással és rizzsel' },
+  'main-33': { preparationTime: 25, cookingTime: 45, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten', 'egg'], note: 'Tejfölös-gombás sertésszelet friss nokedlivel' },
+  'main-34': { preparationTime: 30, cookingTime: 40, difficulty: 'medium', commonAllergens: ['gluten', 'egg', 'milk', 'lactose'], note: 'Rántott sertésborda sonkás-gombás milánói spagettivel' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {

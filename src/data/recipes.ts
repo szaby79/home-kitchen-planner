@@ -390,7 +390,7 @@ const defaultRecipeData: Recipe[] = [
     description: '3 tojást keményre főzünk. A masszát (hús, zsemle, 2 tojás, hagyma) rolóba formáljuk, közepébe a főtt tojásokat tesszük. 180°C-on sütjük 50 percig.'
   },
   {
-    id: 'main-16', name: 'Sült csirke comb', category: 'main', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
+    id: 'main-16', name: 'Sült csirkecomb', category: 'main', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'csirkecomb', quantity: 8, unit: 'db' }, { name: 'olaj', quantity: 2, unit: 'ek' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'fokhagyma', quantity: 3, unit: 'gerezd' },
@@ -405,7 +405,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'sertés oldalas', quantity: 1000, unit: 'g' }, { name: 'fokhagyma', quantity: 4, unit: 'gerezd' },
       { name: 'pirospaprika', quantity: 1, unit: 'tk' }, { name: 'kömény', quantity: 0.5, unit: 'tk' },
       { name: 'mustár', quantity: 1, unit: 'ek' }, { name: 'méz', quantity: 1, unit: 'ek' },
-      { name: 'só', quantity: 1, unit: 'ek' }, { name: 'kenyér', quantity: 4, unit: 'szelet' },
+      { name: 'só', quantity: 2, unit: 'tk' }, { name: 'kenyér', quantity: 4, unit: 'szelet' },
     ],
     description: 'Az oldalast fűszerekkel bedörzsöljük, fóliába csomagolva 160°C-on sütjük 2 órát. Végén fólia nélkül pirosra sütjük. Kenyérrel tálaljuk.'
   },
@@ -524,7 +524,7 @@ const defaultRecipeData: Recipe[] = [
     id: 'main-29', name: 'Sült hekk', category: 'main', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'hekk filé', quantity: 600, unit: 'g' }, { name: 'liszt', quantity: 80, unit: 'g' },
-      { name: 'olaj', quantity: 200, unit: 'ml' }, { name: 'citrom', quantity: 1, unit: 'db' },
+      { name: 'olaj', quantity: 300, unit: 'ml' }, { name: 'citrom', quantity: 1, unit: 'db' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'rizs', quantity: 300, unit: 'g' },
     ],
     description: 'A halfilét sózzuk, lisztbe forgatjuk, olajon kisütjük. Citrommal és rizzsel tálaljuk.'
@@ -534,19 +534,20 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'harcsa filé', quantity: 600, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'liszt', quantity: 80, unit: 'g' }, { name: 'zsemlemorzsa', quantity: 120, unit: 'g' },
-      { name: 'olaj', quantity: 300, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'burgonya', quantity: 600, unit: 'g' },
+      { name: 'olaj', quantity: 500, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'burgonya', quantity: 800, unit: 'g' }, { name: 'tej', quantity: 150, unit: 'ml' },
+      { name: 'vaj', quantity: 40, unit: 'g' },
     ],
     description: 'A halat szeleteljük, sózzuk. Lisztbe, tojásba, zsemlemorzsába forgatjuk. Bő olajban kisütjük. Burgonyapürével tálaljuk.'
   },
   {
     id: 'main-31', name: 'Hortobágyi palacsinta', category: 'main', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'liszt', quantity: 200, unit: 'g' }, { name: 'tojás', quantity: 3, unit: 'db' },
+      { name: 'liszt', quantity: 200, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'tej', quantity: 300, unit: 'ml' }, { name: 'csirkemell', quantity: 400, unit: 'g' },
       { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'pirospaprika', quantity: 1, unit: 'tk' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'só', quantity: 1, unit: 'tk' },
-      { name: 'olaj', quantity: 2, unit: 'ek' },
+      { name: 'olaj', quantity: 3, unit: 'ek' },
     ],
     description: 'Palacsintát sütünk. Paprikás csirke raguval megtöltjük, tepsibe rakjuk. Tejfölös-paprikás szósszal leöntjük, sütőben átmelegítjük.'
   },
@@ -577,9 +578,11 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'sertésborda', quantity: 600, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'zsemlemorzsa', quantity: 120, unit: 'g' }, { name: 'liszt', quantity: 80, unit: 'g' },
-      { name: 'spagetti', quantity: 400, unit: 'g' }, { name: 'paradicsom szósz', quantity: 300, unit: 'ml' },
-      { name: 'sajt', quantity: 100, unit: 'g' }, { name: 'olaj', quantity: 200, unit: 'ml' },
-      { name: 'só', quantity: 1, unit: 'tk' },
+      { name: 'spagetti', quantity: 400, unit: 'g' }, { name: 'paradicsom szósz', quantity: 400, unit: 'ml' },
+      { name: 'gomba', quantity: 200, unit: 'g' }, { name: 'főtt sonka', quantity: 150, unit: 'g' },
+      { name: 'vöröshagyma', quantity: 1, unit: 'db' }, { name: 'oregánó', quantity: 1, unit: 'tk' },
+      { name: 'sajt', quantity: 100, unit: 'g' }, { name: 'olaj', quantity: 500, unit: 'ml' },
+      { name: 'só', quantity: 1.5, unit: 'tk' },
     ],
     description: 'A bordát kirántjuk. Spagettit főzünk, paradicsomszósszal összekeverjük. A rántott húst rátesszük, sajttal megszórjuk.'
   },
