@@ -70,6 +70,21 @@ const mainAudit: Record<string, MainAudit> = {
   'main-68': { preparationTime: 25, cookingTime: 35, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten'], note: 'Karfiolos, sajtos sült csirke' },
   'main-69': { preparationTime: 20, cookingTime: 40, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'gluten'], note: 'Zöldbabos, tejfölös sertésragu' },
   'main-70': { preparationTime: 20, cookingTime: 140, restingTime: 10, difficulty: 'medium', commonAllergens: [], note: 'Ünnepi, ropogósra sült fogás' },
+  'main-91': { preparationTime: 15, cookingTime: 30, commonAllergens: [], note: 'Vegán egytálétel sok zöldséggel' },
+  'main-92': { preparationTime: 15, cookingTime: 30, commonAllergens: [], note: 'Vegán, tartalmas családi főétel' },
+  'main-93': { preparationTime: 15, cookingTime: 65, commonAllergens: ['milk', 'lactose'], note: 'Vegetáriánus tepsis főétel' },
+  'main-94': { preparationTime: 15, cookingTime: 30, commonAllergens: ['milk', 'lactose'], note: 'Vegetáriánus és keto tepsis vacsora' },
+  'main-95': { preparationTime: 15, cookingTime: 25, restingTime: 3, difficulty: 'medium', commonAllergens: ['milk', 'lactose'], note: 'Keto családi főétel' },
+  'main-96': { preparationTime: 10, cookingTime: 15, commonAllergens: ['milk', 'lactose', 'fish'], note: 'Gyors keto halétel' },
+  'main-97': { preparationTime: 20, cookingTime: 25, difficulty: 'medium', commonAllergens: ['egg'], note: 'Könnyű keto egytálétel' },
+  'main-98': { preparationTime: 15, cookingTime: 20, commonAllergens: ['soy'], note: 'Vegán és keto serpenyős étel' },
+  'main-99': { preparationTime: 15, cookingTime: 35, difficulty: 'medium', commonAllergens: [], note: 'Vegán és keto fűszeres főétel' },
+  'main-100': { preparationTime: 20, cookingTime: 20, restingTime: 5, commonAllergens: ['milk', 'lactose', 'egg'], note: 'Vegetáriánus és keto gyors vacsora' },
+  'main-101': { preparationTime: 15, cookingTime: 25, restingTime: 5, commonAllergens: [], note: 'Vegán, tartalmas egyedényes főétel' },
+  'main-102': { preparationTime: 25, cookingTime: 30, restingTime: 5, difficulty: 'medium', commonAllergens: ['nuts'], note: 'Vegán tepsis főétel ropogós dióval' },
+  'main-103': { preparationTime: 20, cookingTime: 35, difficulty: 'medium', commonAllergens: [], note: 'Vegán és keto sült zöldséges főétel' },
+  'main-104': { preparationTime: 15, cookingTime: 35, difficulty: 'medium', commonAllergens: ['milk', 'lactose', 'egg'], note: 'Vegetáriánus és keto paradicsomos tojásétel' },
+  'main-105': { preparationTime: 25, cookingTime: 35, restingTime: 10, difficulty: 'advanced', commonAllergens: ['milk', 'lactose', 'egg'], note: 'Vegetáriánus és keto könnyű felfújt' },
 };
 
 export const applyMainAudit = (recipe: Recipe): Recipe => {

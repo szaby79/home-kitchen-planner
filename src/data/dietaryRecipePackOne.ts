@@ -119,20 +119,20 @@ export const dietaryRecipePackOne: Recipe[] = [
     category: 'main',
     note: 'Vegán egytálétel sok zöldséggel',
     ingredients: [
-      ['csicseriborsó konzerv', 480, 'g'], ['darabolt paradicsom', 400, 'g'],
+      ['csicseriborsó konzerv', 800, 'g'], ['darabolt paradicsom', 400, 'g'],
       ['cukkini', 1, 'db'], ['kaliforniai paprika', 1, 'db'], ['vöröshagyma', 1, 'db'],
       ['fokhagyma', 2, 'gerezd'], ['olívaolaj', 2, 'ek'], ['oregánó', 1, 'tk'],
       ['só', 1, 'tk'], ['petrezselyemzöld', 0.5, 'csokor'],
     ],
     steps: [
-      'A csicseriborsót öblítsd le. A cukkinit és paprikát vágd falatnyi darabokra, a hagymát és fokhagymát aprítsd fel.',
+      'A két konzerv csicseriborsót csepegtesd le és öblítsd át; így körülbelül 480 g marad. A cukkinit és paprikát vágd falatnyi darabokra, a hagymát és fokhagymát aprítsd fel.',
       'Az olívaolajon párold a hagymát 5 percig. Add hozzá a paprikát és a cukkinit, majd pirítsd további 6 percig.',
       'Keverd hozzá a fokhagymát és az oregánót, 30 másodperc után pedig add hozzá a paradicsomot és a csicseriborsót.',
       'Sózd meg, és fedő nélkül, kis lángon főzd 15 percig, amíg a ragu besűrűsödik, a zöldség pedig megpuhul.',
       'Kóstold meg, szükség esetén sózd, majd aprított petrezselyemmel tálald.',
     ],
-    preparationTime: 12,
-    cookingTime: 25,
+    preparationTime: 15,
+    cookingTime: 30,
     vegetarian: true,
     vegan: true,
     childFriendly: true,
@@ -147,14 +147,14 @@ export const dietaryRecipePackOne: Recipe[] = [
       ['főtt lencse', 500, 'g'], ['csiperke gomba', 400, 'g'], ['karfiol', 800, 'g'],
       ['vöröshagyma', 1, 'db'], ['fokhagyma', 3, 'gerezd'], ['paradicsompüré', 1, 'ek'],
       ['zöldségalaplé', 300, 'ml'], ['olívaolaj', 2, 'ek'], ['kakukkfű', 1, 'tk'],
-      ['só', 1, 'tk'], ['bors', 0.5, 'tk'],
+      ['só', 1.5, 'tk'], ['bors', 0.5, 'tk'],
     ],
     steps: [
       'A karfiolt szedd rózsákra, és sós vízben főzd 12–15 perc alatt egészen puhára.',
       'Közben szeleteld fel a gombát, aprítsd fel a hagymát és fokhagymát. Az olaj felén párold a hagymát 5 percig.',
-      'Add hozzá a gombát, és erősebb lángon pirítsd 8 percig. Keverd bele a fokhagymát, paradicsompürét és kakukkfüvet.',
+      'Add hozzá a gombát, és széles edényben, erősebb lángon pirítsd 8 percig, hogy ne csak párolódjon. Keverd bele a fokhagymát, paradicsompürét és kakukkfüvet.',
       'Öntsd hozzá az alaplevet és a lencsét. Sózd, borsozd, majd kis lángon főzd 12 percig.',
-      'A karfiolt szűrd le, a maradék olajjal turmixold pürésre, majd tálald a sűrű lencseragu mellé.',
+      'A karfiolt szűrd le, 1 dl főzővizet tegyél félre. A maradék olajjal turmixold pürésre, és csak annyi főzővizet adj hozzá, hogy krémes legyen. Tálald a sűrű lencseragu mellé.',
     ],
     preparationTime: 15,
     cookingTime: 30,
@@ -173,14 +173,14 @@ export const dietaryRecipePackOne: Recipe[] = [
       ['só', 0.5, 'tk'], ['bors', 0.5, 'tk'],
     ],
     steps: [
-      'Melegítsd elő a sütőt 200 °C-ra. Az édesburgonyát mosd meg, szurkáld meg villával, és tedd sütőpapíros tepsire.',
-      'Süsd 40–50 percig, amíg a közepe késsel könnyen átszúrható. Közben aprítsd fel a fokhagymát.',
+      'Melegítsd elő a sütőt 200 °C-ra. Válassz hasonló méretű, közepes édesburgonyákat, mosd meg, szurkáld meg villával, és tedd sütőpapíros tepsire.',
+      'Süsd mérettől függően 45–60 percig, amíg a közepe késsel könnyen átszúrható. Közben aprítsd fel a fokhagymát.',
       'Az olajon futtasd meg a fokhagymát 30 másodpercig, add hozzá a spenótot, és fonnyaszd 3–4 percig.',
       'A burgonyákat hosszában vágd fel, a belsejüket lazítsd fel villával, majd oszd el rajtuk a spenótot és a morzsolt fetát.',
       'Tedd vissza a sütőbe 5 percre. Citromlével és frissen őrölt borssal tálald.',
     ],
-    preparationTime: 10,
-    cookingTime: 50,
+    preparationTime: 15,
+    cookingTime: 65,
     vegetarian: true,
     commonAllergens: ['milk'],
     childFriendly: true,
@@ -192,17 +192,17 @@ export const dietaryRecipePackOne: Recipe[] = [
     note: 'Vegetáriánus és keto tepsis vacsora',
     ingredients: [
       ['halloumi sajt', 300, 'g'], ['cukkini', 2, 'db'], ['kaliforniai paprika', 2, 'db'],
-      ['padlizsán', 1, 'db'], ['koktélparadicsom', 250, 'g'], ['olívaolaj', 2, 'ek'],
+      ['padlizsán', 1, 'db'], ['koktélparadicsom', 250, 'g'], ['olívaolaj', 3, 'ek'],
       ['oregánó', 1, 'tk'], ['citrom', 0.5, 'db'], ['bors', 0.5, 'tk'],
     ],
     steps: [
       'Melegítsd elő a sütőt 210 °C-ra. A zöldségeket vágd hasonló méretű, körülbelül 2 cm-es darabokra.',
-      'Tedd őket sütőpapíros tepsire, locsold meg olívaolajjal, szórd meg oregánóval és borssal, majd forgasd össze.',
-      'Süsd 18 percig, közben egyszer keverd át. A halloumit vágd 1 cm vastag szeletekre.',
-      'Tedd a sajtot a zöldségek közé, és süsd további 10–12 percig, amíg a széle aranybarna lesz.',
+      'Oszd el őket két sütőpapíros tepsin egy rétegben, locsold meg olívaolajjal, szórd meg oregánóval és borssal, majd forgasd össze.',
+      'Süsd 18 percig; félidőben keverd át a zöldségeket és cseréld meg a tepsiket. A halloumit vágd 1 cm vastag szeletekre.',
+      'Oszd el a sajtot a zöldségek között, és süsd további 10–12 percig, amíg a széle aranybarna lesz.',
       'Citromlével meglocsolva tálald. Külön só általában nem kell, mert a halloumi sós.',
     ],
-    preparationTime: 12,
+    preparationTime: 15,
     cookingTime: 30,
     vegetarian: true,
     keto: true,
@@ -216,16 +216,16 @@ export const dietaryRecipePackOne: Recipe[] = [
     ingredients: [
       ['csirkemell', 650, 'g'], ['karfiol', 900, 'g'], ['vaj', 40, 'g'],
       ['tejszín', 100, 'ml'], ['citrom', 1, 'db'], ['fokhagyma', 2, 'gerezd'],
-      ['olívaolaj', 1, 'ek'], ['só', 1, 'tk'], ['bors', 0.5, 'tk'],
+      ['olívaolaj', 1, 'ek'], ['só', 1.5, 'tk'], ['bors', 0.5, 'tk'],
     ],
     steps: [
       'A karfiolt szedd rózsákra, és sós vízben főzd 12–15 perc alatt teljesen puhára.',
       'A csirkemellet vágd egyforma szeletekre, sózd és borsozd. Serpenyőben, olívaolajon süsd oldalanként 4–5 percig.',
       'Add a serpenyőhöz a zúzott fokhagymát, fél citrom levét és 50 ml vizet. Lefedve párold még 4 percig.',
       'A karfiolt alaposan csepegtesd le, majd vajjal és tejszínnel turmixold simára. Kóstolás után sózd.',
-      'A csirke legvastagabb részét vágd meg: belül teljesen fehér legyen. A karfiolpürével és citromszeletekkel tálald.',
+      'A csirke legvastagabb része érje el a 74 °C-ot. Hagyd 3 percig pihenni, majd tálald a karfiolpürével és citromszeletekkel.',
     ],
-    preparationTime: 12,
+    preparationTime: 15,
     cookingTime: 25,
     vegetarian: false,
     keto: true,
@@ -244,8 +244,8 @@ export const dietaryRecipePackOne: Recipe[] = [
     ],
     steps: [
       'A lazacot töröld szárazra és vágd négy adagra. A cukkinit vágd fél centi vastag karikákra.',
-      'A vaj felét melegítsd fel nagy serpenyőben. A lazacot sózd, borsozd, és bőrös oldalával lefelé süsd 4 percig.',
-      'Fordítsd meg, és süsd további 3–4 percig. Vedd ki egy tányérra; a közepe legyen opálos és könnyen lemezesedjen.',
+      'A vaj felét melegítsd fel nagy serpenyőben. A lazacot sózd, borsozd, és ha van bőre, bőrös oldalával lefelé süsd 4 percig.',
+      'Fordítsd meg, és süsd további 3–4 percig. Akkor biztonságos, ha a legvastagabb része eléri a 63 °C-ot; hőmérő nélkül a közepe legyen opálos és villával könnyen lemezesedjen. Vedd ki egy tányérra.',
       'A serpenyőbe tedd a maradék vajat és a cukkinit. Pirítsd 5–6 percig, majd add hozzá a fokhagymát 30 másodpercre.',
       'Tedd vissza a lazacot, locsold meg citromlével, szórd meg kaporral, és azonnal tálald.',
     ],
@@ -271,9 +271,9 @@ export const dietaryRecipePackOne: Recipe[] = [
       'Nedves kézzel formázz 16 kisebb gombócot. Az olaj felén, közepes lángon pirítsd körbe 7–8 perc alatt, majd tedd félre.',
       'A maradék olajon párold az aprított hagymát 5 percig, add hozzá a fokhagymát, majd a paradicsomot.',
       'Tedd vissza a gombócokat, és lefedve főzd 12 percig. Közben a cukkinit vágd vékony csíkokra vagy félkarikákra.',
-      'Add hozzá a cukkinit az utolsó 5 percre. Egy gombócot vágj ketté: a közepe ne legyen rózsaszín.',
+      'Add hozzá a cukkinit az utolsó 5 percre. A legnagyobb gombóc közepe érje el a 74 °C-ot; a színe önmagában nem megbízható ellenőrzés.',
     ],
-    preparationTime: 15,
+    preparationTime: 20,
     cookingTime: 25,
     vegetarian: false,
     keto: true,
@@ -297,8 +297,8 @@ export const dietaryRecipePackOne: Recipe[] = [
       'Add hozzá a maradék olajat, a gyömbért és fokhagymát. Fél perc után tedd vissza a tofut és öntsd rá a tamarit.',
       'Forgasd össze 2 perc alatt, majd lime-lével tálald. Külön sózás előtt kóstold meg, mert a tamari sós.',
     ],
-    preparationTime: 12,
-    cookingTime: 18,
+    preparationTime: 15,
+    cookingTime: 20,
     vegetarian: true,
     vegan: true,
     keto: true,
@@ -312,7 +312,7 @@ export const dietaryRecipePackOne: Recipe[] = [
     ingredients: [
       ['padlizsán', 2, 'db'], ['karfiol', 800, 'g'], ['kókusztej', 400, 'ml'],
       ['darabolt paradicsom', 200, 'g'], ['vöröshagyma', 1, 'db'], ['fokhagyma', 2, 'gerezd'],
-      ['currypor', 2, 'tk'], ['olívaolaj', 2, 'ek'], ['só', 1, 'tk'], ['lime', 1, 'db'],
+      ['currypor', 2, 'tk'], ['olívaolaj', 4, 'ek'], ['só', 1.5, 'tk'], ['lime', 1, 'db'],
     ],
     steps: [
       'A padlizsánt vágd 2 cm-es kockákra. A karfiolt aprítógépben, több részletben dolgozd rizsszem méretűre.',
@@ -322,7 +322,7 @@ export const dietaryRecipePackOne: Recipe[] = [
       'A maradék olajon pirítsd a karfiolrizst 6–7 percig. Sózd enyhén, és a curryvel, lime-lével tálald.',
     ],
     preparationTime: 15,
-    cookingTime: 28,
+    cookingTime: 35,
     vegetarian: true,
     vegan: true,
     keto: true,
@@ -342,9 +342,9 @@ export const dietaryRecipePackOne: Recipe[] = [
       'A tojásokat verd fel borssal. Keverd hozzá a cukkinit, a karikázott újhagymát, az aprított petrezselymet és a feta felét.',
       'Egy sütőbe tehető serpenyőt kenj ki olajjal, öntsd bele a keveréket, és közepes lángon süsd 4 percig.',
       'Szórd rá a maradék fetát, majd tedd a sütőbe 12–15 percre, amíg a közepe megszilárdul.',
-      'Pihentesd 5 percig, majd szeleteld. A tojásos közép ne maradjon folyós.',
+      'Akkor kész, ha a közepe megszilárdult és eléri a 71 °C-ot. Pihentesd 5 percig, majd szeleteld.',
     ],
-    preparationTime: 15,
+    preparationTime: 20,
     cookingTime: 20,
     vegetarian: true,
     keto: true,
@@ -373,7 +373,7 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 4. Remove from the heat, add the coconut milk, and blend until completely smooth.
 
 5. Season with salt, pepper, and a little lemon juice. Warm gently without a hard boil.`,
-  'main-91': `1. Drain and rinse the chickpeas. Cut the zucchini and pepper into bite-sized pieces and chop the onion and garlic.
+  'main-91': `1. Drain and rinse the two cans of chickpeas; about 480 g should remain. Cut the zucchini and pepper into bite-sized pieces and chop the onion and garlic.
 
 2. Cook the onion in olive oil for 5 minutes. Add the pepper and zucchini and cook for another 6 minutes.
 
@@ -386,14 +386,14 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 
 2. Slice the mushrooms and chop the onion and garlic. Cook the onion in half the oil for 5 minutes.
 
-3. Add the mushrooms and cook over higher heat for 8 minutes. Stir in the garlic, tomato paste, and thyme.
+3. Add the mushrooms and cook in a wide pan over higher heat for 8 minutes so they brown instead of only steaming. Stir in the garlic, tomato paste, and thyme.
 
 4. Add the stock and lentils. Season and simmer for 12 minutes.
 
-5. Drain the cauliflower well and blend it with the remaining oil. Serve the thick lentil ragout over the purée.`,
-  'main-93': `1. Heat the oven to 200 °C. Scrub the sweet potatoes, prick them with a fork, and place on a lined tray.
+5. Drain the cauliflower, reserving 100 ml cooking water. Blend it with the remaining oil, adding only enough cooking water to make it creamy. Serve with the thick lentil ragout.`,
+  'main-93': `1. Heat the oven to 200 °C. Choose similar medium sweet potatoes, scrub them, prick them with a fork, and place on a lined tray.
 
-2. Bake for 40–50 minutes, until easily pierced with a knife. Meanwhile, finely chop the garlic.
+2. Bake for 45–60 minutes depending on size, until easily pierced with a knife. Meanwhile, finely chop the garlic.
 
 3. Cook the garlic in oil for 30 seconds, add the spinach, and wilt for 3–4 minutes.
 
@@ -402,11 +402,11 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 5. Return to the oven for 5 minutes, then finish with lemon juice and black pepper.`,
   'main-94': `1. Heat the oven to 210 °C. Cut the vegetables into similar 2 cm pieces.
 
-2. Spread them on a lined tray, add olive oil, oregano, and pepper, and toss well.
+2. Spread them in one layer across two lined trays, add olive oil, oregano, and pepper, and toss well.
 
-3. Roast for 18 minutes, stirring once. Slice the halloumi about 1 cm thick.
+3. Roast for 18 minutes, stirring and swapping the trays halfway. Slice the halloumi about 1 cm thick.
 
-4. Place the cheese among the vegetables and roast for another 10–12 minutes, until golden at the edges.
+4. Divide the cheese among the vegetables and roast for another 10–12 minutes, until golden at the edges.
 
 5. Finish with lemon juice. Taste before adding salt because halloumi is already salty.`,
   'main-95': `1. Divide the cauliflower into florets and boil in salted water for 12–15 minutes, until completely soft.
@@ -417,12 +417,12 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 
 4. Drain the cauliflower thoroughly and blend with the butter and cream until smooth. Taste before adding more salt.
 
-5. Cut into the thickest chicken piece; it must be white throughout. Serve with the cauliflower purée and lemon.`,
+5. The thickest part of the chicken must reach 74 °C. Rest for 3 minutes, then serve with the cauliflower purée and lemon.`,
   'main-96': `1. Pat the salmon dry and cut into four portions. Slice the zucchini into 5 mm rounds.
 
-2. Heat half the butter. Season the salmon and cook skin-side down for 4 minutes.
+2. Heat half the butter. Season the salmon and, if it has skin, cook it skin-side down for 4 minutes.
 
-3. Turn and cook for another 3–4 minutes. Remove when the centre is opaque and flakes easily.
+3. Turn and cook for another 3–4 minutes. It is safe when the thickest part reaches 63 °C; without a thermometer, the centre should be opaque and flake easily. Transfer to a plate.
 
 4. Add the remaining butter and zucchini to the pan. Cook for 5–6 minutes, then add the garlic for 30 seconds.
 
@@ -435,7 +435,7 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 
 4. Return the meatballs, cover, and simmer for 12 minutes. Meanwhile, slice the zucchini into thin strips or half-moons.
 
-5. Add the zucchini for the final 5 minutes. Cut one meatball open; the centre must not be pink.`,
+5. Add the zucchini for the final 5 minutes. The centre of the largest meatball must reach 74 °C; colour alone is not a reliable check.`,
   'main-98': `1. Press the tofu dry between paper towels and cut into 2 cm cubes. Divide the broccoli into small florets.
 
 2. Heat half the oil and brown the tofu for 8–10 minutes. Leave it undisturbed between turns so it forms a crust.
@@ -462,5 +462,5 @@ export const dietaryRecipePackOneEnglishInstructions: Record<string, string> = {
 
 4. Add the remaining feta and bake for 12–15 minutes, until the centre is set.
 
-5. Rest for 5 minutes before slicing. The egg in the centre must not remain runny.`,
+5. It is ready when the centre is set and reaches 71 °C. Rest for 5 minutes before slicing.`,
 };
