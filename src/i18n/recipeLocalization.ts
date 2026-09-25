@@ -3,6 +3,7 @@ import { ENGLISH_INSTRUCTIONS } from '@/i18n/englishInstructions';
 import { auditedStewEnglishNotes } from '@/data/stewAudit';
 import { auditedSideEnglishNotes } from '@/data/sideAudit';
 import { auditedSaladEnglishNotes } from '@/data/saladAudit';
+import { auditedDessertEnglishNotes } from '@/data/dessertAudit';
 import { ENGLISH_RECIPE_NAMES } from '@/i18n/englishRecipeNames';
 
 const INGREDIENTS: Record<string, string> = {
@@ -46,7 +47,7 @@ const INGREDIENTS: Record<string, string> = {
   'sertés oldalas': 'pork ribs', 'sertésborda': 'pork chops', 'sertéscomb': 'pork leg',
   'sertéscsülök': 'pork hock', 'sertéshús': 'pork', 'sertéskaraj': 'pork loin',
   'sertésköröm': 'pork feet', 'sertéstarja': 'pork shoulder steaks', 'sertészsír': 'lard',
-  'só': 'salt', 'sóska': 'sorrel', 'spagetti': 'spaghetti', 'spenót': 'spinach', 'sütőpor': 'baking powder',
+  'só': 'salt', 'sóska': 'sorrel', 'spagetti': 'spaghetti', 'spenót': 'spinach', 'sütőpor': 'baking powder', 'szódavíz': 'sparkling water',
   'sütőtök': 'butternut squash', 'szalonna': 'bacon', 'szárazbab': 'dry beans', 'száraztészta': 'dry pasta',
   'szegfűszeg': 'cloves', 'szerecsendió': 'nutmeg', 'szilva': 'plums', 'szódabikarbóna': 'baking soda',
   'tarhonya': 'egg barley', 'tarkabab': 'pinto beans', 'tárkony': 'tarragon', 'szárított tárkony': 'dried tarragon', 'tartármártás': 'tartar sauce',
@@ -300,6 +301,7 @@ const NOTES: Record<string, string> = {
   ...auditedStewEnglishNotes,
   ...auditedSideEnglishNotes,
   ...auditedSaladEnglishNotes,
+  ...auditedDessertEnglishNotes,
 };
 
 export const ingredientTranslationCount = Object.keys(INGREDIENTS).length;

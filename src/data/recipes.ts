@@ -18,6 +18,7 @@ import { applyMainAudit } from '@/data/mainAudit';
 import { applyStewAudit } from '@/data/stewAudit';
 import { applySideAudit } from '@/data/sideAudit';
 import { applySaladAudit } from '@/data/saladAudit';
+import { applyDessertAudit, auditedDessertIds } from '@/data/dessertAudit';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -608,7 +609,8 @@ const defaultRecipeData: Recipe[] = [
     id: 'dessert-1', name: 'Palacsinta', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'liszt', quantity: 200, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
-      { name: 'tej', quantity: 300, unit: 'ml' }, { name: 'cukor', quantity: 2, unit: 'ek' },
+      { name: 'tej', quantity: 300, unit: 'ml' }, { name: 'szódavíz', quantity: 200, unit: 'ml' },
+      { name: 'cukor', quantity: 2, unit: 'ek' }, { name: 'só', quantity: 0.25, unit: 'tk' },
       { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'lekvár', quantity: 200, unit: 'g' },
       { name: 'porcukor', quantity: 2, unit: 'ek' },
     ],
@@ -618,7 +620,9 @@ const defaultRecipeData: Recipe[] = [
     id: 'dessert-2', name: 'Túrós palacsinta', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'liszt', quantity: 200, unit: 'g' }, { name: 'tojás', quantity: 3, unit: 'db' },
-      { name: 'tej', quantity: 300, unit: 'ml' }, { name: 'túró', quantity: 250, unit: 'g' },
+      { name: 'tej', quantity: 300, unit: 'ml' }, { name: 'szódavíz', quantity: 200, unit: 'ml' },
+      { name: 'olaj', quantity: 2, unit: 'ek' }, { name: 'só', quantity: 0.25, unit: 'tk' },
+      { name: 'túró', quantity: 250, unit: 'g' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'cukor', quantity: 3, unit: 'ek' },
       { name: 'vanília cukor', quantity: 1, unit: 'csomag' }, { name: 'mazsola', quantity: 50, unit: 'g' },
     ],
@@ -631,6 +635,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'tej', quantity: 700, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'cukor', quantity: 80, unit: 'g' }, { name: 'vaj', quantity: 100, unit: 'g' },
       { name: 'dió', quantity: 100, unit: 'g' }, { name: 'vanília pudingpor', quantity: 1, unit: 'csomag' },
+      { name: 'só', quantity: 0.5, unit: 'tk' },
     ],
     description: 'Kelttésztát gyúrunk. Kis golyókat formálunk, olvasztott vajba, cukros-diós keverékbe mártjuk. Kuglóf formába rétegezzük. Kelesztjük, 180°C-on sütjük 35 percig. Vaníliasodóval tálaljuk.'
   },
@@ -644,13 +649,13 @@ const defaultRecipeData: Recipe[] = [
     description: 'A kifliket szeleteljük, forró tejjel leöntjük. Mákot cukorral összekeverjük. Rétegezzük: kifli, mákos cukor, vaj. Sütőben átmelegítjük.'
   },
   {
-    id: 'dessert-5', name: 'Somlói galuska', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
+    id: 'dessert-5', name: 'Egyszerű somlói galuska', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'piskóta lap', quantity: 3, unit: 'db' }, { name: 'vanília pudingpor', quantity: 2, unit: 'csomag' },
+      { name: 'piskóta lap', quantity: 300, unit: 'g' }, { name: 'vanília pudingpor', quantity: 2, unit: 'csomag' },
       { name: 'tej', quantity: 800, unit: 'ml' }, { name: 'cukor', quantity: 100, unit: 'g' },
       { name: 'dió', quantity: 80, unit: 'g' }, { name: 'mazsola', quantity: 50, unit: 'g' },
       { name: 'rum', quantity: 2, unit: 'ek' }, { name: 'étcsokoládé', quantity: 100, unit: 'g' },
-      { name: 'tejszín', quantity: 200, unit: 'ml' },
+      { name: 'tejszín', quantity: 250, unit: 'ml' }, { name: 'víz', quantity: 100, unit: 'ml' },
     ],
     description: 'Vaníliapudingot főzünk. A piskótákat rétegezzük: puding, dió, mazsola, rum. Tejszínhabbal és csokoládészósszal tálaljuk.'
   },
@@ -666,16 +671,17 @@ const defaultRecipeData: Recipe[] = [
     id: 'dessert-7', name: 'Rizskoch', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'rizs', quantity: 200, unit: 'g' }, { name: 'tej', quantity: 500, unit: 'ml' },
+      { name: 'víz', quantity: 200, unit: 'ml' },
       { name: 'tojás', quantity: 3, unit: 'db' }, { name: 'cukor', quantity: 80, unit: 'g' },
       { name: 'vanília cukor', quantity: 1, unit: 'csomag' }, { name: 'citromhéj', quantity: 1, unit: 'tk' },
-      { name: 'vaj', quantity: 20, unit: 'g' },
+      { name: 'vaj', quantity: 20, unit: 'g' }, { name: 'só', quantity: 0.25, unit: 'tk' },
     ],
     description: 'A rizst tejben puhára főzzük. Tojássárgáját cukorral eldolgozzuk, a rizshez keverjük. A fehérjét habbá verjük, óvatosan beleforgatjuk. 180°C-on sütjük 30 percig.'
   },
   {
     id: 'dessert-8', name: 'Tejbegríz', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'tej', quantity: 600, unit: 'ml' }, { name: 'gríz', quantity: 100, unit: 'g' },
+      { name: 'tej', quantity: 600, unit: 'ml' }, { name: 'gríz', quantity: 80, unit: 'g' },
       { name: 'cukor', quantity: 40, unit: 'g' }, { name: 'vaj', quantity: 20, unit: 'g' },
       { name: 'vanília cukor', quantity: 1, unit: 'csomag' }, { name: 'lekvár', quantity: 100, unit: 'g' },
     ],
@@ -684,10 +690,12 @@ const defaultRecipeData: Recipe[] = [
   {
     id: 'dessert-9', name: 'Almás pite', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
-      { name: 'liszt', quantity: 400, unit: 'g' }, { name: 'vaj', quantity: 150, unit: 'g' },
-      { name: 'cukor', quantity: 120, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
-      { name: 'alma', quantity: 1000, unit: 'g' }, { name: 'fahéj', quantity: 1, unit: 'tk' },
-      { name: 'sütőpor', quantity: 1, unit: 'csomag' }, { name: 'porcukor', quantity: 2, unit: 'ek' },
+      { name: 'liszt', quantity: 300, unit: 'g' }, { name: 'vaj', quantity: 150, unit: 'g' },
+      { name: 'cukor', quantity: 100, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
+      { name: 'tejföl', quantity: 80, unit: 'ml' }, { name: 'alma', quantity: 800, unit: 'g' },
+      { name: 'fahéj', quantity: 1, unit: 'tk' }, { name: 'sütőpor', quantity: 0.5, unit: 'csomag' },
+      { name: 'zsemlemorzsa', quantity: 30, unit: 'g' }, { name: 'só', quantity: 0.25, unit: 'tk' },
+      { name: 'porcukor', quantity: 2, unit: 'ek' },
     ],
     description: 'Omlós tésztát gyúrunk. A tészta felét tepsibe nyújtjuk. Reszelt almát fahéjjal szórjuk rá. A másik felét ráterítjük. 180°C-on sütjük 40 percig. Porcukorral szórjuk.'
   },
@@ -696,8 +704,9 @@ const defaultRecipeData: Recipe[] = [
     ingredients: [
       { name: 'liszt', quantity: 300, unit: 'g' }, { name: 'vaj', quantity: 120, unit: 'g' },
       { name: 'cukor', quantity: 120, unit: 'g' }, { name: 'tojás', quantity: 2, unit: 'db' },
-      { name: 'meggy', quantity: 500, unit: 'g' }, { name: 'sütőpor', quantity: 1, unit: 'csomag' },
-      { name: 'porcukor', quantity: 2, unit: 'ek' },
+      { name: 'tejföl', quantity: 80, unit: 'ml' }, { name: 'meggy', quantity: 500, unit: 'g' },
+      { name: 'sütőpor', quantity: 0.5, unit: 'csomag' }, { name: 'zsemlemorzsa', quantity: 30, unit: 'g' },
+      { name: 'só', quantity: 0.25, unit: 'tk' }, { name: 'porcukor', quantity: 2, unit: 'ek' },
     ],
     description: 'Tésztát gyúrunk, tepsibe nyújtjuk. Meggyet szórunk rá. 180°C-on sütjük 35 percig. Porcukorral szórjuk.'
   },
@@ -773,10 +782,10 @@ const allRecipeData = [
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => {
-  const auditedRecipe = applySaladAudit(applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe)))));
+  const auditedRecipe = applyDessertAudit(applySaladAudit(applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe))))));
   return {
     ...auditedRecipe,
-    description: recipe.category === 'stew'
+    description: recipe.category === 'stew' || auditedDessertIds.includes(recipe.id)
       ? auditedRecipe.description
       : beginnerInstructions[recipe.id] ?? auditedRecipe.description,
     imageUrl: `/recipes/${recipe.id}.webp`,

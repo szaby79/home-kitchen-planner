@@ -240,7 +240,7 @@ export const ENGLISH_RECIPE_NAMES: Record<string, string> = {
   'dessert-2': 'Hungarian Cottage Cheese Crêpes',
   'dessert-3': 'Aranygaluska – Hungarian Golden Dumplings',
   'dessert-4': 'Mákos Guba – Hungarian Poppy Seed Bread Pudding',
-  'dessert-5': 'Somlói Galuska – Hungarian Chocolate Trifle',
+  'dessert-5': 'Simplified Somlói Galuska – Hungarian Chocolate Trifle',
   'dessert-6': 'Madártej – Hungarian Floating Islands',
   'dessert-7': 'Hungarian Baked Rice Pudding',
   'dessert-8': 'Semolina Porridge',
