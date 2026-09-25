@@ -15,6 +15,7 @@ import { dietaryRecipePackFive } from '@/data/dietaryRecipePackFive';
 import { breakfastRecipes } from '@/data/breakfastRecipes';
 import { applySoupAudit } from '@/data/soupAudit';
 import { applyMainAudit } from '@/data/mainAudit';
+import { applyStewAudit } from '@/data/stewAudit';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -475,6 +476,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'ecet', quantity: 1, unit: 'ek' }, { name: 'cukor', quantity: 1, unit: 'tk' },
       { name: 'só', quantity: 1, unit: 'tk' }, { name: 'petrezselyemzöld', quantity: 1, unit: 'csokor' },
       { name: 'tojás', quantity: 1, unit: 'db' }, { name: 'zsemle', quantity: 1, unit: 'db' },
+      { name: 'olaj', quantity: 2, unit: 'ek' },
     ],
     description: 'A zöldbabot puhára főzzük, rántással beteszítjük, tejföllel, ecettel ízesítjük. A darált húsból fasírtokat formálunk és kisütjük. Együtt tálaljuk.'
   },
@@ -508,6 +510,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'ecet', quantity: 2, unit: 'ek' }, { name: 'cukor', quantity: 1, unit: 'ek' },
       { name: 'kapor', quantity: 1, unit: 'csokor' }, { name: 'só', quantity: 1, unit: 'tk' },
       { name: 'tojás', quantity: 1, unit: 'db' }, { name: 'zsemle', quantity: 1, unit: 'db' },
+      { name: 'olaj', quantity: 2, unit: 'ek' },
     ],
     description: 'A tököt lereszeljük, sózzuk, kinyomkodjuk. Rántással beteszítjük, tejföllel, ecettel, cukorral ízesítjük. Kaporral gazdagítjuk. Fasírttal tálaljuk.'
   },
@@ -767,8 +770,13 @@ const allRecipeData = [
   ...dietaryRecipePackFive,
 ];
 
-export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => ({
-  ...applyMainAudit(applySoupAudit(recipe)),
-  description: beginnerInstructions[recipe.id] ?? recipe.description,
-  imageUrl: `/recipes/${recipe.id}.webp`,
-}));
+export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => {
+  const auditedRecipe = applyStewAudit(applyMainAudit(applySoupAudit(recipe)));
+  return {
+    ...auditedRecipe,
+    description: recipe.category === 'stew'
+      ? auditedRecipe.description
+      : beginnerInstructions[recipe.id] ?? auditedRecipe.description,
+    imageUrl: `/recipes/${recipe.id}.webp`,
+  };
+});
