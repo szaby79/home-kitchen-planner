@@ -19,6 +19,7 @@ import { applyStewAudit } from '@/data/stewAudit';
 import { applySideAudit } from '@/data/sideAudit';
 import { applySaladAudit } from '@/data/saladAudit';
 import { applyDessertAudit, auditedDessertIds } from '@/data/dessertAudit';
+import { applyDessertSecondBatchAudit, auditedDessertSecondBatchIds } from '@/data/dessertAuditSecondBatch';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -717,6 +718,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'tej', quantity: 200, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'cukor', quantity: 80, unit: 'g' }, { name: 'vaj', quantity: 80, unit: 'g' },
       { name: 'kakaó', quantity: 3, unit: 'ek' }, { name: 'porcukor', quantity: 50, unit: 'g' },
+      { name: 'só', quantity: 0.5, unit: 'tk' },
     ],
     description: 'Kelttésztát készítünk. Kinyújtjuk, kakaós-cukros keverékkel megszórjuk. Feltekerjük, szeleteljük. Tepsibe rakjuk, kelesztjük. 180°C-on sütjük 25 percig.'
   },
@@ -727,6 +729,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'tojás', quantity: 2, unit: 'db' }, { name: 'cukor', quantity: 2, unit: 'ek' },
       { name: 'zsemlemorzsa', quantity: 100, unit: 'g' }, { name: 'vaj', quantity: 50, unit: 'g' },
       { name: 'tejföl', quantity: 200, unit: 'ml' }, { name: 'porcukor', quantity: 2, unit: 'ek' },
+      { name: 'só', quantity: 0.25, unit: 'tk' },
     ],
     description: 'A túrót grízzel, tojással, cukorral összegyúrjuk. 30 perc pihentetés után gombócokat formálunk. Sós vízben kifőzzük. Pirított zsemlemorzsába forgatjuk. Tejföllel tálaljuk.'
   },
@@ -734,18 +737,20 @@ const defaultRecipeData: Recipe[] = [
     id: 'dessert-13', name: 'Lekváros bukta', category: 'dessert', mealType: 'both', defaultServings: 4, note: '', imageUrl: '',
     ingredients: [
       { name: 'liszt', quantity: 500, unit: 'g' }, { name: 'élesztő', quantity: 25, unit: 'g' },
-      { name: 'tej', quantity: 200, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
+      { name: 'tej', quantity: 250, unit: 'ml' }, { name: 'tojás', quantity: 2, unit: 'db' },
       { name: 'cukor', quantity: 60, unit: 'g' }, { name: 'vaj', quantity: 80, unit: 'g' },
       { name: 'lekvár', quantity: 200, unit: 'g' }, { name: 'porcukor', quantity: 2, unit: 'ek' },
+      { name: 'só', quantity: 0.5, unit: 'tk' },
     ],
     description: 'Kelttésztát készítünk. Négyzetekre vágjuk, lekvárral töltjük. Tepsibe rendezzük, kelesztjük. 180°C-on sütjük 30 percig. Porcukorral szórjuk.'
   },
   {
     id: 'dessert-14', name: 'Dobos torta', category: 'dessert', mealType: 'both', defaultServings: 4, note: 'Ünnepi desszert', imageUrl: '',
     ingredients: [
-      { name: 'liszt', quantity: 200, unit: 'g' }, { name: 'tojás', quantity: 6, unit: 'db' },
-      { name: 'cukor', quantity: 250, unit: 'g' }, { name: 'vaj', quantity: 250, unit: 'g' },
-      { name: 'kakaó', quantity: 3, unit: 'ek' }, { name: 'étcsokoládé', quantity: 100, unit: 'g' },
+      { name: 'liszt', quantity: 90, unit: 'g' }, { name: 'tojás', quantity: 3, unit: 'db' },
+      { name: 'cukor', quantity: 120, unit: 'g' }, { name: 'porcukor', quantity: 50, unit: 'g' },
+      { name: 'vaj', quantity: 150, unit: 'g' }, { name: 'kakaó', quantity: 20, unit: 'g' },
+      { name: 'étcsokoládé', quantity: 80, unit: 'g' }, { name: 'só', quantity: 0.25, unit: 'tk' },
     ],
     description: 'Vékony piskótalapokat sütünk (6 db). Csokoládés vajkrémmel rétegezzük. A legfelső lapot karamellel vonjuk be. Oldalát morzsával szórjuk.'
   },
@@ -756,7 +761,7 @@ const defaultRecipeData: Recipe[] = [
       { name: 'cukor', quantity: 100, unit: 'g' }, { name: 'tojás', quantity: 1, unit: 'db' },
       { name: 'szódabikarbóna', quantity: 1, unit: 'tk' }, { name: 'fahéj', quantity: 1, unit: 'tk' },
       { name: 'szegfűszeg', quantity: 0.5, unit: 'tk' }, { name: 'gyömbér', quantity: 0.5, unit: 'tk' },
-      { name: 'vaj', quantity: 50, unit: 'g' },
+      { name: 'vaj', quantity: 50, unit: 'g' }, { name: 'só', quantity: 0.25, unit: 'tk' },
     ],
     description: 'A mézet, cukrot, vajat felolvasztjuk. A liszttel, fűszerekkel tésztát gyúrunk. Kinyújtjuk, kiszúrjuk. 180°C-on sütjük 10 percig.'
   },
@@ -782,10 +787,10 @@ const allRecipeData = [
 ];
 
 export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => {
-  const auditedRecipe = applyDessertAudit(applySaladAudit(applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe))))));
+  const auditedRecipe = applyDessertSecondBatchAudit(applyDessertAudit(applySaladAudit(applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe)))))));
   return {
     ...auditedRecipe,
-    description: recipe.category === 'stew' || auditedDessertIds.includes(recipe.id)
+    description: recipe.category === 'stew' || auditedDessertIds.includes(recipe.id) || auditedDessertSecondBatchIds.includes(recipe.id)
       ? auditedRecipe.description
       : beginnerInstructions[recipe.id] ?? auditedRecipe.description,
     imageUrl: `/recipes/${recipe.id}.webp`,
