@@ -66,6 +66,11 @@ describe('soup recipe quality audit', () => {
   );
 
   it('keeps critical corrected recipe facts in the catalogue', () => {
+    const goulash = soups.find(recipe => recipe.id === 'soup-2')!;
+    expect(goulash.ingredients).toContainEqual({ name: 'őrölt kömény', quantity: 0.5, unit: 'tk' });
+    expect(goulash.description).toContain('az őrölt köményt');
+    expect(ENGLISH_INSTRUCTIONS[goulash.id]).toContain('ground caraway');
+
     const eggSoup = soups.find(recipe => recipe.id === 'soup-13')!;
     expect(eggSoup.ingredients.map(item => item.name)).toEqual(expect.arrayContaining([
       'tojás', 'liszt', 'olaj', 'pirospaprika', 'kömény', 'ecet',

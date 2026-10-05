@@ -20,6 +20,7 @@ import { applySideAudit } from '@/data/sideAudit';
 import { applySaladAudit } from '@/data/saladAudit';
 import { applyDessertAudit, auditedDessertIds } from '@/data/dessertAudit';
 import { applyDessertSecondBatchAudit, auditedDessertSecondBatchIds } from '@/data/dessertAuditSecondBatch';
+import { mainMealComposition } from '@/data/mainMealComposition';
 
 const defaultRecipeData: Recipe[] = [
   // ===== SOUPS =====
@@ -42,10 +43,10 @@ const defaultRecipeData: Recipe[] = [
       { name: 'sárgarépa', quantity: 2, unit: 'db' }, { name: 'zöldpaprika', quantity: 2, unit: 'db' },
       { name: 'paradicsom', quantity: 2, unit: 'db' }, { name: 'finomliszt', quantity: 100, unit: 'g' },
       { name: 'tojás', quantity: 1, unit: 'db' },
-      { name: 'só', quantity: 1, unit: 'ek' }, { name: 'kömény', quantity: 0.5, unit: 'tk' },
+      { name: 'só', quantity: 1, unit: 'ek' }, { name: 'őrölt kömény', quantity: 0.5, unit: 'tk' },
       { name: 'fokhagyma', quantity: 2, unit: 'gerezd' }, { name: 'olaj', quantity: 2, unit: 'ek' },
     ],
-    description: 'A hagymát apróra vágjuk, olajon megdinszteljük. Hozzáadjuk a kockára vágott húst, pirítjuk. Pirospaprikával megszórjuk, felöntjük vízzel. A zöldségeket kockára vágva hozzáadjuk. Sózzuk, köménymagot adunk hozzá. Amíg a hús megpuhul, kb. 1,5 órát főzzük. A csipetkét az utolsó 10 percben adjuk hozzá.'
+    description: 'A hagymát apróra vágjuk, olajon megdinszteljük. Hozzáadjuk a kockára vágott húst, pirítjuk. Pirospaprikával megszórjuk, felöntjük vízzel. A zöldségeket kockára vágva hozzáadjuk. Sózzuk, őrölt köménnyel ízesítjük. Amíg a hús megpuhul, kb. 1,5 órát főzzük. A csipetkét az utolsó 10 percben adjuk hozzá.'
   },
   {
     id: 'soup-3', name: 'Bableves füstölt hússal', category: 'soup', mealType: 'lunch', defaultServings: 4, note: '', imageUrl: '',
@@ -790,6 +791,7 @@ export const defaultRecipes: Recipe[] = allRecipeData.map(recipe => {
   const auditedRecipe = applyDessertSecondBatchAudit(applyDessertAudit(applySaladAudit(applySideAudit(applyStewAudit(applyMainAudit(applySoupAudit(recipe)))))));
   return {
     ...auditedRecipe,
+    ...(recipe.category === 'main' ? mainMealComposition[recipe.id] : {}),
     description: recipe.category === 'stew' || auditedDessertIds.includes(recipe.id) || auditedDessertSecondBatchIds.includes(recipe.id)
       ? auditedRecipe.description
       : beginnerInstructions[recipe.id] ?? auditedRecipe.description,

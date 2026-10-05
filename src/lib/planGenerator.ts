@@ -9,6 +9,32 @@ function normalizedIngredients(recipe: Recipe): string[] {
     .map(value => value.toLocaleLowerCase('hu'));
 }
 
+const MEAL_PAIRING_PROFILES = [
+  { tag: 'sour', pattern: /savanyú káposzta|ecet|ecetes|savanyított/, penalty: 40 },
+  { tag: 'potato', pattern: /burgonya|krumpli/, penalty: 18 },
+  { tag: 'cabbage', pattern: /káposzta/, penalty: 18 },
+  { tag: 'poultry', pattern: /csirke|pulyka|kakas|tyúk/, penalty: 18 },
+  { tag: 'pork', pattern: /sertés|sertéshús|tarja|karaj|kolbász|sonka|szalonna|csülök|oldalas|pacal|köröm/, penalty: 18 },
+  { tag: 'beef', pattern: /marha|borjú/, penalty: 18 },
+  { tag: 'fish', pattern: /hal|hekk|harcsa|ponty|lazac|pisztráng|tőkehal/, penalty: 18 },
+  { tag: 'rice', pattern: /rizs/, penalty: 18 },
+  { tag: 'pasta', pattern: /tészta|spagetti|tarhonya|nokedli|galuska|csusza/, penalty: 18 },
+  { tag: 'legume', pattern: /fehérbab|tarkabab|fekete bab|bab konzerv|babkonzerv|lencse|csicseriborsó|borsó/, penalty: 18 },
+  { tag: 'tomato', pattern: /paradicsom/, penalty: 18 },
+  { tag: 'mushroom', pattern: /gomba|csiperke/, penalty: 18 },
+] as const;
+
+function mealPairingPenalty(firstCourse: Recipe | undefined, mainCourse: Recipe): number {
+  if (!firstCourse) return 0;
+  const firstIngredients = normalizedIngredients(firstCourse).join(' ');
+  const mainIngredients = normalizedIngredients(mainCourse).join(' ');
+  return MEAL_PAIRING_PROFILES.reduce((penalty, profile) =>
+    profile.pattern.test(firstIngredients) && profile.pattern.test(mainIngredients)
+      ? penalty + profile.penalty
+      : penalty,
+  0);
+}
+
 function estimatedMinutes(recipe: Recipe): number {
   if (recipe.totalTime) return recipe.totalTime;
   if (recipe.preparationTime || recipe.cookingTime) return (recipe.preparationTime ?? 0) + (recipe.cookingTime ?? 0);
@@ -43,27 +69,23 @@ function goalScore(recipe: Recipe, settings: WeeklyAutopilotSettings, favoriteId
   return score;
 }
 
-function pickId(recipes: Recipe[], usedIds: Set<string>, preferences: MenuPreferences, favoriteIds: Set<string>, previousIds: Set<string>, settings?: WeeklyAutopilotSettings, reusedIngredients = new Set<string>()): string | null {
+function pickId(recipes: Recipe[], usedIds: Set<string>, preferences: MenuPreferences, favoriteIds: Set<string>, previousIds: Set<string>, settings?: WeeklyAutopilotSettings, reusedIngredients = new Set<string>(), companionRecipe?: Recipe): string | null {
   const unused = recipes.filter(recipe => !usedIds.has(recipe.id));
   const notRecentlyUsed = unused.filter(recipe => !previousIds.has(recipe.id));
   const pool = notRecentlyUsed.length ? notRecentlyUsed : (unused.length ? unused : recipes);
   const selectedRecipe = shuffled(pool).sort((a, b) => {
     const preference = recipePreferenceScore(b, preferences.preferredStyles, favoriteIds) - recipePreferenceScore(a, preferences.preferredStyles, favoriteIds);
     const goal = settings ? goalScore(b, settings, favoriteIds, reusedIngredients) - goalScore(a, settings, favoriteIds, reusedIngredients) : 0;
-    return preference + goal;
+    const diversity = mealPairingPenalty(companionRecipe, a) - mealPairingPenalty(companionRecipe, b);
+    return preference + goal + diversity;
   })[0];
   if (selectedRecipe) usedIds.add(selectedRecipe.id);
   return selectedRecipe?.id ?? null;
 }
 
 function compatibleSideIds(main?: Recipe): string[] {
-  const name = main?.name.toLocaleLowerCase('hu') ?? '';
   if (!recipeNeedsSeparateSide(main)) return [];
-  if (/kacsa|liba/.test(name)) return ['side-9', 'side-6', 'side-1'];
-  if (/pörkölt|paprikás|tokány|vadas/.test(name)) return ['side-4', 'side-5', 'side-3'];
-  if (/rántott|fasírt|pecsenye|sült/.test(name)) return ['side-1', 'side-2', 'side-7', 'side-3'];
-  if (/hal/.test(name)) return ['side-1', 'side-3', 'side-8'];
-  return ['side-1', 'side-2', 'side-3', 'side-5', 'side-8', 'side-10'];
+  return main?.suitableSideDishes ?? [];
 }
 
 function pickCompatibleSide(recipes: Recipe[], main?: Recipe): string | null {
@@ -197,7 +219,8 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
       if (day === 'Szombat') dayMains = saturdayMains;
       if (day === 'Vasárnap') dayMains = sundayMains.length ? sundayMains : mains;
       dayMains = filterForDay(dayMains, day, settings);
-      const lunch = pickId(dayMains, usedMeals, preferences, favoriteSet, previousIds, settings, reusedIngredients);
+      const soup = soupForDay(index, profile, soups, usedSoups, pairedSoups, preferences, favoriteSet, previousIds, settings, reusedIngredients);
+      const lunch = pickId(dayMains, usedMeals, preferences, favoriteSet, previousIds, settings, reusedIngredients, recipes.find(recipe => recipe.id === soup));
       const isWeekend = day === 'Szombat' || day === 'Vasárnap';
       let dessert = profile !== 'simple' && isWeekend ? pickId(desserts, usedDesserts, preferences, favoriteSet, previousIds, settings, reusedIngredients) : null;
       if (profile !== 'simple' && isWeekend) {
@@ -205,7 +228,7 @@ export function generateWeekPlan(recipes: Recipe[], numLunches: number, numDinne
         dessert = sharedWeekendDessert;
       }
       plan[day] = {
-        ...plan[day], soup: soupForDay(index, profile, soups, usedSoups, pairedSoups, preferences, favoriteSet, previousIds, settings, reusedIngredients), lunch,
+        ...plan[day], soup, lunch,
         side: pickCompatibleSide(sides, recipes.find(recipe => recipe.id === lunch)),
         pickle: profile !== 'simple' && isWeekend ? shuffled(pickles)[0]?.id ?? null : null, dessert,
         soupServings: people, lunchServings: people, sideServings: people,
