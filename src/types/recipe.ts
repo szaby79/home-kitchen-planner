@@ -10,6 +10,7 @@ export interface Ingredient {
 export type CostCategory = '$' | '$$' | '$$$';
 export type RecipeDifficulty = 'easy' | 'medium' | 'advanced';
 export type RecipeQualityAuditStatus = 'code-reviewed' | 'kitchen-verified';
+export type MainMealComposition = 'complete-meal' | 'main-needs-side';
 export interface Recipe {
   id: string;
   name: string;
@@ -38,6 +39,8 @@ export interface Recipe {
   quickMeal?: boolean;
   weekendMeal?: boolean;
   suitableSideDishes?: string[];
+  /** Explicit meal structure for main dishes; prevents title/ingredient guesswork. */
+  mealComposition?: MainMealComposition;
   qualityAuditStatus?: RecipeQualityAuditStatus;
 }
 

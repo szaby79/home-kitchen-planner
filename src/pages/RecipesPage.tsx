@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Search, ChefHat, Heart, Zap, Settings, SlidersHorizontal, ChevronDown, RotateCcw } from 'lucide-react';
+import { Search, ChefHat, Heart, Zap, Settings, SlidersHorizontal, ChevronDown, RotateCcw, Clock3 } from 'lucide-react';
 import { useAppContext } from '@/components/Layout';
 import { Category, CATEGORY_LABELS, MEAL_TYPE_LABELS } from '@/types/recipe';
 import { Input } from '@/components/ui/input';
@@ -203,7 +203,15 @@ export default function RecipesPage() {
                   <Badge variant="outline" className="text-xs">{isEnglish ? EN_MEAL_TYPE_LABELS[recipe.mealType] : MEAL_TYPE_LABELS[recipe.mealType]}</Badge>
                   {isQuickRecipe(recipe) && <Badge className="text-xs bg-accent text-accent-foreground">{tr('Gyors', 'Quick')}</Badge>}
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed font-medium">{tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</p>
+                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground leading-relaxed font-medium">
+                  <span>{tr('kb.', 'about')} {estimateRecipeCalories(recipe)} {tr('kcal/adag', 'kcal/serving')}</span>
+                  {recipe.qualityAuditStatus && recipe.totalTime !== undefined && (
+                    <span className="inline-flex items-center gap-1" aria-label={tr('Teljes elkészítési idő', 'Total time')}>
+                      <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
+                      {formatMinutes(recipe.totalTime, tr)}
+                    </span>
+                  )}
+                </div>
               </div>
             </Link>
           </div>
@@ -219,4 +227,12 @@ export default function RecipesPage() {
 
 function hash(value: string) {
   return [...value].reduce((total, char) => ((total << 5) - total + char.charCodeAt(0)) | 0, 0);
+}
+
+function formatMinutes(minutes: number, tr: (hungarian: string, english: string) => string) {
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+  if (!hours) return `${minutes} ${tr('perc', 'min')}`;
+  if (!remainder) return `${hours} ${tr('óra', 'hr')}`;
+  return `${hours} ${tr('óra', 'hr')} ${remainder} ${tr('perc', 'min')}`;
 }

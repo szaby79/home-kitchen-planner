@@ -36,7 +36,7 @@ Caution: Wash your hands, knife, and cutting board thoroughly after handling raw
 
 3. REMOVE THE POT FROM THE HEAT before stirring in the paprika. After 10 seconds, immediately add about 1.5 litres of water so the paprika cannot burn and turn bitter.
 
-4. Add the tomato, pepper, garlic, caraway, and half the salt. Simmer partly covered for 60 minutes, then add the carrots and potatoes and cook 30–40 minutes more.
+4. Add the tomato, pepper, garlic, ground caraway, and half the salt. Simmer partly covered for 60 minutes, then add the carrots and potatoes and cook 30–40 minutes more.
 
 5. For csipetke, knead 1 egg, a pinch of salt, and about 100 g flour into a firm, non-sticky dough. Pinch off pea-sized pieces with floured fingers.
 

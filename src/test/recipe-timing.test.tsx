@@ -9,6 +9,14 @@ afterEach(() => {
 });
 
 describe('audited recipe timing', () => {
+  it('shows the verified total time on recipe cards', () => {
+    localStorage.clear();
+    window.history.replaceState({}, '', '/recipes?category=soup');
+    render(<App />);
+
+    expect(screen.getByText('2 óra 15 perc')).toBeInTheDocument();
+  });
+
   it('separates active preparation from overnight waiting without inventing cooking time', () => {
     localStorage.clear();
     window.history.replaceState({}, '', '/recipes/breakfast-3');

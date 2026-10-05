@@ -17,7 +17,7 @@ Figyelem: nyers csirke után moss kezet, a kést és a vágódeszkát pedig mosd
 
 2. Melegítsd fel az olajat egy nagy fazékban közepes lángon. Add hozzá a hagymát, és 6–8 percig kevergetve párold, amíg puha és üveges lesz, de nem barnul meg. Tedd hozzá a húst, és 5–7 perc alatt pirítsd körbe.
 
-3. Húzd le a fazekat a tűzről, és csak ezután keverd bele a pirospaprikát. 10–15 másodperc után azonnal önts hozzá kb. 1,5 liter vizet. A paprika forró, száraz edényben megég és keserű lesz. Add hozzá a paradicsomot, paprikát, fokhagymát, köményt és a só felét.
+3. Húzd le a fazekat a tűzről, és csak ezután keverd bele a pirospaprikát. 10–15 másodperc után azonnal önts hozzá kb. 1,5 liter vizet. A paprika forró, száraz edényben megég és keserű lesz. Add hozzá a paradicsomot, paprikát, fokhagymát, az őrölt köményt és a só felét.
 
 4. Forrald fel, majd kis lángon, félig lefedve főzd kb. 60 percig. Add hozzá a répát és a burgonyát, majd főzd további 30–40 percig. Akkor jó, ha a hús és a burgonya is könnyen átszúrható villával. Kóstold meg, és csak ezután add hozzá a maradék sót, ha szükséges.
 

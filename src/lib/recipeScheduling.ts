@@ -23,16 +23,7 @@ export function isSundayRecipe(recipe: Recipe): boolean {
   return SUNDAY_MAIN_IDS.has(recipe.id);
 }
 
-const BUILT_IN_SIDE_INGREDIENT = /burgonya|rizs|tarhonya|tészta|csusza|galuska|nokedli|dödölle|finomliszt/i;
-const COMPLETE_DISH_NAME = /tészta|spagetti|makaróni|csusza|paprikás krumpli|rakott|rizses|rizi-bizi|tarhonyás|főzelék|lecsó|töltött káposzta|székelykáposzta|dödölle|nudli|gombóc|sztrapacska|slambuc|brassói|palacsinta|káposztával|krumplival|nokedlivel|csuszával|rizzsel|burgonyával/i;
-
-/** True only when the recipe does not already contain or prescribe a side dish. */
+/** Uses audited recipe metadata instead of guessing from its title or ingredients. */
 export function recipeNeedsSeparateSide(recipe?: Recipe): boolean {
-  if (!recipe || recipe.category !== 'main') return false;
-  if (COMPLETE_DISH_NAME.test(recipe.name)) return false;
-  const hasSubstantialSideIngredient = recipe.ingredients.some(ingredient =>
-    BUILT_IN_SIDE_INGREDIENT.test(ingredient.name) &&
-    (ingredient.unit !== 'g' || ingredient.quantity >= 200),
-  );
-  return !hasSubstantialSideIngredient;
+  return recipe?.category === 'main' && recipe.mealComposition === 'main-needs-side';
 }

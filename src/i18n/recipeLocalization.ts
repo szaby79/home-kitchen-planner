@@ -31,7 +31,7 @@ const INGREDIENTS: Record<string, string> = {
   'kapor': 'dill', 'karalábé': 'kohlrabi', 'karfiol': 'cauliflower', 'kelkáposzta': 'savoy cabbage',
   'kenyér': 'bread', 'kenyérkocka': 'bread cubes', 'kifli': 'crescent rolls', 'kockatészta': 'square egg noodles',
   'koktélparadicsom': 'cherry tomatoes', 'kolbász': 'sausage', 'kovászos uborka': 'fermented dill pickles',
-  'kömény': 'caraway seeds', 'kukorica konzerv': 'canned corn', 'kuszkusz': 'couscous',
+  'kömény': 'caraway seeds', 'őrölt kömény': 'ground caraway', 'kukorica konzerv': 'canned corn', 'kuszkusz': 'couscous',
   'lebbencstészta': 'lebbencs noodles', 'lekvár': 'jam', 'lencse': 'lentils', 'libacomb': 'goose legs',
   'lilahagyma': 'red onion', 'lilakáposzta': 'red cabbage', 'lime': 'lime', 'liszt': 'all-purpose flour',
   'magozott meggy': 'pitted sour cherries', 'majoránna': 'marjoram', 'mák': 'poppy seeds',

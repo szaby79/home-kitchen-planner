@@ -1,10 +1,50 @@
 import { describe, expect, it } from 'vitest';
 import { defaultRecipes } from '@/data/recipes';
+import { mainMealComposition } from '@/data/mainMealComposition';
 import { generateSelectedPlan, generateWeekPlan } from '@/lib/planGenerator';
 import { createEmptyDayPlan, createGenerationSelection, DEFAULT_MENU_PREFERENCES, WEEKDAYS } from '@/types/recipe';
 import { isQuickRecipe, isSundayRecipe, recipeNeedsSeparateSide } from '@/lib/recipeScheduling';
 
 describe('weekly menu generation rules', () => {
+  it('has explicit meal composition and valid side options for every main recipe', () => {
+    const mains = defaultRecipes.filter(recipe => recipe.category === 'main');
+    const sides = new Set(defaultRecipes.filter(recipe => recipe.category === 'side').map(recipe => recipe.id));
+
+    expect(mains).toHaveLength(Object.keys(mainMealComposition).length);
+    mains.forEach(recipe => {
+      const metadata = mainMealComposition[recipe.id];
+      expect(metadata?.mealComposition, recipe.id).toMatch(/^(complete-meal|main-needs-side)$/);
+      if (metadata.mealComposition === 'main-needs-side') {
+        expect(metadata.suitableSideDishes?.length, recipe.id).toBeGreaterThan(0);
+        metadata.suitableSideDishes?.forEach(sideId => expect(sides.has(sideId), `${recipe.id} -> ${sideId}`).toBe(true));
+      }
+    });
+  });
+
+  it('decides from explicit metadata rather than recipe title or ingredients', () => {
+    const main = defaultRecipes.find(recipe => recipe.id === 'main-14')!;
+    expect(recipeNeedsSeparateSide({ ...main, name: 'Ismeretlen étel neve', ingredients: [] })).toBe(true);
+    expect(recipeNeedsSeparateSide(defaultRecipes.find(recipe => recipe.id === 'main-112'))).toBe(false);
+  });
+
+  it('avoids pairing sour potato soup with sour cabbage stew when another main is available', () => {
+    const catalog = defaultRecipes.filter(recipe => ['soup-18', 'main-83', 'main-112'].includes(recipe.id));
+
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const plan = generateWeekPlan(catalog, 1, 0, 'balanced');
+      expect(plan.Hétfő.soup).toBe('soup-18');
+      expect(plan.Hétfő.lunch).toBe('main-112');
+    }
+  });
+
+  it('keeps a similar meal pairing when no suitable alternative exists', () => {
+    const catalog = defaultRecipes.filter(recipe => ['soup-18', 'main-83'].includes(recipe.id));
+    const plan = generateWeekPlan(catalog, 1, 0, 'balanced');
+
+    expect(plan.Hétfő.soup).toBe('soup-18');
+    expect(plan.Hétfő.lunch).toBe('main-83');
+  });
+
   it('uses only quick mains or salads for dinner', () => {
     for (let attempt = 0; attempt < 20; attempt += 1) {
       const plan = generateWeekPlan(defaultRecipes, 7, 7, 'balanced');
@@ -56,7 +96,11 @@ describe('weekly menu generation rules', () => {
     });
   });
 
-  it.each(['main-19', 'main-47', 'main-28', 'main-7'])('never adds a separate side to complete dish %s', mainId => {
+  it.each([
+    'main-1', 'main-2', 'main-3', 'main-4', 'main-5', 'main-6', 'main-7', 'main-15', 'main-16', 'main-17',
+    'main-19', 'main-28', 'main-29', 'main-30', 'main-32', 'main-33', 'main-47',
+    'main-36', 'main-57', 'main-60', 'main-61', 'main-64', 'main-67', 'main-70', 'main-112',
+  ])('never adds a separate side to complete dish %s', mainId => {
     const catalog = defaultRecipes.filter(recipe => (recipe.category !== 'main' && recipe.category !== 'stew') || recipe.id === mainId);
     expect(generateWeekPlan(catalog, 1, 0, 'balanced').Hétfő.side).toBeNull();
   });
@@ -65,7 +109,7 @@ describe('weekly menu generation rules', () => {
     const catalog = defaultRecipes.filter(recipe => (recipe.category !== 'main' && recipe.category !== 'stew') || recipe.id === 'main-14');
     const plan = generateWeekPlan(catalog, 1, 0, 'balanced');
     expect(plan.Hétfő.lunch).toBe('main-14');
-    expect(plan.Hétfő.side).not.toBeNull();
+    expect(mainMealComposition['main-14'].suitableSideDishes).toContain(plan.Hétfő.side);
     expect(defaultRecipes.find(recipe => recipe.id === 'main-14')?.ingredients.some(ingredient => ingredient.name === 'burgonya')).toBe(false);
   });
 
